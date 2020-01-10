@@ -1,0 +1,81 @@
+<view class="container">
+
+  <view class="lea-time-layout">
+    <view class="lea-time-shu"></view>
+    <view class="lea-time-title">请假时间</view>
+    <view class="lea-time-time">2019-12-22</view>
+    <image class="lea-time-sel" src="../../images/next.png"></image>
+  
+  
+  
+  </view>
+  <!-- 选择日期的课表 -->
+  <view class="lea-time-layout">
+    <image class="lea-sel" src="../../images/sel.png"></image>
+    <view class="cour-time">14:00-17:00</view>
+    <view class="cour-content">逻辑推理第三节</view>
+  </view>
+
+  <!-- 请假课程显示 -->
+  <view class="tobelea-cour-layout">
+    <view class="tobelea-cour-head">
+      <view class="tobelea-cour-shu"></view>
+      <view class="tobelea-cour-title">需请假的课程</view>
+    </view>
+    <!-- <view class="tobelea-cour-head"> -->
+      <view class="tobelea-cour-timetitle">请假时间：2019.12.22</view>
+      <!-- <view class="tobelea-cour-timedate">2019.12.22</view> -->
+    <!-- </view> -->
+
+    <view>
+      <view class="tobelea-cour-head">
+        <view class="tobelea-cour-content-layout">请假课程：</view>
+          <!-- 请假课程详情 -->
+          <view class="tobelea-cour-content">
+            <view class="tobelea-cour-content-list">
+              <view class="tobelea-cour-cont-time">08:00-09:00</view>
+              <view class="tobelea-cour-cont-name">逻辑推理第三节</view>
+              <image class="tobelea-cour-cont-del" src="../../images/del.png"></image>
+            </view>
+
+            <view class="tobelea-cour-content-list">
+              <view class="tobelea-cour-cont-time">08:00-09:00</view>
+              <view class="tobelea-cour-cont-name">逻辑推理第三节</view>
+              <image class="tobelea-cour-cont-del" src="../../images/del.png"></image>
+            </view>
+          </view>
+      </view>
+      <image class="tobelea-cour-content-xu" src="../../images/xu.png"></image>
+    </view>
+
+
+  <!-- 需请假课程最大框 -->
+  </view>
+
+  <view class="tobelea-for-layout">
+    <view class="tobelea-cour-head">
+      <view class="tobelea-cour-shu"></view>
+      <view class="tobelea-cour-title">请假事由</view>
+    </view>
+    <textarea class="tobelea-cour-cont" placeholder="请输入请假事由..."></textarea>
+  
+  
+  
+  <!-- 请假事由最大kuang -->
+  </view>
+
+  <view class="submit">提交</view>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- container -->
+</view>

@@ -1,0 +1,146 @@
+<view class="container">
+
+    <view class="mask"></view>
+    <view class="stu_num">班级共32人</view>
+    <view class="stu-work-layout">
+      <view class="stu-suit">
+        <view class="stu-suit-shu"></view>
+        <view class="stu-suit-head">正常到课(12人)：</view>
+      </view>
+      <view class="stu-suit">
+        <view class="stu-info-layout">
+          <image class="stu-avatar" src="../../images/avatar.png"></image>
+          <view class="stu-name">王璐瑶</view>
+          <!-- <view class="stu-xcx">查看详情</view> -->
+        </view>
+      </view>
+
+      <view class="stu-suit">
+        <view class="stu-suit-shu"></view>
+        <view class="stu-suit-head">迟到(12人)：</view>
+      </view>
+      <view class="stu-suit">
+        <view class="stu-info-layout">
+          <image class="stu-avatar" src="../../images/avatar.png"></image>
+          <view class="stu-name">王璐瑶</view>
+          <!-- <view class="stu-xcx">查看详情</view> -->
+        </view>
+      </view>
+
+      <view class="stu-suit">
+        <view class="stu-suit-shu"></view>
+        <view class="stu-suit-head">请假(12人)：</view>
+      </view>
+      <view class="stu-suit">
+        <view class="stu-info-layout">
+          <image class="stu-avatar" src="../../images/avatar.png"></image>
+          <view class="stu-name">王璐瑶</view>
+          <view class="stu-xcx">查看详情</view>
+        </view>
+      </view>
+
+      <view class="stu-suit">
+        <view class="stu-suit-shu"></view>
+        <view class="stu-suit-head">旷课(12人)：</view>
+      </view>
+      <view class="stu-suit">
+        <view class="stu-info-layout">
+          <image class="stu-avatar" src="../../images/avatar.png"></image>
+          <view class="stu-name">王璐瑶</view>
+          <!-- <view class="stu-xcx">查看详情</view> -->
+        </view>
+      </view>
+
+      <view class="stu-suit">
+        <view class="stu-suit-shu"></view>
+        <view class="stu-suit-head">离校(12人)：</view>
+      </view>
+      <view class="stu-suit">
+        <view class="stu-info-layout">
+          <image class="stu-avatar" src="../../images/avatar.png"></image>
+          <view class="stu-name">王璐瑶</view>
+          <!-- <view class="stu-xcx">查看详情</view> -->
+        </view>
+      </view>
+
+    </view>
+
+    <view class="mask-tip">
+      <image class="mask-close" src="../../images/close.png"></image>
+      <view class="mask-head">
+        <view class="mask-shu"></view>
+        <view class="mask-title">请假详情</view>
+      </view>
+      <view class="mask-head">
+        <image class="stu-avatar" src="../../images/avatar.png"></image>
+        <view class="stu-name">韩在于</view>
+        <view class="lea-time">请假时间：2019.12.22  </view>
+      </view>
+      <view class="mask-heng"></view>
+      <view class="mask-head">
+        <view class="lea-cour">请假课程：</view>
+        <view class="lea-cour-cont">
+
+
+          <view class="cour-cont">
+            <view class="cour-date">08:00-09:00</view>
+            <view class="cour-name">判断推理第一节</view>
+          </view>
+
+          <view class="cour-cont">
+            <view class="cour-date">08:00-09:00</view>
+            <view class="cour-name">判断推理第一节</view>
+          </view>
+
+
+
+        </view>
+      </view>
+      <view class="lea-for">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</view>
+      <image class="mask-xu" src="../../images/xu.png"></image>
+      <view class="lea-pro">
+        <view class="mask-head">
+          <image class="mask-cir" src="../../images/gc.png"></image>
+          <view class="pro-start">发起</view>
+          <view class="start-time">2019-12-22 15:23:12</view>
+        </view>
+        <image class="pro-img" src="../../images/route.png"></image>
+        <view class="mask-head">
+          <image class="mask-cir" src="../../images/gc.png"></image>
+          <view class="pro-two">教务审核通过</view>
+          <view class="pro-ope">操作人：王晓茹</view>
+          <view class="start-time2">2019-12-22 15:23:12</view>
+        </view>
+        <image class="pro-img" src="../../images/route.png"></image>
+        <view class="mask-head">
+          <image class="mask-cir" src="../../images/gc.png"></image>
+          <view class="pro-end">管理员审核通过</view>
+          <view class="pro-ope">操作人：王晓茹</view>
+          <view class="end-time">2019-12-22 15:23:12</view>
+        </view>
+      </view>
+      
+    </view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</view>

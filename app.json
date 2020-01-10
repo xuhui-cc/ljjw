@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/record/record",
+    "pages/task/task",
+    "pages/my/my",
+    "pages/add_leave/add_leave",
+    "pages/call-roll/call-roll",
+    "pages/t_stuwork/t_stuwork"
+  ],
+"tabBar": {
+  "custom": true,
+  "color": "#7A7E83",
+  "selectedColor": "#3cc51f",
+  "borderStyle": "black",
+  "backgroundColor": "#ffffff",
+  "list": [
+    {
+      "pagePath": "pages/index/index",
+      "text": "课表",
+      "iconPath": "/images/unselectCourse.png",
+      "selectedIconPath": "/images/selectCourse.png"
+    },
+    {
+      "pagePath": "pages/record/record",
+      "text": "成绩",
+      "iconPath": "/images/unselectRecord.png",
+      "selectedIconPath": "/images/selectRecord.png"
+    },
+    {
+      "pagePath": "pages/task/task",
+      "text": "任务",
+      "iconPath": "/images/unselectTask.png",
+      "selectedIconPath": "/images/selectTask.png"
+    },
+    {
+      "pagePath": "pages/my/my",
+      "text": "我的",
+      "iconPath": "/images/unselectMy.png",
+      "selectedIconPath": "/images/selectMy.png"
+    }
+  ]
+},
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

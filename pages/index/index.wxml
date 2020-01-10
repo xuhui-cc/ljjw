@@ -1,0 +1,448 @@
+<view class="container">
+  <view class="nabigation_bar">
+   <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select">请假</text>
+   <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
+   <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
+  </view>
+
+  <!-- 学生角色 -->
+  <view class="student" >
+    <!-- 课表页 -->
+    <view  wx:if="{{type == 2}}">
+      <!-- 课表日历 -->
+      <view class="rili" >
+        <!-- 年月显示切换 -->
+          <view class="date-layout">
+            <text class="year">2020年</text>
+            <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+            <text class="month">1月</text>
+            <image class="next-month" src="../../images/next.png"></image>
+          </view>
+          <view class="heng1"></view>
+          <!-- 课表日历 -->
+          <view class="calendar">
+            <view class="calendar-header">
+              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
+                <text class="ch-item-text">{{item}}</text>
+              </view>
+            </view>
+            <!-- 完整的当月数据 -->
+            <view class="calendar-month" wx:if="{{!calendarfold}}">
+              <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
+                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <text wx:else class="day" class="day">{{item[0]}}</text>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view class="dot" ></view>
+                </view>
+              </view>
+            </view>
+            <!-- 本周数据 -->
+            <view class="calendar-month-week" wx:else>
+                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <text wx:else class="day" >{{item[0]}}</text>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view class="dot" ></view>
+                </view>
+              </view>
+          </view>
+          <!-- 修改年月日 -->
+          <!-- <picker mode="date" value="{{date}}" start="2015-09-01" end="{{nowYear}}-{{nowMonth}}-{{nowDay}}" bindchange="bindDateChange">
+            <view class="picker">
+              当前选择: {{showYear}}-{{showMonth}}-{{showDay}}
+            </view>
+          </picker> -->
+            <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
+
+      </view>
+      <!-- 选择日期的课表 -->
+      <view>
+        <view class="coursetable">
+          <view class="ct-layout">
+            <view class="mask"></view>
+            <view class="c-time">14:00-17:00</view>
+            <view class="shu"></view>
+            <view class="c-name">逻辑推理第三节</view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+    <!-- 课表页结束 -->
+
+    <!-- 考勤页 -->
+    <view  wx:if="{{type == 3}}">
+      <!-- 考勤日历 -->
+      <view class="rili" >
+        <!-- 年月显示切换 -->
+          <view class="date-layout">
+            <text class="year">2020年</text>
+            <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+            <text class="month">1月</text>
+            <image class="next-month" src="../../images/next.png"></image>
+          </view>
+          <view class="heng1"></view>
+          <!-- 课表日历 -->
+          <view class="calendar">
+            <view class="calendar-header">
+              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
+                <text class="ch-item-text">{{item}}</text>
+              </view>
+            </view>
+            <!-- 完整的当月数据 -->
+            <view class="calendar-month" wx:if="{{!calendarfold}}">
+              <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
+                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <text wx:else class="day" class="day">{{item[0]}}</text>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view class="dot" ></view>
+                </view>
+              </view>
+            </view>
+            <!-- 本周数据 -->
+            <view class="calendar-month-week" wx:else>
+                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <text wx:else class="day" >{{item[0]}}</text>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view class="dot" ></view>
+                </view>
+              </view>
+          </view>
+            <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
+      </view>
+    
+      <view class="stu-class">西安国考集训营逻辑班</view>
+
+      <!-- 选择日期考情表 -->
+      <view>
+        <view class="work">
+          <view class="ct-layout">
+            <view class="c-time">14:00-17:00</view>
+            <view class="shu"></view>
+            <view class="c-name">逻辑推理第三节</view>
+            <image class="state-img" src="../../images/yes.png"></image>
+            <!-- <text class="state" style="color:rgba(70,161,251,1);">请假</text> -->
+            <!-- <text class="state" style="color:rgba(255,142,67,1);">迟到</text> -->
+          </view>
+        </view>
+      
+      </view>
+    
+    
+    
+
+
+    </view>
+    <!-- 考勤页结束 -->
+
+    <!-- 请假页 -->
+    <view wx:if="{{type == 1}}">
+
+      <view class="leave-layout">
+        <view class="leave-state">
+          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
+        </view>
+      </view>
+
+      <view wx:if="{{aud == 0}}" >
+        <view class="leave-layout2">
+          <view class="leave">
+            <text class="lea-time">请假时间：2019.12.22</text>
+            <text class="lea-course">请假课程：08:00-09:00  判断推理第一节</text>
+            <text class="lea-for">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</text>
+            <view class="heng2"></view>
+            <view class="step">
+              <image class="gc" src="../../images/gc.png"></image>
+              <text class="lea-sta">发起</text>
+              <text class="apply-time">2019.12.22 15:23:12</text>
+            </view>
+            <image class="route" src="../../images/route.png"></image>
+            <view class="step">
+              <image class="gc1" src="../../images/gc.png"></image>
+              <text class="lea-sta1">教务审核通过</text>
+              <text class="apply-time1">2019.12.22 15:23:12</text>
+            </view>
+            <text class="operator">操作人：王晓茹</text>
+          </view>
+        </view>
+
+        <!-- 新建 -->
+          <view class="add-btn">
+            <image class="add-img" src="../../images/add.png"></image>
+            <text class="add-new">新建</text>
+          </view>
+
+    
+      </view>
+
+      <view wx:if="{{aud == 1}}">
+        <view class="leave-layout2">
+          <view class="auded-leave">
+            <text class="lea-time">请假时间：2019.12.22</text>
+            <text class="lea-course">请假课程：08:00-09:00  判断推理第一节</text>
+            <text class="lea-for">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</text>
+            <image class="xuheng" src="../../images/xu.png"></image>
+            <view class="unfold-btn"> 
+              <image class="unfold-img" src="../../images/xsj.png"></image>
+              <text class="unfold-font">展开</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 新建 -->
+        <view class="add-btn">
+          <image class="add-img" src="../../images/add.png"></image>
+          <text class="add-new">新建</text>
+        </view>
+      
+      
+        <!-- 已审核最大 -->
+      </view>
+    
+
+      <!--  请假最大 -->
+    </view>  
+    <!-- xs -->
+  </view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</view>

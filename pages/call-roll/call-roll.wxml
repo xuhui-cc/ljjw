@@ -1,0 +1,115 @@
+<!-- container -->
+<view class="container">
+
+  <view class="mask" hidden="true"></view>
+  <view class="popup" hidden="true">
+    <image class="popup-close" src="../../images/close.png"></image>
+    <view class="popup_cont-layout">
+      <view>
+        <view class="popup-cont">到课</view>
+        <view class="popup-heng"></view>
+      </view>
+      <view>
+        <view class="popup-cont">到课</view>
+        <view class="popup-heng"></view>
+      </view>
+      
+    </view>
+    
+  </view>
+  <!-- 点名课程班级信息 -->
+  <view class="t-cour-info">
+    <view class="t-info">
+      <image class="t-avatar" src="../../images/avatar.png"></image>
+      <text class="t-name">王凌霄</text>
+    </view>
+    <view class="t-cour-shu"></view>
+    <view class="cour-info">
+      <view class="cour-info-display">
+        <view class="cour-timetitle">时间</view>
+        <view class="cour-time">下午</view>
+        <view class="cour-placetitle">教室</view>
+        <view class="cour-time">301</view>
+      </view>
+      <view class="cour-info-display">
+        <view class="cour-nametitle">课程</view>
+        <view class="cour-name">判断推理第一节</view>
+      </view>
+      <view class="cour-info-display">
+        <view class="cour-nametitle">班级</view>
+        <view class="cour-name">西安国考集训营逻辑班</view>
+      </view>
+    </view>
+  </view>
+  <!-- 点名课程班级信息结束 -->
+
+
+<!-- 点名学生信息 -->
+  <view class="stu">
+    <!-- 已标注 -->
+    <view class="stu-info-head">
+      <view class="stu-info-shu"></view>
+      <view class="stu-info-headtitle">已标注</view>
+    </view>
+    <view class="stu-info-layout">
+      <view class="stu-info">
+        <image class="stu-avatar" src="../../images/avatar.png"></image>
+        <view class="syu-name">王璐瑶</view>
+        <!-- 请假状态图 -->
+        <image class="stu-situ-img1" src="../../images/yes.png"></image>
+        <!-- <image class="stu-situ-img2" src="../../images/leave.png"></image>
+        <image class="stu-situ-img2" src="../../images/leaved.png"></image>
+        <image class="stu-situ-img2" src="../../images/belate.png"></image>
+        <image class="stu-situ-img2" src="../../images/truancy.png"></image> -->
+
+      </view>
+      <view class="stu-info-fgshu"></view>
+    </view>
+    <!-- 已标注结束 -->
+    
+    <!-- 未标注 -->
+    <view class="stu-info-head">
+      <view class="stu-info-shu"></view>
+      <view class="stu-info-headtitle">未标注</view>
+    </view>
+    <view class="stu-info-layout">
+      <view class="stu-info">
+        <image class="stu-avatar" src="../../images/avatar.png"></image>
+        <view class="syu-name">王璐瑶</view>
+        <!-- 请假状态图 -->
+        <image class="stu-situ-img1" src="../../images/yes.png"></image>
+        <!-- <image class="stu-situ-img2" src="../../images/leave.png"></image>
+        <image class="stu-situ-img2" src="../../images/leaved.png"></image>
+        <image class="stu-situ-img2" src="../../images/belate.png"></image>
+        <image class="stu-situ-img2" src="../../images/truancy.png"></image> -->
+
+      </view>
+    </view>
+    <!-- 未标注结束 -->
+    
+
+    
+    
+    
+    
+    
+    
+  </view>
+  <!-- 点名学生信息结束 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</view>
+<!-- container结束 -->

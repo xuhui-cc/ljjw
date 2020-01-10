@@ -1,0 +1,1015 @@
+page{
+  background: rgba(251,251,252,1)
+}
+.mask-layout{
+  position: absolute;
+  display: block;
+  width:750rpx;
+  height:1624rpx;
+  background:rgba(0,0,0,1);
+  opacity:0.54;
+  z-index: 200;
+}
+.reject-layout{
+  position: absolute;
+  margin-top: 487rpx;
+  margin-left: 86rpx;
+  width:578rpx;
+  height:659rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+  z-index: 210;
+}
+.reject-close{
+  margin-top: 21rpx;
+  margin-left: 518rpx;
+  width:36rpx;
+  height:36rpx;
+}
+.reject-head{
+  display: flex;
+}
+.reject-shu{
+  margin-left: 44rpx;
+  margin-top: 5rpx;
+  width:5rpx;
+  height:13rpx;
+  background:rgba(45,193,160,1);
+  opacity:1;
+  border-radius:224rpx;
+}
+.reject-title{
+  margin-left: 14rpx;
+  margin-top: -13rpx;
+  width:120rpx;
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:42rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.reject-cont-lay{
+  margin-left: 43rpx;
+  margin-top: 25rpx;
+  width:492rpx;
+  height:357rpx;
+  background:rgba(246,246,246,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.reject-for{
+  margin-left: 27rpx;
+  padding-top: 24rpx;
+  width:440rpx;
+  height:300rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:28rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.reject-sub{
+  margin-left: 134rpx;
+  padding-top: 55rpx;
+  width:311rpx;
+  height:80rpx;
+  font-size:32px;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:80rpx;
+  text-align: center;
+  color:rgba(255,255,255,1);
+  background:rgba(222,222,222,1);
+  opacity:1;
+  border-radius:49rpx;
+}
+.nabigation_bar{
+  position: fixed;
+  width:750rpx;
+  height:176rpx;
+  background:linear-gradient(90deg,rgba(20,203,162,1) 0%,rgba(111,238,209,1) 100%);
+  opacity:1;
+  display: flex;
+  z-index: 100;
+}
+.menu{
+  margin-top: 108rpx;
+  margin-left: 49rpx;
+  margin-bottom: 16rpx;
+  width:68rpx;
+  height:48rpx;
+  font-size:34rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:48rpx;
+  color:rgba(211,246,238,1);
+  opacity:1;
+}
+.menu1{
+  margin-top: 106rpx;
+  margin-left: 49rpx;
+  width:76rpx;
+  height:53rx;
+  font-size:38rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:53rpx;
+  color:rgba(255,255,255,1);
+  opacity:1;
+}
+.rili{
+  background-color: #FFFFFF
+}
+.role{
+  margin-top: 186rpx;
+}
+.date-layout{
+  display: flex;
+}
+.last-month{
+  margin-left: 452rpx;
+  margin-top: 30rpx;
+  width: 18.71rpx;
+  height: 18.71rpx;
+}
+.month{
+  margin-left: 10rpx;
+  margin-top: 17rpx;
+}
+.next-month{
+  margin-left: 10rpx;
+  margin-top: 30rpx;
+  width: 18.71rpx;
+  height: 18.71rpx;
+}
+.year{
+  margin-left: 30rpx;
+  margin-top: 17rpx;
+  width:108rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:45rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.heng1{
+  margin-top: 16rpx;
+  margin-bottom: 26rpx;
+  width:750rpx;
+  height:0rpx;
+  border:1rpx solid rgba(241,241,241,1);
+  opacity:1;
+}
+.xl{
+  margin-left: 697rpx;
+  margin-top: 3rpx;
+  margin-bottom: 22rpx;
+  width:22.63rpx;
+  height:22.63rpx;
+}
+.calendar-header{
+  display: flex;
+  justify-content: center;
+  color: #C5C5C5;
+}
+.ch-week{
+  flex: 1;
+  text-align: center;
+  margin-bottom: 26rpx;
+}
+.ch-item-text{
+  display: inline-block;
+  width:44rpx;
+  height:30rpx;
+  font-size:22rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:30rpx;
+  color:rgba(197,197,197,1);
+  opacity:1;
+  /* background-color: #159F5C; */
+}
+.calendar-month-week{
+  display: flex;
+  position: relative;
+  height: 90rpx;
+}
+.cm-week-day{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+ 
+}
+.cm-week-day-circle{
+
+  width: 109rpx;
+  height:48rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:48rpx;
+  color:#FF9853;
+  background:rgba(242,250,255,1);
+  opacity:1;
+  text-align: center;
+
+}
+.day{
+  width:109rpx;
+  height:48rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:48rpx;
+  color:rgba(39,39,39,1);
+  background:rgba(242,250,255,1);
+  opacity:1;
+}
+.today{
+  position: absolute;
+  margin-top: -8rpx;
+  width:52rpx;
+  height:52rpx;
+  z-index: 100;
+}
+.dot{
+  margin-top: 7rpx;
+  width:8rpx;
+  height:8rpx;
+  background:rgba(70,191,106,1);
+  border-radius:50%;
+  opacity:1;
+}
+.ct-layout{
+  display: flex;
+  margin-left: 30rpx;
+  margin-top: 16rpx;
+  width:690rpx;
+  height:157rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.c-time{
+  margin-left: 22rpx;
+  margin-top: 59rpx;
+  width:160rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:37rpx;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.shu{
+  margin-left: 20rpx;
+  margin-top: 69rpx;
+  width:0rpx;
+  height:21rpx;
+  border:1rpx solid rgba(180,180,180,1);
+  opacity:1;
+}
+.c-name{
+  margin-left: 18rpx;
+  margin-top: 56rpx;
+  width:224rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:45rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.mask{
+  position: absolute;
+  width:690rpx;
+  height:157rpx;
+  background:#FFFFFF;
+  opacity:0.64;
+  border-radius:14rpx;
+}
+.state{
+  margin-left: 149rpx;
+  margin-top: 54rpx;
+  width:72rpx;
+  height:50rpx;
+  font-size:36rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:50rpx;
+  opacity:1;
+}
+.state-img{
+  margin-left: 168rpx;
+  margin-top: 71rpx;
+  width:34.72rpx;
+  height:25.65rpx;
+}
+.stu-class{
+  margin-left: 35rpx;
+  margin-top: 23rpx;
+  margin-bottom: 22rpx;
+  width:280rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.leave-layout{
+  position: fixed;
+  padding-top: -220rpx;
+  /* margin-bottom: 70rpx; */
+  z-index: 5;
+}
+.leave-state{
+  width:750rpx;
+  height:88rpx;
+  line-height: 88rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+}
+.aud{
+  margin-left: 163rpx;
+  margin-right: 70rpx;
+  width:96rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  line-height:45rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.aud.active{
+  position: relative;
+  margin-left: 163rpx;
+  margin-right: 70rpx;
+  width:96rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:45rpx;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.aud.active::after{
+  content: ""; 
+  display: block; 
+  height: 4rpx; 
+  width: 30%; 
+  background: rgba(45,193,160,1);
+  position: absolute;  
+  top:65rpx;
+  left: 35.5rpx; 
+}
+.leave-layout2{
+  position: absolute; 
+  margin-top: 80rpx;
+  margin-bottom: 250rpx;
+}
+.leave{
+  margin-left: 30rpx;
+  margin-bottom: 20rpx;
+  width:690rpx;
+  height:491rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.lea-time{
+  display: block;
+  padding-left: 30rpx;
+  padding-top: 26rpx;
+  
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.lea-course{
+  display: block;
+  padding-left: 28rpx;
+  padding-top: 24rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.lea-for{
+  display: block;
+  padding-left: 28rpx;
+  padding-top: 22rpx;
+  width:624rpx;
+  height:74rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.heng2{
+  margin-left: 28rpx;
+  margin-top: 30rpx;
+  width:640rpx;
+  height:0rpx;
+  border:1rpx solid rgba(241,241,241,1);
+  opacity:1;
+}
+.step{
+  display: flex
+}
+.gc{
+  margin-left: 28rpx;
+  margin-top: 39rpx;
+  width:14rpx;
+  height:14rpx;
+}
+.lea-sta{
+  margin-left: 12rpx;
+  margin-top: 26rpx;
+  width:56rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.apply-time{
+  margin-left: 315rpx;
+  margin-top: 30rpx;
+  
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.route{
+  margin-top: -10rpx;
+  margin-left: 34rpx;
+  width:3rpx;
+  height:90rpx;
+}
+.gc1{
+  margin-left: 28rpx;
+  margin-top: -10rpx;
+  width:14rpx;
+  height:14rpx;
+}
+.lea-sta1{
+  margin-left: 12rpx;
+  margin-top: -22rpx;
+  width:168rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  color:rgba(70,191,106,1);
+  opacity:1;
+}
+.apply-time1{
+  margin-left: 203rpx;
+  margin-top: -22rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.operator{
+  display: block;
+  margin-left: 54rpx;
+  
+  width:168rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.add-btn{
+  margin-left: 30rpx;
+  margin-top: 1255rpx;
+  position: fixed;
+  width:690rpx;
+  height:90rpx;
+  background:rgba(45,193,160,1);
+  opacity:1;
+  border-radius:49rpx;
+}
+.add-img{
+  margin-left: 289rpx;
+  margin-top: 31rpx;
+  width: 27rpx;
+  height: 27rpx;
+}
+.add-new{
+  margin-left: 18rpx;
+  width:64rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:45rpx;
+  color:rgba(255,255,255,1);
+  opacity:1;
+}
+.auded-leave{
+  margin-left: 30rpx;
+  width:690rpx;
+  height:316rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.xuheng{
+  position: absolute;
+  margin-left: 28rpx;
+  margin-top: 30rpx;
+  width:640rpx;
+  height:1rpx;
+
+}
+.unfold-btn{
+  display: flex;
+  position: absolute;
+  margin-top: 30rpx;
+  width:690rpx;
+  height:64rpx;
+}
+.unfold-img{
+  margin-left: 291rpx;
+  margin-top: 20rpx;
+  width:23rpx;
+  height:23rpx;
+}
+.unfold-font{
+  display: block;
+  margin-left: 17rpx;
+  margin-top: 20rpx;
+  width:48rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.t-courtab-layout{
+  margin-left: 30rpx;
+  margin-top: 16rpx;
+  width:690rpx;
+  height:223rpx;
+  
+  opacity:1;
+  border-radius:10rpx;
+}
+.t-info-layout{
+  display: flex;
+}
+.t-avatar{
+  margin-left: 34rpx;
+  margin-top: 16rpx;
+  width:50rpx;
+  height:50rpx;
+}
+.t-name{
+  margin-left: 13rpx;
+  margin-top: 21rpx;
+  width:168rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.t-class{
+  margin-left: 128rpx;
+  margin-top: 24rpx;
+  width:260rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(158,158,158,1);
+  opacity:0.46;
+}
+.t-courtab-heng{
+  margin-left: 34rpx;
+  margin-top: 13rpx;
+  width:626rpx;
+  height:0rpx;
+  border:1rpx solid rgba(241,241,241,1);
+  opacity:1;
+}
+.t-cour-timetitle{
+  margin-left: 34rpx;
+  margin-top: 26rpx;
+  width:52rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(171,171,171,1);
+  opacity:1;
+}
+.t-cour-time{
+  margin-left: 16rpx;
+  margin-top: 26rpx;
+  width:52rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.t-cour-placetitle{
+  margin-left: 45rpx;
+  margin-top: 26rpx;
+  width:52rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(171,171,171,1);
+  opacity:1;
+}
+.t-cour-place{
+  margin-left: 19rpx;
+  margin-top: 26rpx;
+  width:52rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.t-cour-name{
+  margin-left: 16rpx;
+  margin-top: 26rpx;
+  width:182rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.t-call-layout{
+  position: absolute;
+  display: flex;
+  margin-left: 545rpx;
+  margin-top: 135rpx;
+}
+.t-call{
+  width:96rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  text-align: center;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.t-call-img{
+  margin-top: 9rpx;
+  width:19rpx;
+  height:19rpx;
+}
+.hm-lea-layout{
+  position: absolute;
+  margin-top: 80rpx;
+  width:750rpx;
+  opacity:1;
+}
+.lea-layout{
+  width:750rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+}
+.hm-info{
+  display: flex;
+}
+.hm-name{
+  margin-left: 30rpx;
+  margin-top: 25rpx;
+  width:104rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  text-align: left;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.hm-class{
+  margin-left: 330rpx;
+  margin-top: 25rpx;
+  width:260rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:24rpx;
+  text-align: right;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-heng{
+  margin-top: 25rpx;
+  width:750rpx;
+  height:0px;
+  border:1rpx solid rgba(241,241,241,1);
+  opacity:1;
+}
+.hm-lea-date{
+  margin-left: 31rpx;
+  margin-top: 28rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.hm-lea-courinfo{
+  display: flex;
+}
+.hm-cour-head{
+  margin-left: 32rpx;
+  margin-top: 24rpx;
+  width:284rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-t-ava{
+  margin-left: 34rpx;
+  margin-top: 22rpx;
+  width:42rpx;
+  height:42rpx;
+}
+.hm-t-name{
+  margin-left: 10rpx;
+  margin-top: 24rpx;
+  width:130rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-lea-courinfo-lay{
+  display: flex;
+  flex-direction: column;
+}
+.hm-cour-name{
+  margin-left: 156rpx;
+  margin-top: 10rpx;
+  width:182rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-lea-for{
+  margin-left: 31rpx;
+  margin-top: 22rpx;
+  width:680rpx;
+  height:74rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-xu{
+  margin-left: 30rpx;
+  margin-top: 30rpx;
+  width:691rpx;
+  height:2rpx;
+}
+.hm-pro{
+  display: flex;
+}
+.hm-pro-btn{
+  display: flex;
+  padding-bottom: 67rpx;
+}
+.hm-pro-img{
+  margin-left: 31rpx;
+  margin-top: 39rpx;
+  width:14rpx;
+  height:14rpx;
+}
+.hm-pro-start{
+  margin-left: 12rpx;
+  margin-top: 26rpx;
+  width:196rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.hm-pro-time{
+  margin-left: 363rpx;
+  margin-top: 30rpx;
+  width:244rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-pass{
+  margin-left: 45rpx;
+  margin-top: 66rpx;
+  width:311rpx;
+  height:80rpx;
+  background:rgba(45,193,160,1);
+  border:2rpx solid rgba(45,193,160,1);
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:80rpx;
+  text-align: center;
+  color:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:49rpx;
+}
+.hm-reject{
+  margin-left: 39rpx;
+  margin-top: 66rpx;
+  width:311rpx;
+  height:80rpx;
+  background:rgba(222,222,222,1);
+  border:2rpx solid rgba(222,222,222,1);
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:80rpx;
+  text-align: center;
+  color:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:49rpx;
+}
+.hm-aud-stat{
+  margin-left: 27rpx;
+  margin-top: 16rpx;
+  width:168rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:40rpx;
+  color:rgba(70,161,251,1);
+  opacity:1;
+}
+.hm-lea-aud-layout{
+  position: absolute;
+  display: block;
+  margin-top: 80rpx;
+  margin-left: 30rpx;
+  width:690rpx;
+}
+.hm-aud-class{
+  margin-left: 270rpx;
+  margin-top: 25rpx;
+  width:260rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:24rpx;
+  text-align: right;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.lea-aud-layout{
+  width:690rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.hm-aud-lea-for{
+  margin-left: 31rpx;
+  margin-top: 22rpx;
+  width:635rpx;
+  height:74rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-aud-pro-time{
+  margin-left: 146rpx;
+  margin-top: 30rpx;
+  width:244rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.hm-aud-pro{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 80rpx;
+}
+.hm-route-xu{
+  margin-left: 36rpx;
+  margin-top: -10rpx;
+  width:2rpx;
+  height:90rpx;
+}
+.hm-aud-xu{
+  margin-left: 30rpx;
+  margin-top: 30rpx;
+  width:640rpx;
+  height:2rpx;
+}
+.hm-aud-heng{
+  margin-left: 33rpx;
+  margin-top: 25rpx;
+  width:626rpx;
+  height:0px;
+  border:1rpx solid rgba(241,241,241,1);
+  opacity:1;
+}
+.hm-pro-two{
+  display: flex;
+  margin-top: -50rpx;
+}
+.hm-pro-start2{
+  margin-left: 12rpx;
+  margin-top: 26rpx;
+  width:196rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  color:rgba(70,191,106,1);
+  opacity:1;
+}
