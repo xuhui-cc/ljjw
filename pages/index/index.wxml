@@ -337,7 +337,7 @@
   <!-- 老师角色结束 -->
 
   <!-- 教务角色 -->
-  <view wx:if="{{role == 3}}">
+  <view wx:if="{{role == 2}}">
     <view wx:if="{{type == 1}}">
       <view class="leave-layout">
         <view class="leave-state">
@@ -402,7 +402,11 @@
               <view class="hm-t-name">哈哈哈哈</view>
               <view class="hm-taud-class">西安国考集训营逻辑班</view>
             </view>
-            <view class="hm-aud-tip">待管理员审核</view>
+            <view class="hm-flex-fold">
+              <view class="hm-aud-tip">待管理员审核</view>
+              <image class="hm-aud-unfold" src="../../images/xsj.png"></image>
+            </view>
+            <view hidden="true">
             <view class="hm-un-heng"></view>
             <!-- 多请假时间循环 -->
             <view>
@@ -447,10 +451,140 @@
         </view>
         <!-- 教务审核，做循环 -->
       </view>
+      </view>
 
 
     </view>
   </view>
+  <!-- 教务角色结束 -->
+
+  <!-- 管理员角色 -->
+  <view wx:if="{{role == 3}}">
+    <view wx:if="{{type == 1}}">
+      <view class="leave-layout">
+        <view class="leave-state">
+          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
+        </view>
+      </view>
+
+
+      <view wx:if="{{aud == 0 }}" >
+        <!-- 管理员未审核，做循环 -->
+        <view class="hm-unaud-for">
+          <!-- 单个未审核样式 -->
+          <view class="hm-unaud-layout">
+            <view class="hm-flex">
+              <view class="hm-t-name">哈哈哈哈</view>
+              <view class="hm-t-class">西安国考集训营逻辑班</view>
+            </view>
+            <view class="hm-un-heng"></view>
+            <!-- 多请假时间循环 -->
+            <view>
+              <view class="hm-un-leadate">请假时间：2019.12.22  </view>
+              <!-- 一天请多届课循环 -->
+              <view>
+                <view class="hm-flex">
+                  <view class="hm-un-leacour">请假课程：08:00-09:00</view>
+                  <image class="hm-un-tava" src="../../images/avatar.png"></image>
+                  <view class="hm-un-tname">高文娇和老师</view>
+                </view>
+                <view class="hm-un-cour">判断推理第一节</view>
+              </view>
+              <!-- 一天请多届课循环结束 -->
+            </view>
+            <!-- 多请假时间循环结束 -->
+            <view class="hm-un-leafor">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</view>
+            <image class="hm-un-xu" src="../../images/xu.png"></image>
+            <view class="hm-flex">
+              <image class="hm-pro-start" src="../../images/gc.png"></image>
+              <view class="hm-pro-starttitle">发起</view>
+              <view class="hm-pro-date">2019.12.22 15:23:12</view>
+            </view>
+            <image class="hm-route-xu" src="../../images/route.png"></image>
+              <view class="hm-pro-two">
+                <image class="hm-pro-start" src="../../images/gc.png"></image>
+                <view class="hm-pro-start2">教务审核通过</view>
+                <view class="hm-aud-pro-time">2019.12.22 15:23:12</view>
+              </view>
+            <view class="hm-flex">
+              <view class="hm-un-pass">通过</view>
+              <view class="hm-un-rejest">驳回</view>
+            </view>
+
+
+
+          </view>
+        <!-- 单个未审核样式 -->
+      
+        </view>
+        <!-- 管理员未审核，做循环 -->
+      </view>
+
+      <view wx:if="{{aud == 1 }}" >
+        <!-- 管理员审核，做循环 -->
+        <view class="hm-unaud-for">
+          <!-- 单个审核样式 -->
+          <view class="hm-aud-layout">
+            <view class="hm-flex">
+              <view class="hm-t-name">哈哈哈哈</view>
+              <view class="hm-taud-class">西安国考集训营逻辑班</view>
+            </view>
+            <view class="hm-flex-fold">
+              <view class="hm-aud-tip">待管理员审核</view>
+              <image class="hm-aud-unfold" src="../../images/xsj.png"></image>
+            </view>
+            <view hidden="true">
+            <view class="hm-un-heng"></view>
+            <!-- 多请假时间循环 -->
+            <view>
+              <view class="hm-un-leadate">请假时间：2019.12.22  </view>
+              <!-- 一天请多届课循环 -->
+              <view>
+                <view class="hm-flex">
+                  <view class="hm-un-leacour">请假课程：08:00-09:00</view>
+                  <image class="hm-un-tava" src="../../images/avatar.png"></image>
+                  <view class="hm-un-tname">高文娇和老师</view>
+                </view>
+                <view class="hm-un-cour">判断推理第一节</view>
+              </view>
+              <!-- 一天请多届课循环结束 -->
+            </view>
+            <!-- 多请假时间循环结束 -->
+            <view class="hm-unaud-leafor">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</view>
+            <image class="hm-un-xu" src="../../images/xu.png"></image>
+            <view class="hm-route">
+              <view class="hm-flex">
+                <image class="hm-pro-start" src="../../images/gc.png"></image>
+                <view class="hm-pro-starttitle">发起</view>
+                <view class="hm-audpro-date">2019.12.22 15:23:12</view>
+              </view>
+              <image class="hm-route-xu" src="../../images/route.png"></image>
+            <view class="hm-pro-two">
+                <image class="hm-pro-start" src="../../images/gc.png"></image>
+                <view class="hm-pro-start2">教务审核通过</view>
+                <view class="hm-aud-pro-time">2019.12.22 15:23:12</view>
+              </view>
+              <image class="hm-route-xu" src="../../images/route.png"></image>
+              <view class="hm-pro-two">
+                <image class="hm-pro-start" src="../../images/gc.png"></image>
+                <view class="hm-pro-start2">管理员审核通过</view>
+                <view class="hm-aud-pro-time">2019.12.22 15:23:12</view>
+              </view>
+            </view>
+
+          </view>
+        <!-- 单个审核样式 -->
+      
+        </view>
+        <!-- 教务审核，做循环 -->
+      </view>
+      </view>
+
+
+    </view>
+  </view>
+  <!-- 管理员角色结束 -->
   
 
 

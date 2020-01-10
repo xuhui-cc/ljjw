@@ -1387,3 +1387,14 @@ page{
 .hm-route{
   padding-bottom: 80rpx;
 }
+.hm-aud-unfold{
+  margin-left: 440rpx;
+  margin-top: 27rpx;
+  width:18rpx;
+  height:18rpx;
+
+}
+.hm-flex-fold{
+  display: flex;
+  padding-bottom: 25rpx;
+}
