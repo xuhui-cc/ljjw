@@ -4,9 +4,9 @@ const app = getApp()
 
 Page({
   data: {
-    type: 2,
+    type: 1,
     aud: 1,
-    role: 1,
+    role: 3,
     week: ["周日", '周一', '周二', '周三', '周四', '周五', '周六'],
     //当前显示的年
     showYear: null,
