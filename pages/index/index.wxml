@@ -1,12 +1,12 @@
 <view class="container">
   <view class="nabigation_bar">
-   <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select">请假</text>
+   <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
    <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
    <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
   </view>
 
   <!-- 学生角色 -->
-  <view class="student" >
+  <view class="student" wx:if="{{role == 0}}">
     <!-- 课表页 -->
     <view  wx:if="{{type == 2}}">
       <!-- 课表日历 -->
@@ -56,6 +56,7 @@
             <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
 
       </view>
+      <!-- 日历结束 -->
       <!-- 选择日期的课表 -->
       <view>
         <view class="coursetable">
@@ -148,7 +149,7 @@
         </view>
       </view>
 
-      <view wx:if="{{aud == 0}}" >
+       <view wx:if="{{aud == 0}}" >
         <view class="leave-layout2">
           <view class="leave">
             <text class="lea-time">请假时间：2019.12.22</text>
@@ -202,12 +203,126 @@
       
         <!-- 已审核最大 -->
       </view>
+
+     
     
 
       <!--  请假最大 -->
     </view>  
     <!-- xs -->
   </view>
+  <!-- 学生角色结束 -->
+
+  <!-- 老师角色 -->
+  <view wx:else="">
+
+    <!-- 课表 -->
+
+    <!-- 公用日历 -->
+    <view>
+      <!-- 课表日历 -->
+      <view class="rili">
+        <!-- 年月显示切换 -->
+          <view class="date-layout">
+            <text class="year">2020年</text>
+            <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+            <text class="month">1月</text>
+            <image class="next-month" src="../../images/next.png"></image>
+          </view>
+          <view class="heng1"></view>
+          <!-- 课表日历 -->
+          <view class="calendar">
+            <view class="calendar-header">
+              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
+                <text class="ch-item-text">{{item}}</text>
+              </view>
+            </view>
+            <!-- 完整的当月数据 -->
+            <view class="calendar-month" wx:if="{{!calendarfold}}">
+              <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
+                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <text wx:else class="day" class="day">{{item[0]}}</text>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view class="dot" ></view>
+                </view>
+              </view>
+            </view>
+            <!-- 本周数据 -->
+            <view class="calendar-month-week" wx:else>
+                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <text wx:else class="day" >{{item[0]}}</text>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view class="dot" ></view>
+                </view>
+              </view>
+          </view>
+            <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
+
+      </view>
+      <!-- 日历结束 -->
+    </view>
+    <!-- 公用日历结束 -->
+
+    <!-- 老师点名 -->
+    <view wx:if="{{type == 2}}">
+      <view class="t-cour-layout">
+        <view class="t-call-lay">
+          <view class="t-call">去点名</view>
+          <image class="t-call-img" src="../../images/gjt.png"></image>
+        </view>
+        <view class="t-info">
+          <image class="t-ava" src="../../images/avatar.png"></image>
+          <view class="t-name">老师：哈哈哈哈</view>
+          <view class="t-class">西安国考集训营逻辑班</view>
+        </view>
+        <view class="t-cour-heng"></view>
+        <view class="t-info">
+          <view class="t-cour-date">时间</view>
+          <view class="t-cour-time">下午</view>
+          <view class="t-cour-date">教室</view>
+          <view class="t-cour-time">301</view>
+        </view>
+        <view class="t-info">
+          <view class="t-cour-cour">课程</view>
+          <view class="t-cour-name">判断推理第一节</view>
+        </view>
+      </view>
+    </view>
+    <!-- 老师点名结束 -->
+
+    <!-- 老师考勤 -->
+    <view wx:if="{{type == 3}}">
+      <view class="t-cour-layout">
+        <view class="t-call-lay">
+          <view class="t-call">查看考勤</view>
+          <image class="t-call-img" src="../../images/gjt.png"></image>
+        </view>
+        <view class="t-info">
+          <image class="t-ava" src="../../images/avatar.png"></image>
+          <view class="t-name">老师：哈哈哈哈</view>
+          <view class="t-class">西安国考集训营逻辑班</view>
+        </view>
+        <view class="t-cour-heng"></view>
+        <view class="t-info">
+          <view class="t-cour-date">时间</view>
+          <view class="t-cour-time">下午</view>
+          <view class="t-cour-date">教室</view>
+          <view class="t-cour-time">301</view>
+        </view>
+        <view class="t-info">
+          <view class="t-cour-cour">课程</view>
+          <view class="t-cour-name">判断推理第一节</view>
+        </view>
+      </view>
+    </view>
+    <!-- 老师考勤结束 -->
+
+
+  
+  </view>
+  <!-- 老师角色结束 -->
 
 
 
