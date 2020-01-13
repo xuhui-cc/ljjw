@@ -1,2 +1,37 @@
-<!--pages/record/record.wxml-->
-<text>pages/record/record.wxml</text>
+<view class="container">
+    <!-- 导航栏 -->
+  <view class="nabigation_bar">
+    <view class="bar-class">西安国考集训营逻辑班</view>
+    <image class="bar-img" src="../../images/wxsj.png"></image>
+  </view>
+  <!-- 导航栏结束 -->
+
+  <!-- 学生角色 -->
+  <view class="stu-rec" wx:if="{{role == 0}}">
+
+    <view class="rec-layout">
+      <view class="rec-flex">
+        <view class="rec-title">判断推理第三次测试</view>
+        <view class="rec-date">2019.12.22</view>
+        <view class="rec-more">更多</view>
+        <image class="rec-more-img" src="../../images/next.png"></image>
+      </view>
+      <view class="rec-flex">
+        <view class="rec-total">总分：</view>
+        <view class="rec-total-num">118</view>
+        <view class="rec-rank">排名：</view>
+        <view class="rec-rank-num">103</view>
+      </view>
+
+    </view>
+  </view>
+  <!-- 学生角色结束 -->
+
+
+
+
+
+
+
+</view>
+<!-- container -->

@@ -7,7 +7,7 @@
       <view class="reject-shu"></view>
       <view class="reject-title">驳回原因</view>
     </view>
-    <view class="reject-cont-lay">
+    <view class="reject-cont-lay">o
       <textarea class="reject-for" placeholder="请填写您的驳回原因…"></textarea>
     </view>
     <view class="reject-sub">确定</view>

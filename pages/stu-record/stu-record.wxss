@@ -1,0 +1,122 @@
+page{
+  background: rgba(251,251,252,1)
+}
+.record-bar{
+  display: flex;
+  width:750rpx;
+  height:88rpx;
+  background:rgba(255,255,255,1);
+}
+.aud{
+  margin-left: 151rpx;
+  margin-right: -23rpx;
+  margin-top: 22rpx;
+  width:64rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:45rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.aud.active{
+  position: relative;
+  margin-left: 151rpx;
+  margin-right: -23rpx;
+  margin-top: 22rpx;
+  width:64rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:45rpx;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.aud.active::after{
+  content: ""; 
+  display: block; 
+  height: 4rpx; 
+  width: 30%; 
+  background: rgba(45,193,160,1);
+  position: absolute;  
+  top:65rpx;
+  left: 22rpx; 
+}
+.rec-total-layout{
+  display: flex;
+  margin-top: 17rpx;
+  width:750rpx;
+  height:144rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+}
+.rec-total{
+  margin-left: 113rpx;
+  margin-top: 64rpx;
+  width:78rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.rec-total-num{
+  margin-top: 29rpx;
+  width:116rpx;
+  height:90rpx;
+  font-size:64rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:90rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.rec-rank{
+  margin-left: 130rpx;
+  margin-top: 64rpx;
+  width:78rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.analyse-layout{
+  margin-left: 30rpx;
+  margin-top: 17rpx;
+  width:690rpx;
+  height:521rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.stu-rec-flex{
+  display: flex;
+}
+.shu{
+  margin-left: 30rpx;
+  margin-top: 39rpx;
+  width:5rpx;
+  height:13rpx;
+  background:rgba(45,193,160,1);
+  opacity:1;
+  border-radius:224rpx;
+}
+.analyse-title{
+  margin-left: 13rpx;
+  margin-top: 24rpx;
+  width:210rpx;
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:42rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}

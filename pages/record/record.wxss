@@ -1,1 +1,135 @@
-/* pages/record/record.wxss */
+page{
+  background: rgba(251,251,252,1)
+}
+.nabigation_bar{
+  position: fixed;
+  width:750rpx;
+  height:176rpx;
+  background:linear-gradient(90deg,rgba(20,203,162,1) 0%,rgba(111,238,209,1) 100%);
+  opacity:1;
+  display: flex;
+  z-index: 100;
+}
+.bar-class{
+  margin-left: 30rpx;
+  margin-top: 108rpx;
+  width:340rpx;
+  height:48rpx;
+  font-size:34rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:48rpx;
+  color:rgba(255,255,255,1);
+  opacity:1;
+}
+.bar-img{
+  margin-left: 20rpx;
+  margin-top: 117rpx;
+  width:24rpx;
+  height:24rpx;
+}
+.stu-rec{
+  margin-top: 176rpx;
+}
+.rec-layout{
+  margin-left: 30rpx;
+  margin-top: 16rpx;
+  width:690rpx;
+  height:241rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.rec-flex{
+  display: flex;
+}
+.rec-title{
+  margin-left: 31rpx;
+  margin-top: 27rpx;
+  width:364rpx;
+  height:80rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:40rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.rec-date{
+  margin-left: 44rpx;
+  margin-top: 31rpx;
+  width:128rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.rec-more{
+  margin-left: 28rpx;
+  margin-top: 31rpx;
+  width:48rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.rec-more-img{
+  margin-left: 3rpx;
+  margin-top: 38rpx;
+  width:18rpx;
+  height:18rpx;
+}
+.rec-total{
+  margin-left: 100rpx;
+  margin-top: 30rpx;
+  width:78rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.rec-total-num{
+  
+  margin-top: -5rpx;
+  width:116rpx;
+  height:90rpx;
+  font-size:64rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:90rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.rec-rank{
+  margin-left: 113rpx;
+  margin-top: 30rpx;
+  width:78rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.rec-rank-num{
+  
+  margin-top: -5rpx;
+  width:116rpx;
+  height:90rpx;
+  font-size:64rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:90rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}

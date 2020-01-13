@@ -1,21 +1,24 @@
-// pages/record/record.js
+// pages/stu-record/stu-record.js
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    type: 1,
-    aud: 1,
-    role: 0,  //role：0 -学生；1 -老师；2 -教务；3 -管理员
+    aud: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that = this
+    
   },
+
+
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -28,17 +31,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+
+  },
+
+  aud_select: function (e) {
     let that = this
-    if (typeof that.getTabBar === 'function' &&
-      that.getTabBar()) {
-      console.log('record_onshow')
-      that.getTabBar().setData({
-        selected: 1
-      })
-    }
-    else {
-      console.log('未执行')
-    }
+    var aud = e.currentTarget.dataset.aud
+    that.setData({
+      aud: aud
+    })
   },
 
   /**

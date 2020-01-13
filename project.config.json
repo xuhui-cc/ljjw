@@ -64,6 +64,20 @@
 					"id": -1,
 					"name": "pages/t_stuwork/t_stuwork",
 					"pathName": "pages/t_stuwork/t_stuwork",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/record/record",
+					"pathName": "pages/record/record",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/stu-record/stu-record",
+					"pathName": "pages/stu-record/stu-record",
 					"scene": null
 				}
 			]
