@@ -78,6 +78,20 @@
 					"id": -1,
 					"name": "pages/stu-record/stu-record",
 					"pathName": "pages/stu-record/stu-record",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tea-record/tea-record",
+					"pathName": "pages/tea-record/tea-record",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/my/my",
+					"pathName": "pages/my/my",
 					"scene": null
 				}
 			]

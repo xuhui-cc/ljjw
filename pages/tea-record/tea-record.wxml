@@ -1,0 +1,165 @@
+<view class="container">
+
+  <!-- 成绩分类显示菜单栏 -->
+  <view class="record-bar">
+    <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">总分</text>
+    <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">行测</text>
+    <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">申论</text>
+  </view>
+  <!-- 成绩分类显示菜单栏 -->
+
+  <!-- 冠亚季 -->
+  <view class="champ-layout">
+
+    <view class="flex">
+      <view class="champ-rank">
+        <image class="second-img" src="../../images/second.png"></image>
+        <image class="runner-up-ava" src="../../images/avatar.png"></image>
+        <view class="runner-up-name">张帆</view>
+        <view class="runner-up-record">175</view>
+      </view>
+
+      <view class="champ-rank">
+        <image class="first-img" src="../../images/first.png"></image>
+        <image class="champion-ava" src="../../images/avatar.png"></image>
+        <view class="champion-name">张帆</view>
+        <view class="champion-record">175</view>
+      </view>
+
+      <view class="champ-rank">
+        <image class="third-img" src="../../images/third.png"></image>
+        <image class="third-ava" src="../../images/avatar.png"></image>
+        <view class="third-name">张帆</view>
+        <view class="third-record">175</view>
+      </view>
+    </view>
+
+  
+    <view >
+      <view class="record-detail-heng"></view>
+      <view wx:if="{{aud == 1}}">
+
+        <view class="flex">
+          <view class="kemu">科目</view>
+          <view class="bingo">答对题目</view>
+          <view class="bingo">分值</view>
+        </view>
+
+        <view class="rec-for">
+          <view class="flex">
+            <view class="kemu-name">科目名称</view>
+            <view class="bingo-num">25</view>
+            <view class="record">22.5</view>
+          </view>
+        </view>
+
+      </view>
+
+      <view wx:if="{{aud == 0}}">
+
+        <view class="flex">
+          <view class="s-kemu">科目</view>
+          <view class="s-bingo">分值</view>
+        </view>
+
+        <view class="rec-for">
+          <view class="flex">
+            <view class="s-kemu-name">科目</view>
+            <view class="s-record">22.5</view>
+          </view>
+        </view>
+        
+      </view>
+
+      <view wx:if="{{aud == 2}}">
+
+      <view class="flex">
+        <view class="s-kemu">科目</view>
+        <view class="s-bingo">分值</view>
+      </view>
+
+      <view class="rec-for">
+        <view class="flex">
+          <view class="s-kemu-name">科目</view>
+          <view class="s-record">22.5</view>
+        </view>
+      </view>
+        
+    </view>
+
+    </view>
+
+  </view>
+  <!-- 冠亚季 -->
+
+
+  <!-- 排名往后 -->
+  <view class="rank-layout">
+    <view class="flex">
+      <view class="rank-num">4</view>
+      <image class="rank-ava" src="../../images/avatar.png"></image>
+      <view class="rank-name">哈哈哈哈</view>
+      <view class="rank-record">162</view>
+      <image class="rank-xl" src="../../images/xsj.png"></image>
+    </view>
+    <view class="rank-heng"></view>
+    <view wx:if="{{aud == 1}}">
+
+      <view class="flex">
+        <view class="kemu">科目</view>
+        <view class="bingo">答对题目</view>
+        <view class="bingo">分值</view>
+      </view>
+
+      <view class="rec-for">
+        <view class="flex">
+          <view class="kemu-name">科目名称</view>
+          <view class="bingo-num">25</view>
+          <view class="record">22.5</view>
+        </view>
+      </view>
+
+    </view>
+
+    <view wx:if="{{aud == 0}}">
+
+      <view class="flex">
+        <view class="s-kemu">科目</view>
+        <view class="s-bingo">分值</view>
+      </view>
+
+      <view class="rec-for">
+        <view class="flex">
+          <view class="s-kemu-name">科目</view>
+          <view class="s-record">22.5</view>
+        </view>
+      </view>
+        
+    </view>
+
+    <view wx:if="{{aud == 2}}">
+
+      <view class="flex">
+        <view class="s-kemu">科目</view>
+        <view class="s-bingo">分值</view>
+      </view>
+
+      <view class="rec-for">
+        <view class="flex">
+          <view class="s-kemu-name">科目</view>
+          <view class="s-record">22.5</view>
+        </view>
+      </view>
+        
+    </view>
+  
+  </view>
+  <!-- 排名往后 -->
+
+
+
+
+
+
+<!-- container -->
+</view>

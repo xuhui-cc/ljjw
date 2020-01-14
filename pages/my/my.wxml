@@ -1,2 +1,108 @@
-<!--pages/my/my.wxml-->
-<text>pages/my/my.wxml</text>
+<view class="container">
+
+  <view class="nabigation_bar">
+    <text class="my-head">我的</text> 
+  </view>
+
+    <!-- 学生 -->
+  <view wx:if="{{role == 0}}">
+
+    <view class="my-info">
+      <image class="my-ava" src="../../images/avatar.png"></image>
+
+      <view class="state-layout">
+        <view class="my-name">JUGK-2333</view>
+        <view class="flex">
+          <view class="my-state">请完成您的基础信息</view>
+          <image class="to-add" src="../../images/next.png"></image>
+        </view>
+      </view>
+
+      <view class="flex">
+        <view class="change-state">修改信息</view>
+        <image class="to-change" src="../../images/next.png"></image>
+      </view>
+    
+    </view>
+
+
+    <view class="collect-layout">
+      <view class="shu"></view>
+      <view class="my-collect">我的收藏</view>
+      <image class="to-collect" src="../../images/next.png"></image>
+    </view>
+
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="my-collect">班级资料</view>
+      <image class="search-img" src="../../images/search.png"></image>
+      <view class="search">搜索</view>
+      <view class="class-name">西安国考集训营逻辑班</view>
+      <image class="class-xl" src="../../images/xsj.png"></image>
+    </view>
+
+    <view >
+      <view class="data-layout">
+        <view class="flex">
+          <view class="data-tea">来自：王芳慧和老师</view>
+          <view class="data-date">2019.10.25  20:05</view>
+          <image class="class-uncollect" src="../../images/uncollect.png"></image>
+          <view class="data-collect">未收藏</view>
+        </view>
+
+        <view class="data-heng"></view>
+
+        <view class="flex">
+          <image class="pdf" src="../../images/pdf.png"></image>
+          <view>
+            <view class="data-name">申论必考热点.pdf</view>
+            <view class="data-intro">重点考点汇总，希望同学们可以仔细阅读</view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+
+  </view>
+  <!-- 学生 -->
+
+  <view wx:else="{{}}">
+
+    <view class="my-info">
+      <image class="my-ava" src="../../images/avatar.png"></image>
+
+      <view class="state-layout">
+        <view class="my-name">JUGK-2333</view>
+
+        <view class="flex">
+          <image class="role-img" src="../../images/tea.png"></image>
+          <view class="role-name">老师</view>
+        </view>
+
+      </view>
+    </view>
+
+    <view class="class-data">
+      <image class="img" src="../../images/class_data.png"></image>
+      <view class="tea-shu" style="background:rgba(128,183,255,1);"></view>
+      <view class="tea-cla-data">班级资料</view>
+      <image class="img-next" src="../../images/next.png"></image>
+    </view>
+
+    <view class="class-data">
+      <image class="img" src="../../images/stu_data.png"></image>
+      <view class="tea-shu" style="background:rgba(255,168,72,1);"></view>
+      <view class="tea-cla-data">学生档案</view>
+      <image class="img-next" src="../../images/next.png"></image>
+    </view>
+
+
+
+
+
+  </view>
+
+
+
+<!-- container -->
+</view>

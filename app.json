@@ -7,6 +7,7 @@
     "pages/add_leave/add_leave",
     "pages/call-roll/call-roll",
     "pages/stu-record/stu-record",
+    "pages/tea-record/tea-record",
     "pages/t_stuwork/t_stuwork"
   ],
 "tabBar": {
@@ -44,7 +45,7 @@
 },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#14CBA2",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },

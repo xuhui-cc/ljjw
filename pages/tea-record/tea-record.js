@@ -1,11 +1,11 @@
-// pages/my/my.js
+// pages/tea-record/tea-record.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    role:1,
+      aud:0,
   },
 
   /**
@@ -13,6 +13,14 @@ Page({
    */
   onLoad: function (options) {
 
+  },
+
+  aud_select: function (e) {
+    let that = this
+    var aud = e.currentTarget.dataset.aud
+    that.setData({
+      aud: aud
+    })
   },
 
   /**
@@ -26,16 +34,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      console.log('my_onshow')
-      this.getTabBar().setData({
-        selected: 3
-      })
-    }
-    else {
-      console.log('未执行')
-    }
+
   },
 
   /**

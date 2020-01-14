@@ -140,7 +140,6 @@
     <view class="xc-single-rec">
       <view class="stu-rec-flex">
         <view class="s-kemu">科目</view>
-        
         <view class="s-bingo">分值</view>
       </view>
 
