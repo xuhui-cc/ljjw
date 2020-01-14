@@ -1,12 +1,11 @@
 // pages/stu-record/stu-record.js
-
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    aud: 0,
+    aud: 2,
   },
 
   /**
@@ -16,8 +15,6 @@ Page({
     let that = this
     
   },
-
-
 
 
   /**

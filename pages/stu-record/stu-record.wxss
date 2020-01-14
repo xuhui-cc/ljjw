@@ -45,12 +45,59 @@ page{
   left: 22rpx; 
 }
 .rec-total-layout{
-  display: flex;
+  
   margin-top: 17rpx;
   width:750rpx;
-  height:144rpx;
+  
   background:rgba(255,255,255,1);
   opacity:1;
+}
+.total-layout{
+  display: flex;
+  padding-bottom: 25rpx;
+}
+.ana-layout{
+  margin-top: 41rpx;
+  padding-bottom: 41rpx;
+}
+.up-down-title{
+  margin-left: 78rpx;
+  padding-bottom: 16rpx;
+  width:78rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.up-down-cont{
+  
+  width:338rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.up-down-num{
+  
+  width:60rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.total-xu{
+  margin-left: 30rpx;
+  width: 690rpx; 
+  height: 2rpx; 
 }
 .rec-total{
   margin-left: 113rpx;
@@ -117,6 +164,137 @@ page{
   font-family:PingFang SC;
   font-weight:bold;
   line-height:42rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.rec-up{
+  margin-left: 5rpx;
+  margin-top: 64rpx;
+  width:17rpx;
+  height:33rpx;
+}
+.xc-single-rec{
+  margin-left: 30rpx;
+  margin-top: 15rpx;
+  width:690rpx;
+  
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.rec-for{
+  
+  padding-bottom: 40rpx;
+}
+.kemu{
+  margin-left: 104rpx;
+  margin-top: 35rpx;
+  margin-bottom: 27rpx;
+  width:56rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:30rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.bingo{
+  margin-left: 129rpx;
+  margin-top: 35rpx;
+  width:112rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:30rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.kemu-name{
+  margin-left: 80rpx;
+  margin-bottom: 16rpx;
+  width:104rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.bingo-num{
+  margin-left: 146rpx;
+  margin-bottom: 16rpx;
+  width:31rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.record{
+  margin-left: 171rpx;
+  margin-bottom: 16rpx;
+  width:54rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  text-align: center;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.s-kemu{
+  margin-left: 196rpx;
+  margin-top: 35rpx;
+  margin-bottom: 27rpx;
+  width:56rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:30rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.s-bingo{
+  margin-left: 197rpx;
+  margin-top: 35rpx;
+  width:112rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:30rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.s-kemu-name{
+  margin-left: 185rpx;
+  margin-bottom: 16rpx;
+  width:78rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.s-record{
+  margin-left: 199rpx;
+  margin-bottom: 16rpx;
+  width:54rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }

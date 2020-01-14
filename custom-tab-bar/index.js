@@ -26,6 +26,22 @@ Component({
     }]
   },
   attached() {
+    // let that = this
+
+
+    // that.setData({
+    //   list: [{
+    //     pagePath: "/pages/index/index",
+    //     iconPath: "/images/unselectCourse.png",
+    //     selectedIconPath: "/images/selectCourse.png",
+    //     text: "课表"
+    //   },  {
+    //     pagePath: "/pages/my/my",
+    //     iconPath: "/images/unselectMy.png",
+    //     selectedIconPath: "/images/selectMy.png",
+    //     text: "我的"
+    //   }]
+    // })
   },
   methods: {
     switchTab(e) {

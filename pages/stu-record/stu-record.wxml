@@ -12,12 +12,30 @@
   <view wx:if="{{aud == 0}}">
 
     <view class="rec-total-layout">
-      <view class="rec-total">总分：</view>
-      <view class="rec-total-num">118</view>
-      <view class="rec-rank">排名：</view>
-      <view class="rec-total-num">103</view>
+      <view class="total-layout">
+        <view class="rec-total">总分：</view>
+        <view class="rec-total-num">118</view>
+        <image class="rec-up" src="../../images/up.png"></image>
+        <view class="rec-rank">排名：</view>
+        <view class="rec-total-num">103</view>
+        <image class="rec-up" src="../../images/down.png"></image>
+      </view>
+      <image class="total-xu" src="../../images/xu.png"></image>
+      <view class="ana-layout">
+        <view class="stu-rec-flex">
+          <view class="up-down-title">总分：</view>
+          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view class="up-down-num">12分</view>
+        </view>
+        <view class="stu-rec-flex">
+          <view class="up-down-title">总分：</view>
+          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view class="up-down-num">12分</view>
+        </view>
+      </view>
+        
     </view>
-
+  
     <view class="analyse-layout">
       <view class="stu-rec-flex">
         <view class="shu"></view>
@@ -32,5 +50,122 @@
   </view>
   <!-- 总分 -->
 
+  <!-- 行测 -->
+  <view wx:if="{{aud == 1}}">
+
+    <view class="rec-total-layout">
+      <view class="total-layout">
+        <view class="rec-total">总分：</view>
+        <view class="rec-total-num">118</view>
+        <image class="rec-up" src="../../images/up.png"></image>
+        <view class="rec-rank">排名：</view>
+        <view class="rec-total-num">103</view>
+        <image class="rec-up" src="../../images/down.png"></image>
+      </view>
+      <image class="total-xu" src="../../images/xu.png"></image>
+      <view class="ana-layout">
+        <view class="stu-rec-flex">
+          <view class="up-down-title">总分：</view>
+          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view class="up-down-num">12分</view>
+        </view>
+        <view class="stu-rec-flex">
+          <view class="up-down-title">总分：</view>
+          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view class="up-down-num">12分</view>
+        </view>
+      </view>
+        
+    </view>
+
+    <view class="xc-single-rec">
+      <view class="stu-rec-flex">
+        <view class="kemu">科目</view>
+        <view class="bingo">答对题目</view>
+        <view class="bingo">分值</view>
+      </view>
+
+      <view class="rec-for">
+        <view class="stu-rec-flex">
+          <view class="kemu-name">科目名称</view>
+          <view class="bingo-num">25</view>
+          <view class="record">22.5</view>
+        </view>
+      </view>
+    
+    </view >
+  
+    <view class="analyse-layout">
+      <view class="stu-rec-flex">
+        <view class="shu"></view>
+        <view class="analyse-title">模考总分折线图</view>
+      
+      </view>
+    
+     
+    
+    </view>
+  
+  </view>
+  <!-- 行测 -->
+
+  <!-- 申论 -->
+  <view wx:if="{{aud == 2}}">
+
+    <view class="rec-total-layout">
+      <view class="total-layout">
+        <view class="rec-total">总分：</view>
+        <view class="rec-total-num">118</view>
+        <image class="rec-up" src="../../images/up.png"></image>
+        <view class="rec-rank">排名：</view>
+        <view class="rec-total-num">103</view>
+        <image class="rec-up" src="../../images/down.png"></image>
+      </view>
+      <image class="total-xu" src="../../images/xu.png"></image>
+      <view class="ana-layout">
+        <view class="stu-rec-flex">
+          <view class="up-down-title">总分：</view>
+          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view class="up-down-num">12分</view>
+        </view>
+        <view class="stu-rec-flex">
+          <view class="up-down-title">总分：</view>
+          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view class="up-down-num">12分</view>
+        </view>
+      </view>
+        
+    </view>
+
+    <view class="xc-single-rec">
+      <view class="stu-rec-flex">
+        <view class="s-kemu">科目</view>
+        
+        <view class="s-bingo">分值</view>
+      </view>
+
+      <view class="rec-for">
+        <view class="stu-rec-flex">
+          <view class="s-kemu-name">科目名</view>
+        
+          <view class="s-record">22.5</view>
+        </view>
+      </view>
+    
+    </view>
+  
+    <view class="analyse-layout">
+      <view class="stu-rec-flex">
+        <view class="shu"></view>
+        <view class="analyse-title">模考总分折线图</view>
+      
+      </view>
+    
+     
+    
+    </view>
+  
+  </view>
+  <!-- 申论 -->
 
 </view>
