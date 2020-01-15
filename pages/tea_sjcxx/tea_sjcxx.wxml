@@ -1,0 +1,22 @@
+<view class="container">
+
+  <view class="layout">
+    <view class="flex">
+      <image class="ava" src="../../images/avatar.png"></image>
+      <view class="name">哈哈哈哈</view>
+      <image class="jf" src="../../images/jf.png"></image>
+    
+    </view>
+  
+  
+  
+  
+  </view>
+
+
+
+
+
+
+<!-- container -->
+</view>

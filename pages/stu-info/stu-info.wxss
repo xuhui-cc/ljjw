@@ -1,0 +1,52 @@
+page{
+  background: rgba(251,251,252,1)
+}
+.flex{
+  display: flex;
+  margin-top: 16rpx;
+  width:750rpx;
+  height:90rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+}
+.shu{
+  margin-left: 32rpx;
+  margin-top: 39rpx;
+  width:5rpx;
+  height:13rpx;
+  background:rgba(45,193,160,1);
+  opacity:1;
+  border-radius:224rpx;
+}
+.info-tltle{
+  margin-left: 11rpx;
+  margin-top: 24rpx;
+  width:120rpx;
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:42rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.tip{
+  margin-left: 160rpx;
+  margin-top: 25rpx;
+  
+  width:358rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  text-align: right;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.select{
+  margin-left: 13rpx;
+  margin-top: 36rpx;
+  width:18rpx;
+  height:18rpx;
+}

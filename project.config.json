@@ -92,6 +92,41 @@
 					"id": -1,
 					"name": "pages/my/my",
 					"pathName": "pages/my/my",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/stu-info/stu-info",
+					"pathName": "pages/stu-info/stu-info",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/class_data/class_data",
+					"pathName": "pages/class_data/class_data",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tea_data/tea_data",
+					"pathName": "pages/tea_data/tea_data",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tea_sinfo/tea_sinfo",
+					"pathName": "pages/tea_sinfo/tea_sinfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tea_sjcxx/tea_sjcxx",
+					"pathName": "pages/tea_sjcxx/tea_sjcxx",
 					"scene": null
 				}
 			]

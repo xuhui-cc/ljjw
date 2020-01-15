@@ -1,0 +1,78 @@
+<view class="container">
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">我的头像</view>
+    <view class="tip">请选择</view>
+    <image class="select" src="../../images/next.png"></image>
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">姓名</view>
+    <input class="tip" placeholder="请填写"></input>
+    <!-- <image class="select" src="../../images/next.png"></image> -->
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">电话</view>
+    <input class="tip" placeholder="请填写"></input>
+    <!-- <image class="select" src="../../images/next.png"></image> -->
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">性别</view>
+    <view class="tip">请选择</view>
+    <image class="select" src="../../images/next.png"></image>
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">毕业院校</view>
+    <view class="tip">请填写</view>
+    <!-- <image class="select" src="../../images/next.png"></image> -->
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">毕业时间</view>
+    <view class="tip">请选择</view>
+    <image class="select" src="../../images/next.png"></image>
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">专业</view>
+    <input class="tip" placeholder="请填写"></input>
+    <!-- <image class="select" src="../../images/next.png"></image> -->
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">邮箱</view>
+    <input class="tip" placeholder="请填写"></input>
+    <!-- <image class="select" src="../../images/next.png"></image> -->
+  </view>
+
+  <view class="flex">
+    <view class="shu"></view>
+    <view class="info-tltle">班级</view>
+    <view class="tip">请选择</view>
+    <image class="select" src="../../images/next.png"></image>
+  </view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- container -->
+</view>

@@ -1,0 +1,58 @@
+<view class="container">
+
+  <view class="flex">
+    <view class="search-layout">
+      <image class="search-img" src="../../images/search_w.png"></image>
+      <input class="search-input" placeholder="请输入资料标题"></input>
+    </view>
+    
+  </view>
+
+ 
+
+  <!-- 清晰搜索 -->
+  <view>
+
+    <view>
+      <view class="pub-date">2019.10.25  20:05</view>
+      <view class="data-layout">
+        <view class="flex">
+          <view class="data-tea">来自：王芳慧和老师</view>
+        </view>
+        <view class="data-heng"></view>
+        <view class="flex">
+          <image class="pdf" src="../../images/pdf.png"></image>
+          <view>
+            <view class="data-name">申论必考热点.pdf</view>
+            <view class="data-intro">重点考点汇总，希望同学们可以仔细阅读</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view>
+      <view class="pub-date">2019.10.25  20:05</view>
+      <view class="data-layout">
+        <view class="flex">
+          <view class="data-tea">来自：王芳慧和老师</view>
+        </view>
+        <view class="data-heng"></view>
+        <view class="flex">
+          <image class="pdf" src="../../images/pdf.png"></image>
+          <view>
+            <view class="data-name">申论必考热点.pdf</view>
+            <view class="data-intro">重点考点汇总，希望同学们可以仔细阅读</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+  </view>
+  <!-- 清晰搜索 -->
+
+
+
+
+
+</view>
+

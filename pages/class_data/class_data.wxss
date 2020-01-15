@@ -1,0 +1,157 @@
+page{
+  background: rgba(251,251,252,1)
+}
+.flex{
+  display: flex;
+}
+.search-layout{
+  margin-left: 30rpx;
+  margin-top:30rpx;
+  display: flex;
+  width:594rpx;
+  height:74rpx;
+  background:rgba(242,243,247,1);
+  opacity:1;
+  border-radius:35rpx;
+}
+.search-img{
+  margin-left: 31rpx;
+  margin-top:22rpx;
+  width:29rpx;
+  height:30rpx;
+}
+.search-input{
+  margin-left: 17rpx;
+  margin-top:19rpx;
+  width:450rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:50rpx;
+
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.cancel{
+  margin-left: 35rpx;
+  margin-top:46rpx;
+  width:60rpx;
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:50rpx;
+  color:rgba(139,139,139,1);
+  opacity:1;
+}
+.search-title{
+  margin-left: 30rpx;
+  margin-top:25rpx;
+  width:670rpx;
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:42rpx;
+  color:rgba(58,58,58,1);
+  opacity:1;
+}
+.heng{
+  margin-left: 30rpx;
+  margin-top:24rpx;
+  width:691rpx;
+  height:0rpx;
+  border:1rpx solid rgba(241,241,241,1);
+  opacity:1;
+}
+
+.data-layout{
+  margin-left: 30rpx;
+  margin-top: 29rpx;
+  width:690rpx;
+  height:261rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.data-tea{
+  margin-left: 30rpx;
+  margin-top: 25rpx;
+  width:240rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:37rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.data-date{
+  margin-left: 75rpx;
+  margin-top: 28rpx;
+  width:200rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:24rpx;
+  color:rgba(217,217,217,1);
+  opacity:1;
+}
+.class-uncollect{
+  margin-left: 17rpx;
+  margin-top: 28rpx;
+  width:25rpx;
+  height:25rpx;
+}
+.data-collect{
+  margin-left: 8rpx;
+  margin-top: 25rpx;
+  width:72rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.data-heng{
+  margin-left: 30rpx;
+  margin-top: 25rpx;
+  width:636rpx;
+  height:0rpx;
+  border:1rpx solid rgba(226,226,226,1);
+  opacity:0.4;
+}
+.pdf{
+  margin-left: 29rpx;
+  margin-top: 31rpx;
+  width:91rpx;
+  height:112rpx;
+}
+.data-name{
+  margin-left: 33rpx;
+  margin-top: 42rpx;
+  width:300rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:45rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.data-intro{
+  margin-left: 34rpx;
+  margin-top: 9rpx;
+  width:468rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:24rpx;
+  color:rgba(148,144,144,1);
+  opacity:1;
+}

@@ -8,6 +8,11 @@
     "pages/call-roll/call-roll",
     "pages/stu-record/stu-record",
     "pages/tea-record/tea-record",
+    "pages/stu-info/stu-info",
+    "pages/class_data/class_data",
+    "pages/tea_data/tea_data",
+    "pages/tea_sinfo/tea_sinfo",
+    "pages/tea_sjcxx/tea_sjcxx",
     "pages/t_stuwork/t_stuwork"
   ],
 "tabBar": {

@@ -1,0 +1,31 @@
+page{
+  background: rgba(251,251,252,1)
+}
+.layout{
+  width:750rpx;
+  height:835rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+}
+.flex{
+  display: flex;
+}
+.ava{
+  margin-left: 50rpx;
+  margin-top: 44rpx;
+  width:115rpx;
+  height:115rpx;
+}
+
+.name{
+  margin-left: 30rpx;
+  margin-top: 79rpx;
+  width:128rpx;
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:45rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
