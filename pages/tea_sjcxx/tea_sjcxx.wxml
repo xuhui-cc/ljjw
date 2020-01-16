@@ -5,7 +5,38 @@
       <image class="ava" src="../../images/avatar.png"></image>
       <view class="name">哈哈哈哈</view>
       <image class="jf" src="../../images/jf.png"></image>
-    
+      <image class="jf" src="../../images/wjf.png"></image>
+    </view>
+    <view class="heng"></view>
+    <view class="flex">
+      <image class="byyx-img" src="../../images/byyx.png"></image>
+      <view class="byyx">毕业院校</view>
+      <view class="byyx-cont">渭南师范学院</view>
+    </view>
+    <view class="flex">
+      <image class="byyx-img" src="../../images/bysj.png"></image>
+      <view class="byyx">毕业时间</view>
+      <view class="byyx-cont">2019.07</view>
+    </view>
+    <view class="flex">
+      <image class="byyx-img" src="../../images/zhuanye.png"></image>
+      <view class="byyx">专业</view>
+      <view class="byyx-cont">高中数学</view>
+    </view>
+    <view class="flex">
+      <image class="byyx-img" src="../../images/banji.png"></image>
+      <view class="byyx">班级</view>
+      <view class="byyx-cont">西安国考集训营逻辑班</view>
+    </view>
+    <view class="flex">
+      <image class="byyx-img" src="../../images/zxsj.png"></image>
+      <view class="byyx">在校时间</view>
+      <view class="byyx-cont">2019.11.26 - 2019.12.30</view>
+    </view>
+    <view class="flex">
+      <image class="byyx-img" src="../../images/scls.png"></image>
+      <view class="byyx">市场老师</view>
+      <view class="byyx-cont">张嘉佳</view>
     </view>
   
   

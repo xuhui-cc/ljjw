@@ -127,6 +127,20 @@
 					"id": -1,
 					"name": "pages/tea_sjcxx/tea_sjcxx",
 					"pathName": "pages/tea_sjcxx/tea_sjcxx",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tea_xsda/tea_xsda",
+					"pathName": "pages/tea_xsda/tea_xsda",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/task/task",
+					"pathName": "pages/task/task",
 					"scene": null
 				}
 			]

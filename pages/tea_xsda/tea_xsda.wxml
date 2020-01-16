@@ -1,0 +1,152 @@
+<view class="container">
+
+    <!-- 成绩分类显示菜单栏 -->
+  <view class="record-bar">
+    <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">学情</text>
+    <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">概况</text>
+    <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">成绩</text>
+  </view>
+  <!-- 成绩分类显示菜单栏 -->
+
+  <!-- 学情 -->
+  <view wx:if="{{aud == 0}}" class="xq">
+
+    <view class="flex">
+      <view class="kemu">申论</view>
+      <image class="select" src="../../images/next.png"></image>
+    </view>
+
+    <view class="cont-layout">
+
+      <view>
+        <image class="xu" src="../../images/route2.png"></image>
+        <view class="flex">
+          <image class="dot" src="../../images/gc.png"></image>
+          <view class="date">2019.12.23  09:30</view>
+        </view>
+        <view class="flex">
+          <image class="ava" src="../../images/avatar.png"></image>
+          <view class="name">哈哈哈哈老师</view>
+        </view>
+        <view class="xqfx">学情分析：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
+      </view>
+      <view>
+        <image class="xu" src="../../images/route2.png"></image>
+        <view class="flex">
+          <image class="dot" src="../../images/gc.png"></image>
+          <view class="date">2019.12.23  09:30</view>
+        </view>
+        <view class="flex">
+          <image class="ava" src="../../images/avatar.png"></image>
+          <view class="name">哈哈哈哈老师</view>
+        </view>
+        <view class="xqfx">学情分析：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
+      </view>
+    
+    </view>
+
+    <view class="add">
+        <image class="add-img" src="../../images/add.png"></image>
+        <view class="xj">新建</view>
+    </view>
+
+  </view>
+  <!-- 学情结束 -->
+
+
+  <!-- 概况 -->
+  <view wx:if="{{aud == 1}}" class="xq">
+    <view class="cont-layout">
+
+      <view>
+        <image class="xu" src="../../images/route2.png"></image>
+        <view class="flex">
+          <image class="dot" src="../../images/gc.png"></image>
+          <view class="date">2019.12.23  09:30</view>
+        </view>
+        <view class="flex">
+          <image class="ava" src="../../images/avatar.png"></image>
+          <view class="name">哈哈哈哈老师</view>
+        </view>
+        <view class="xqfx">学生概况：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
+      </view>
+      <view>
+        <image class="xu" src="../../images/route2.png"></image>
+        <view class="flex">
+          <image class="dot" src="../../images/gc.png"></image>
+          <view class="date">2019.12.23  09:30</view>
+        </view>
+        <view class="flex">
+          <image class="ava" src="../../images/avatar.png"></image>
+          <view class="name">哈哈哈哈老师</view>
+        </view>
+        <view class="xqfx">学生概况：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
+      </view>
+    
+    </view>
+
+    <view class="add">
+      <image class="add-img" src="../../images/add.png"></image>
+      <view class="xj">新建</view>
+    </view>
+
+  </view>
+  <!-- 概况结束 -->
+
+  <!-- 成绩 -->
+  <view wx:if="{{aud == 2}}">
+
+    <view >
+      <view class="rec-layout">
+
+        <view class="flex">
+          <view class="ks-name">西安国考集训营逻辑班</view>
+          <view class="ks-date">2019.12.26  20:16</view>
+        </view>
+        <view class="flex">
+          <view class="bj-name">西安国考集训营逻辑班</view>
+          <image class="xl-img" src="../../images/xsj.png"></image>
+        </view>
+
+        <!-- 下拉展开 -->
+        <view>
+          <view class="flex">
+            <view>
+              <view class="sl-cj">75</view>
+              <view class="km-sl">申论</view>
+            </view>
+            <view>
+              <view class="xc-cj">98</view>
+              <view class="km-xc">行测</view>
+            </view>
+          </view>
+          <view class="rec-heng"></view>
+          <view class="flex">
+            <view class="km-title">科目</view>
+            <view class="ans">答对题目</view>
+            <view class="rec">分值</view>
+          </view>
+          <view class="rec-cont">
+            <view class="flex">
+              <view class="km">常识判断</view>
+              <view class="ans-num">96</view>
+              <view class="rec-num">18.5</view>
+            </view>
+          </view>
+          
+
+
+        </view>
+        <!-- 下拉展开 -->
+        
+      </view>
+    </view>
+  
+  </view>
+  <!-- 成绩结束 -->
+
+
+
+
+<!-- container -->
+</view>

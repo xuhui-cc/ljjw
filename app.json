@@ -13,6 +13,7 @@
     "pages/tea_data/tea_data",
     "pages/tea_sinfo/tea_sinfo",
     "pages/tea_sjcxx/tea_sjcxx",
+    "pages/tea_xsda/tea_xsda",
     "pages/t_stuwork/t_stuwork"
   ],
 "tabBar": {

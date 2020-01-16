@@ -1,11 +1,11 @@
-// pages/task/task.js
+// pages/tea_xsda/tea_xsda.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    role:1,
+    aud : 2,
   },
 
   /**
@@ -26,16 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      console.log('task_onshow')
-      this.getTabBar().setData({
-        selected: 2
-      })
-    }
-    else {
-      console.log('未执行')
-    }
+
   },
 
   /**

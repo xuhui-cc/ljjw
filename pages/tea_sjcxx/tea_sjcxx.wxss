@@ -29,3 +29,48 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
+.jf{
+  position: absolute;
+  margin-left: 570rpx;
+  
+  width:180rpx;
+  height:203rpx;
+}
+.heng{
+  margin-top: 44rpx;
+  width:750rpx;
+  height:0rpx;
+  border:1rpx solid rgba(238,238,238,1);
+  opacity:1;
+}
+.byyx-img{
+  margin-left: 42rpx;
+  margin-top: 63rpx;
+  width: 30rpx;
+  height: 32rpx;
+}
+.byyx{
+  margin-left: 23rpx;
+  margin-top: 58rpx;
+  width:120rpx;
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:49rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.byyx-cont{
+  margin-left: 162rpx;
+  margin-top: 58rpx;
+  width:334rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:49rpx;
+  text-align: right;
+  color:rgba(26,26,26,1);
+  opacity:1;
+}
