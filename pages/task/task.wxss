@@ -199,7 +199,7 @@ page{
 .add_message{
   position: absolute;
   margin-left: 42rpx;
-  margin-top: 70rpx;
+  margin-top: 303rpx;
   width:26rpx;
   height:29rpx;
   z-index: 200;
