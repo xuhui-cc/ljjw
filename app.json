@@ -14,6 +14,7 @@
     "pages/tea_sinfo/tea_sinfo",
     "pages/tea_sjcxx/tea_sjcxx",
     "pages/tea_xsda/tea_xsda",
+    "pages/add_read/add_read",
     "pages/t_stuwork/t_stuwork"
   ],
 "tabBar": {

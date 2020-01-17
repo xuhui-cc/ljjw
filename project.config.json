@@ -141,6 +141,13 @@
 					"id": -1,
 					"name": "pages/task/task",
 					"pathName": "pages/task/task",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/add_read/add_read",
+					"pathName": "pages/add_read/add_read",
 					"scene": null
 				}
 			]
