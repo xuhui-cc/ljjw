@@ -1,2 +1,12 @@
-<!--pages/add_read/add_read.wxml-->
-<text>pages/add_read/add_read.wxml</text>
+<view class="container">
+
+  <textarea class="read-cont" placeholder="点击输入文字……"></textarea>
+
+
+
+
+
+
+
+<!-- container -->
+</view>
