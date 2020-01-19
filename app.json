@@ -7,6 +7,7 @@
     "pages/add_leave/add_leave",
     "pages/call-roll/call-roll",
     "pages/stu-record/stu-record",
+    "pages/stu-task/stu-task",
     "pages/tea-record/tea-record",
     "pages/stu-info/stu-info",
     "pages/class_data/class_data",
@@ -14,6 +15,7 @@
     "pages/tea_sinfo/tea_sinfo",
     "pages/tea_sjcxx/tea_sjcxx",
     "pages/tea_xsda/tea_xsda",
+    "pages/tea-task/tea-task",
     "pages/add_read/add_read",
     "pages/t_stuwork/t_stuwork"
   ],

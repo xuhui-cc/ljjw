@@ -1,6 +1,14 @@
 <view class="container">
 
-  <textarea class="read-cont" placeholder="点击输入文字……"></textarea>
+    <textarea class="read-cont" placeholder="点击输入文字……"></textarea>
+
+  <view class="tjzp">添加照片</view>
+  <view>
+    <image class="del-img" src="../../images/gdel.png"></image>
+    <image class="image-img" src="../../images/image.png"></image>
+    
+  </view>
+  
 
 
 

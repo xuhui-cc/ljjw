@@ -148,6 +148,20 @@
 					"id": -1,
 					"name": "pages/add_read/add_read",
 					"pathName": "pages/add_read/add_read",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/stu-task/stu-task",
+					"pathName": "pages/stu-task/stu-task",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tea-task/tea-task",
+					"pathName": "pages/tea-task/tea-task",
 					"scene": null
 				}
 			]

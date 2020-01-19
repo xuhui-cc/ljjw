@@ -1,0 +1,46 @@
+<view class="container">
+
+
+  <view class="ques-layout">
+    <view >
+      <view class="flex">
+        <view class="ques-ori">来自：徐颖很好老师</view>
+        <view class="ques-date">2019.10.25  20:05</view>
+      </view>
+      <view class="heng"></view>
+      <!-- 问题循环 -->
+      <view>
+        <view class="flex">
+          <view class="ques-title">1. 12月22日是否就餐？</view>
+          <view class="sq">收起</view>
+          <image class="xl-img" src="../../images/xsj.png"></image>
+        </view>
+        
+        <view class="ans-layout">
+          <view class="ques-cont">A.校长不让在校服上别别在校服上别别在校服上别别上别别</view>
+          <view class="ques-cont">A.校长不让在</view>
+          <view class="ques-cont">A.校长不让在</view>
+          <view class="ques-cont">A.校长不让在校服上别别校服上别别</view>
+        </view>
+        
+      </view>
+      <!-- 问题循环 -->
+      <view class="heng"></view>
+    </view>
+
+    <view class="finish">已完成：</view>
+    <view class="finish-man">韩涛、张梦凡、杨园、马梦、马美英、张祥、张嘉佳、韩文
+静、王佳欣</view>
+<view class="unfinish">未完成：</view>
+    <view class="finish-man">韩涛、张梦凡、杨园、马梦、马美英、张祥、张嘉佳、韩文
+静、王佳欣</view>
+
+  
+  
+  
+    
+  </view>
+
+
+  <!-- container -->
+</view>
