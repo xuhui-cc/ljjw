@@ -2,22 +2,24 @@
 
   <!-- 导航栏 -->
   <view class="nabigation_bar">
-    <image wx:if="{{role == 1}}" class="add" src="../../images/add.png"></image>
+    <image wx:if="{{role == 1}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
     <view class="bar-class">西安国考集训营逻辑班</view>
     <image class="bar-img" src="../../images/wxsj.png"></image>
   </view>
   <!-- 导航栏结束 -->
 
+  <view wx:if="{{add}}">
+    <image class="add-kuang" src="../../images/kuang.png"></image>
+    <image class="add_read" src="../../images/add_read.png"></image>
+    <view class="add-read-tltle">创建每日晨读</view>
+    <image class="add_message" src="../../images/add_message.png"></image>
+    <view class="add-message-tltle">创建每日晨读</view>
+  </view>
   
-  <image class="add-kuang" src="../../images/kuang.png"></image>
-  <image class="add_read" src="../../images/add_read.png"></image>
-  <view class="add-read-tltle">创建每日晨读</view>
-  <image class="add_message" src="../../images/add_message.png"></image>
-  <view class="add-message-tltle">创建每日晨读</view>
   
   
 
-  <view class="read-layout">
+  <view class="read-layout" bindtap="to_stu_task">
     <view class="flex">
       <view class="shu"></view>
       <view class="head">每日晨读</view>
@@ -31,7 +33,7 @@
     </view>
   </view>
 
-  <view class="task-layout">
+  <view class="task-layout" bindtap="to_stu_task">
     <view class="flex">
       <view class="shu"></view>
       <view class="head">任务</view>
@@ -43,11 +45,11 @@
     <view class="task-cont">你有一条新任务未做，快去提交吧！</view>
   </view>
 
-  <view class="message-layout">
+  <view class="message-layout" bindtap="to_detail_news">
     <view class="flex">
       <view class="shu"></view>
       <view class="head">消息通知</view>
-      
+       
       <view class="message-date">2019.12.26 09:23</view>
       
     </view>

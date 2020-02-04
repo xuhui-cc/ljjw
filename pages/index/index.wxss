@@ -1,6 +1,9 @@
 page{
   background: rgba(251,251,252,1)
 }
+.container{
+  margin-bottom: 100rpx;
+}
 .mask-layout{
   position: absolute;
   display: block;
@@ -440,6 +443,10 @@ page{
 .step{
   display: flex
 }
+.aud-step{
+  display: flex;
+  margin-top: 22rpx;
+}
 .gc{
   margin-left: 28rpx;
   margin-top: 39rpx;
@@ -485,7 +492,7 @@ page{
 .lea-sta1{
   margin-left: 12rpx;
   margin-top: -22rpx;
-  width:168rpx;
+  width:200rpx;
   height:40rpx;
   font-size:28rpx;
   font-family:PingFang SC;
@@ -495,7 +502,7 @@ page{
   opacity:1;
 }
 .apply-time1{
-  margin-left: 203rpx;
+  margin-left: 169rpx;
   margin-top: -22rpx;
   height:33rpx;
   font-size:24rpx;
@@ -547,30 +554,44 @@ page{
 }
 .auded-leave{
   margin-left: 30rpx;
+  padding-bottom: 25rpx;
   width:690rpx;
-  height:316rpx;
+  /* height:316rpx; */
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:14rpx;
+}
+.auded-result{
+  margin-left: 240rpx;
+  margin-top: 24rpx;
+  width:112rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:40rpx;
+  color:rgba(70,191,106,1);
+  opacity:1;
 }
 .xuheng{
   position: absolute;
   margin-left: 28rpx;
   margin-top: 30rpx;
+  
   width:640rpx;
   height:1rpx;
 
 }
 .unfold-btn{
   display: flex;
-  position: absolute;
+  /* position: absolute; */
   margin-top: 30rpx;
   width:690rpx;
   height:64rpx;
 }
 .unfold-img{
   margin-left: 291rpx;
-  margin-top: 20rpx;
+  margin-top: 28rpx;
   width:23rpx;
   height:23rpx;
 }

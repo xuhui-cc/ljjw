@@ -17,6 +17,8 @@
     "pages/tea_xsda/tea_xsda",
     "pages/tea-task/tea-task",
     "pages/add_read/add_read",
+    "pages/stu-rearch/stu-rearch",
+    "pages/detail-news/detail-news",
     "pages/t_stuwork/t_stuwork"
   ],
 "tabBar": {

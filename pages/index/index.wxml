@@ -143,6 +143,15 @@
             <!-- <text class="state" style="color:rgba(70,161,251,1);">请假</text> -->
             <!-- <text class="state" style="color:rgba(255,142,67,1);">迟到</text> -->
           </view>
+
+          <view class="ct-layout">
+            <view class="c-time">14:00-17:00</view>
+            <view class="shu"></view>
+            <view class="c-name">逻辑推理第三节</view>
+            <!-- <image class="state-img" src="../../images/yes.png"></image> -->
+            <text class="state" style="color:rgba(70,161,251,1);">请假</text>
+            <!-- <text class="state" style="color:rgba(255,142,67,1);">迟到</text> -->
+          </view>
         </view>
       
       </view>
@@ -187,7 +196,7 @@
         </view>
 
         <!-- 新建 -->
-          <view class="add-btn">
+          <view class="add-btn" bindtap="stu_add_leave">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
@@ -198,19 +207,51 @@
       <view wx:if="{{aud == 1}}">
         <view class="leave-layout2">
           <view class="auded-leave">
-            <text class="lea-time">请假时间：2019.12.22</text>
+            <view class="hm-flex">
+              <text class="lea-time">请假时间：2019.12.22</text>
+              <text class="auded-result">审核通过</text>
+            </view>
+            
             <text class="lea-course">请假课程：08:00-09:00  判断推理第一节</text>
             <text class="lea-for">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</text>
             <image class="xuheng" src="../../images/xu.png"></image>
-            <view class="unfold-btn"> 
-              <image class="unfold-img" src="../../images/xsj.png"></image>
-              <text class="unfold-font">展开</text>
+
+            <view wx:if="{{!audoc}}">
+              <view class="aud-step">
+                <image class="gc" src="../../images/gc.png"></image>
+                <text class="lea-sta">发起</text>
+                <text class="apply-time">2019.12.22 15:23:12</text>
+              </view>
+              <image class="route" src="../../images/route.png"></image>
+              <view class="step">
+                <image class="gc1" src="../../images/gc.png"></image>
+                <text class="lea-sta1">教务审核通过</text>
+                <text class="apply-time1">2019.12.22 15:23:12</text>
+              </view>
+              <text class="operator">操作人：王晓茹</text>
+              <image class="route" src="../../images/route.png"></image>
+              <view class="step">
+                <image class="gc1" src="../../images/gc.png"></image>
+                <text class="lea-sta1">管理员审核通过</text>
+                <text class="apply-time1">2019.12.22 15:23:12</text>
+              </view>
+              <text class="operator">操作人：王晓茹</text>
+              </view>
+
+              <view wx:if="{{audoc}}" class="unfold-btn" bindtap="stu_lea_open"> 
+                <image class="unfold-img" src="../../images/xsj.png"></image>
+                <text class="unfold-font">展开</text>
+              </view>
+
+              <view wx:if="{{!audoc}}" class="unfold-btn" bindtap="stu_lea_open"> 
+                <image class="unfold-img" src="../../images/ssj.png"></image>
+                <text class="unfold-font">收起</text>
+              </view>
             </view>
-          </view>
         </view>
 
         <!-- 新建 -->
-        <view class="add-btn">
+        <view class="add-btn" bindtap="stu_add_leave">
           <image class="add-img" src="../../images/add.png"></image>
           <text class="add-new">新建</text>
         </view>

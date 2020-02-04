@@ -9,7 +9,7 @@
   <!-- 学生角色 -->
   <view class="stu-rec" wx:if="{{role == 0}}">
 
-    <view class="rec-layout">
+    <view class="rec-layout" bindtap="to_stu_record">
       <view class="rec-flex">
         <view class="rec-title">判断推理第三次测试</view>
         <view class="rec-date">2019.12.22</view>

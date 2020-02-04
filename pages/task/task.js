@@ -6,6 +6,7 @@ Page({
    */
   data: {
     role:1,
+    add:false,
   },
 
   /**
@@ -15,6 +16,25 @@ Page({
 
   },
 
+  add_layout:function(){
+    let that = this
+    that.setData({
+      add : !that.data.add
+    })
+
+  },
+
+  to_stu_task:function(){
+    wx.navigateTo({
+      url: '../../pages/stu-task/stu-task',
+    })
+  },
+
+  to_detail_news: function () {
+    wx.navigateTo({
+      url: '../../pages/detail-news/detail-news',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

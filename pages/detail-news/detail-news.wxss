@@ -1,0 +1,29 @@
+/* pages/detail-news/detail-news.wxss */
+page{
+  background: rgba(251,251,252,1)
+}
+.news-title{
+  margin-left: 40rpx;
+  margin-top: 55rpx;
+  
+  height:42rpx;
+  font-size:44rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  color:rgba(0,0,0,1);
+}
+.nwes-time{
+  margin-left: 40rpx;
+  margin-top: 55rpx;
+  
+  height:19rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  color:rgba(180,180,180,1);
+}
+.news-cont{
+  margin-left: 40rpx;
+  margin-top: 56rpx;
+  width: 664rpx;
+}

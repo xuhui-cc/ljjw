@@ -4,9 +4,10 @@ const app = getApp()
 
 Page({
   data: {
-    type: 1,
-    aud: 1,
-    role: 3,    //role：0 -学生；1 -老师；2 -教务；3 -管理员
+    type: 2,
+    aud: 0,
+    role: 0,    //role：0 -学生；1 -老师；2 -教务；3 -管理员
+    audoc:true,
     week: ["周日", '周一', '周二', '周三', '周四', '周五', '周六'],
     //当前显示的年
     showYear: null,
@@ -61,6 +62,22 @@ Page({
     that.setData({
       aud:aud
     })
+  },
+
+  stu_add_leave:function(){
+    console.log('add_leave跳转')
+    wx.navigateTo({
+      url: "../../pages/add_leave/add_leave"
+    })
+  },
+
+  stu_lea_open:function(){
+    let that = this
+    
+      that.setData({
+        audoc: !that.data.audoc
+      })
+    
   },
 
   last:function(){

@@ -162,6 +162,20 @@
 					"id": -1,
 					"name": "pages/tea-task/tea-task",
 					"pathName": "pages/tea-task/tea-task",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/detail-news/detail-news",
+					"pathName": "pages/detail-news/detail-news",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/stu-rearch/stu-rearch",
+					"pathName": "pages/stu-rearch/stu-rearch",
 					"scene": null
 				}
 			]

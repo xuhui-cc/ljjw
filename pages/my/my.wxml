@@ -12,13 +12,13 @@
 
       <view class="state-layout">
         <view class="my-name">JUGK-2333</view>
-        <view class="flex">
+        <view class="flex" bindtap="to_stu_info">
           <view class="my-state">请完成您的基础信息</view>
           <image class="to-add" src="../../images/next.png"></image>
         </view>
       </view>
 
-      <view class="flex">
+      <view class="flex" bindtap="to_stu_info">
         <view class="change-state">修改信息</view>
         <image class="to-change" src="../../images/next.png"></image>
       </view>
@@ -35,8 +35,8 @@
     <view class="flex">
       <view class="shu"></view>
       <view class="my-collect">班级资料</view>
-      <image class="search-img" src="../../images/search.png"></image>
-      <view class="search">搜索</view>
+      <image class="search-img" src="../../images/search.png" bindtap="to_stu_rea"></image>
+      <view class="search" bindtap="to_stu_rea">搜索</view>
       <view class="class-name">西安国考集训营逻辑班</view>
       <image class="class-xl" src="../../images/xsj.png"></image>
     </view>

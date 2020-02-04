@@ -15,6 +15,18 @@ Page({
 
   },
 
+  to_stu_info:function(){
+    wx.navigateTo({
+      url: '../../pages/stu-info/stu-info',
+    })
+
+  },
+
+  to_stu_rea:function(){
+    wx.navigateTo({
+      url: '../../pages/stu-rearch/stu-rearch',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

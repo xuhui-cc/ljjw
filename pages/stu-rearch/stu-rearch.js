@@ -1,13 +1,11 @@
-// pages/record/record.js
+// pages/stu-rearch/stu-rearch.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    type: 1,
-    aud: 1,
-    role: 0,  //role：0 -学生；1 -老师；2 -教务；3 -管理员
+
   },
 
   /**
@@ -17,13 +15,6 @@ Page({
 
   },
 
-
-  to_stu_record:function(){
-    wx.navigateTo({
-      url: '../../pages/stu-record/stu-record',
-    })
-
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -35,17 +26,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this
-    if (typeof that.getTabBar === 'function' &&
-      that.getTabBar()) {
-      console.log('record_onshow')
-      that.getTabBar().setData({
-        selected: 1
-      })
-    }
-    else {
-      console.log('未执行')
-    }
+
   },
 
   /**
