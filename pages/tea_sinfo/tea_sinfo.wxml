@@ -9,9 +9,9 @@
             <view class="heng">
               <view class="address_bottom" data-id='{{item.brandId}}'>{{item.name}}</view> 
               <image class="xsda-img" src="../../images/xsda.png"></image>
-              <view class="xsda">学生档案</view>
+              <view class="xsda" bindtap="to_tea_xsda">学生档案</view>
               <image class="jczl-img" src="../../images/jczl.png"></image>
-              <view class="xsda">基础资料</view>
+              <view class="xsda" bindtap="to_tea_sjcxx">基础资料</view>
             </view>
             
           </view>

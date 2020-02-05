@@ -82,14 +82,14 @@
       </view>
     </view>
 
-    <view class="class-data">
+    <view class="class-data" bindtap="to_tea_data">
       <image class="img" src="../../images/class_data.png"></image>
       <view class="tea-shu" style="background:rgba(128,183,255,1);"></view>
       <view class="tea-cla-data">班级资料</view>
       <image class="img-next" src="../../images/next.png"></image>
     </view>
 
-    <view class="class-data">
+    <view class="class-data" bindtap="to_tea_sinfo">
       <image class="img" src="../../images/stu_data.png"></image>
       <view class="tea-shu" style="background:rgba(255,168,72,1);"></view>
       <view class="tea-cla-data">学生档案</view>

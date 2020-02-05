@@ -176,6 +176,13 @@
 					"id": -1,
 					"name": "pages/stu-rearch/stu-rearch",
 					"pathName": "pages/stu-rearch/stu-rearch",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tea_sinfo/tea_sinfo",
+					"pathName": "pages/tea_sinfo/tea_sinfo",
 					"scene": null
 				}
 			]

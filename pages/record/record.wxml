@@ -31,7 +31,7 @@
   <view class="stu-rec" wx:elif="{{role == 1}}">
 
     <view>
-      <view class="tea-rec-layout">
+      <view class="tea-rec-layout" bindtap="to_tea_recors">
         <view class="rec-flex">
           <image class="t-rec-img" src="../../images/trec.png"></image>
           <view class="t-rec-date">2019.12.22</view>

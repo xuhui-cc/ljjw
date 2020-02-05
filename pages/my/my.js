@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    role:0,
+    role:1,
   },
 
   /**
@@ -27,6 +27,17 @@ Page({
       url: '../../pages/stu-rearch/stu-rearch',
     })
   },
+  to_tea_data:function(){
+    wx.navigateTo({
+      url: '../../pages/tea_data/tea_data',
+    })
+  },
+  to_tea_sinfo: function () {
+    wx.navigateTo({
+      url: '../../pages/tea_sinfo/tea_sinfo',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

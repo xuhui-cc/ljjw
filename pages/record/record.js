@@ -7,7 +7,7 @@ Page({
   data: {
     type: 1,
     aud: 1,
-    role: 0,  //role：0 -学生；1 -老师；2 -教务；3 -管理员
+    role: 1,  //role：0 -学生；1 -老师；2 -教务；3 -管理员
   },
 
   /**
@@ -23,6 +23,12 @@ Page({
       url: '../../pages/stu-record/stu-record',
     })
 
+  },
+
+  to_tea_recors:function(){
+    wx.navigateTo({
+      url: '../../pages/tea-record/tea-record',
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

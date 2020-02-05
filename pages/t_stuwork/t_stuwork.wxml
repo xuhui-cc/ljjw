@@ -1,6 +1,6 @@
 <view class="container">
 
-    <view class="mask"></view>
+    <view class="mask" wx:if="{{stu_detail}}"></view>
     <view class="stu_num">班级共32人</view>
     <view class="stu-work-layout">
       <view class="stu-suit">
@@ -8,10 +8,16 @@
         <view class="stu-suit-head">正常到课(12人)：</view>
       </view>
       <view class="stu-suit">
-        <view class="stu-info-layout">
+        <view class="stu-info-layout" bindtap="look_stu_datail">
           <image class="stu-avatar" src="../../images/avatar.png"></image>
           <view class="stu-name">王璐瑶</view>
-          <!-- <view class="stu-xcx">查看详情</view> -->
+          <view class="stu-xcx">查看详情</view>
+        </view>
+
+        <view class="stu-info-layout" bindtap="look_stu_datail">
+          <image class="stu-avatar" src="../../images/avatar.png"></image>
+          <view class="stu-name">王璐瑶</view>
+          <view class="stu-xcx">查看详情</view>
         </view>
       </view>
 
@@ -65,8 +71,8 @@
 
     </view>
 
-    <view class="mask-tip">
-      <image class="mask-close" src="../../images/close.png"></image>
+    <view class="mask-tip" wx:if="{{stu_detail}}">
+      <image class="mask-close" src="../../images/close.png" bindtap="clo_mask"></image>
       <view class="mask-head">
         <view class="mask-shu"></view>
         <view class="mask-title">请假详情</view>

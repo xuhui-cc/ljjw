@@ -109,6 +109,18 @@ Page({
 
   },
 
+  to_tea_xsda:function(){
+    wx.navigateTo({
+      url: '../../pages/tea_xsda/tea_xsda',
+    })
+  },
+
+  to_tea_sjcxx: function () {
+    wx.navigateTo({
+      url: '../../pages/tea_sjcxx/tea_sjcxx',
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

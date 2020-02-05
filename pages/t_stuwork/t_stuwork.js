@@ -15,6 +15,20 @@ Page({
 
   },
 
+  look_stu_datail:function(){
+    let that = this
+    that.setData({
+      stu_detail: true
+    })
+  },
+
+  clo_mask:function(){
+    let that = this
+    that.setData({
+      stu_detail : false
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

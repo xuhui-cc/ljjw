@@ -6,7 +6,7 @@ Page({
   data: {
     type: 2,
     aud: 0,
-    role: 0,    //role：0 -学生；1 -老师；2 -教务；3 -管理员
+    role: 1,    //role：0 -学生；1 -老师；2 -教务；3 -管理员
     audoc:true,
     week: ["周日", '周一', '周二', '周三', '周四', '周五', '周六'],
     //当前显示的年
@@ -78,6 +78,19 @@ Page({
         audoc: !that.data.audoc
       })
     
+  },
+
+  to_call_roll:function(){
+    wx.navigateTo({
+      url: '../../pages/call-roll/call-roll',
+    })
+  },
+
+  to_t_stuwork:function(){
+    
+    wx.navigateTo({
+      url: '../../pages/t_stuwork/t_stuwork',
+    })
   },
 
   last:function(){

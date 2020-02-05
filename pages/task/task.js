@@ -25,8 +25,22 @@ Page({
   },
 
   to_stu_task:function(){
+    let that = this
+    if(that.data.role == 0){
+      wx.navigateTo({
+        url: '../../pages/stu-task/stu-task',
+      })
+    }else if(that.data.role == 1){
+      wx.navigateTo({
+        url: '../../pages/tea-task/tea-task',
+      })
+    }
+    
+  },
+
+  to_add_read:function(){
     wx.navigateTo({
-      url: '../../pages/stu-task/stu-task',
+      url: '../../pages/add_read/add_read',
     })
   },
 

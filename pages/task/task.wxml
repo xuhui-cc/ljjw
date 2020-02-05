@@ -10,10 +10,15 @@
 
   <view wx:if="{{add}}">
     <image class="add-kuang" src="../../images/kuang.png"></image>
-    <image class="add_read" src="../../images/add_read.png"></image>
-    <view class="add-read-tltle">创建每日晨读</view>
-    <image class="add_message" src="../../images/add_message.png"></image>
-    <view class="add-message-tltle">创建每日晨读</view>
+    <view bindtap="to_add_read">
+     <image class="add_read" src="../../images/add_read.png"></image>
+      <view class="add-read-tltle">创建每日晨读</view>
+    </view>
+    <view bindtap="to_add_read">
+      <image class="add_message" src="../../images/add_message.png"></image>
+      <view class="add-message-tltle">创建消息通知</view>
+    </view>
+    
   </view>
   
   

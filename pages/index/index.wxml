@@ -323,7 +323,7 @@
     <!-- 老师点名 -->
     <view wx:if="{{type == 2}}">
       <view class="t-cour-layout">
-        <view class="t-call-lay">
+        <view class="t-call-lay" bindtap="to_call_roll">
           <view class="t-call">去点名</view>
           <image class="t-call-img" src="../../images/gjt.png"></image>
         </view>
@@ -350,7 +350,7 @@
     <!-- 老师考勤 -->
     <view wx:if="{{type == 3}}">
       <view class="t-cour-layout">
-        <view class="t-call-lay">
+        <view class="t-call-lay" bindtap="to_t_stuwork">
           <view class="t-call">查看考勤</view>
           <image class="t-call-img" src="../../images/gjt.png"></image>
         </view>

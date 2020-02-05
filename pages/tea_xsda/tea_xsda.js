@@ -15,6 +15,14 @@ Page({
 
   },
 
+
+  aud_select: function (e) {
+    let that = this
+    var aud = e.currentTarget.dataset.aud
+    that.setData({
+      aud: aud
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
