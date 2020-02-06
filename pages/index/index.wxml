@@ -1,16 +1,16 @@
 <view class="container">
 
-  <view class="mask-layout" hidden="true"></view>
-  <view class="reject-layout" hidden="true">
+  <view class="mask-layout" wx:if="{{hm_rejest}}"></view>
+  <view class="reject-layout" wx:if="{{hm_rejest}}">
     <image class="reject-close" src="../../images/close.png"></image>
     <view class="reject-head">
       <view class="reject-shu"></view>
       <view class="reject-title">驳回原因</view>
     </view>
-    <view class="reject-cont-lay">o
+    <view class="reject-cont-lay">
       <textarea class="reject-for" placeholder="请填写您的驳回原因…"></textarea>
     </view>
-    <view class="reject-sub">确定</view>
+    <view class="reject-sub" bindtap="hm_pass">确定</view>
   
   </view>
 
@@ -421,8 +421,8 @@
               <view class="hm-pro-date">2019.12.22 15:23:12</view>
             </view>
             <view class="hm-flex">
-              <view class="hm-un-pass">通过</view>
-              <view class="hm-un-rejest">驳回</view>
+              <view class="hm-un-pass" bindtap="hm_pass">通过</view>
+              <view class="hm-un-rejest" bindtap="hm_rejest">驳回</view>
             </view>
 
 
@@ -549,8 +549,8 @@
                 <view class="hm-aud-pro-time">2019.12.22 15:23:12</view>
               </view>
             <view class="hm-flex">
-              <view class="hm-un-pass">通过</view>
-              <view class="hm-un-rejest">驳回</view>
+              <view class="hm-un-pass" bindtap="hm_pass">通过</view>
+              <view class="hm-un-rejest" bindtap="hm_rejest">驳回</view>
             </view>
 
 

@@ -6,7 +6,7 @@ Page({
   data: {
     type: 2,
     aud: 0,
-    role: 1,    //role：0 -学生；1 -老师；2 -教务；3 -管理员
+    role: 2,    //role：0 -学生；1 -老师；2 -教务；3 -管理员
     audoc:true,
     week: ["周日", '周一', '周二', '周三', '周四', '周五', '周六'],
     //当前显示的年
@@ -27,6 +27,7 @@ Page({
   
   onLoad: function () {
     let that = this;
+    console.log("onload")
     //获取当前年份和月份
     let nowTime = new Date();
     let nowYear = nowTime.getFullYear();
@@ -90,6 +91,22 @@ Page({
     
     wx.navigateTo({
       url: '../../pages/t_stuwork/t_stuwork',
+    })
+  },
+
+  hm_pass:function(){
+    let that = this
+    that.setData({
+      type : 1
+    })
+    that.onLoad()
+
+  },
+
+  hm_rejest:function(){
+    let that = this
+    that.setData({
+      hm_rejest : true
     })
   },
 

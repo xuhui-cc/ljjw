@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    role:1,
+    role:2,
     add:false,
   },
 
@@ -30,7 +30,7 @@ Page({
       wx.navigateTo({
         url: '../../pages/stu-task/stu-task',
       })
-    }else if(that.data.role == 1){
+    } else if (that.data.role == 1 || that.data.role == 2){
       wx.navigateTo({
         url: '../../pages/tea-task/tea-task',
       })

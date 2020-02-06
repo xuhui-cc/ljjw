@@ -2,65 +2,66 @@
 
   <!-- 导航栏 -->
   <view class="nabigation_bar">
-    <image wx:if="{{role == 1}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
+    <image wx:if="{{role == 1}} || {{role == 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
     <view class="bar-class">西安国考集训营逻辑班</view>
     <image class="bar-img" src="../../images/wxsj.png"></image>
   </view>
   <!-- 导航栏结束 -->
 
-  <view wx:if="{{add}}">
-    <image class="add-kuang" src="../../images/kuang.png"></image>
-    <view bindtap="to_add_read">
-     <image class="add_read" src="../../images/add_read.png"></image>
-      <view class="add-read-tltle">创建每日晨读</view>
-    </view>
-    <view bindtap="to_add_read">
-      <image class="add_message" src="../../images/add_message.png"></image>
-      <view class="add-message-tltle">创建消息通知</view>
-    </view>
-    
-  </view>
-  
-  
-  
-
-  <view class="read-layout" bindtap="to_stu_task">
-    <view class="flex">
-      <view class="shu"></view>
-      <view class="head">每日晨读</view>
-      <view class="more">更多</view>
-      <image class="more-img" src="../../images/next.png"></image>
-    </view>
-    <view class="flex">
-      <image class="read-img" src="../../images/read.png"></image>
-      <image class="read-img" src="../../images/read.png"></image>
-      <image class="read-img" src="../../images/read.png"></image>
-    </view>
-  </view>
-
-  <view class="task-layout" bindtap="to_stu_task">
-    <view class="flex">
-      <view class="shu"></view>
-      <view class="head">任务</view>
-      <image class="tip" src="../../images/tip.png"></image>
-      <view class="tip-num">1</view>
-      <view class="more">查看</view>
-      <image class="more-img" src="../../images/next.png"></image>
-    </view>
-    <view class="task-cont">你有一条新任务未做，快去提交吧！</view>
-  </view>
-
-  <view class="message-layout" bindtap="to_detail_news">
-    <view class="flex">
-      <view class="shu"></view>
-      <view class="head">消息通知</view>
-       
-      <view class="message-date">2019.12.26 09:23</view>
+  <view wx:if="{{role <= 2}}">
+    <view wx:if="{{add}}">
+      <image class="add-kuang" src="../../images/kuang.png"></image>
+      <view bindtap="to_add_read">
+      <image class="add_read" src="../../images/add_read.png"></image>
+        <view class="add-read-tltle">创建每日晨读</view>
+      </view>
+      <view bindtap="to_add_read">
+        <image class="add_message" src="../../images/add_message.png"></image>
+        <view class="add-message-tltle">创建消息通知</view>
+      </view>
       
     </view>
-    <view class="message-cont">圣诞将至，学校放假一天，提前祝同学们节日快乐，26号上午正常上课。</view>
+
+    <view class="read-layout" bindtap="to_stu_task">
+      <view class="flex">
+        <view class="shu"></view>
+        <view class="head">每日晨读</view>
+        <view class="more">更多</view>
+        <image class="more-img" src="../../images/next.png"></image>
+      </view>
+      <view class="flex">
+        <image class="read-img" src="../../images/read.png"></image>
+        <image class="read-img" src="../../images/read.png"></image>
+        <image class="read-img" src="../../images/read.png"></image>
+      </view>
+    </view>
+
+    <view class="task-layout" bindtap="to_stu_task">
+      <view class="flex">
+        <view class="shu"></view>
+        <view class="head">任务</view>
+        <image class="tip" src="../../images/tip.png"></image>
+        <view class="tip-num">1</view>
+        <view class="more">查看</view>
+        <image class="more-img" src="../../images/next.png"></image>
+      </view>
+      <view class="task-cont">你有一条新任务未做，快去提交吧！</view>
+    </view>
+
+    <view class="message-layout" bindtap="to_detail_news">
+      <view class="flex">
+        <view class="shu"></view>
+        <view class="head">消息通知</view>
+        
+        <view class="message-date">2019.12.26 09:23</view>
+        
+      </view>
+      <view class="message-cont">圣诞将至，学校放假一天，提前祝同学们节日快乐，26号上午正常上课。</view>
+    </view>
   </view>
 
+
+  <view wx:if="{{role == 3}}"></view>
 
 
 
