@@ -10,6 +10,40 @@
   
   </view>
 
+  <!-- 模糊搜索 -->
+  <view>
+    <view >
+      <view class="search-title">2020国考必考考点精讲.doc</view>
+      <view class="heng"></view>
+    </view>
+  </view>
+  <!-- 模糊搜索 -->
+
+
+    <!-- 清晰搜索 -->
+  <view>
+    <view class="data-layout">
+        <view class="flex">
+          <view class="data-tea">来自：王芳慧和老师</view>
+          <view class="data-date">2019.10.25  20:05</view>
+          <image class="class-uncollect" src="../../images/uncollect.png"></image>
+          <view class="data-collect">未收藏</view>
+        </view>
+
+        <view class="data-heng"></view>
+
+        <view class="flex">
+          <image class="pdf" src="../../images/pdf.png"></image>
+          <view>
+            <view class="data-name">申论必考热点.pdf</view>
+            <view class="data-intro">重点考点汇总，希望同学们可以仔细阅读</view>
+          </view>
+        </view>
+
+      </view>
+  </view>
+  <!-- 清晰搜索 -->
+
 
 
 

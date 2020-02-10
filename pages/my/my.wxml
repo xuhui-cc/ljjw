@@ -48,8 +48,12 @@
       <view class="my-collect">班级资料</view>
       <image class="search-img" src="../../images/search.png" bindtap="to_stu_rea"></image>
       <view class="search" bindtap="to_stu_rea">搜索</view>
-      <view class="class-name">西安国考集训营逻辑班</view>
-      <image class="class-xl" src="../../images/xsj.png"></image>
+      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
+        <view class="class-name">{{stu_class[stu_class_index]}}</view>
+      </picker>
+      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
+        <image class="class-xl" src="../../images/xsj.png"></image>
+      </picker>
     </view>
 
     <view >
@@ -57,8 +61,15 @@
         <view class="flex">
           <view class="data-tea">来自：王芳慧和老师</view>
           <view class="data-date">2019.10.25  20:05</view>
-          <image class="class-uncollect" src="../../images/uncollect.png"></image>
-          <view class="data-collect">未收藏</view>
+          <view class="flex" wx:if="{{!iscollect}}" bindtap='iscollect'>
+            <image class="class-uncollect" src="../../images/uncollect.png"></image>
+            <view class="data-uncollect">未收藏</view>
+          </view>
+          <view class="flex" wx:if="{{iscollect}}" bindtap='iscollect'>
+            <image class="class-uncollect" src="../../images/collect.png"></image>
+            <view class="data-collect">收藏</view>
+          </view>
+          
         </view>
 
         <view class="data-heng"></view>

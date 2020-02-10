@@ -220,6 +220,18 @@ page{
   width:25rpx;
   height:25rpx;
 }
+.data-uncollect{
+  margin-left: 8rpx;
+  margin-top: 25rpx;
+  width:72rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(217,217,217,1);
+  opacity:1;
+}
 .data-collect{
   margin-left: 8rpx;
   margin-top: 25rpx;

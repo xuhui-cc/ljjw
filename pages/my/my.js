@@ -8,6 +8,8 @@ Page({
    */
   data: {
     // role:0,
+    stu_class: ['西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班'],
+    stu_class_index: 0,
   },
 
   /**
@@ -34,6 +36,13 @@ Page({
     
   },
 
+  stu_class_picker: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      stu_class_index: e.detail.value
+    })
+  },
+
   to_stu_info:function(){
     wx.navigateTo({
       url: '../../pages/stu-info/stu-info',
@@ -42,11 +51,13 @@ Page({
   },
 
   
+  to_class_data: function () {
+    wx.navigateTo({
+      url: '../../pages/class_data/class_data',
+    })
 
+  },
   
-
-  
-
   to_stu_rea:function(){
     wx.navigateTo({
       url: '../../pages/stu-rearch/stu-rearch',
@@ -62,6 +73,13 @@ Page({
   to_tea_sinfo: function () {
     wx.navigateTo({
       url: '../../pages/tea_sinfo/tea_sinfo',
+    })
+  },
+
+  iscollect:function(){
+    let that = this
+    that.setData({
+      iscollect: !that.data.iscollect
     })
   },
 
