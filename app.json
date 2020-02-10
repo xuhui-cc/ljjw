@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/my/my",
     "pages/index/index",
     "pages/record/record",
     "pages/task/task",
-    "pages/my/my",
     "pages/add_leave/add_leave",
     "pages/call-roll/call-roll",
     "pages/stu-record/stu-record",

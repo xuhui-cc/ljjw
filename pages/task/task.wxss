@@ -1,6 +1,12 @@
 page{
   background: rgba(251,251,252,1)
 }
+.task-null{
+  margin-left: 238rpx;
+  margin-top: 599rpx;
+  width: 294rpx;
+  height: 329rpx;
+}
 .flex{
   display: flex;
 }

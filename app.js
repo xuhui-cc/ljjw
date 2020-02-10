@@ -1,5 +1,10 @@
 //app.js
+const ljjw = require('./utils/ljjw.js')
+
 App({
+
+  ljjw: ljjw,
+
   onLaunch: function () {
     // 展示本地存储能力
    

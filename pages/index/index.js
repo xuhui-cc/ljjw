@@ -110,6 +110,13 @@ Page({
     })
   },
 
+  close:function(){
+    let that = this
+    that.setData({
+      hm_rejest: false
+    })
+  },
+
   last:function(){
     let that = this
     if (that.data.showMonth == 1){

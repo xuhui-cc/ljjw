@@ -2,7 +2,7 @@
 
   <view class="mask-layout" wx:if="{{hm_rejest}}"></view>
   <view class="reject-layout" wx:if="{{hm_rejest}}">
-    <image class="reject-close" src="../../images/close.png"></image>
+    <image class="reject-close" src="../../images/close.png" bindtap='close'></image>
     <view class="reject-head">
       <view class="reject-shu"></view>
       <view class="reject-title">驳回原因</view>

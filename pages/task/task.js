@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    role:2,
+    role:3,
     add:false,
   },
 

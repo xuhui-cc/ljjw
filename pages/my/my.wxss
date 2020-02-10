@@ -13,6 +13,23 @@ page{
 .flex{
   display: flex;
 }
+.no_login{
+  margin-left: 30rpx;
+  margin-top: 79rpx;
+  /* width:96rpx; */
+  height:45rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  text-align: left;
+  line-height:45rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+  background: transparent;
+}
+.no_login::after {
+  border: none;
+}
 .my-head{
   margin-left: 341rpx;
   margin-top: 108rpx;
@@ -38,6 +55,7 @@ page{
   margin-top: 44rpx;
   width:115rpx;
   height:115rpx;
+  border-radius: 50%;
 }
 .state-layout{
   width:300rpx;

@@ -4,14 +4,25 @@
     <text class="my-head">我的</text> 
   </view>
 
-    <!-- 学生 -->
-  <view wx:if="{{role == 0}}">
-
+  <view wx:if="{{role < 0}}">
     <view class="my-info">
-      <image class="my-ava" src="../../images/avatar.png"></image>
+      <image class="my-ava" src="../../images/avatar_null.png"></image>
 
       <view class="state-layout">
-        <view class="my-name">JUGK-2333</view>
+        <!-- <view class="no_login">请登录</view> -->
+        <button class="no_login" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">请登录</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 学生 -->
+  <view wx:elif="{{role == 1}}">
+
+    <view class="my-info">
+      <image class="my-ava" src="{{avatar}}"></image>
+
+      <view class="state-layout">
+        <view class="my-name">{{name}}</view>
         <view class="flex" bindtap="to_stu_info">
           <view class="my-state">请完成您的基础信息</view>
           <image class="to-add" src="../../images/next.png"></image>
@@ -26,7 +37,7 @@
     </view>
 
 
-    <view class="collect-layout">
+    <view class="collect-layout" bindtap='to_class_data'>
       <view class="shu"></view>
       <view class="my-collect">我的收藏</view>
       <image class="to-collect" src="../../images/next.png"></image>
@@ -66,17 +77,19 @@
   </view>
   <!-- 学生 -->
 
-  <view wx:else="{{}}">
+  <view wx:else="{{role > 1}}">
 
     <view class="my-info">
-      <image class="my-ava" src="../../images/avatar.png"></image>
+      <image class="my-ava" src="{{avatar}}"></image>
 
       <view class="state-layout">
-        <view class="my-name">JUGK-2333</view>
+        <view class="my-name">{{name}}</view>
 
         <view class="flex">
           <image class="role-img" src="../../images/tea.png"></image>
-          <view class="role-name">老师</view>
+          <view wx:if="{{role == 1}}" class="role-name">老师</view>
+          <view wx:if="{{role == 2}}" class="role-name">教务</view>
+          <view wx:if="{{role == 3}}" class="role-name">管理员</view>
         </view>
 
       </view>

@@ -2,7 +2,8 @@
 
   <!-- 导航栏 -->
   <view class="nabigation_bar">
-    <image wx:if="{{role == 1}} || {{role == 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
+    <image wx:if="{{role == 1}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
+    <image wx:if="{{role == 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
     <view class="bar-class">西安国考集训营逻辑班</view>
     <image class="bar-img" src="../../images/wxsj.png"></image>
   </view>
@@ -61,7 +62,10 @@
   </view>
 
 
-  <view wx:if="{{role == 3}}"></view>
+  <view wx:if="{{role == 3}}">
+    <image class='task-null' src='../../images/null.png'></image>
+  
+  </view>
 
 
 
