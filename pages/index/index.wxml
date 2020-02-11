@@ -37,7 +37,7 @@
           <!-- 课表日历 -->
           <view class="calendar">
             <view class="calendar-header">
-              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
+              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}" >
                 <text class="ch-item-text">{{item}}</text>
               </view>
             </view>
@@ -46,7 +46,9 @@
               <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
                 <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
                   <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
-                  <text wx:else class="day" class="day">{{item[0]}}</text>
+                  <view wx:elif="{{item[1] == 'true'}}" class="day">{{item[0]}}</view>
+                  <view wx:else="{{item[1] == 'false'}}" class="day1">{{item[0]}}</view>
+                 
                   <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
                   <view class="dot" ></view>
                 </view>
@@ -73,7 +75,7 @@
       </view>
       <!-- 日历结束 -->
       <!-- 选择日期的课表 -->
-      <view>
+      <view wx:if="{{dayCourse != ''}}">
         <view class="coursetable">
           <view class="ct-layout">
             <view class="mask"></view>
@@ -83,6 +85,12 @@
           </view>
         </view>
       </view>
+
+      <!-- 课表为空 -->
+      <view wx:if="{{dayCourse == ''}}">
+        <image class='course_null' src='../../images/course_null.png'></image>
+      </view>
+      <!-- 空课表 -->
 
     </view>
     <!-- 课表页结束 -->
@@ -95,7 +103,7 @@
           <view class="date-layout">
             <text class="year">2020年</text>
             <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-            <text class="month">1月</text>
+            <text class="month">{{showMonth}}月</text>
             <image class="next-month" src="../../images/next.png"></image>
           </view>
           <view class="heng1"></view>
@@ -109,7 +117,7 @@
             <!-- 完整的当月数据 -->
             <view class="calendar-month" wx:if="{{!calendarfold}}">
               <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                <view catchtap="clickDay_work" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
                   <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
                   <text wx:else class="day" class="day">{{item[0]}}</text>
                   <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
@@ -119,7 +127,7 @@
             </view>
             <!-- 本周数据 -->
             <view class="calendar-month-week" wx:else>
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                <view catchtap="clickDay_work" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
                   <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
                   <text wx:else class="day" >{{item[0]}}</text>
                   <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
@@ -134,7 +142,7 @@
 
       <!-- 选择日期考情表 -->
       <view>
-        <view class="work">
+        <view class="work" wx:if="{{dayCheckon != ''}}">
           <view class="ct-layout">
             <view class="c-time">14:00-17:00</view>
             <view class="shu"></view>
@@ -153,8 +161,13 @@
             <!-- <text class="state" style="color:rgba(255,142,67,1);">迟到</text> -->
           </view>
         </view>
+
+        <view wx:else="{{dayCheckon == ''}}">
+          <image class='course_null' src='../../images/Checkon_null.png'></image>
+        </view>
       
       </view>
+      <!-- 选择日期考情表 -->
     
     
     

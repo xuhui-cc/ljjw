@@ -4,6 +4,12 @@ page{
 .container{
   margin-bottom: 100rpx;
 }
+.course_null{
+  margin-top: 239rpx;
+  margin-left: 219rpx;
+  width:323rpx;
+  height:312rpx;
+}
 .mask-layout{
   position: absolute;
   display: block;
@@ -236,6 +242,17 @@ page{
   font-weight:400;
   line-height:48rpx;
   color:rgba(39,39,39,1);
+  background:rgba(242,250,255,1);
+  opacity:1;
+}
+.day1{
+  width:109rpx;
+  height:48rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:48rpx;
+  color:rgba(197,197,197,1);
   background:rgba(242,250,255,1);
   opacity:1;
 }

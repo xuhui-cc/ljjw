@@ -45,6 +45,48 @@ Page({
       clickMonth: nowMonth + 1,
       clickDay: nowDay,
     })
+
+    var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
+    var nowmonth = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth)
+    that.setData({
+      nowDate: nowDate,
+      nowmonth: nowmonth
+    })
+
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "riqi": nowDate
+    }
+    console.log(params)
+    app.ljjw.jwGetDayCourse(params).then(d => {
+      if (d.data.status == 1) {
+        that.setData({
+          dayCourse: d.data.data
+        })
+        console.log(that.data.dayCourse)
+      }
+    })
+
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "month": nowmonth
+    }
+    console.log(params)
+    app.ljjw.jwGetMonthCourse(params).then(d => {
+      if (d.data.status == 1) {
+        console.log(d)
+        // that.setData({
+        //   dayCourse: d.data.data
+        // })
+        // console.log(that.data.dayCourse)
+      }
+    })
+
+
+
+
   },
 
   menu_select:function(e){
@@ -54,6 +96,63 @@ Page({
     that.setData({
       type : type
     })
+    if(type == 3){
+      //学生某月考勤
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "month": that.data.nowmonth
+      }
+      console.log(params)
+      app.ljjw.jwGetMonthCheckon(params).then(d => {
+        if (d.data.status == 1) {
+          console.log(d)
+        } else if (d.data.status == -1){
+          console.log(d.data.msg)
+        }
+      })
+
+      //学生当日考勤
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": that.data.nowDate
+      }
+      console.log(params)
+      app.ljjw.jwGetDayCheckon(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            dayCheckon: d.data.data
+          })
+          console.log(that.data.dayCheckon)
+        }
+        else if (d.data.status == -1) {
+          that.setData({
+            dayCheckon: ''
+          })
+          console.log(that.data.dayCheckon)
+        }
+
+      })
+
+
+    }
+    else if (type == 1){
+      //学生请假
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 0 
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentAskforleave(params).then(d => {
+        if (d.data.status == 1) {
+          console.log(d)
+        } else if (d.data.status == -1) {
+          console.log(d.data.msg)
+        }
+      })
+    }
 
   },
 
@@ -63,6 +162,38 @@ Page({
     that.setData({
       aud:aud
     })
+    if(aud == 0){
+      //学生请假未审核
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 0
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentAskforleave(params).then(d => {
+        if (d.data.status == 1) {
+        console.log(d)
+        } else if (d.data.status == -1) {
+          console.log(d.data.msg)
+        }
+      })
+    }
+    else{
+      //学生请假未审核
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentAskforleave(params).then(d => {
+        if (d.data.status == 1) {
+        console.log(d)
+        } else if (d.data.status == -1) {
+          console.log(d.data.msg)
+        }
+      })
+    }
   },
 
   stu_add_leave:function(){
@@ -172,17 +303,6 @@ Page({
       weekData.unshift(dayData);
     }
 
-    // for (let qq = 0; qq < weekData.length; qq++){
-    //   // console.log(weekData[qq][0])
-    //   for (let ww = 0; ww < weekData[qq].length; ww++){
-    //     // console.log(weekData[qq][ww])
-    //     if (weekData[qq][ww] == nowgetdate.getDate() ){
-    //       // console.log(weekData[qq][ww])
-    //       weekData[qq][ww] = "今"
-    //     }
-    //   }
-    // }
-
     //检查首周是否有七天
     let llastDay = new Date(year, month - 1, 0).getDate();
     if (weekData[0].length < 7) {
@@ -263,53 +383,88 @@ Page({
       }
      
     }
-    // let nowWeekData = weekData.filter((weekItem) => {
-    //   if (weekItem.indexOf(new Date().getDate()) !== -1) {
-    //     return weekItem
-    //   }
-    //   //  console.log(nowWeekData)
-    // })
-    // console.log(nowWeekData[0])
-    
-    
-     
 
-
-    // for(let qq = 0; qq < that.data.nowWeekData.length ; qq ++){
-    //   // console.log(that.data.nowDay)
-    //   var cs = "nowWeekData[" + qq + "]"//添加键值对
-    //   if (that.data.nowWeekData[qq] == nowgetdate.getDate()){
-    //     console.log("今")
-    //     that.setData({
-    //       [cs] : "今"
-    //     })
-    //   }
-    // }
   },
 
-  //点击某一天
+  //点击某一天,课表
   clickDay(e) {
+    let that = this
+    
     if (e.currentTarget.dataset.day === -1) return;
-    this.setData({
+    that.setData({
       showDay: e.currentTarget.dataset.day,
       clickDay: e.currentTarget.dataset.day,
     })
+    console.log(e.currentTarget.dataset.day1)
+    console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
+    var clickDate = that.data.clickYear + "-" + (that.data.clickMonth < 10 ? '0' + (that.data.clickMonth) : that.data.clickMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
+    that.setData({
+      clickDate: clickDate
+    })
+
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "riqi": clickDate
+    }
+    console.log(params)
+    app.ljjw.jwGetDayCourse(params).then(d => {
+      if(d.data.status == 1){
+        that.setData({
+          dayCourse: d.data.data
+        })
+        console.log(that.data.dayCourse)
+      }
+
+
+
+
+    })
+
+
   },
-  // //更改显示的日期
-  // bindDateChange(e) {
-  //   let date = e.detail.value.split('-');
-  //   console.log(date)
-  //   this.setData({
-  //     showYear: date[0],
-  //     showMonth: date[1],
-  //     showDay: date[2],
-  //     clickYear: date[0],
-  //     clickMonth: date[1],
-  //     clickDay: date[2],
-  //     calendarfold: false,
-  //   })
-  //   this.getMonthData(date[0], date[1])
-  // },
+
+  //点击某一天,考勤
+  clickDay_work(e) {
+    let that = this
+
+    if (e.currentTarget.dataset.day === -1) return;
+    that.setData({
+      showDay: e.currentTarget.dataset.day,
+      clickDay: e.currentTarget.dataset.day,
+    })
+    console.log(e.currentTarget.dataset.day1)
+    console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
+    var clickDate = that.data.clickYear + "-" + (that.data.clickMonth < 10 ? '0' + (that.data.clickMonth) : that.data.clickMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
+    that.setData({
+      clickDate: clickDate
+    })
+
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "riqi": clickDate
+    }
+    console.log(params)
+    app.ljjw.jwGetDayCheckon(params).then(d => {
+      if (d.data.status == 1) {
+        that.setData({
+          dayCheckon: d.data.data
+        })
+        console.log(that.data.dayCheckon)
+      }
+      else if(d.data.status == -1){
+        that.setData({
+          dayCheckon: ''
+        })
+        console.log(that.data.dayCheckon)
+      }
+
+    })
+
+
+  },
+  
   //折叠日历
   foldAndUnfold() {
     let that = this;

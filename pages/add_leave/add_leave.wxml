@@ -11,24 +11,16 @@
   </picker>
   
   <!-- 选择日期的课表 -->
-  <view class="lea-time-layout">
-    <image class="lea-sel" src="../../images/sel.png" wx:if="{{lea_sel}}" bindtap='lea_sel'></image>
-    <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!lea_sel}}" bindtap='lea_sel'></image>
-    <view class="cour-time">14:00-17:00</view>
-    <view class="cour-content">逻辑推理第三节</view>
+  <view wx:for="{{course}}" wx:key="index">
+    <view class="lea-time-layout">
+      <image class="lea-sel" data-index='{{index}}' src="../../images/sel.png" wx:if="{{item.sel}}" bindtap='lea_sel'></image>
+      <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!item.sel}}" bindtap='lea_sel'></image>
+      <view class="cour-time">{{item.time}}</view>
+      <view class="cour-content">{{item.name}}</view>
+    </view>
   </view>
-  <view class="lea-time-layout">
-    <image class="lea-sel" src="../../images/sel.png" wx:if="{{lea_sel}}" bindtap='lea_sel'></image>
-    <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!lea_sel}}" bindtap='lea_sel'></image>
-    <view class="cour-time">14:00-17:00</view>
-    <view class="cour-content">逻辑推理第三节</view>
-  </view>
-  <view class="lea-time-layout">
-    <image class="lea-sel" src="../../images/sel.png" wx:if="{{lea_sel}}" bindtap='lea_sel'></image>
-    <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!lea_sel}}" bindtap='lea_sel'></image>
-    <view class="cour-time">14:00-17:00</view>
-    <view class="cour-content">逻辑推理第三节</view>
-  </view>
+  
+  
 
   <!-- 请假课程显示 -->
   <view class="tobelea-cour-layout">
