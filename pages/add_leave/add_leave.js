@@ -19,6 +19,9 @@ Page({
           sel: false
         },
       ],
+    lea_date_arr:[],
+    list:[],
+    cs:[]
   },
 
   /**
@@ -39,35 +42,31 @@ Page({
 
   leave_stu_time: function (e) {
     let that = this
-    // 
+
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    var newarray = [{
+      date: e.detail.value,
+      id: []
+    }];
+
+
+    this.setData({
+      'lea_date_arr': this.data.lea_date_arr.concat(newarray)
+    });
     that.setData({
       leave_stu_time: e.detail.value
     })
-    that.data.lea_date_arr.push(e.detail.value)
-    // console.log(lea_date_arr)
+    
+    
+  //   // console.log(lea_date_arr)
   },
 
-  lea_sel:function(){
+  lea_sel:function(e){
     let that = this
-    var index = e.currentTarget.dataset.index
+    var index = e.currentTarget.dataset.index;
     console.log(index)
-    // that.setData({
-    //   lea_sel : !that.data.lea_sel
-    // })
-
-    // var ab = "sl_list[" + xb + "].question.img"//添加键值对
-    // if (!that.data.sl_list[xb].question.img){
-    //   var cs = []
-    //     cs.push(imgs)
-    //     that.setData({
-    //     // [ab]: that.data.img
-    //     [ab]: cs
-    //     // [ab]: []
-    //   })
-
-    // }
-
+    that.data.cs.push([that.data.course[index].time, that.data.course[index].name])
+    console.log(that.data.cs)
   },
 
   lea_for:function(e){

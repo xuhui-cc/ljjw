@@ -11,10 +11,10 @@
   </picker>
   
   <!-- 选择日期的课表 -->
-  <view wx:for="{{course}}" wx:key="index">
-    <view class="lea-time-layout">
-      <image class="lea-sel" data-index='{{index}}' src="../../images/sel.png" wx:if="{{item.sel}}" bindtap='lea_sel'></image>
-      <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!item.sel}}" bindtap='lea_sel'></image>
+  <view wx:for="{{course}}" wx:for-index="xb">
+    <view class="lea-time-layout" data-index='{{xb}}' bindtap='lea_sel'>
+      <image class="lea-sel" src="../../images/sel.png" wx:if="{{item.sel}}" ></image>
+      <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!item.sel}}" ></image>
       <view class="cour-time">{{item.time}}</view>
       <view class="cour-content">{{item.name}}</view>
     </view>

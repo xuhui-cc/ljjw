@@ -33,6 +33,19 @@ Page({
       avatar: userInfo.avatar,
       name: userInfo.name,
     })
+
+    if(that.data.role == 4){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentMainPage(params).then(d => {
+    
+        console.log("d.data.msg")
+        
+      })
+    }
     
   },
 
@@ -171,7 +184,7 @@ Page({
                   wx.setStorageSync('token', d.data.token);
                   wx.setStorageSync('uid', d.data.uid);
                   wx.setStorageSync('userInfo', d.data.userInfo)
-                  wx.setStorageSync('role', 1)
+                  wx.setStorageSync('role', 4)
                   
                   that.onLoad()
 

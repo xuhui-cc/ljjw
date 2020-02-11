@@ -35,8 +35,13 @@ function jwGetStudentAskforleave(params) {
   return fetch.ljjwfetch(URI, 'jwGetStudentAskforleave', params)
 }
 
+//我的主页
+function jwGetStudentMainPage(params) {
+  return fetch.ljjwfetch(URI, 'jwGetStudentMainPage', params)
+}
 
 
 
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave}
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage}
