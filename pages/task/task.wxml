@@ -2,10 +2,13 @@
 
   <!-- 导航栏 -->
   <view class="nabigation_bar">
-    <image wx:if="{{role == 1}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
-    <image wx:if="{{role == 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
-    <view class="bar-class">西安国考集训营逻辑班</view>
-    <image class="bar-img" src="../../images/wxsj.png"></image>
+    <image wx:if="{{role <= 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
+    <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">  
+      <view class="bar-class">{{stu_class[stu_class_index]}}</view>
+    </picker>
+    <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
+      <image class="bar-img" src="../../images/wxsj.png"></image>
+    </picker>
   </view>
   <!-- 导航栏结束 -->
 
@@ -23,7 +26,9 @@
       
     </view>
 
-    <view class="read-layout" bindtap="to_stu_task">
+  </view>
+
+    <view class="read-layout" >
       <view class="flex">
         <view class="shu"></view>
         <view class="head">每日晨读</view>
@@ -59,7 +64,7 @@
       </view>
       <view class="message-cont">圣诞将至，学校放假一天，提前祝同学们节日快乐，26号上午正常上课。</view>
     </view>
-  </view>
+  
 
 
   <view wx:if="{{role == 3}}">

@@ -5,8 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    role:3,
+    role:4,
     add:false,
+    stu_class: ['西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班'],
+    stu_class_index: 0,
   },
 
   /**
@@ -14,6 +16,13 @@ Page({
    */
   onLoad: function (options) {
 
+  },
+
+  stu_class_picker: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      stu_class_index: e.detail.value
+    })
   },
 
   add_layout:function(){
@@ -26,11 +35,12 @@ Page({
 
   to_stu_task:function(){
     let that = this
-    if(that.data.role == 0){
+    console.log("to_stu_task")
+    if(that.data.role == 4){
       wx.navigateTo({
         url: '../../pages/stu-task/stu-task',
       })
-    } else if (that.data.role == 1 || that.data.role == 2){
+    } else if (that.data.role <= 2){
       wx.navigateTo({
         url: '../../pages/tea-task/tea-task',
       })

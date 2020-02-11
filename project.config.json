@@ -45,7 +45,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 20,
 			"list": [
 				{
 					"id": -1,
@@ -184,6 +184,13 @@
 					"id": -1,
 					"name": "pages/tea_sinfo/tea_sinfo",
 					"pathName": "pages/tea_sinfo/tea_sinfo",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
 					"scene": null
 				}
 			]

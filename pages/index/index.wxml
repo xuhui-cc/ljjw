@@ -21,7 +21,7 @@
   </view>
 
   <!-- 学生角色 -->
-  <view class="student" wx:if="{{role == 0}}">
+  <view class="student" wx:if="{{role == 4}}">
     <!-- 课表页 -->
     <view  wx:if="{{type == 2}}">
       <!-- 课表日历 -->
@@ -30,7 +30,7 @@
           <view class="date-layout">
             <text class="year">2020年</text>
             <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-            <text class="month">1月</text>
+            <text class="month">{{showMonth}}月</text>
             <image class="next-month" src="../../images/next.png"></image>
           </view>
           <view class="heng1"></view>

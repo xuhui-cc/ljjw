@@ -1,17 +1,31 @@
 <view class="container">
 
-  <view class="lea-time-layout">
-    <view class="lea-time-shu"></view>
-    <view class="lea-time-title">请假时间</view>
-    <view class="lea-time-time">2019-12-22</view>
-    <image class="lea-time-sel" src="../../images/next.png"></image>
   
+  <picker mode="date" value="{{leave_stu_time}}" start="{{cur_date}}" bindchange="leave_stu_time"> 
+    <view class="lea-time-layout">
+      <view class="lea-time-shu"></view>
+      <view class="lea-time-title">请假时间</view>
+      <view class="lea-time-time">{{leave_stu_time}}</view>
+      <image class="lea-time-sel" src="../../images/next.png"></image>
+    </view>
+  </picker>
   
-  
-  </view>
   <!-- 选择日期的课表 -->
   <view class="lea-time-layout">
-    <image class="lea-sel" src="../../images/sel.png"></image>
+    <image class="lea-sel" src="../../images/sel.png" wx:if="{{lea_sel}}" bindtap='lea_sel'></image>
+    <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!lea_sel}}" bindtap='lea_sel'></image>
+    <view class="cour-time">14:00-17:00</view>
+    <view class="cour-content">逻辑推理第三节</view>
+  </view>
+  <view class="lea-time-layout">
+    <image class="lea-sel" src="../../images/sel.png" wx:if="{{lea_sel}}" bindtap='lea_sel'></image>
+    <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!lea_sel}}" bindtap='lea_sel'></image>
+    <view class="cour-time">14:00-17:00</view>
+    <view class="cour-content">逻辑推理第三节</view>
+  </view>
+  <view class="lea-time-layout">
+    <image class="lea-sel" src="../../images/sel.png" wx:if="{{lea_sel}}" bindtap='lea_sel'></image>
+    <image class="lea-sel" src="../../images/unsel.png" wx:if="{{!lea_sel}}" bindtap='lea_sel'></image>
     <view class="cour-time">14:00-17:00</view>
     <view class="cour-content">逻辑推理第三节</view>
   </view>
@@ -57,14 +71,14 @@
       <view class="tobelea-cour-shu"></view>
       <view class="tobelea-cour-title">请假事由</view>
     </view>
-    <textarea class="tobelea-cour-cont" placeholder="请输入请假事由..."></textarea>
+    <textarea class="tobelea-cour-cont" placeholder="请输入请假事由..." bindinput='lea_for'></textarea>
   
   
   
   <!-- 请假事由最大kuang -->
   </view>
 
-  <view class="submit">提交</view>
+  <view class="submit" bindtap='lea_submit'>提交</view>
 
 
 

@@ -7,7 +7,7 @@
   <!-- 导航栏结束 -->
 
   <!-- 学生角色 -->
-  <view class="stu-rec" wx:if="{{role == 0}}">
+  <view class="stu-rec" wx:if="{{role == 4}}">
 
     <view class="rec-layout" bindtap="to_stu_record">
       <view class="rec-flex">
