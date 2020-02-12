@@ -3,10 +3,10 @@
   <!-- 导航栏 -->
   <view class="nabigation_bar">
     <image wx:if="{{role <= 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
-    <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">  
-      <view class="bar-class">{{stu_class[stu_class_index]}}</view>
+    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
+      <view class="bar-class">{{stu_class[stu_class_index].name}}</view>
     </picker>
-    <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
+    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
       <image class="bar-img" src="../../images/wxsj.png"></image>
     </picker>
   </view>

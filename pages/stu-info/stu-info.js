@@ -415,7 +415,7 @@ Page({
         "subject": that.data.input_major,
         "email": that.data.input_email,
         "class_id": that.data.stu_class[that.data.stu_class_index].id,
-        
+        "sex": that.data.sex_index,
         
       }
       console.log(params)

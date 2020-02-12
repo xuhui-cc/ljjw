@@ -1,4 +1,5 @@
 // pages/task/task.js
+const app = getApp()
 Page({
 
   /**
@@ -7,7 +8,7 @@ Page({
   data: {
     role:4,
     add:false,
-    stu_class: ['西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班'],
+    stu_class: [],
     stu_class_index: 0,
   },
 
@@ -15,7 +16,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    console.log(params)
+    app.ljjw.jwGetAllClass(params).then(d => {
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          stu_class: d.data.data
+        })
+        console.log("学生任务班级获取成功")
+      }
 
+
+    })
   },
 
   stu_class_picker: function (e) {

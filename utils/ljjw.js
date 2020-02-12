@@ -60,5 +60,16 @@ function jwSaveStudentBaseInfo(params) {
   return fetch.ljjwfetch(URI, 'jwSaveStudentBaseInfo', params)
 }
 
+//学生成绩首页
+function jwGetStudentScore(params) {
+  return fetch.ljjwfetch(URI, 'jwGetStudentScore', params)
+}
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo}
+//学生任务首页
+function jwGetStudentTaskMain(params) {
+  return fetch.ljjwfetch(URI, 'jwGetStudentTaskMain', params)
+}
+
+
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain}

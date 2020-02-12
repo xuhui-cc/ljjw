@@ -1,4 +1,5 @@
 // pages/record/record.js
+const app = getApp()
 Page({
 
   /**
@@ -14,7 +15,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    console.log(params)
+    app.ljjw.jwGetStudentScore(params).then(d => {
+      console.log(d)
+      // if (d.data.status == 1) {
+      //   console.log(d.data.data)
+      //   that.setData({
+      //     stu_class: d.data.data
+      //   })
+      //   console.log("所有班级获取成功")
+      // }
 
+
+    })
   },
 
 
