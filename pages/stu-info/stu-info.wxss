@@ -1,6 +1,21 @@
 page{
   background: rgba(251,251,252,1)
 }
+.submit{
+  margin-left: 30rpx;
+  margin-top: 94rpx;
+  width:690rpx;
+  height:90rpx;
+  background:rgba(222,222,222,1);
+  opacity:1;
+  border-radius:49rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:90rpx;
+  text-align: center;
+  color:rgba(255,255,255,1);
+}
 .flex{
   display: flex;
   margin-top: 16rpx;
@@ -8,6 +23,9 @@ page{
   height:90rpx;
   background:rgba(255,255,255,1);
   opacity:1;
+}
+.flex1{
+  display: flex;
 }
 .shu{
   margin-left: 32rpx;
@@ -21,7 +39,7 @@ page{
 .info-tltle{
   margin-left: 11rpx;
   margin-top: 24rpx;
-  width:120rpx;
+  width:150rpx;
   height:42rpx;
   font-size:30rpx;
   font-family:PingFang SC;
@@ -31,10 +49,9 @@ page{
   opacity:1;
 }
 .tip{
-  margin-left: 160rpx;
+  margin-left: 180rpx;
   margin-top: 25rpx;
-  
-  width:358rpx;
+  width:300rpx;
   height:40rpx;
   font-size:28rpx;
   font-family:PingFang SC;
@@ -43,6 +60,13 @@ page{
   text-align: right;
   color:rgba(39,39,39,1);
   opacity:1;
+}
+.avatar{
+  margin-left: 425rpx;
+  margin-top: 25rpx;
+  width:57rpx;
+  height:57rpx;
+  border-radius: 50%;
 }
 .select{
   margin-left: 13rpx;

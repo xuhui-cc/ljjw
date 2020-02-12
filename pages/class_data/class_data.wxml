@@ -3,7 +3,7 @@
   <view class="flex">
     <view class="search-layout">
       <image class="search-img" src="../../images/search_w.png"></image>
-      <input class="search-input" placeholder="请输入资料标题"></input>
+      <input class="search-input" placeholder="请输入资料标题" bindinput='search_collect'></input>
     </view>
   </view>
 

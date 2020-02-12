@@ -2,8 +2,13 @@
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">我的头像</view>
-    <view class="tip">请选择</view>
-    <image class="select" src="../../images/next.png"></image>
+    <view class="flex1" bindtap="chooseImg">
+      <view class="tip" wx:if="{{!avatar}}">请选择</view>
+      <image class='avatar' src='{{avatar}}' wx:else=""></image>
+      <image class="select" src="../../images/next.png"></image>
+    </view>
+    <!-- <view class="tip">请选择</view>
+    <image class="select" src="../../images/next.png"></image> -->
   </view>
 
   <view class="flex">
@@ -34,7 +39,8 @@
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">毕业院校</view>
-    <input class="tip" placeholder="请填写" bindinput='input_school' ></input>
+    <!-- <input class="tip" placeholder="请填写" bindinput='input_school' ></input> -->
+    <view class="tip" bindtap='to_graduation_school'>{{input_school}}</view>
     <!-- <image class="select" src="../../images/next.png"></image> -->
   </view>
 
@@ -68,13 +74,17 @@
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">班级</view>
-    <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
-      <view class="tip">{{stu_class[stu_class_index]}}</view>
+    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
+      <view class='tip' wx:if="{{stu_class_index == -1}}">请选择</view>
+      <view class="tip" wx:else="">{{stu_class[stu_class_index].name}}</view>
     </picker>
-    <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
+    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
       <image class="select" src="../../images/next.png"></image>
     </picker>
   </view>
+
+  <view class='submit' bindtap="submit" style="{{issubmit ? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}">提交</view>
+
 
 
 

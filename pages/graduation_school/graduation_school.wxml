@@ -1,0 +1,17 @@
+<view class="container">
+  <view class='flex'>
+    <view class='shu'></view>
+    <view class='head'>毕业院校</view>
+  </view>
+  <view class='school_layout'>
+    <input class='school' placeholder='请输入毕业院校名称' bindinput='input_school'></input>
+  </view>
+
+
+
+
+
+
+
+<!-- container -->
+</view>

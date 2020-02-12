@@ -17,6 +17,7 @@ function ljjwfetch(api, path, params) {
   })
 }
 
+
 function ljjwfetchpost(api, path, params) {
   return new Promise((resolve, reject) => {
     wx.request({
@@ -31,4 +32,4 @@ function ljjwfetchpost(api, path, params) {
 }
 
 
-module.exports = { ljjwfetch, ljjwfetchpost }
+module.exports = { ljjwfetch, ljjwfetchpost}

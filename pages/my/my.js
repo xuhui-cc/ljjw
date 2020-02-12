@@ -30,7 +30,7 @@ Page({
       })
     }
     that.setData({
-      avatar: userInfo.avatar,
+      // avatar: userInfo.avatar,
       name: userInfo.name,
     })
 
@@ -41,8 +41,13 @@ Page({
       }
       console.log(params)
       app.ljjw.jwGetStudentMainPage(params).then(d => {
-    
-        console.log("d.data.msg")
+        if(d.data.status == 1){
+          that.setData({
+            mydata: d.data.data
+          })
+          console.log("我的主页接口获取成功")
+        }
+        
         
       })
     }

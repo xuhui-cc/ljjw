@@ -19,20 +19,20 @@
   <view wx:elif="{{role == 4}}">
 
     <view class="my-info">
-      <image class="my-ava" src="{{avatar}}"></image>
+      <image class="my-ava" src="{{mydata.avatar}}"></image>
 
       <view class="state-layout">
         <view class="my-name">{{name}}</view>
         <view class="flex" bindtap="to_stu_info">
-          <view class="my-state">请完成您的基础信息</view>
+          <view class="my-state">{{mydata.status_text}}</view>
           <image class="to-add" src="../../images/next.png"></image>
         </view>
       </view>
 
-      <view class="flex" bindtap="to_stu_info">
+      <!-- <view class="flex" bindtap="to_stu_info">
         <view class="change-state">修改信息</view>
         <image class="to-change" src="../../images/next.png"></image>
-      </view>
+      </view> -->
     
     </view>
 

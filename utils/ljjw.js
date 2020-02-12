@@ -40,8 +40,25 @@ function jwGetStudentMainPage(params) {
   return fetch.ljjwfetch(URI, 'jwGetStudentMainPage', params)
 }
 
+//我的收藏内搜索
+function jwGetMyCollection(params) {
+  return fetch.ljjwfetch(URI, 'jwGetMyCollection', params)
+}
+
+//我的普通跳转搜索
+function jwGetFilesByKeyword(params) {
+  return fetch.ljjwfetch(URI, 'jwGetFilesByKeyword', params)
+}
+
+//获取所有班级
+function jwGetAllClass(params) {
+  return fetch.ljjwfetch(URI, 'jwGetAllClass', params)
+}
+
+//完善学生信息提交
+function jwSaveStudentBaseInfo(params) {
+  return fetch.ljjwfetch(URI, 'jwSaveStudentBaseInfo', params)
+}
 
 
-
-
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage}
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo}
