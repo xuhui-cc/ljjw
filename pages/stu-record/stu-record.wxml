@@ -14,23 +14,27 @@
     <view class="rec-total-layout">
       <view class="total-layout">
         <view class="rec-total">总分：</view>
-        <view class="rec-total-num">118</view>
-        <image class="rec-up" src="../../images/up.png"></image>
+        <view class="rec-total-num">{{score.scores}}</view>
+        <image wx:if="{{score.score_change > 0}}" class="rec-up" src="../../images/up.png"></image>
+        <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
         <view class="rec-rank">排名：</view>
-        <view class="rec-total-num">103</view>
-        <image class="rec-up" src="../../images/down.png"></image>
+        <view class="rec-total-num">{{score.position}}</view>
+        <image wx:if="{{score.position_change > 0}}" class="rec-up" src="../../images/up.png"></image>
+        <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
       </view>
       <image class="total-xu" src="../../images/xu.png"></image>
       <view class="ana-layout">
         <view class="stu-rec-flex">
           <view class="up-down-title">总分：</view>
-          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
-          <view class="up-down-num">12分</view>
+          <view wx:if="{{score.score_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
+          <view class="up-down-num">{{score.score_change}}分</view>
         </view>
         <view class="stu-rec-flex">
-          <view class="up-down-title">总分：</view>
-          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
-          <view class="up-down-num">12分</view>
+          <view class="up-down-title">排名：</view>
+          <view wx:if="{{score.position_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
+          <view class="up-down-num">{{score.position_change}}个排名</view>
         </view>
       </view>
         
@@ -56,23 +60,27 @@
     <view class="rec-total-layout">
       <view class="total-layout">
         <view class="rec-total">总分：</view>
-        <view class="rec-total-num">118</view>
-        <image class="rec-up" src="../../images/up.png"></image>
+        <view class="rec-total-num">{{score.scores}}</view>
+        <image wx:if="{{score.score_change > 0}}" class="rec-up" src="../../images/up.png"></image>
+        <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
         <view class="rec-rank">排名：</view>
-        <view class="rec-total-num">103</view>
-        <image class="rec-up" src="../../images/down.png"></image>
+        <view class="rec-total-num">{{score.position}}</view>
+        <image wx:if="{{score.position_change > 0}}" class="rec-up" src="../../images/up.png"></image>
+        <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
       </view>
       <image class="total-xu" src="../../images/xu.png"></image>
       <view class="ana-layout">
         <view class="stu-rec-flex">
           <view class="up-down-title">总分：</view>
-          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
-          <view class="up-down-num">12分</view>
+          <view wx:if="{{score.score_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
+          <view class="up-down-num">{{score.score_change}}分</view>
         </view>
         <view class="stu-rec-flex">
-          <view class="up-down-title">总分：</view>
-          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
-          <view class="up-down-num">12分</view>
+          <view class="up-down-title">排名：</view>
+          <view wx:if="{{score.position_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
+          <view class="up-down-num">{{score.position_change}}个排名</view>
         </view>
       </view>
         
@@ -115,23 +123,27 @@
     <view class="rec-total-layout">
       <view class="total-layout">
         <view class="rec-total">总分：</view>
-        <view class="rec-total-num">118</view>
-        <image class="rec-up" src="../../images/up.png"></image>
+        <view class="rec-total-num">{{score.scores}}</view>
+        <image wx:if="{{score.score_change > 0}}" class="rec-up" src="../../images/up.png"></image>
+        <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
         <view class="rec-rank">排名：</view>
-        <view class="rec-total-num">103</view>
-        <image class="rec-up" src="../../images/down.png"></image>
+        <view class="rec-total-num">{{score.position}}</view>
+        <image wx:if="{{score.position_change > 0}}" class="rec-up" src="../../images/up.png"></image>
+        <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
       </view>
       <image class="total-xu" src="../../images/xu.png"></image>
       <view class="ana-layout">
         <view class="stu-rec-flex">
           <view class="up-down-title">总分：</view>
-          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
-          <view class="up-down-num">12分</view>
+          <view wx:if="{{score.score_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
+          <view class="up-down-num">{{score.score_change}}分</view>
         </view>
         <view class="stu-rec-flex">
-          <view class="up-down-title">总分：</view>
-          <view class="up-down-cont">对比上次模考成绩，你进步了</view>
-          <view class="up-down-num">12分</view>
+          <view class="up-down-title">排名：</view>
+          <view wx:if="{{score.position_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
+          <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
+          <view class="up-down-num">{{score.position_change}}个排名</view>
         </view>
       </view>
         

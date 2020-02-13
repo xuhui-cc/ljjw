@@ -1,4 +1,5 @@
 // pages/stu-task/stu-task.js
+const app = getApp()
 Page({
 
   /**
@@ -12,7 +13,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    console.log(params)
+    app.ljjw.jwStudentTaskNotFinished(params).then(d => {
+      console.log(d)
+      // if (d.data.status == 1) {
+      //   console.log(d.data.data)
+      //   that.setData({
+      //     stu_class: d.data.data
+      //   })
+      //   console.log("所有班级获取成功")
+      // }
 
+
+    })
   },
 
   finish_select: function (e) {
@@ -21,6 +38,47 @@ Page({
     that.setData({
       finish: finish
     })
+    if(finish == 0){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwStudentTaskNotFinished(params).then(d => {
+        console.log(d)
+        // if (d.data.status == 1) {
+        //   console.log(d.data.data)
+        //   that.setData({
+        //     stu_class: d.data.data
+        //   })
+        //   console.log("所有班级获取成功")
+        // }
+
+
+      })
+    }else{
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwStudentTaskFinished(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          console.log(d.data.data)
+          // that.setData({
+          //   stu_class: d.data.data
+          // })
+          // console.log("所有班级获取成功")
+        }else{
+          that.setData({
+            finish_task : ''
+          })
+        }
+
+
+      })
+    }
   },
 
   /**

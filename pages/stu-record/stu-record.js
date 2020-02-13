@@ -1,11 +1,12 @@
 // pages/stu-record/stu-record.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    aud: 2,
+    aud: 0,
   },
 
   /**
@@ -13,7 +14,25 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "sid":1,
+      "type": 1    //type->1是总分 2是行测分数 3是申论分数
+    }
+    console.log(params)
+    app.ljjw.jwGetStudentSortScore(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          score: d.data.data
+        })
+        console.log("总成绩获取成功")
+      }
+
+
+    })
   },
 
 
@@ -36,6 +55,25 @@ Page({
     var aud = e.currentTarget.dataset.aud
     that.setData({
       aud: aud
+    })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "sid": 1,
+      "type": aud + 1    //type->1是总分 2是行测分数 3是申论分数
+    }
+    console.log(params)
+    app.ljjw.jwGetStudentSortScore(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          score: d.data.data
+        })
+        console.log("总成绩获取成功")
+      }
+
+
     })
   },
 

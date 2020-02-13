@@ -71,6 +71,12 @@ Page({
     })
   },
 
+  to_stu_mornread: function () {
+    wx.navigateTo({
+      url: '../../pages/stu_mornread/stu_mornread',
+    })
+  },
+
   to_detail_news: function () {
     wx.navigateTo({
       url: '../../pages/detail-news/detail-news',

@@ -85,7 +85,7 @@ page{
 }
 .up-down-num{
   
-  width:60rpx;
+  /* width:60rpx; */
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;
@@ -113,7 +113,7 @@ page{
 }
 .rec-total-num{
   margin-top: 29rpx;
-  width:116rpx;
+  /* width:116rpx; */
   height:90rpx;
   font-size:64rpx;
   font-family:PingFang SC;

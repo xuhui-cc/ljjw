@@ -57,7 +57,7 @@
 
   <!-- 已完成 -->
   <view wx:if="{{finish == 1}}">
-    <view class="ques-layout">
+    <view class="ques-layout" wx:if="{{finish_task}}">
       <view class="flex">
         <view class="ques-ori">来自：徐颖很好老师</view>
         <view class="ques-date">2019.10.25  20:05</view>
@@ -78,6 +78,10 @@
       </view>
       <!-- 问题循环 -->
       
+    </view>
+
+    <view wx:if="{{finish_task == ''}}">
+      <image class='img_null' src='../../images/null.png'></image>
     </view>
 
   

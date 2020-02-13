@@ -70,6 +70,26 @@ function jwGetStudentTaskMain(params) {
   return fetch.ljjwfetch(URI, 'jwGetStudentTaskMain', params)
 }
 
+//学生成绩详情
+function jwGetStudentSortScore(params) {
+  return fetch.ljjwfetch(URI, 'jwGetStudentSortScore', params)
+}
+
+//学生每日晨读
+function jwGetMorningReadMore(params) {
+  return fetch.ljjwfetch(URI, 'jwGetMorningReadMore', params)
+}
+
+//学生任务待完成
+function jwStudentTaskNotFinished(params) {
+  return fetch.ljjwfetch(URI, 'jwStudentTaskNotFinished', params)
+}
+
+//学生任务已完成
+function jwStudentTaskFinished(params) {
+  return fetch.ljjwfetch(URI, 'jwStudentTaskFinished', params)
+}
 
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain}
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished}

@@ -1,0 +1,39 @@
+<view class="container">
+
+  <view class='search_layout'>
+    <image class='sea_img' src='../../images/search.png'></image>
+    <view class='sea_title'>搜索</view>
+  </view>
+
+  <view>
+    <view class='layout' wx:for="{{morningRead}}" wx:key="index" wx:for-index="xb">
+      <view class='sub_date'>{{item.pubdate}}</view>
+      <view class='read_layout'>
+        <view class='flex'>
+          <view class='shu'></view>
+          <view class='head'>{{item.title}}</view>
+        </view>
+        <view class='flex_warp'>
+          <view wx:for="{{item.pics}}"  wx:for-item="pitem">
+            <image class='read_img' src='{{pitem}}'></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    
+  </view>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- container -->
+</view>

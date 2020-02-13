@@ -20,6 +20,7 @@
     "pages/stu-rearch/stu-rearch",
     "pages/detail-news/detail-news",
     "pages/t_stuwork/t_stuwork",
+    "pages/stu_mornread/stu_mornread",
     "pages/graduation_school/graduation_school"
   ],
 "tabBar": {

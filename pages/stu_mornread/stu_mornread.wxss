@@ -1,0 +1,83 @@
+/* pages/stu_mornread/stu_mornread.wxss */
+page{
+  background: rgba(251,251,252,1)
+}
+.search_layout{
+  margin-left: 634rpx;
+  
+  display: flex;
+}
+.sea_img{
+  margin-top: 30rpx;
+  width: 22rpx;
+  height: 24rpx;
+}
+.sea_title{
+  margin-left: 7rpx;
+  margin-top: 20rpx;
+  width:56rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.flex{
+  display: flex;
+}
+.flex_warp{
+  margin-left: 106rpx;
+  display: flex;
+  flex-wrap: wrap;
+  width: 510rpx;
+}
+.sub_date{
+  margin-top: 36rpx;
+  width:750rpx;
+  height:40rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:40rpx;
+  text-align: center;
+  color:rgba(153,153,153,1);
+  opacity:1;
+}
+.read_layout{
+  margin-left: 30rpx;
+  margin-top: 18rpx;
+  width:690rpx;
+  height:316rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.shu{
+  margin-left: 31rpx;
+  margin-top: 39rpx;
+  width:5rpx;
+  height:13rpx;
+  background:rgba(45,193,160,1);
+  opacity:1;
+  border-radius:224rpx;
+}
+.head{
+  margin-left: 13rpx;
+  margin-top: 24rpx;
+  /* width:270px; */
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:42rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.read_img{
+  margin-right: 30rpx;
+  margin-top: 29rpx;
+  width: 140rpx;
+  height: 192rpx;
+}

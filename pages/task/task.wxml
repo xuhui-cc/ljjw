@@ -28,7 +28,7 @@
 
   </view>
 
-    <view class="read-layout" >
+    <view class="read-layout" bindtap='to_stu_mornread'>
       <view class="flex">
         <view class="shu"></view>
         <view class="head">每日晨读</view>

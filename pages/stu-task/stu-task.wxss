@@ -1,6 +1,12 @@
 page{
   background: rgba(251,251,252,1)
 }
+.img_null{
+  margin-top: 423rpx;
+  margin-left: 238rpx;
+  width: 249rpx;
+  height: 329rpx;
+}
 .mask-layout{
   position: absolute;
   display: block;

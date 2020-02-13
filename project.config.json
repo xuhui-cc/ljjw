@@ -45,7 +45,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 21,
+			"current": 22,
 			"list": [
 				{
 					"id": -1,
@@ -198,6 +198,13 @@
 					"id": -1,
 					"name": "pages/graduation_school/graduation_school",
 					"pathName": "pages/graduation_school/graduation_school",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "/stu_mornread",
+					"pathName": "pages/stu_mornread/stu_mornread",
 					"scene": null
 				}
 			]
