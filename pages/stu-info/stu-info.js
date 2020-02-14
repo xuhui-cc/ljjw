@@ -42,6 +42,7 @@ Page({
         that.setData({
           stu_class: d.data.data
         })
+        console.log(that.data.stu_class)
         console.log("所有班级获取成功")
       } 
 

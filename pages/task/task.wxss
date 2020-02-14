@@ -1,6 +1,12 @@
 page{
   background: rgba(251,251,252,1)
 }
+.flex_warp{
+  margin-left: 100rpx;
+  display: flex;
+  flex-wrap: wrap;
+  width: 510rpx;
+}
 .task-null{
   margin-left: 238rpx;
   margin-top: 599rpx;

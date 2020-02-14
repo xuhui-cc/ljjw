@@ -3,10 +3,10 @@
   <!-- 导航栏 -->
   <view class="nabigation_bar">
     <image wx:if="{{role <= 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
-    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
-      <view class="bar-class">{{stu_class[stu_class_index].name}}</view>
+    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
+      <view class="bar-class">{{stu_class[stu_class_index].classname}}</view>
     </picker>
-    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
+    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
       <image class="bar-img" src="../../images/wxsj.png"></image>
     </picker>
   </view>
@@ -35,10 +35,10 @@
         <view class="more">更多</view>
         <image class="more-img" src="../../images/next.png"></image>
       </view>
-      <view class="flex">
-        <image class="read-img" src="../../images/read.png"></image>
-        <image class="read-img" src="../../images/read.png"></image>
-        <image class="read-img" src="../../images/read.png"></image>
+      <view class="flex_warp">
+        <view wx:for="{{csmorningRead.pics}}" wx:key="img_index" >
+          <image class='read-img' src='{{item}}'></image>
+        </view>
       </view>
     </view>
 

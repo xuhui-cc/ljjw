@@ -32,6 +32,47 @@ Page({
     })
   },
 
+  reject_for:function(e){
+    let that = this
+    console.log(e.detail.value)
+    that.setData({
+      reject_reason: e.detail.value
+    })
+    if (e.detail.value != ''){
+      that.setData({
+        isreject: true
+      })
+    }else{
+      that.setData({
+        isreject: false
+      })
+    }
+  },
+
+  reject:function(){
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "tid":1,
+      "type": 2,
+      "reason": that.data.reject_reason
+    }
+    console.log(params)
+    app.ljjw.jwStudentCheckonVerify(params).then(d => {
+      console.log(d)
+      // if (d.data.status == 1) {
+      //   console.log(d.data.data)
+      //   that.setData({
+      //     stu_class: d.data.data
+      //   })
+      //   console.log("所有班级获取成功")
+      // }
+
+
+    })
+  },
+
   finish_select: function (e) {
     let that = this
     var finish = e.currentTarget.dataset.finish

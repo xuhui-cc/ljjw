@@ -22,13 +22,29 @@ Page({
       "uid": wx.getStorageSync("uid"),
     }
     console.log(params)
-    app.ljjw.jwGetAllClass(params).then(d => {
+    app.ljjw.jwGetStudentTaskMain(params).then(d => {
       if (d.data.status == 1) {
         console.log(d.data.data)
         that.setData({
-          stu_class: d.data.data
+          message: d.data.data.messages,
+          morning: d.data.data.morning_read,
+          stu_class:d.data.data.classes
         })
-        console.log("学生任务班级获取成功")
+        that.data.morning.pics = that.data.morning.pics.split(",")
+        for (var j = 0; j < that.data.message.length; j++) {
+          var cscs = 'message[' + j + '].pics'
+          that.setData({
+            [cscs]: that.data.message[j].pics.split(",")
+          })
+        }
+
+        that.setData({
+          csmorningRead: that.data.morning,
+          new_message:that.data.message
+        })
+        console.log(that.data.stu_class)
+        console.log(that.data.csmorningRead)
+        console.log("学生任务首页获取成功")
       }
 
 

@@ -1,16 +1,17 @@
 <view class="container">
 
-  <view class="mask-layout" hidden="true"></view>
-  <view class="reject-layout" hidden="true">
+  <view class="mask-layout" ></view>
+  <view class="reject-layout" >
     <image class="reject-close" src="../../images/close.png"></image>
     <view class="reject-head">
       <view class="reject-shu"></view>
       <view class="reject-title">驳回原因</view>
     </view>
     <view class="reject-cont-lay">
-      <textarea class="reject-for" placeholder="请填写您的驳回原因…"></textarea>
+      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='reject_for'></textarea>
     </view>
-    <view class="reject-sub">确定</view>
+    <view wx:if="{{isreject}}" class="reject-sub" bindtap='reject'>确定</view>
+    <view wx:else="{{isreject}}" class="reject-sub1" >确定</view>
   
   </view>
 

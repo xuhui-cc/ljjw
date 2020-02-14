@@ -67,11 +67,18 @@ Page({
 
         for (var i = 0; i < that.data.morningRead.length; i++) {
           var cs = 'morningRead[' + i + '].pics'
-          
           that.setData({
             [cs]: that.data.morningRead[i].pics.split(",")
           })
         }
+
+        that.setData({
+          csmorningRead: that.data.morningRead
+        })
+
+
+
+        console.log(that.data.morningRead)
 
         
     
