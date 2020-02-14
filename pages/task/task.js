@@ -93,10 +93,15 @@ Page({
     })
   },
 
-  to_detail_news: function () {
+  to_detail_news: function (e) {
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    console.log(xb)
+    console.log(that.data.new_message[xb])
     wx.navigateTo({
-      url: '../../pages/detail-news/detail-news',
+      url: '../../pages/detail-news/detail-news?content=' + that.data.new_message[xb].content + '&date=' + that.data.new_message[xb].createtime + '&pics=' + that.data.new_message[xb].pics,
     })
+    // url: '../live/live?video_id=' + this.data.video_id + '&lesson_id=' + this.data.lesson_id,
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

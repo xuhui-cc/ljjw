@@ -99,6 +99,21 @@ Page({
     that.setData({
       iscollect: !that.data.iscollect
     })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "type":2,  //1-添加，2-取消
+      "fileid":1
+    }
+    console.log(params)
+    app.ljjw.jwStudentAddCollection(params).then(d => {
+      if (d.data.status == 1) {
+        console.log(d.data.msg)
+        that.onLoad();
+        console.log("收藏与取消收藏接口获取成功")
+      }
+
+    })
   },
 
   /**

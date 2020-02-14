@@ -13,8 +13,11 @@
         <view class="flex">
           <view class="data-tea">来自：王芳慧和老师</view>
           <view class="data-date">2019.10.25  20:05</view>
-          <image class="class-uncollect" src="../../images/collect.png"></image>
-          <view class="data-collect">已收藏</view>
+          <view class="flex" bindtap='cancel_collect'>
+            <image class="class-uncollect" src="../../images/collect.png"></image>
+            <view class="data-collect">已收藏</view>
+          </view>
+          
         </view>
 
         <view class="data-heng"></view>

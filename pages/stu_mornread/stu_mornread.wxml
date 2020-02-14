@@ -1,6 +1,6 @@
 <view class="container">
 
-  <view class='search_layout'>
+  <view class='search_layout' bindtap='to_stu_rearch'>
     <image class='sea_img' src='../../images/search.png'></image>
     <view class='sea_title'>搜索</view>
   </view>

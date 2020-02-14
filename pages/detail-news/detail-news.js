@@ -12,6 +12,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    console.log(options.content)
+    console.log(options.date)
+    console.log(options.pics)
+    that.setData({
+      content: options.content,
+      date: options.date,
+      pics: options.pics.split(",")
+    })
+
+
 
   },
 

@@ -2,9 +2,15 @@
 
 
   <view class="news-title">消息通知</view>
-  <view class="nwes-time">2019.12.03  14:53</view>
+  <view class="nwes-time">{{date}}</view>
   <view class="news-cont">
-    <rich-text nodes="同学们在上课前需要将自己的二寸照片交给班主任，已经上课的同学，在中午12点之前交。同学们在上课前需要将自己的二寸照片交给班主任，已经上课的同学，在中午12点之前交。同学们在上课前需要将自己的二寸照片交给班主任，已经上课的同学，在中午12点之前交。同学们在上课前需要将自己的二寸照片交给班主任，已经上课的同学，在中午12点之前交。同学们在上课前需要将自己的二寸照片"></rich-text>
+    <rich-text nodes="{{content}}"></rich-text>
+  </view>
+  <view class='flex_warp'>
+    <view wx:for="{{pics}}" wx:key="index">
+      <image class='img' src='{{item}}'></image>
+    </view> 
+    
   </view>
   
 

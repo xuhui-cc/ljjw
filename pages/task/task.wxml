@@ -54,17 +54,16 @@
       <view class="task-cont">你有一条新任务未做，快去提交吧！</view>
     </view>
 
-    <view class="message-layout" bindtap="to_detail_news">
-      <view class="flex">
-        <view class="shu"></view>
-        <view class="head">消息通知</view>
-        
-        <view class="message-date">2019.12.26 09:23</view>
-        
+    <view wx:for="{{new_message}}" wx:key="index" wx:for-index="xb">
+      <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
+        <view class="flex">
+          <view class="shu"></view>
+          <view class="head">消息通知</view>
+          <view class="message-date">{{item.createtime}}</view>
+        </view>
+      <view class="message-cont">{{item.content}}</view>
       </view>
-      <view class="message-cont">圣诞将至，学校放假一天，提前祝同学们节日快乐，26号上午正常上课。</view>
     </view>
-  
 
 
   <view wx:if="{{role == 3}}">
