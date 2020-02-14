@@ -6,7 +6,7 @@ Page({
   data: {
     type: 2,
     aud: 0,
-    role: 4,    //role：4 -学生；1 -老师；2 -教务；3 -管理员
+    role: 3,    //role：4 -学生；1 -老师；2 -教务；3 -管理员
     audoc:true,
     week: ["周日", '周一', '周二', '周三', '周四', '周五', '周六'],
     //当前显示的年
@@ -53,36 +53,45 @@ Page({
       nowmonth: nowmonth
     })
 
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "riqi": nowDate
-    }
-    console.log(params)
-    app.ljjw.jwGetDayCourse(params).then(d => {
-      if (d.data.status == 1) {
-        that.setData({
-          dayCourse: d.data.data
-        })
-        console.log(that.data.dayCourse)
+    if(that.data.role == 4){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": nowDate
       }
-    })
+      console.log(params)
+      app.ljjw.jwGetDayCourse(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            dayCourse: d.data.data
+          })
+          console.log(that.data.dayCourse)
+        }
+      })
 
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "month": nowmonth
-    }
-    console.log(params)
-    app.ljjw.jwGetMonthCourse(params).then(d => {
-      if (d.data.status == 1) {
-        console.log(d)
-        // that.setData({
-        //   dayCourse: d.data.data
-        // })
-        // console.log(that.data.dayCourse)
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "month": nowmonth
       }
-    })
+      console.log(params)
+      app.ljjw.jwGetMonthCourse(params).then(d => {
+        if (d.data.status == 1) {
+          console.log(d)
+          // that.setData({
+          //   dayCourse: d.data.data
+          // })
+          // console.log(that.data.dayCourse)
+        }
+      })
+    }
+    else if(that.data.role == 1){
+      console.log("我是老师")
+    }else if(that.data.role == 2){
+      console.log("我是教务")
+    }else if(that.data.role == 3){
+      console.log("我是管理员")
+    }
 
 
 
@@ -96,7 +105,7 @@ Page({
     that.setData({
       type : type
     })
-    if(type == 3){
+    if(that.data.role == 4 && type == 3){
       //学生某月考勤
       var params = {
         "token": wx.getStorageSync("token"),
@@ -137,7 +146,7 @@ Page({
 
 
     }
-    else if (type == 1){
+    else if (that.data.role == 4 && type == 1){
       //学生请假
       var params = {
         "token": wx.getStorageSync("token"),
@@ -152,6 +161,40 @@ Page({
           console.log(d.data.msg)
         }
       })
+    } else if (that.data.role == 4 && type == 2){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": nowDate
+      }
+      console.log(params)
+      app.ljjw.jwGetDayCourse(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            dayCourse: d.data.data
+          })
+          console.log(that.data.dayCourse)
+        }
+      })
+
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "month": nowmonth
+      }
+      console.log(params)
+      app.ljjw.jwGetMonthCourse(params).then(d => {
+        if (d.data.status == 1) {
+          console.log(d)
+          // that.setData({
+          //   dayCourse: d.data.data
+          // })
+          // console.log(that.data.dayCourse)
+        }
+      })
+    }
+    else if (that.data.role == 3 && type == 1) {
+      console.log("我是管理员请假")
     }
 
   },
