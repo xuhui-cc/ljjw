@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    type : 1
 
   },
 
@@ -22,29 +23,69 @@ Page({
     that.setData({
       input_title: e.detail.value
     })
-
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "keyword": that.data.input_title
+    if (that.data.input_title == ''){
+      that.setData({
+        csmorningRead: ''
+      })
     }
-    console.log(params)
-    app.ljjw.jwGetFilesByKeyword(params).then(d => {
-      if (d.data.status == 1) {
-        that.setData({
-          mydata: d.data.data
-        })
-        console.log("搜索接口获取成功")
-      }else{
-        wx.showToast({
-          title: d.data.msg,
-          icon:"none",
-          duration:2000
-        })
+
+    if (that.data.type == 1 && that.data.input_title != ''){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "page": 1,
+        "keyword": that.data.input_title
       }
+      console.log(params)
+      app.ljjw.jwGetMorningReadMore(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            morningRead: d.data.data
+          })
+
+          for (var i = 0; i < that.data.morningRead.length; i++) {
+            var cs = 'morningRead[' + i + '].pics'
+            that.setData({
+              [cs]: that.data.morningRead[i].pics.split(",")
+            })
+          }
+
+          that.setData({
+            csmorningRead: that.data.morningRead
+          })
+          
+          console.log(that.data.csmorningRead)
+          console.log("学生任务首页获取成功")
+        }
 
 
-    })
+      })
+    }else{
+
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "keyword": that.data.input_title
+      }
+      console.log(params)
+      app.ljjw.jwGetFilesByKeyword(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            mydata: d.data.data
+          })
+          console.log("搜索接口获取成功")
+        }else{
+          wx.showToast({
+            title: d.data.msg,
+            icon:"none",
+            duration:2000
+          })
+        }
+
+
+      })
+
+    }
 
 
   },

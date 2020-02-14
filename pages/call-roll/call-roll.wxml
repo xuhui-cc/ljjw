@@ -86,6 +86,8 @@
       </view>
     </view>
     <!-- 未标注结束 -->
+
+    <view class='submit'>提交</view>
     
 
     

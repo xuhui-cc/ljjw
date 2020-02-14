@@ -17,7 +17,12 @@ Page({
   },
 
   
-  
+  to_stu_rearch:function(){
+    var type = 1
+    wx.navigateTo({
+      url: '../../pages/stu-rearch/stu-rearch?type=' + type,
+    })
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
