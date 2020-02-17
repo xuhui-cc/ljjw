@@ -434,8 +434,8 @@
               <view class="hm-pro-date">2019.12.22 15:23:12</view>
             </view>
             <view class="hm-flex">
-              <view class="hm-un-pass" bindtap="hm_pass">通过</view>
-              <view class="hm-un-rejest" bindtap="hm_rejest">驳回</view>
+              <view class="hm-un-pass" data-role='{{role}}' bindtap="hm_pass">通过</view>
+              <view class="hm-un-rejest"  bindtap="hm_rejest">驳回</view>
             </view>
 
 
