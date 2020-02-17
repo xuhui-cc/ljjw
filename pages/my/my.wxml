@@ -88,13 +88,13 @@
   </view>
   <!-- 学生 -->
 
-  <view wx:else="{{role > 1}}">
+  <view wx:else="{{role > 0 && role < 4}}">
 
     <view class="my-info">
-      <image class="my-ava" src="{{avatar}}"></image>
+      <image class="my-ava" src="{{userInfo.avatar}}"></image>
 
       <view class="state-layout">
-        <view class="my-name">{{name}}</view>
+        <view class="my-name">{{userInfo.name}}</view>
 
         <view class="flex">
           <image class="role-img" src="../../images/tea.png"></image>
@@ -106,20 +106,21 @@
       </view>
     </view>
 
-    <view class="class-data" bindtap="to_tea_data">
-      <image class="img" src="../../images/class_data.png"></image>
-      <view class="tea-shu" style="background:rgba(128,183,255,1);"></view>
-      <view class="tea-cla-data">班级资料</view>
-      <image class="img-next" src="../../images/next.png"></image>
-    </view>
+    <view wx:if="{{role > 0 && role < 3}}">
+      <view class="class-data" bindtap="to_tea_data">
+        <image class="img" src="../../images/class_data.png"></image>
+        <view class="tea-shu" style="background:rgba(128,183,255,1);"></view>
+        <view class="tea-cla-data">班级资料</view>
+        <image class="img-next" src="../../images/next.png"></image>
+      </view>
 
-    <view class="class-data" bindtap="to_tea_sinfo">
-      <image class="img" src="../../images/stu_data.png"></image>
-      <view class="tea-shu" style="background:rgba(255,168,72,1);"></view>
-      <view class="tea-cla-data">学生档案</view>
-      <image class="img-next" src="../../images/next.png"></image>
+      <view class="class-data" bindtap="to_tea_sinfo">
+        <image class="img" src="../../images/stu_data.png"></image>
+        <view class="tea-shu" style="background:rgba(255,168,72,1);"></view>
+        <view class="tea-cla-data">学生档案</view>
+        <image class="img-next" src="../../images/next.png"></image>
+      </view>
     </view>
-
 
 
 

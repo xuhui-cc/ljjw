@@ -28,6 +28,7 @@
 
   </view>
 
+  <view wx:if="{{role != 3}}">
     <view class="read-layout" bindtap='to_stu_mornread'>
       <view class="flex">
         <view class="shu"></view>
@@ -64,6 +65,8 @@
       <view class="message-cont">{{item.content}}</view>
       </view>
     </view>
+
+  </view>
 
 
   <view wx:if="{{role == 3}}">

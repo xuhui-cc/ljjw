@@ -30,8 +30,8 @@ Page({
       })
     }
     that.setData({
-      // avatar: userInfo.avatar,
-      name: userInfo.name,
+      userInfo: userInfo
+      // name: userInfo.name,
     })
 
     if(that.data.role == 4){
@@ -204,7 +204,7 @@ Page({
                   wx.setStorageSync('token', d.data.token);
                   wx.setStorageSync('uid', d.data.uid);
                   wx.setStorageSync('userInfo', d.data.userInfo)
-                  wx.setStorageSync('role', 4)
+                  wx.setStorageSync('role', d.data.role)
                   
                   that.onLoad()
 

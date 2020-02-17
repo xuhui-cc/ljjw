@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    role:4,
+    // role:4,
     add:false,
     stu_class: [],
     stu_class_index: 0,
@@ -17,6 +17,16 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+    var role = wx.getStorageSync("role")
+    if (!role) {
+      that.setData({
+        role: -1
+      })
+    } else {
+      that.setData({
+        role: role
+      })
+    }
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),

@@ -93,7 +93,7 @@ page{
   line-height:80rpx;
   text-align: center;
   color:rgba(255,255,255,1);
-  background:rgba(222,222,222,1);
+  
   opacity:1;
   border-radius:49rpx;
 }
@@ -1436,4 +1436,10 @@ page{
 .hm-flex-fold{
   display: flex;
   padding-bottom: 25rpx;
+}
+.admin_lea_null{
+  margin-left: 246rpx;
+  margin-top: 589rpx;
+  width: 283rpx;
+  height: 350rpx;
 }

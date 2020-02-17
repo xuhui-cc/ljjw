@@ -8,14 +8,24 @@ Page({
   data: {
     type: 1,
     aud: 1,
-    role: 4,  //role：4 -学生；1 -老师；2 -教务；3 -管理员
+    // role: 4,  //role：4 -学生；1 -老师；2 -教务；3 -管理员
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this
+    let that = this;
+    var role = wx.getStorageSync("role")
+    if (!role) {
+      that.setData({
+        role: -1
+      })
+    } else {
+      that.setData({
+        role: role
+      })
+    }
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
