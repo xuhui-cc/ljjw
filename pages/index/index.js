@@ -253,6 +253,29 @@ Page({
       })
       
     }
+    else if (that.data.role == 2 && type == 1) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1
+      }
+      console.log(params)
+      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          // that.setData({
+          //   dayCourse: d.data.data
+          // })
+          // console.log(that.data.dayCourse)
+        } else {
+          that.setData({
+            jw_auding_lea: false
+          })
+        }
+        console.log("我是教务请假待审核")
+      })
+
+    }
 
   },
 
@@ -337,6 +360,50 @@ Page({
         console.log("我是管理员请假已审核")
       })
       
+    } else if (aud == 0 && that.data.role == 2) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1
+      }
+      console.log(params)
+      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          // that.setData({
+          //   dayCourse: d.data.data
+          // })
+          // console.log(that.data.dayCourse)
+        } else {
+          that.setData({
+            jw_auding_lea: false
+          })
+        }
+        console.log("教务请假待审核")
+      })
+
+    } else if (aud == 1 && that.data.role == 2) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 2
+      }
+      console.log(params)
+      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          // that.setData({
+          //   dayCourse: d.data.data
+          // })
+          // console.log(that.data.dayCourse)
+        } else {
+          that.setData({
+            jw_auding_lea: false
+          })
+        }
+        console.log("教务请假已审核")
+      })
+
     }
   },
 
@@ -391,6 +458,8 @@ Page({
         } 
         // console.log("我是管理员请假通过")
       })
+    }else if(role == 2){
+
     }
     
 
@@ -438,6 +507,8 @@ Page({
         }
         
       })
+    } else if(that.data.lea_role == 2){
+
     }
   },
 
