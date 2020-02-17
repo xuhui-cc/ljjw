@@ -1,4 +1,5 @@
 // pages/add_leave/add_leave.js
+const app = getApp()
 Page({
 
   /**
@@ -7,21 +8,31 @@ Page({
   data: {
     course: [
         {
-          id:0,
-          time: '14:00-17:00',
-          name: '逻辑推理第三节',
-          sel:false
+          id:5,
+          time: '14:00-15:00',
+          name: '逻辑推理第1节',
         },
         {
-          id: 1,
-          time: '14:00-17:00',
-          name: '逻辑推理第三节',
-          sel: false
+          id: 6,
+          time: '15:00-16:00',
+          name: '逻辑推理第2节',
         },
+      {
+        id: 7,
+        time: '16:00-17:00',
+        name: '逻辑推理第3节',
+      },
+      {
+        id: 8,
+        time: '17:00-18:00',
+        name: '逻辑推理第4节',
+        sel: false
+      },
       ],
     lea_date_arr:[],
     list:[],
-    cs:[]
+    cs:[],
+    sel_id : []
   },
 
   /**
@@ -63,10 +74,34 @@ Page({
 
   lea_sel:function(e){
     let that = this
+    
     var index = e.currentTarget.dataset.index;
+    // var hh = "course[" + index + "].xb"
+    // for (var i = 0; i < that.data.course.length; i++) {
+    //   that.setData({
+    //     [hh]: false
+    //   })
+    // }
+    for (var j = 0; j < that.data.course.length; j++){
+      if(index == j){
+        var hhh = "course[" + j + "].xb"
+        that.setData({
+          [hhh] : true
+        })
+      }
+    }
     console.log(index)
-    that.data.cs.push([that.data.course[index].time, that.data.course[index].name])
+    that.data.cs.push([that.data.course[index].time])
     console.log(that.data.cs)
+    that.data.sel_id.push([that.data.course[index].id])
+    var zh = that.data.sel_id.toString()
+    console.log(zh)
+
+
+    var jj = "lea_date_arr[0].id"
+    that.setData({
+      [jj] : zh
+    })
   },
 
   lea_for:function(e){
@@ -79,13 +114,41 @@ Page({
   },
 
   lea_submit:function(){
-    wx.showToast({
-      title: '提交成功',
-      duration:2000
+    let that = this
+    var obj = []
+    for (var i = 0; i < that.data.lea_date_arr.length; i++) {
+      var qq = "ojb[" + i + "]." + that.data.lea_date_arr[i].date
+      that.setData({
+        [qq]: that.data.lea_date_arr[i].id
+      })
+    }
+    // console.log(JSON.stringify(that.data.obj))
+    var date_ids = JSON.stringify(that.data.ojb)
+    console.log(date_ids)
+    
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "date_ids": date_ids,
+      "reason": that.data.lea_for
+    }
+    console.log(params)
+    app.ljjw.jwSaveAskforleave(params).then(d => {
+      // if (d.data.status == 1) {
+      //   that.setData({
+      //     dayCourse: d.data.data
+      //   })
+      //   console.log(that.data.dayCourse)
+      // }
+      wx.showToast({
+        title: '提交成功',
+        duration: 2000
+      })
     })
-    wx.navigateBack({
-      url: "../../pages/index/index"
-    })
+    
+    // wx.navigateBack({
+    //   url: "../../pages/index/index"
+    // })
   },
 
   /**

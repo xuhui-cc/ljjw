@@ -194,7 +194,23 @@ Page({
       })
     }
     else if (that.data.role == 3 && type == 1) {
-      console.log("我是管理员请假")
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": that.data.aud + 1
+      }
+      console.log(params)
+      app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
+        console.log(d)
+        // if (d.data.status == 1) {
+        //   that.setData({
+        //     dayCourse: d.data.data
+        //   })
+        //   console.log(that.data.dayCourse)
+        // }
+        console.log("我是管理员请假")
+      })
+      
     }
 
   },

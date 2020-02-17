@@ -100,6 +100,16 @@ function jwStudentAddCollection(params) {
   return fetch.ljjwfetch(URI, 'jwStudentAddCollection', params)
 }
 
+//小程序管理员-获取请假列表
+function jwAdminGetAskforleaveList(params) {
+  return fetch.ljjwfetch(URI, 'jwAdminGetAskforleaveList', params)
+}
+
+//小程序管理员-获取请假列表
+function jwSaveAskforleave(params) {
+  return fetch.ljjwfetch(URI, 'jwSaveAskforleave', params)
+}
 
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection}
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave}
