@@ -1,5 +1,18 @@
 <view >
-<!-- 左侧列表内容部分 -->
+
+  <!-- 导航栏 -->
+  <view class="nabigation_bar">
+    <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
+      <view class="bar-class">{{tea_class[tea_class_index].name}}</view>
+    </picker>
+    <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" >
+      <image class="bar-img" src="../../images/wxsj.png"></image>
+    </picker>
+  </view>
+  <!-- 导航栏结束 -->
+
+  
+  <!-- 左侧列表内容部分 -->
   <scroll-view class="content" enable-back-to-top scroll-into-view="{{toView}}" scroll-y="true" scroll-with-animation="true" bindscroll="onPageScroll"> 
     <view wx:for="{{listMain}}" wx:for-item="group" wx:key="{{group.id}}"  id="{{ 'inToView'+group.id}}" data-id='{{group.id}}'> 
       <view class="address_top" >{{group.region}}</view> 

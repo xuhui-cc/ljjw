@@ -20,24 +20,24 @@
   <!-- 点名课程班级信息 -->
   <view class="t-cour-info">
     <view class="t-info">
-      <image class="t-avatar" src="../../images/avatar.png"></image>
-      <text class="t-name">王凌霄</text>
+      <image class="t-avatar" src="{{tea_info.avatar}}"></image>
+      <text class="t-name">{{tea_info.teachername}}</text>
     </view>
     <view class="t-cour-shu"></view>
     <view class="cour-info">
       <view class="cour-info-display">
         <view class="cour-timetitle">时间</view>
-        <view class="cour-time">下午</view>
+        <view class="cour-time">{{tea_info.classtime}}</view>
         <view class="cour-placetitle">教室</view>
-        <view class="cour-time">301</view>
+        <view class="cour-time">{{tea_info.classroom}}</view>
       </view>
       <view class="cour-info-display">
         <view class="cour-nametitle">课程</view>
-        <view class="cour-name">判断推理第一节</view>
+        <view class="cour-name">{{tea_info.title}}</view>
       </view>
       <view class="cour-info-display">
         <view class="cour-nametitle">班级</view>
-        <view class="cour-name">西安国考集训营逻辑班</view>
+        <view class="cour-name">{{tea_info.classname}}</view>
       </view>
     </view>
   </view>

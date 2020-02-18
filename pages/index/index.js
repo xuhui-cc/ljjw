@@ -88,15 +88,33 @@ Page({
       app.ljjw.jwGetMonthCourse(params).then(d => {
         if (d.data.status == 1) {
           console.log(d)
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
+          that.setData({
+            dayCourse: d.data.data
+          })
+          console.log(that.data.dayCourse)
         }
       })
     }
     else if(that.data.role == 1){
-      console.log("我是老师")
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": nowDate
+      }
+      console.log(params)
+      app.ljjw.jwGetCheckOnList(params).then(d => {
+        // console.log(d.data.status)
+        if (d.data.status == 1) {
+          console.log("我是老师")
+          console.log(d.data.data)
+          that.setData({
+            tea_dayCourse: d.data.data.course_list
+          })
+          console.log(that.data.tea_dayCourse)
+        }
+      })
+
+      
     }else if(that.data.role == 2){
       console.log("我是教务")
     }else if(that.data.role == 3){
@@ -423,9 +441,13 @@ Page({
     
   },
 
-  to_call_roll:function(){
+  to_call_roll:function(e){
+    let that = this
+    console.log(e.currentTarget.dataset.tea_index)
+    var tea_index = e.currentTarget.dataset.tea_index
+    console.log(that.data.tea_dayCourse[tea_index].id)
     wx.navigateTo({
-      url: '../../pages/call-roll/call-roll',
+      url: '../../pages/call-roll/call-roll?sid=' + that.data.tea_dayCourse[tea_index].id,
     })
   },
 
@@ -697,31 +719,48 @@ Page({
       showDay: e.currentTarget.dataset.day,
       clickDay: e.currentTarget.dataset.day,
     })
-    console.log(e.currentTarget.dataset.day1)
+    // console.log(e.currentTarget.dataset.day1)
     console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
     var clickDate = that.data.clickYear + "-" + (that.data.clickMonth < 10 ? '0' + (that.data.clickMonth) : that.data.clickMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
     that.setData({
       clickDate: clickDate
     })
 
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "riqi": clickDate
-    }
-    console.log(params)
-    app.ljjw.jwGetDayCourse(params).then(d => {
-      if(d.data.status == 1){
-        that.setData({
-          dayCourse: d.data.data
-        })
-        console.log(that.data.dayCourse)
+    if(that.data.role == 4){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": clickDate
       }
+      console.log(params)
+      app.ljjw.jwGetDayCourse(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            dayCourse: d.data.data
+          })
+          console.log(that.data.dayCourse)
+        }
 
-
-
-
-    })
+      })
+    }else if(that.data.role == 1){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": clickDate
+      }
+      console.log(params)
+      app.ljjw.jwGetCheckOnList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            tea_dayCourse: d.data.data.course_list
+          })
+          console.log(that.data.tea_dayCourse)
+        }
+      })
+      console.log("我是老师某天课表")
+    }
+    
 
 
   },

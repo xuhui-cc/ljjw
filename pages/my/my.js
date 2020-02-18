@@ -50,6 +50,30 @@ Page({
         
         
       })
+    } else if (that.data.role == 1){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwTeacherMyPage(params).then(d => {
+        console.log(d)
+        // if (d.data.status == 1) {
+        //   that.setData({
+        //     mydata: d.data.data
+        //   })
+        //   console.log("我的主页接口获取成功")
+        // }
+
+
+      })
+      console.log("我是老师")
+    }
+    else if (that.data.role == 2) {
+      console.log("我是教务")
+    }
+    else if (that.data.role == 3) {
+      console.log("我是管理员")
     }
     
   },

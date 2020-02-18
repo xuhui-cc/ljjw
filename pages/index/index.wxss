@@ -643,6 +643,7 @@ page{
   margin-top: 16rpx;
   width:50rpx;
   height:50rpx;
+  border-radius: 50%;
 }
 .t-name{
   margin-left: 13rpx;
@@ -688,18 +689,7 @@ page{
   color:rgba(171,171,171,1);
   opacity:1;
 }
-.t-cour-time{
-  margin-left: 16rpx;
-  margin-top: 26rpx;
-  width:52rpx;
-  height:37rpx;
-  font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:37rpx;
-  color:rgba(39,39,39,1);
-  opacity:1;
-}
+
 .t-cour-placetitle{
   margin-left: 45rpx;
   margin-top: 26rpx;
@@ -1123,7 +1113,7 @@ page{
   margin-left: 16rpx;
   margin-top: 26rpx;
   margin-right: 11rpx;
-  width:52rpx;
+  width:170rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;

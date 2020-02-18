@@ -14,7 +14,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that = this
+    var sid = options.sid
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "sid": sid
+    }
+    console.log(params)
+    app.ljjw.jwTeacherClassSignIn(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        that.setData({
+          tea_info: d.data.data.info,
+          student: d.data.data.student
+        })
+        
+      }
+    })
   },
 
   stu_situ_picker:function(e){

@@ -125,6 +125,31 @@ function jwJiaowuAskforleaveVerify(params) {
   return fetch.ljjwfetch(URI, 'jwJiaowuAskforleaveVerify', params)
 }
 
+//老师首页
+function jwTeacherMyPage(params) {
+  return fetch.ljjwfetch(URI, 'jwTeacherMyPage', params)
+}
+
+//老师班级资料
+function jwTeacherClassFiles(params) {
+  return fetch.ljjwfetch(URI, 'jwTeacherClassFiles', params)
+}
+
+//老师学生档案
+function jwTeacherClassStudents(params) {
+  return fetch.ljjwfetch(URI, 'jwTeacherClassStudents', params)
+}
+
+//老师某一天课程
+function jwGetCheckOnList(params) {
+  return fetch.ljjwfetch(URI, 'jwGetCheckOnList', params)
+}
+
+//老师-获取课程学生列表，点名页面
+function jwTeacherClassSignIn(params) {
+  return fetch.ljjwfetch(URI, 'jwTeacherClassSignIn', params)
+}
 
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify}
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn}

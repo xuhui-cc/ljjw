@@ -67,6 +67,7 @@ page{
   margin-top: 36rpx;
   width: 66rpx;
   height: 66rpx;
+  border-radius: 50%;
 }
 .t-name{
   margin-left: 46rpx;
@@ -107,7 +108,7 @@ page{
 .cour-time{
   margin-left: 24rpx;
   margin-top: 28rpx;
-  width:48rpx;
+  width:170rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
@@ -117,7 +118,7 @@ page{
   opacity:1;
 }
 .cour-placetitle{
-  margin-left: 82rpx;
+  margin-left: 50rpx;
   margin-top: 28rpx;
   width:48rpx;
   height:33rpx;
