@@ -115,11 +115,16 @@ function jwAdminAskforleaveVerify(params) {
   return fetch.ljjwfetch(URI, 'jwAdminAskforleaveVerify', params)
 }
 
-//教务请假审批  type=1未审核 type=2 已审核
+//教务请假列表  type=1未审核 type=2 已审核
 function jwJiaowuGetAskforleaveList(params) {
   return fetch.ljjwfetch(URI, 'jwJiaowuGetAskforleaveList', params)
 }
 
+//教务请假审核  type=1通过 2-驳回
+function jwJiaowuAskforleaveVerify(params) {
+  return fetch.ljjwfetch(URI, 'jwJiaowuAskforleaveVerify', params)
+}
 
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList}
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify}

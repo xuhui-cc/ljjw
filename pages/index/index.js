@@ -398,7 +398,7 @@ Page({
           // console.log(that.data.dayCourse)
         } else {
           that.setData({
-            jw_auding_lea: false
+            jw_auded_lea: false
           })
         }
         console.log("教务请假已审核")
@@ -458,8 +458,21 @@ Page({
         } 
         // console.log("我是管理员请假通过")
       })
-    }else if(role == 2){
-
+    } else if (lea_role == 2){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1,
+        "ask_id": 1
+      }
+      console.log(params)
+      app.ljjw.jwJiaowuAskforleaveVerify(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.onLoad()
+        }
+        console.log("我是教务请假通过")
+      })
     }
     
 
@@ -508,7 +521,25 @@ Page({
         
       })
     } else if(that.data.lea_role == 2){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 2,
+        "ask_id": 1,
+        "reason": that.data.input_reason
+      }
+      console.log(params)
+      app.ljjw.jwJiaowuAskforleaveVerify(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            hm_rejest: false,
+          })
+          that.onLoad()
+          console.log("我是教务请假驳回成功")
+        }
 
+      })
     }
   },
 

@@ -448,8 +448,12 @@
       </view>
 
       <view wx:if="{{aud == 1 }}" >
+        <!-- 无记录空显示 wx:else=""-->
+        <!-- <view wx:if="{{!jw_auded_lea}}">
+          <image class='admin_lea_null' src='../../images/lea_null.png'></image>
+        </view> -->
         <!-- 教务审核，做循环 -->
-        <view class="hm-unaud-for">
+        <view  class="hm-unaud-for">
           <!-- 单个审核样式 -->
           <view class="hm-aud-layout">
             <view class="hm-flex">
