@@ -150,6 +150,11 @@ function jwTeacherClassSignIn(params) {
   return fetch.ljjwfetch(URI, 'jwTeacherClassSignIn', params)
 }
 
+//老师点名学生状态更改
+function jwSaveStudentSignIn(params) {
+  return fetch.ljjwfetch(URI, 'jwSaveStudentSignIn', params)
+}
 
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn}
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn}

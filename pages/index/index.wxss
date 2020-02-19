@@ -826,6 +826,7 @@ page{
   margin-top: 22rpx;
   width:42rpx;
   height:42rpx;
+  /* border-radius: 50%; */
 }
 .hm-t-name{
   margin-left: 10rpx;
@@ -1062,6 +1063,7 @@ page{
   margin-top: 16rpx;
   width:50rpx;
   height:50rpx;
+  border-radius: 50%;
 }
 .t-name{
   margin-left: 13rpx;

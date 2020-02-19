@@ -198,6 +198,7 @@ page{
 .stu-avatar{
   width: 66rpx;
   height: 66rpx;
+  border-radius: 50%;
   /* background:rgba(0,0,0,0);
   border-radius:33rpx;
   border:3rpx solid rgba(45,193,160,1); */

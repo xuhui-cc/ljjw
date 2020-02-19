@@ -2,7 +2,7 @@
 <view class="container">
 
   <view class="mask" hidden="true"></view>
-  <view class="popup" hidden="true">
+  <!-- <view class="popup" wx:if="{{condition}}">
     <image class="popup-close" src="../../images/close.png"></image>
     <view class="popup_cont-layout">
       <view>
@@ -12,11 +12,9 @@
       <view>
         <view class="popup-cont">到课</view>
         <view class="popup-heng"></view>
-      </view>
-      
+      </view> 
     </view>
-    
-  </view>
+  </view> -->
   <!-- 点名课程班级信息 -->
   <view class="t-cour-info">
     <view class="t-info">
@@ -52,20 +50,22 @@
       <view class="stu-info-headtitle">已标注</view>
     </view>
     <view class="stu-info-layout">
-      <picker bindchange="stu_situ_picker" value="{{stu_situ_index}}" range="{{stu_situ}}">
-        <view class="stu-info">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="syu-name">王璐瑶</view>
-          <!-- 请假状态图 -->
-          <image wx:if="{{stu_situ_index == 0}}" class="stu-situ-img1" src="../../images/yes.png"></image>
-          <image wx:if="{{stu_situ_index == 1}}" class="stu-situ-img2" src="../../images/truancy.png"></image>
-          <image wx:if="{{stu_situ_index == 2}}" class="stu-situ-img2" src="../../images/belate.png"></image>
-          <image wx:if="{{stu_situ_index == 3}}" class="stu-situ-img2" src="../../images/leave.png"></image>
-          <image wx:if="{{stu_situ_index == 4}}" class="stu-situ-img2" src="../../images/leaved.png"></image>
-          
+      <view wx:for="{{students_signed}}" wx:key="signed_index">
+        <picker bindchange="stu_situ_picker" value="{{stu_situ_index}}" range="{{stu_situ}}" data-xb='{{index}}'>
+          <view class="stu-info" >
+            <image class="stu-avatar" src="{{item.avatar}}"></image>
+            <view class="syu-name">{{item.realname}}</view>
+            <!-- 请假状态图 -->
+            <image wx:if="{{item.check_status == 0}}" class="stu-situ-img1" src="../../images/yes.png"></image>
+            <image wx:if="{{item.check_status == 1}}" class="stu-situ-img2" src="../../images/belate.png"></image>
+            <image wx:if="{{item.check_status == 2}}" class="stu-situ-img2" src="../../images/truancy.png"></image>
+            <image wx:if="{{item.check_status == 3}}" class="stu-situ-img2" src="../../images/leave.png"></image>
+            <image wx:if="{{item.check_status == 4}}" class="stu-situ-img2" src="../../images/leaved.png"></image>
+            
 
-        </view>
-      </picker>
+          </view>
+        </picker>
+      </view>
       <view class="stu-info-fgshu"></view>
     </view>
     <!-- 已标注结束 -->
@@ -76,24 +76,26 @@
       <view class="stu-info-headtitle">未标注</view>
     </view>
     <view class="stu-info-layout">
-      <picker bindchange="stu_situ_picker" value="{{stu_situ_index}}" range="{{stu_situ}}">
-        <view class="stu-info">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="syu-name">王璐瑶</view>
-          <!-- 请假状态图 -->
-          <image wx:if="{{stu_situ_index == 0}}" class="stu-situ-img1" src="../../images/yes.png"></image>
-          <image wx:if="{{stu_situ_index == 1}}" class="stu-situ-img2" src="../../images/truancy.png"></image>
-          <image wx:if="{{stu_situ_index == 2}}" class="stu-situ-img2" src="../../images/belate.png"></image>
-          <image wx:if="{{stu_situ_index == 3}}" class="stu-situ-img2" src="../../images/leave.png"></image>
-          <image wx:if="{{stu_situ_index == 4}}" class="stu-situ-img2" src="../../images/leaved.png"></image>
-          
+      <view wx:for="{{students_unsigned}}" wx:key="unsigned_index">
+        <picker bindchange="stu_unsitu_picker" value="{{stu_situ_index}}" range="{{stu_situ}}" data-unxb='{{index}}'>
+          <view class="stu-info">
+            <image class="stu-avatar" src="{{item.avatar}}"></image>
+            <view class="syu-name">{{item.realname}}</view>
+            <!-- 请假状态图 -->
+            <image wx:if="{{item.status == 0}}" class="stu-situ-img1" src="../../images/yes.png"></image>
+            <image wx:if="{{item.status == 1}}" class="stu-situ-img2" src="../../images/belate.png"></image>
+            <image wx:if="{{item.status == 2}}" class="stu-situ-img2" src="../../images/truancy.png"></image>
+            <image wx:if="{{item.status == 3}}" class="stu-situ-img2" src="../../images/leave.png"></image>
+            <image wx:if="{{item.status == 4}}" class="stu-situ-img2" src="../../images/leaved.png"></image>
+            
 
-        </view>
-      </picker>
+          </view>
+        </picker>
+      </view>
     </view>
     <!-- 未标注结束 -->
 
-    <view class='submit'>提交</view>
+    <view class='submit' bindtap='submit'>提交</view>
     
 
     
