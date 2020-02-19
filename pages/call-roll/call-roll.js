@@ -27,7 +27,7 @@ Page({
       if (d.data.status == 1) {
         that.setData({
           tea_info: d.data.data.info,
-          student: d.data.data.student
+          student_signed: d.data.data.student_signed
         })
         
       }
