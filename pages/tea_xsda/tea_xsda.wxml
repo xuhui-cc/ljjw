@@ -101,7 +101,7 @@
 
         <view class="flex">
           <view class="ks-name">{{item.mock_name}}</view>
-          <view class="ks-date">{{classname.classname}}</view>
+          <view class="ks-date">{{item.mock_date}}</view>
         </view>
         <view class="flex">
           <view class="bj-name">{{item.classname}}</view>
