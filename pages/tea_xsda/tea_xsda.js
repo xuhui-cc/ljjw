@@ -1,4 +1,5 @@
 // pages/tea_xsda/tea_xsda.js
+const app = getApp()
 Page({
 
   /**
@@ -12,7 +13,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),    //老师uid
+      "stu_id":7
+    }
+    console.log(params)
+    app.ljjw.jwViewStudentScores(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        that.setData({
+          student_score: d.data.data
+        })
+        console.log(that.data.student_score[0].mock_date.length)
+        
 
+        console.log("学生档案——成绩获取成功")
+      }
+
+    })
   },
 
 

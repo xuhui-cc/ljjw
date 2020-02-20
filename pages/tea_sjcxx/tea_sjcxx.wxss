@@ -15,6 +15,7 @@ page{
   margin-top: 44rpx;
   width:115rpx;
   height:115rpx;
+  border-radius: 50%;
 }
 
 .name{
@@ -64,7 +65,7 @@ page{
 .byyx-cont{
   margin-left: 162rpx;
   margin-top: 58rpx;
-  width:334rpx;
+  width:350rpx;
   height:40rpx;
   font-size:28rpx;
   font-family:PingFang SC;

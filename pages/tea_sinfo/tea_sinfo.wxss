@@ -10,6 +10,13 @@ page{
   display: flex;
   z-index: 100;
 }
+.back-img{
+  margin-left: 30rpx;
+  margin-top: 120rpx;
+  margin-right: 57rpx;
+  width: 27rpx;
+  height: 27rpx;
+}
 .bar-class{
   margin-left: 30rpx;
   margin-top: 108rpx;

@@ -2,6 +2,7 @@
 
   <!-- 导航栏 -->
   <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png'></image>
     <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
       <view class="bar-class">{{tea_class[tea_class_index].name}}</view>
     </picker>
