@@ -1,5 +1,92 @@
 page{
-  background: rgba(251,251,252,1)
+  background:rgba(255,255,255,1);
+}
+.mask-layout{
+  position: absolute;
+  display: block;
+  width:750rpx;
+  height:1624rpx;
+  background:rgba(0,0,0,1);
+  opacity:0.54;
+  z-index: 200;
+}
+.reject-layout{
+  position: absolute;
+  margin-top: 300rpx;
+  margin-left: 86rpx;
+  width:578rpx;
+  height:659rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+  z-index: 210;
+}
+.reject-close{
+  margin-top: 21rpx;
+  margin-left: 518rpx;
+  width:36rpx;
+  height:36rpx;
+}
+.reject-head{
+  display: flex;
+}
+.reject-shu{
+  margin-left: 44rpx;
+  margin-top: 5rpx;
+  width:5rpx;
+  height:13rpx;
+  background:rgba(45,193,160,1);
+  opacity:1;
+  border-radius:224rpx;
+}
+.reject-title{
+  margin-left: 14rpx;
+  margin-top: -13rpx;
+  width:120rpx;
+  height:42rpx;
+  font-size:30rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:42rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
+}
+.reject-cont-lay{
+  margin-left: 43rpx;
+  margin-top: 25rpx;
+  width:492rpx;
+  height:357rpx;
+  background:rgba(246,246,246,1);
+  opacity:1;
+  border-radius:14rpx;
+}
+.reject-for{
+  margin-left: 27rpx;
+  padding-top: 24rpx;
+  width:440rpx;
+  height:300rpx;
+  font-size:28rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:28rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.reject-sub{
+  
+  margin-left: 134rpx;
+  margin-top: 55rpx;
+  width: 331rpx;
+  height: 80rpx;
+  font-size:32rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:80rpx;
+  text-align: center;
+  color:rgba(255,255,255,1);
+  
+  opacity:1;
+  border-radius:49rpx;
 }
 .record-bar{
   display: flex;
@@ -44,10 +131,13 @@ page{
   top:65rpx;
   left: 22rpx; 
 }
+.interval{
+  width: 750rpx;
+  height: 16rpx;
+  background:rgba(251,251,252,1);
+}
 .xq{
-  margin-top: 16rpx;
   width:750rpx;
-  
   background:rgba(255,255,255,1);
   opacity:1;
 }
@@ -73,12 +163,9 @@ page{
   height:18rpx;
 }
 .cont-layout{
-
   margin-top: 35rpx;
-  
   width:750rpx;
   /* background: rgb(182, 131, 131); */
-  
 }
 .dot{
   margin-left: 32rpx;
@@ -88,7 +175,7 @@ page{
 }
 .date{
   margin-left: 23rpx;
-  width:208rpx;
+  width:250rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
@@ -103,11 +190,12 @@ page{
   margin-top: 27rpx;
   width:42rpx;
   height:42rpx;
+  border-radius: 50%;
 }
 .name{
   margin-left: 10rpx;
   margin-top: 29rpx;
-  width:158rpx;
+  width:190rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;
@@ -137,9 +225,9 @@ page{
   height:240rpx;
 }
 .add{
-  position: fixed;
+  /* position: fixed; */
   margin-left: 30rpx;
-  margin-top: 1300rpx;
+  margin-top: 550rpx;
   display: flex;
   width:690rpx;
   height:90rpx;
@@ -217,7 +305,7 @@ page{
   height:20rpx;
 }
 .sl-cj{
-  margin-left: 223rpx;
+  margin-left: 210rpx;
   margin-top: 23rpx;
   width:76rpx;
   height:90rpx;
@@ -225,11 +313,12 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:90rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }
 .km-sl{
-  margin-left: 235rpx;
+  margin-left: 230rpx;
   
   width:52rpx;
   height:37rpx;
@@ -241,7 +330,7 @@ page{
   opacity:1;
 }
 .xc-cj{
-  margin-left: 153rpx;
+  margin-left: 135rpx;
   margin-top: 23rpx;
   width:76rpx;
   height:90rpx;
@@ -249,6 +338,7 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:90rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }
@@ -333,6 +423,7 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:37rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }
@@ -345,6 +436,13 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:37rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
+}
+.null_img{
+  margin-left: 224rpx;
+  margin-top: 200rpx;
+  width: 321rpx;
+  height: 318rpx;
 }

@@ -1,5 +1,21 @@
 <view class="container">
 
+  <view class="mask-layout" wx:if="{{add_mask}}"></view>
+  <view class="reject-layout" wx:if="{{add_mask}}">
+    <image class="reject-close" src="../../images/close.png" bindtap='close'></image>
+    <view class="reject-head">
+      <view class="reject-shu"></view>
+      <view wx:if="{{aud == 0}}" class="reject-title">学生学情</view>
+      <view wx:else="{{aud == 1}}" class="reject-title">学生概况</view>
+    </view>
+    <view class="reject-cont-lay">
+      <textarea wx:if="{{aud == 0}}" class="reject-for" placeholder="请输入该学生学情分析" bindinput='input_condition'></textarea>
+      <textarea wx:else="{{aud == 1}}" class="reject-for" placeholder="请输入该学生概况分析" bindinput='input_condition'></textarea>
+    </view>
+    <view class="reject-sub" style="{{input_condition? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{input_condition?'add_submit':''}}">确定</view>
+  
+  </view>
+
     <!-- 成绩分类显示菜单栏 -->
   <view class="record-bar">
     <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">学情</text>
@@ -7,45 +23,41 @@
     <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">成绩</text>
   </view>
   <!-- 成绩分类显示菜单栏 -->
+  <view class='interval'></view>
 
   <!-- 学情 -->
   <view wx:if="{{aud == 0}}" class="xq">
 
-    <view class="flex">
-      <view class="kemu">申论</view>
-      <image class="select" src="../../images/next.png"></image>
-    </view>
-
-    <view class="cont-layout">
-
-      <view>
-        <image class="xu" src="../../images/route2.png"></image>
-        <view class="flex">
-          <image class="dot" src="../../images/gc.png"></image>
-          <view class="date">2019.12.23  09:30</view>
-        </view>
-        <view class="flex">
-          <image class="ava" src="../../images/avatar.png"></image>
-          <view class="name">哈哈哈哈老师</view>
-        </view>
-        <view class="xqfx">学情分析：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
+    
+    <picker mode='selector' bindchange="cates_picker" range-key="{{'name'}}" value="{{cates_index}}" range="{{cates}}" > 
+      <view class="flex">
+        <view class="kemu">{{cates[cates_index].name}}</view>
+        <image class="select" src="../../images/next.png"></image>
       </view>
-      <view>
-        <image class="xu" src="../../images/route2.png"></image>
-        <view class="flex">
-          <image class="dot" src="../../images/gc.png"></image>
-          <view class="date">2019.12.23  09:30</view>
+    </picker>
+    
+
+    <view class="cont-layout" wx:if="{{studyinfo != ''}}">
+      <view wx:for="{{studyinfo}}" wx:key="studyinfo_index">
+        <view>
+          <image class="xu" src="../../images/route2.png"></image>
+          <view class="flex">
+            <image class="dot" src="../../images/gc.png"></image>
+            <view class="date">{{item.createtime}}</view>
+          </view>
+          <view class="flex">
+            <image class="ava" src="{{item.avatar}}"></image>
+            <view class="name">{{item.teachername}}</view>
+          </view>
+          <view class="xqfx">{{item.memo}}</view>
         </view>
-        <view class="flex">
-          <image class="ava" src="../../images/avatar.png"></image>
-          <view class="name">哈哈哈哈老师</view>
-        </view>
-        <view class="xqfx">学情分析：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
       </view>
     
     </view>
 
-    <view class="add">
+    <image wx:else="" class='null_img' src='../../images/rec_null.png'></image>
+
+    <view class="add" bindtap='add'>
         <image class="add-img" src="../../images/add.png"></image>
         <view class="xj">新建</view>
     </view>
@@ -55,37 +67,28 @@
 
 
   <!-- 概况 -->
-  <view wx:if="{{aud == 1}}" class="xq">
-    <view class="cont-layout">
-
-      <view>
-        <image class="xu" src="../../images/route2.png"></image>
-        <view class="flex">
-          <image class="dot" src="../../images/gc.png"></image>
-          <view class="date">2019.12.23  09:30</view>
+  <view wx:if="{{aud == 1}}" class="xq" >
+    <view class="cont-layout" wx:if="{{condition != ''}}">
+      <view wx:for="{{condition}}" wx:key="condition_index">
+        <view>
+          <image class="xu" src="../../images/route2.png"></image>
+          <view class="flex">
+            <image class="dot" src="../../images/gc.png"></image>
+            <view class="date">{{item.createtime}}</view>
+          </view>
+          <view class="flex">
+            <image class="ava" src="{{item.avatar}}"></image>
+            <view class="name">{{item.teachername}}老师</view>
+          </view>
+          <view class="xqfx">{{item.memo}}</view>
         </view>
-        <view class="flex">
-          <image class="ava" src="../../images/avatar.png"></image>
-          <view class="name">哈哈哈哈老师</view>
-        </view>
-        <view class="xqfx">学生概况：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
-      </view>
-      <view>
-        <image class="xu" src="../../images/route2.png"></image>
-        <view class="flex">
-          <image class="dot" src="../../images/gc.png"></image>
-          <view class="date">2019.12.23  09:30</view>
-        </view>
-        <view class="flex">
-          <image class="ava" src="../../images/avatar.png"></image>
-          <view class="name">哈哈哈哈老师</view>
-        </view>
-        <view class="xqfx">学生概况：在图形推理这块掌握的不熟练，对于图形的解析不到位。</view>
       </view>
     
     </view>
 
-    <view class="add">
+    <image wx:else="" class='null_img' src='../../images/rec_null.png'></image>
+
+    <view class="add" bindtap='add'>
       <image class="add-img" src="../../images/add.png"></image>
       <view class="xj">新建</view>
     </view>
@@ -105,18 +108,19 @@
         </view>
         <view class="flex">
           <view class="bj-name">{{item.classname}}</view>
-          <image class="xl-img" src="../../images/xsj.png"></image>
+          <image wx:if="{{isfold}}" class="xl-img" src="../../images/xsj.png" bindtap='score_fold'></image>
+          <image wx:else="" class="xl-img" src="../../images/ssj.png" bindtap='score_fold'></image>
         </view>
 
         <!-- 下拉展开 -->
-        <view>
+        <view wx:if="{{!isfold}}">
           <view class="flex">
             <view>
-              <view class="sl-cj">75</view>
+              <view class="sl-cj">{{item.sl_score}}</view>
               <view class="km-sl">申论</view>
             </view>
             <view>
-              <view class="xc-cj">98</view>
+              <view class="xc-cj">{{item.xc_score}}</view>
               <view class="km-xc">行测</view>
             </view>
           </view>
@@ -127,10 +131,12 @@
             <view class="rec">分值</view>
           </view>
           <view class="rec-cont">
-            <view class="flex">
-              <view class="km">常识判断</view>
-              <view class="ans-num">96</view>
-              <view class="rec-num">18.5</view>
+            <view wx:for="{{item.xc_scoreinfo}}" wx:key="xc_scoreinfo_index" wx:for-item="xc_scoreinfo">
+              <view class="flex">
+                <view class="km">{{xc_scoreinfo.cateName}}</view>
+                <view class="ans-num">{{xc_scoreinfo.cateDate.correct_num}}</view>
+                <view class="rec-num">{{xc_scoreinfo.cateDate.get_score}}</view>
+              </view>
             </view>
           </view>
           
