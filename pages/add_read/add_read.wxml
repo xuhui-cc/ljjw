@@ -1,13 +1,19 @@
 <view class="container">
 
-    <textarea class="read-cont" placeholder="点击输入文字……"></textarea>
+    <textarea class="read-cont" placeholder="点击输入文字……" bindinput='input_title'></textarea>
 
   <view class="tjzp">添加照片</view>
-  <image class='insert' src='../../images/insert_img.png'></image>
-  <view>
-    <image class="del-img" src="../../images/gdel.png"></image>
-    <image class="image-img" src="../../images/image.png"></image>
+
+  
+  <view class='flex'>
+    <view wx:for="{{imgs}}" wx:key="index">
+      <image class="del-img" data-xb='{{index}}' bindtap='del_img' src="../../images/gdel.png"></image>
+      <image class="image-img" src="{{item}}"></image>
+    </view>
+    <image wx:if="{{imgs.length < 3}}" class='insert' src='../../images/insert_img.png' bindtap='chooseImg'></image>
   </view>
+
+  <view class='submit' bindtap='submit'>提交</view>
   
 
 
