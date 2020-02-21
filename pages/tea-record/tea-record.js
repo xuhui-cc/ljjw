@@ -1,18 +1,43 @@
 // pages/tea-record/tea-record.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-      aud:0,
+    aud:1,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    // var mid = options.mid
+    // that.setData({
+    //   mid : mid
+    // })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "mid": 1,                   //that.data.mid,
+      "type": that.data.aud    //type=1总分type=2行测 type=3 申论
+    }
+    console.log(params)
+    app.ljjw.jwTeacherScoreSubPage(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          totalscore: d.data.data,
+          
+        })
+        console.log("老师成绩详情页获取成功")
+      }
 
+
+    })
   },
 
   aud_select: function (e) {

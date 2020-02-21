@@ -8,6 +8,7 @@ Page({
   data: {
     type: 1,
     aud: 1,
+    tea_class_index:0,
     // role: 4,  //role：4 -学生；1 -老师；2 -教务；3 -管理员
   },
 
@@ -26,22 +27,55 @@ Page({
         role: role
       })
     }
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
+    if(that.data.role == 4){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentScore(params).then(d => {
+        console.log(d)
+        // if (d.data.status == 1) {
+        //   console.log(d.data.data)
+        //   that.setData({
+        //     stu_class: d.data.data
+        //   })
+        //   console.log("所有班级获取成功")
+        // }
+
+
+      })
+    }else if(that.data.role == 1){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwTeacherScoreMainPage(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          console.log(d.data.data)
+          that.setData({
+            tea_class: d.data.data.classes,
+            tea_mock_list: d.data.data.mock_list
+          })
+          console.log("老师成绩首页获取成功")
+        }
+
+
+      })
     }
-    console.log(params)
-    app.ljjw.jwGetStudentScore(params).then(d => {
-      console.log(d)
-      // if (d.data.status == 1) {
-      //   console.log(d.data.data)
-      //   that.setData({
-      //     stu_class: d.data.data
-      //   })
-      //   console.log("所有班级获取成功")
-      // }
+    else if (that.data.role == 2) {
+      console.log("我是教务成绩首页")
+    }
+    
+  },
 
-
+  tea_class_picker: function (e) {
+    let that = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    that.setData({
+      tea_class_index: e.detail.value
     })
   },
 
@@ -53,9 +87,12 @@ Page({
 
   },
 
-  to_tea_recors:function(){
+  to_tea_record:function(e){
+    let that = this
+    var xb = e.currentTarget.dataset.xb 
+    console.log(e.currentTarget.dataset.xb)
     wx.navigateTo({
-      url: '../../pages/tea-record/tea-record',
+      url: '../../pages/tea-record/tea-record?mid=' + that.data.tea_mock_list[xb].id,
     })
   },
   /**

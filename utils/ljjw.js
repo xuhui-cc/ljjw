@@ -180,6 +180,20 @@ function jwAddStudyInfo(params) {
   return fetch.ljjwfetch(URI, 'jwAddStudyInfo', params)
 }
 
+//老师——成绩首页
+function jwTeacherScoreMainPage(params) {
+  return fetch.ljjwfetch(URI, 'jwTeacherScoreMainPage', params)
+}
+
+//老师——成绩详情页
+function jwTeacherScoreSubPage(params) {
+  return fetch.ljjwfetch(URI, 'jwTeacherScoreSubPage', params)
+}
 
 
-module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo}
+
+
+
+
+
+module.exports = { xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage}

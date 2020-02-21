@@ -81,6 +81,7 @@ page{
   margin-top: 78rpx;
   width:136rpx;
   height:136rpx;
+  border-radius:50%;
 }
 .runner-up-ava{
   margin-left: 96rpx;
@@ -95,6 +96,7 @@ page{
   margin-top: 104rpx;
   width:110rpx;
   height:110rpx;
+  border-radius: 50%;
 }
 .runner-up-name{
   margin-left: 128rpx;
@@ -134,7 +136,7 @@ page{
   opacity:1;
 }
 .runner-up-record{
-  margin-left: 125rpx;
+  margin-left: 115rpx;
   margin-top: 26rpx;
   width:62rpx;
   height:48rpx;
@@ -142,11 +144,12 @@ page{
   font-family:PingFang SC;
   font-weight:bold;
   line-height:48rpx;
+  text-align: left;
   color:rgba(39,39,39,1);
   opacity:1;
 }
 .third-record{
-  margin-left: 125rpx;
+  margin-left: 120rpx;
   margin-top: 26rpx;
   width:62rpx;
   height:48rpx;
@@ -154,11 +157,12 @@ page{
   font-family:PingFang SC;
   font-weight:bold;
   line-height:48rpx;
+  text-align: right;
   color:rgba(39,39,39,1);
   opacity:1;
 }
 .champion-record{
-  margin-left: 130rpx;
+  margin-left: 120rpx;
   margin-top: 19rpx;
   width:80rpx;
   height:62rpx;
@@ -166,6 +170,7 @@ page{
   font-family:PingFang SC;
   font-weight:bold;
   line-height:62rpx;
+  text-align: left;
   color:rgba(39,39,39,1);
   opacity:1;
 }
