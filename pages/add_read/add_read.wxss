@@ -44,3 +44,7 @@
   width:46rpx;
   height:46rpx;
 }
+.insert_img{
+  width: 200rpx;
+  height: 200rpx;
+}

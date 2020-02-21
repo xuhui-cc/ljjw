@@ -10,6 +10,7 @@ Page({
     add:false,
     stu_class: [],
     stu_class_index: 0,
+    tea_class_index: 0,
   },
 
   /**
@@ -27,44 +28,88 @@ Page({
         role: role
       })
     }
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-    }
-    console.log(params)
-    app.ljjw.jwGetStudentTaskMain(params).then(d => {
-      if (d.data.status == 1) {
-        console.log(d.data.data)
-        that.setData({
-          message: d.data.data.messages,
-          morning: d.data.data.morning_read,
-          stu_class:d.data.data.classes
-        })
-        that.data.morning.pics = that.data.morning.pics.split(",")
-        for (var j = 0; j < that.data.message.length; j++) {
-          var cscs = 'message[' + j + '].pics'
+    if(that.data.role == 4){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentTaskMain(params).then(d => {
+        if (d.data.status == 1) {
+          console.log(d.data.data)
           that.setData({
-            [cscs]: that.data.message[j].pics.split(",")
+            message: d.data.data.messages,
+            morning: d.data.data.morning_read,
+            stu_class:d.data.data.classes
+          })
+          that.data.morning.pics = that.data.morning.pics.split(",")
+          for (var j = 0; j < that.data.message.length; j++) {
+            var cscs = 'message[' + j + '].pics'
+            that.setData({
+              [cscs]: that.data.message[j].pics.split(",")
+            })
+          }
+
+          that.setData({
+            csmorningRead: that.data.morning,
+            new_message:that.data.message
+          })
+          console.log(that.data.stu_class)
+          console.log(that.data.csmorningRead)
+          console.log("学生任务首页获取成功")
+        }
+
+
+      })
+    }else if(that.data.role == 1){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwTeacherTasksMainPage(params).then(d => {
+
+        if (d.data.status == 1) {
+          that.setData({
+            message: d.data.data.messages,
+            morning: d.data.data.morning_read,
+            tea_class: d.data.data.classes
+          })
+          that.data.morning.pics = that.data.morning.pics.split(",")
+          for (var j = 0; j < that.data.message.length; j++) {
+            var cscs = 'message[' + j + '].pics'
+            that.setData({
+              [cscs]: that.data.message[j].pics.split(",")
+            })
+          }
+
+          that.setData({
+            csmorningRead: that.data.morning,
+            new_message: that.data.message
           })
         }
 
-        that.setData({
-          csmorningRead: that.data.morning,
-          new_message:that.data.message
-        })
-        console.log(that.data.stu_class)
-        console.log(that.data.csmorningRead)
-        console.log("学生任务首页获取成功")
-      }
-
-
-    })
+        console.log("我是老师任务onLoad")
+      })
+      
+    }else if(that.data.role == 2){
+      console.log("我是教务任务onLoad")
+    }else if(that.data.role == 3){
+      console.log("我是管理员任务onLoad")
+    }
   },
 
   stu_class_picker: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       stu_class_index: e.detail.value
+    })
+  },
+
+  tea_class_picker: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      tea_class_index: e.detail.value
     })
   },
 
@@ -98,9 +143,18 @@ Page({
   },
 
   to_stu_mornread: function () {
-    wx.navigateTo({
-      url: '../../pages/stu_mornread/stu_mornread',
-    })
+    let that = this
+    if(that.data.role == 4){
+
+      wx.navigateTo({
+        url: '../../pages/stu_mornread/stu_mornread?class_id=' + thaht.data.stu_class[that.data.stu_class_index].id,
+      })
+    }else if(that.data.role == 1){
+      wx.navigateTo({
+        url: '../../pages/stu_mornread/stu_mornread?class_id=' + that.data.tea_class[that.data.tea_class_index].id,
+      })
+    }
+    
   },
 
   to_detail_news: function (e) {

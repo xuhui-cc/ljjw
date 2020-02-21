@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    aud:1,
+    aud:3,
+    click_detail:[],
   },
 
   /**
@@ -46,6 +47,20 @@ Page({
     that.setData({
       aud: aud
     })
+  },
+
+  click_rank:function(e){
+    let that = this
+    var rank = e.currentTarget.dataset.rank
+    that.setData({
+      click_rank : rank
+    })
+    console.log(that.data.click_rank)
+    
+    that.setData({
+      click_detail: that.data.totalscore[that.data.click_rank]
+    })
+
   },
 
   /**

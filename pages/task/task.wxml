@@ -3,10 +3,16 @@
   <!-- 导航栏 -->
   <view class="nabigation_bar">
     <image wx:if="{{role <= 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
-    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
+    <picker wx:if="{{role == 4}}" mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
       <view class="bar-class">{{stu_class[stu_class_index].classname}}</view>
     </picker>
-    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
+    <picker wx:else="{{role == 1}}" mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
+      <view class="bar-class">{{tea_class[tea_class_index].name}}</view>
+    </picker>
+    <picker wx:if="{{role == 4}}" mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
+      <image class="bar-img" src="../../images/wxsj.png"></image>
+    </picker>
+    <picker wx:else="{{role == 1}}" mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
       <image class="bar-img" src="../../images/wxsj.png"></image>
     </picker>
   </view>

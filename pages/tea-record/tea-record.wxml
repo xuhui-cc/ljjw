@@ -12,30 +12,34 @@
   <view class="champ-layout">
 
     <view class="flex">
-      <view class="champ-rank">
+      <view class="champ-rank" data-rank='{{1}}' bindtap='click_rank'>
         <image class="second-img" src="../../images/second.png"></image>
-        <image class="runner-up-ava" src="{{totalscore[1].avatar}}"></image>
-        <view class="runner-up-name">{{totalscore[1].realname}}</view>
-        <view class="runner-up-record">{{totalscore[1].totalscore}}</view>
+        <image class="runner-up-ava" style="{{click_rank == 1 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="{{totalscore[1].avatar}}"></image>
+        <view class="runner-up-name" style="{{click_rank == 1 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[1].realname}}</view>
+        <view wx:if="{{aud == 1}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].totalscore}}</view>
+        <view wx:elif="{{aud == 2}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].xc_score}}</view>
+        <view wx:else="{{aud == 3}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].sl_score}}</view>
       </view>
 
-      <view class="champ-rank">
+      <view class="champ-rank" data-rank='{{0}}' bindtap='click_rank'>
         <image class="first-img" src="../../images/first.png"></image>
-        <image class="champion-ava" src="{{totalscore[0].avatar}}"></image>
-        <view class="champion-name">{{totalscore[0].realname}}</view>
-        <view class="champion-record">{{totalscore[0].totalscore}}</view>
+        <image class="champion-ava" style="{{click_rank == 0 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="{{totalscore[0].avatar}}"></image>
+        <view class="champion-name" style="{{click_rank == 0 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[0].realname}}</view>
+        <view wx:if="{{aud == 1}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">{{totalscore[0].totalscore}}</view>
+        <view wx:elif="{{aud == 2}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">{{totalscore[0].xc_score}}</view>
+        <view wx:else="{{aud == 3}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">{{totalscore[0].sl_score}}</view>
       </view>
 
-      <view class="champ-rank">
-        <image class="third-img" src="../../images/third.png"></image>
-        <image class="third-ava" src="../../images/avatar.png"></image>
-        <view class="third-name">张帆</view>
-        <view class="third-record">175</view>
+      <view class="champ-rank" data-rank='{{2}}' bindtap='click_rank'>
+        <image class="third-img"  src="../../images/third.png"></image>
+        <image class="third-ava" style="{{click_rank == 2 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="../../images/avatar.png"></image>
+        <view class="third-name" style="{{click_rank == 2 ? 'color:rgba(45,193,160,1);' : ''}}">张帆</view>
+        <view class="third-record {{click_rank == 2 ? 'active': ''}}">175</view>
       </view>
     </view>
 
   
-    <view >
+    <view wx:if="{{click_detail != ''}}">
       <view class="record-detail-heng"></view>
       <view wx:if="{{aud == 2}}">
 
@@ -45,11 +49,13 @@
           <view class="bingo">分值</view>
         </view>
 
-        <view class="rec-for">
-          <view class="flex">
-            <view class="kemu-name">科目名称</view>
-            <view class="bingo-num">25</view>
-            <view class="record">22.5</view>
+        <view class="rec-for" >
+          <view wx:for="{{click_detail.xc_scoreinfo}}" wx:key="xc_index">
+            <view class="flex">
+              <view class="kemu-name">{{item.cateName}}</view>
+              <view class="bingo-num">{{item.cateDate.correct_num}}</view>
+              <view class="record">{{item.cateDate.get_score}}</view>
+            </view>
           </view>
         </view>
 
@@ -64,8 +70,12 @@
 
         <view class="rec-for">
           <view class="flex">
-            <view class="s-kemu-name">科目</view>
-            <view class="s-record">22.5</view>
+            <view class="s-kemu-name">行测</view>
+            <view class="s-record">{{click_detail.xc_score}}</view>
+          </view>
+          <view class="flex">
+            <view class="s-kemu-name">申论</view>
+            <view class="s-record">{{click_detail.sl_score}}</view>
           </view>
         </view>
         
@@ -79,9 +89,11 @@
       </view>
 
       <view class="rec-for">
-        <view class="flex">
-          <view class="s-kemu-name">科目</view>
-          <view class="s-record">22.5</view>
+        <view wx:for="{{click_detail.sl_scoreinfo}}" wx:key="sl_index">
+          <view class="flex">
+            <view class="s-kemu-name">第{{index + 1 }}题</view>
+            <view class="s-record">{{item}}</view>
+          </view>
         </view>
       </view>
         

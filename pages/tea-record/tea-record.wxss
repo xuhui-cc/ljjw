@@ -88,7 +88,7 @@ page{
   margin-top: 104rpx;
   width:110rpx;
   height:110rpx;
-  border:3rpx solid rgba(45,193,160,1);
+  
   border-radius:50%;
 }
 .third-ava{
@@ -148,6 +148,30 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
+.runner-up-record.active{
+  position: relative;
+  margin-left: 115rpx;
+  margin-top: 26rpx;
+  width:62rpx;
+  height:48rpx;
+  font-size:34rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:48rpx;
+  text-align: left;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.runner-up-record.active::after{
+  content: ""; 
+  display: block; 
+  height: 4rpx; 
+  width: 50%; 
+  background: rgba(45,193,160,1);
+  position: absolute;  
+  top:68rpx;
+  left: 30rpx; 
+}
 .third-record{
   margin-left: 120rpx;
   margin-top: 26rpx;
@@ -161,6 +185,30 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
+.third-record.active{
+  position: relative;
+  margin-left: 120rpx;
+  margin-top: 26rpx;
+  width:62rpx;
+  height:48rpx;
+  font-size:34rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:48rpx;
+  text-align: right;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.third-record.active::after{
+  content: ""; 
+  display: block; 
+  height: 4rpx; 
+  width: 50%; 
+  background: rgba(45,193,160,1);
+  position: absolute;  
+  top:68rpx;
+  left: 20rpx; 
+}
 .champion-record{
   margin-left: 120rpx;
   margin-top: 19rpx;
@@ -173,6 +221,30 @@ page{
   text-align: left;
   color:rgba(39,39,39,1);
   opacity:1;
+}
+.champion-record.active{
+  position: relative;
+  margin-left: 120rpx;
+  margin-top: 19rpx;
+  width:80rpx;
+  height:62rpx;
+  font-size:44rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:62rpx;
+  text-align: left;
+  color:rgba(45,193,160,1);
+  opacity:1;
+}
+.champion-record.active::after{
+  content: ""; 
+  display: block; 
+  height: 4rpx; 
+  width: 50%; 
+  background: rgba(45,193,160,1);
+  position: absolute;  
+  top:80rpx;
+  left: 35rpx; 
 }
 .rank-layout{
   margin-top: 16rpx;
@@ -245,7 +317,7 @@ page{
   margin-left: 63rpx;
   margin-top: -8rpx;
   width:626rpx;
-  height:2rpx;
+  height:0rpx;
   border:1rpx solid rgba(233,233,233,1);
   opacity:1;
 }
@@ -287,6 +359,7 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:37rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }
@@ -299,6 +372,7 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:37rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }
@@ -341,19 +415,20 @@ page{
   opacity:1;
 }
 .s-kemu-name{
-  margin-left: 228rpx;
+  margin-left: 220rpx;
   margin-bottom: 16rpx;
-  width:52rpx;
+  width:70rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;
   font-weight:400;
   line-height:37rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }
 .s-record{
-  margin-left: 199rpx;
+  margin-left: 195rpx;
   margin-bottom: 16rpx;
   width:54rpx;
   height:37rpx;
