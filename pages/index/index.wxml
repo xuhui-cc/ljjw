@@ -370,28 +370,37 @@
 
     <!-- 老师考勤 -->
     <view wx:if="{{type == 3}}">
-      <view class="t-cour-layout">
-        <view class="t-call-lay" bindtap="to_t_stuwork">
-          <view class="t-call">查看考勤</view>
-          <image class="t-call-img" src="../../images/gjt.png"></image>
-        </view>
-        <view class="t-info">
-          <image class="t-ava" src="../../images/avatar.png"></image>
-          <view class="t-name">老师：哈哈哈哈</view>
-          <view class="t-class">西安国考集训营逻辑班</view>
-        </view>
-        <view class="t-cour-heng"></view>
-        <view class="t-info">
-          <view class="t-cour-date">时间</view>
-          <view class="t-cour-time">下午</view>
-          <view class="t-cour-date">教室</view>
-          <view class="t-cour-time">301</view>
-        </view>
-        <view class="t-info">
-          <view class="t-cour-cour">课程</view>
-          <view class="t-cour-name">判断推理第一节</view>
+      <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
+        <view class="t-cour-layout">
+          <view class="t-call-lay" data-tea_index='{{index}}' bindtap="to_t_stuwork">
+            <view class="t-call">查看考勤</view>
+            <image class="t-call-img" src="../../images/gjt.png"></image>
+          </view>
+          <view class="t-info">
+            <image class="t-ava" src="{{item.avatar}}"></image>
+            <view class="t-name">老师：{{item.teachername}}</view>
+            <view class="t-class">{{item.classname}}</view>
+          </view>
+          <view class="t-cour-heng"></view>
+          <view class="t-info">
+            <view class="t-cour-date">时间</view>
+            <view class="t-cour-time">{{item.classtime}}</view>
+            <view class="t-cour-date">教室</view>
+            <view class="t-cour-time">{{item.classroom}}</view>
+          </view>
+          <view class="t-info">
+            <view class="t-cour-cour">课程</view>
+            <view class="t-cour-name">{{item.title}}</view>
+          </view>
         </view>
       </view>
+
+      <!-- 课表为空 -->
+      <view wx:if="{{tea_dayCourse == ''}}">
+        <image class='course_null' src='../../images/course_null.png'></image>
+      </view>
+      <!-- 空课表 -->
+      
     </view>
     <!-- 老师考勤结束 -->
 

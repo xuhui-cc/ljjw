@@ -95,7 +95,7 @@ Page({
         }
       })
     }
-    else if(that.data.role == 1){
+    else if(that.data.role <= 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -105,7 +105,7 @@ Page({
       app.ljjw.jwGetCheckOnList(params).then(d => {
         // console.log(d.data.status)
         if (d.data.status == 1) {
-          console.log("我是老师")
+          console.log("或教务")
           console.log(d.data.data)
           that.setData({
             tea_dayCourse: d.data.data.course_list
@@ -115,8 +115,6 @@ Page({
       })
 
       
-    }else if(that.data.role == 2){
-      console.log("我是教务")
     }else if(that.data.role == 3){
       if (that.data.type == 1){
         var params = {
@@ -293,6 +291,25 @@ Page({
         console.log("我是教务请假待审核")
       })
 
+    } else if (that.data.role <= 2 && type == 3) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": that.data.nowDate
+      }
+      console.log(params)
+      app.ljjw.jwGetCheckOnList(params).then(d => {
+        // console.log(d.data.status)
+        if (d.data.status == 1) {
+          console.log("我是老师或教务")
+          console.log(d.data.data)
+          that.setData({
+            tea_dayCourse: d.data.data.course_list
+          })
+          console.log(that.data.tea_dayCourse)
+        }
+      })
+
     }
 
   },
@@ -451,11 +468,15 @@ Page({
     })
   },
 
-  to_t_stuwork:function(){
-    
+  to_t_stuwork:function(e){
+    let that = this
+    console.log(e.currentTarget.dataset.tea_index)
+    var tea_index = e.currentTarget.dataset.tea_index
+    console.log(that.data.tea_dayCourse[tea_index].id)
     wx.navigateTo({
-      url: '../../pages/t_stuwork/t_stuwork',
+      url: '../../pages/t_stuwork/t_stuwork?sid=' + that.data.tea_dayCourse[tea_index].id,
     })
+    
   },
 
   hm_pass:function(e){
@@ -742,7 +763,7 @@ Page({
         }
 
       })
-    }else if(that.data.role == 1){
+    }else if(that.data.role <= 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -758,7 +779,7 @@ Page({
           console.log(that.data.tea_dayCourse)
         }
       })
-      console.log("我是老师某天课表")
+      console.log("我是老师或教务某天课表")
     }
     
 
@@ -780,28 +801,47 @@ Page({
     that.setData({
       clickDate: clickDate
     })
+    if (that.data.role == 4){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": clickDate
+      }
+      console.log(params)
+      app.ljjw.jwGetDayCheckon(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            dayCheckon: d.data.data
+          })
+          console.log(that.data.dayCheckon)
+        }
+        else if (d.data.status == -1) {
+          that.setData({
+            dayCheckon: ''
+          })
+          console.log(that.data.dayCheckon)
+        }
 
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "riqi": clickDate
+      })
+    } else if (that.data.role <= 2) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": clickDate
+      }
+      console.log(params)
+      app.ljjw.jwGetCheckOnList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            tea_dayCourse: d.data.data.course_list
+          })
+          console.log(that.data.tea_dayCourse)
+        }
+      })
+      console.log("我是老师或教务某天考勤")
     }
-    console.log(params)
-    app.ljjw.jwGetDayCheckon(params).then(d => {
-      if (d.data.status == 1) {
-        that.setData({
-          dayCheckon: d.data.data
-        })
-        console.log(that.data.dayCheckon)
-      }
-      else if(d.data.status == -1){
-        that.setData({
-          dayCheckon: ''
-        })
-        console.log(that.data.dayCheckon)
-      }
-
-    })
+    
 
 
   },

@@ -1,4 +1,5 @@
 // pages/t_stuwork/t_stuwork.js
+const app = getApp()
 Page({
 
   /**
@@ -12,7 +13,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    var i = 0
+    var sid = options.sid
+    that.setData({
+      sid: sid
+    })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "sid": sid
+    }
+    console.log(params)
+    app.ljjw.jwViewScheduleCheckOn(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        that.setData({
+          cutschool: d.data.data.cutschool,
+          later: d.data.data.later,
+          normal: d.data.data.normal,
+          leaveschool: d.data.data.leaveschool,
+          askforleave: d.data.data.askforleave,
+        })
 
+      }
+      
+    })
   },
 
   look_stu_datail:function(){

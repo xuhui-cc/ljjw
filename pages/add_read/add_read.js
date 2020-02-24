@@ -24,6 +24,15 @@ Page({
     that.setData({
       title : title
     })
+    if (that.data.title != '' && that.data.imgs != '') {
+      that.setData({
+        submit: true
+      })
+    } else {
+      that.setData({
+        submit: false
+      })
+    }
   },
 
   del_img:function(e){
@@ -34,10 +43,20 @@ Page({
     that.setData({
       imgs:that.data.imgs
     })
+    if (that.data.title != '' && that.data.imgs != '') {
+      that.setData({
+        submit: true
+      })
+    } else {
+      that.setData({
+        submit: false
+      })
+    }
   },
 
   submit:function(){
     let that = this
+    
     var pics = that.data.imgs.join(",");
     var params = {
       "token": wx.getStorageSync("token"),
@@ -48,12 +67,12 @@ Page({
     console.log(params)
     app.ljjw.jwTeacherAddMorningRead(params).then(d => {
       console.log(d)
-      // if (d.data.status == 1) {
-      //   that.setData({
-      //     tea_class: d.data.data.classes
-      //   })
-      //   console.log("老师学生档案获取成功")
-      // }
+      if (d.data.status == 1) {
+        console.log("back")
+        wx.navigateBack({
+          delta: 1  // 返回上一级页面。
+        })
+      }
 
     })
   },
@@ -96,6 +115,15 @@ Page({
                   that.setData({
                     imgs: that.data.img
                   })
+                  if (that.data.title != '' && that.data.imgs != '') {
+                    that.setData({
+                      submit: true
+                    })
+                  } else {
+                    that.setData({
+                      submit: false
+                    })
+                  }
                   console.log(that.data.img)
 
                   // console.log(imgs)

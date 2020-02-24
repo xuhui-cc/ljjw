@@ -1,4 +1,5 @@
 // pages/tea-task/tea-task.js
+const app = getApp()
 Page({
 
   /**
@@ -12,7 +13,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    console.log(params)
+    app.ljjw.jwTeacherTasks(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          task: d.data.data
+        })
+        for(var i=0;i<that.data.task.length;i++){
+          var cs1 = "task[" + i + "].finished_students"
+          var cs2 = "task[" + i + "].notfinished_students"
+          that.setData({
+            [cs1]: that.data.task[i].finished_students.join("、"),
+            [cs2]: that.data.task[i].notfinished_students.join("、"),
+          })
+        }
+        console.log("老师任务获取成功")
+      }
 
+
+    })
   },
 
   /**

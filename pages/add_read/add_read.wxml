@@ -13,7 +13,7 @@
     <image wx:if="{{imgs.length < 3}}" class='insert' src='../../images/insert_img.png' bindtap='chooseImg'></image>
   </view>
 
-  <view class='submit' bindtap='submit'>提交</view>
+  <view class='submit' style="{{submit?'background:rgba(45,193,160,1);':''}}" bindtap="{{submit?'submit':''}}">提交</view>
   
 
 

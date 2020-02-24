@@ -2,40 +2,51 @@
 
 
   <view class="ques-layout">
-    <view >
+    <view wx:for="{{task}}" wx:key="task_index">
       <view class="flex">
-        <view class="ques-ori">来自：徐颖很好老师</view>
-        <view class="ques-date">2019.10.25  20:05</view>
+        <view class="ques-ori">来自：{{item.teachername}}老师</view>
+        <view class="ques-date">{{item.createtime}}</view>
       </view>
       <view class="heng"></view>
       <!-- 问题循环 -->
       <view>
         <view class="flex">
-          <view class="ques-title">1. 12月22日是否就餐？</view>
+          <view class="ques-title">{{item.title}}</view>
           <view class="sq">收起</view>
-          <image class="xl-img" src="../../images/xsj.png"></image>
+          <image class="xl-img" src="../../images/ssj.png"></image>
         </view>
         
-        <view class="ans-layout">
-          <view class="ques-cont">A.校长不让在校服上别别在校服上别别在校服上别别上别别</view>
-          <view class="ques-cont">A.校长不让在</view>
-          <view class="ques-cont">A.校长不让在</view>
-          <view class="ques-cont">A.校长不让在校服上别别校服上别别</view>
+        <!-- 选项式 -->
+        <view wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+          <view class="ans-layout">
+            <view class="ques-cont">A.{{task_detail.options.lists.a}}</view>
+            <view class="ques-cont">B.{{task_detail.options.lists.b}}</view>
+            <view class="ques-cont">C.{{task_detail.options.lists.c}}</view>
+            <view class="ques-cont">D.{{task_detail.options.lists.d}}</view>
+          </view>
         </view>
-        
+        <!-- 选项式 -->
+
+        <!-- 选项式 -->
+        <view wx:if="{{item.type == 3}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+          <view wx:for="{{task_detail.fieldlist.lists}}" wx:for-item="fieldlist" wx:for-key="fieldlist_index" wx:key="{{fieldlist_index}}">
+            <view class='ques-cont'>{{fieldlist}}</view>
+          </view>
+          
+        </view>
+        <!-- 选项式 -->
+
+
       </view>
       <!-- 问题循环 -->
       <view class="heng"></view>
+    
+
+      <view class="finish">已完成：</view>
+      <view class="finish-man">{{item.finished_students}}</view>
+      <view class="unfinish">未完成：</view>
+      <view class="finish-man">{{item.notfinished_students}}</view>
     </view>
-
-    <view class="finish">已完成：</view>
-    <view class="finish-man">韩涛、张梦凡、杨园、马梦、马美英、张祥、张嘉佳、韩文
-静、王佳欣</view>
-<view class="unfinish">未完成：</view>
-    <view class="finish-man">韩涛、张梦凡、杨园、马梦、马美英、张祥、张嘉佳、韩文
-静、王佳欣</view>
-
-  
   
   
     

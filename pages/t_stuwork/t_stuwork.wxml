@@ -8,17 +8,14 @@
         <view class="stu-suit-head">正常到课(12人)：</view>
       </view>
       <view class="stu-suit">
-        <view class="stu-info-layout" bindtap="look_stu_datail">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="stu-name">王璐瑶</view>
-          <view class="stu-xcx">查看详情</view>
+        <view wx:for="{{normal}}" wx:key="normal_index">
+          <view class="stu-info-layout" bindtap="look_stu_datail">
+            <image class="stu-avatar" src="{{item.avatar}}"></image>
+            <view class="stu-name">{{item.realname}}</view>
+            <!-- <view class="stu-xcx">查看详情</view> -->
+          </view>
         </view>
-
-        <view class="stu-info-layout" bindtap="look_stu_datail">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="stu-name">王璐瑶</view>
-          <view class="stu-xcx">查看详情</view>
-        </view>
+      
       </view>
 
       <view class="stu-suit">
@@ -26,10 +23,12 @@
         <view class="stu-suit-head">迟到(12人)：</view>
       </view>
       <view class="stu-suit">
-        <view class="stu-info-layout">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="stu-name">王璐瑶</view>
-          <!-- <view class="stu-xcx">查看详情</view> -->
+        <view wx:for="{{later}}" wx:key="later_index">
+          <view class="stu-info-layout" bindtap="look_stu_datail">
+            <image class="stu-avatar" src="{{item.avatar}}"></image>
+            <view class="stu-name">{{item.realname}}</view>
+            <!-- <view class="stu-xcx">查看详情</view> -->
+          </view>
         </view>
       </view>
 
@@ -38,10 +37,12 @@
         <view class="stu-suit-head">请假(12人)：</view>
       </view>
       <view class="stu-suit">
-        <view class="stu-info-layout">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="stu-name">王璐瑶</view>
-          <view class="stu-xcx">查看详情</view>
+        <view wx:for="{{askforleave}}" wx:key="askforleave_index">
+          <view class="stu-info-layout" bindtap="look_stu_datail">
+            <image class="stu-avatar" src="{{item.avatar}}"></image>
+            <view class="stu-name">{{item.realname}}</view>
+            <view class="stu-xcx">查看详情</view>
+          </view>
         </view>
       </view>
 
@@ -50,10 +51,12 @@
         <view class="stu-suit-head">旷课(12人)：</view>
       </view>
       <view class="stu-suit">
-        <view class="stu-info-layout">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="stu-name">王璐瑶</view>
-          <!-- <view class="stu-xcx">查看详情</view> -->
+        <view wx:for="{{cutschool}}" wx:key="cutschool_index">
+          <view class="stu-info-layout" bindtap="look_stu_datail">
+            <image class="stu-avatar" src="{{item.avatar}}"></image>
+            <view class="stu-name">{{item.realname}}</view>
+            <!-- <view class="stu-xcx">查看详情</view> -->
+          </view>
         </view>
       </view>
 
@@ -62,10 +65,12 @@
         <view class="stu-suit-head">离校(12人)：</view>
       </view>
       <view class="stu-suit">
-        <view class="stu-info-layout">
-          <image class="stu-avatar" src="../../images/avatar.png"></image>
-          <view class="stu-name">王璐瑶</view>
-          <!-- <view class="stu-xcx">查看详情</view> -->
+        <view wx:for="{{leaveschool}}" wx:key="leaveschool_index">
+          <view class="stu-info-layout" bindtap="look_stu_datail">
+            <image class="stu-avatar" src="{{item.avatar}}"></image>
+            <view class="stu-name">{{item.realname}}</view>
+            <!-- <view class="stu-xcx">查看详情</view> -->
+          </view>
         </view>
       </view>
 
