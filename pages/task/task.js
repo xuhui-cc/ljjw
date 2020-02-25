@@ -42,17 +42,24 @@ Page({
             morning: d.data.data.morning_read,
             stu_class:d.data.data.classes
           })
-          that.data.morning.pics = that.data.morning.pics.split(",")
-          for (var j = 0; j < that.data.message.length; j++) {
-            var cscs = 'message[' + j + '].pics'
-            that.setData({
-              [cscs]: that.data.message[j].pics.split(",")
-            })
+          if (that.data.morning.pics != ''){
+            that.data.morning.pics = that.data.morning.pics.split(",")
+          }else{
+            console.log("morning.pics空")
           }
+          
+          // for (var j = 0; j < that.data.message.length; j++) {
+           
+          //     var cscs = 'message[' + j + '].pics'
+          //     that.setData({
+          //       [cscs]: that.data.message[j].pics.split(",")
+          //     })
+            
+          // }
 
           that.setData({
             csmorningRead: that.data.morning,
-            new_message:that.data.message
+            // new_message:that.data.message
           })
           console.log(that.data.stu_class)
           console.log(that.data.csmorningRead)
@@ -76,16 +83,12 @@ Page({
             tea_class: d.data.data.classes
           })
           that.data.morning.pics = that.data.morning.pics.split(",")
-          for (var j = 0; j < that.data.message.length; j++) {
-            var cscs = 'message[' + j + '].pics'
-            that.setData({
-              [cscs]: that.data.message[j].pics.split(",")
-            })
-          }
+          
+          
 
           that.setData({
             csmorningRead: that.data.morning,
-            new_message: that.data.message
+            // new_message: that.data.message
           })
         }
 
@@ -104,6 +107,20 @@ Page({
     this.setData({
       stu_class_index: e.detail.value
     })
+  },
+
+  // 图片预览
+  previewImg: function (e) {
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    // var dxb = e.currentTarget.dataset.dxb
+    console.log(xb)
+    var imgs = that.data.csmorningRead.pics
+    wx.previewImage({
+      current: that.data.csmorningRead.pics[xb],
+      urls: imgs
+    })
+
   },
 
   tea_class_picker: function (e) {
@@ -161,11 +178,11 @@ Page({
     let that = this
     var xb = e.currentTarget.dataset.xb
     console.log(xb)
-    console.log(that.data.new_message[xb])
+    console.log(that.data.message[xb])
     wx.navigateTo({
-      url: '../../pages/detail-news/detail-news?content=' + that.data.new_message[xb].content + '&date=' + that.data.new_message[xb].createtime + '&pics=' + that.data.new_message[xb].pics,
+      url: '../../pages/detail-news/detail-news?content=' + that.data.message[xb].content + '&date=' + that.data.message[xb].createtime + '&pics=' + that.data.message[xb].pics,
     })
-    // url: '../live/live?video_id=' + this.data.video_id + '&lesson_id=' + this.data.lesson_id,
+    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -2,50 +2,82 @@
 
 
   <view class="ques-layout">
-    <view wx:for="{{task}}" wx:key="task_index">
+    <view wx:for="{{task}}" wx:key="task_index" wx:for-index="task_index">
+      <view class='room'></view>
       <view class="flex">
         <view class="ques-ori">来自：{{item.teachername}}老师</view>
         <view class="ques-date">{{item.createtime}}</view>
       </view>
       <view class="heng"></view>
+
       <!-- 问题循环 -->
       <view>
-        <view class="flex">
-          <view class="ques-title">{{item.title}}</view>
-          <view class="sq">收起</view>
-          <image class="xl-img" src="../../images/ssj.png"></image>
+        <view class="flex" data-xb='{{task_index}}' bindtap='fold'>
+          <view class="ques-title">{{item.subject}}</view>
+          <view wx:if="{{item.fold}}" class="sq">收起</view>
+          <view wx:else="" class="sq">详情</view>
+          <image wx:if="{{item.fold}}" class="xl-img" src="../../images/ssj.png"></image>
+          <image wx:else="" class="xl-img" src="../../images/xsj.png"></image>
         </view>
         
-        <!-- 选项式 -->
-        <view wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
-          <view class="ans-layout">
-            <view class="ques-cont">A.{{task_detail.options.lists.a}}</view>
-            <view class="ques-cont">B.{{task_detail.options.lists.b}}</view>
-            <view class="ques-cont">C.{{task_detail.options.lists.c}}</view>
-            <view class="ques-cont">D.{{task_detail.options.lists.d}}</view>
+        <view wx:if="{{item.fold}}">
+          <!-- 选项式 -->
+          <view wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+            <view class='ques-cont'>{{item.title}}</view>
+            <view class="ans-layout">
+              <view class="ques-cont">A.{{task_detail.options.lists.a}}</view>
+              <view class="ques-cont">B.{{task_detail.options.lists.b}}</view>
+              <view class="ques-cont">C.{{task_detail.options.lists.c}}</view>
+              <view class="ques-cont">D.{{task_detail.options.lists.d}}</view>
+            </view>
           </view>
-        </view>
-        <!-- 选项式 -->
+          <!-- 选项式 -->
 
-        <!-- 选项式 -->
-        <view wx:if="{{item.type == 3}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
-          <view wx:for="{{task_detail.fieldlist.lists}}" wx:for-item="fieldlist" wx:for-key="fieldlist_index" wx:key="{{fieldlist_index}}">
-            <view class='ques-cont'>{{fieldlist}}</view>
+          <!-- 字段式 -->
+          <view wx:if="{{item.type == 3}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+            <view class='ques-cont'>{{item.title}}</view>
+            <view wx:for="{{task_detail.fieldlist.lists}}" wx:for-item="fieldlist" wx:for-key="fieldlist_index" wx:key="{{fieldlist_index}}">
+              <view class='ques-cont'>{{fieldlist}}</view>
+            </view>
+            
           </view>
-          
+          <!-- 字段式 -->
+
+          <!-- 考勤式 -->
+          <view wx:if="{{item.type == 4}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+            <view class='ques-cont'>{{item.title}}</view>
+            <view class='ques-cont'>确认考勤{{task_detail.startdate}}~{{task_detail.enddate}}</view>
+            
+          </view>
+          <!-- 考勤式 -->
+
+          <!-- 普通式 -->
+          <view wx:if="{{item.type == 1}}" >
+            <view class='ques-cont'>{{item.title}}</view>
+            <view wx:for="{{item.attach}}" wx:for-item="attach" wx:for-key="attach_index" wx:key="{{attach_index}}">
+              <view class='img_flex' data-xb='{{index}}' data-dxb='{{task_index}}' bindtap='previewImg'>
+                <image class='big_img' src='../../images/big.png'></image>
+                <image class='task_img' src='{{attach}}'></image>
+              </view>
+            </view>
+            
+          </view>
+          <!-- 普通式 -->
+
+          <image class='xu' src='../../images/xu.png'></image>
         </view>
-        <!-- 选项式 -->
-
-
+        
       </view>
       <!-- 问题循环 -->
-      <view class="heng"></view>
+      
     
-
-      <view class="finish">已完成：</view>
-      <view class="finish-man">{{item.finished_students}}</view>
-      <view class="unfinish">未完成：</view>
-      <view class="finish-man">{{item.notfinished_students}}</view>
+      <view class='cs'>
+        <view wx:if="{{item.finished_students}}" class="finish">已完成：</view>
+        <view class="finish-man">{{item.finished_students}}</view>
+        <view wx:if="{{item.notfinished_students}}" class="unfinish">未完成：</view>
+        <view class="finish-man">{{item.notfinished_students}}</view>
+      </view>
+      
     </view>
   
   

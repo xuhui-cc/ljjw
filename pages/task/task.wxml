@@ -44,7 +44,7 @@
       </view>
       <view class="flex_warp">
         <view wx:for="{{csmorningRead.pics}}" wx:key="img_index" >
-          <image class='read-img' src='{{item}}'></image>
+          <image class='read-img' data-xb='{{index}}' bindtap='previewImg' src='{{item}}'></image>
         </view>
       </view>
     </view>
@@ -62,7 +62,7 @@
       <view wx:else="" class="task-cont">学员们提交的任务动态都在这里呦~</view>
     </view>
 
-    <view wx:for="{{new_message}}" wx:key="index" wx:for-index="xb">
+    <view wx:for="{{message}}" wx:key="index" wx:for-index="xb">
       <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
         <view class="flex">
           <view class="shu"></view>

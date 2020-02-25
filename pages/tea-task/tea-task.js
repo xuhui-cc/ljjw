@@ -29,9 +29,17 @@ Page({
         for(var i=0;i<that.data.task.length;i++){
           var cs1 = "task[" + i + "].finished_students"
           var cs2 = "task[" + i + "].notfinished_students"
+          var cs3 = "task[" + i + "].fold"
+          if (that.data.task[i].type == 1){
+            var cs4 = "task[" + i + "].attach"
+            that.setData({
+              [cs4]: that.data.task[i].attach.split(",")
+            })
+          }
           that.setData({
             [cs1]: that.data.task[i].finished_students.join("、"),
             [cs2]: that.data.task[i].notfinished_students.join("、"),
+            [cs3]:false
           })
         }
         console.log("老师任务获取成功")
@@ -39,6 +47,34 @@ Page({
 
 
     })
+  },
+
+  previewImg: function (e) {
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    var dxb = e.currentTarget.dataset.dxb
+    console.log(dxb)
+    console.log(xb)
+    var imgs = that.data.task[dxb].attach
+    wx.previewImage({
+      current: that.data.task[dxb].attach[xb],
+      urls: imgs
+    })
+
+  },
+
+  fold:function(e){
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    console.log(xb)
+    for(var i=0;i<that.data.task.length;i++){
+      if(i == xb){
+        var cs = "task[" + i + "].fold"
+        that.setData({
+          [cs]:!that.data.task[i].fold
+        })
+      }
+    }
   },
 
   /**

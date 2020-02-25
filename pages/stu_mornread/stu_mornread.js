@@ -38,6 +38,19 @@ Page({
     })
   },
 
+  previewImg:function(e){
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    var dxb = e.currentTarget.dataset.dxb
+    console.log(dxb)
+    var imgs = that.data. csmorningRead[dxb].pics
+    wx.previewImage({
+      current: that.data.csmorningRead[dxb].pics[xb],
+      urls: imgs
+    })
+
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -196,6 +209,7 @@ Page({
           })
           console.log(that.data.morningRead)
           console.log("老师每日晨读获取成功")
+          wx.hideLoading();
         }
 
 
