@@ -258,7 +258,7 @@ page{
 }
 .today{
   position: absolute;
-  margin-top: -8rpx;
+  margin-top: -5rpx;
   width:52rpx;
   height:52rpx;
   z-index: 100;
@@ -268,6 +268,14 @@ page{
   width:8rpx;
   height:8rpx;
   background:rgba(70,191,106,1);
+  border-radius:50%;
+  opacity:1;
+}
+.dot1{
+  margin-top: 7rpx;
+  width:8rpx;
+  height:8rpx;
+  /* background:rgba(70,191,106,1); */
   border-radius:50%;
   opacity:1;
 }

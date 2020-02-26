@@ -1,56 +1,53 @@
 <view class="container">
 
     <view class="mask" wx:if="{{stu_detail}}"></view>
-    <view class="stu_num">班级共32人</view>
+    <view class="stu_num">班级共{{stu_totle}}人</view>
     <view class="stu-work-layout">
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{normal}}">
         <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">正常到课(12人)：</view>
+        <view class="stu-suit-head">正常到课({{normal_num}}人)：</view>
       </view>
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{normal}}">
         <view wx:for="{{normal}}" wx:key="normal_index">
           <view class="stu-info-layout" bindtap="look_stu_datail">
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>
-            <!-- <view class="stu-xcx">查看详情</view> -->
           </view>
         </view>
-      
       </view>
 
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{later}}">
         <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">迟到(12人)：</view>
+        <view class="stu-suit-head">迟到({{later_num}}人)：</view>
       </view>
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{later}}">
         <view wx:for="{{later}}" wx:key="later_index">
           <view class="stu-info-layout" bindtap="look_stu_datail">
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>
-            <!-- <view class="stu-xcx">查看详情</view> -->
           </view>
         </view>
       </view>
 
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{askforleave}}">
         <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">请假(12人)：</view>
+        <view class="stu-suit-head">请假({{askforleave_num}}人)：</view>
       </view>
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{askforleave}}">
         <view wx:for="{{askforleave}}" wx:key="askforleave_index">
-          <view class="stu-info-layout" bindtap="look_stu_datail">
+          <view class="stu-info-layout" data-askfor_xb='{{index}}' bindtap="look_stu_datail">
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>
-            <view class="stu-xcx">查看详情</view>
+            <view wx:if="{{item.askforleave_info != ''}}" class="stu-xcx">查看详情</view>
           </view>
         </view>
       </view>
 
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{cutschool}}">
         <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">旷课(12人)：</view>
+        <view class="stu-suit-head">旷课({{cutschool_num}}人)：</view>
       </view>
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{cutschool}}">
         <view wx:for="{{cutschool}}" wx:key="cutschool_index">
           <view class="stu-info-layout" bindtap="look_stu_datail">
             <image class="stu-avatar" src="{{item.avatar}}"></image>
@@ -60,11 +57,11 @@
         </view>
       </view>
 
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{leaveschool}}">
         <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">离校(12人)：</view>
+        <view class="stu-suit-head">离校({{leaveschool_num}}人)：</view>
       </view>
-      <view class="stu-suit">
+      <view class="stu-suit" wx:if="{{leaveschool}}">
         <view wx:for="{{leaveschool}}" wx:key="leaveschool_index">
           <view class="stu-info-layout" bindtap="look_stu_datail">
             <image class="stu-avatar" src="{{item.avatar}}"></image>
@@ -83,31 +80,23 @@
         <view class="mask-title">请假详情</view>
       </view>
       <view class="mask-head">
-        <image class="stu-avatar" src="../../images/avatar.png"></image>
-        <view class="stu-name">韩在于</view>
-        <view class="lea-time">请假时间：2019.12.22  </view>
+        <image class="stu-avatar_detail" src="{{askforleave_avatar}}"></image>
+        <view class="stu-name_detail">{{askforleave_info.stuname}}</view>
+        <view class="lea-time">请假时间：{{askforleave_info.date}}  </view>
       </view>
       <view class="mask-heng"></view>
       <view class="mask-head">
         <view class="lea-cour">请假课程：</view>
         <view class="lea-cour-cont">
-
-
-          <view class="cour-cont">
-            <view class="cour-date">08:00-09:00</view>
-            <view class="cour-name">判断推理第一节</view>
+          <view wx:for="{{askforleave_info.schedule_info}}" wx:key="schedule_index">
+            <view class="cour-cont">
+              <view class="cour-date">{{item.classtime}}</view>
+              <view class="cour-name">{{item.title}}</view>
+            </view>
           </view>
-
-          <view class="cour-cont">
-            <view class="cour-date">08:00-09:00</view>
-            <view class="cour-name">判断推理第一节</view>
-          </view>
-
-
-
         </view>
       </view>
-      <view class="lea-for">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</view>
+      <view class="lea-for">请假事由：{{askforleave_info.reason}}</view>
       <image class="mask-xu" src="../../images/xu.png"></image>
       <view class="lea-pro">
         <view class="mask-head">
@@ -116,18 +105,20 @@
           <view class="start-time">2019-12-22 15:23:12</view>
         </view>
         <image class="pro-img" src="../../images/route.png"></image>
-        <view class="mask-head">
+        <view class="mask-head" wx:if="{{askforleave_info.verify_list[0] != ''}}">
           <image class="mask-cir" src="../../images/gc.png"></image>
-          <view class="pro-two">教务审核通过</view>
-          <view class="pro-ope">操作人：王晓茹</view>
-          <view class="start-time2">2019-12-22 15:23:12</view>
+          <view wx:if="{{askforleave_info.verify_list[0].verify_status == 1}}" class="pro-two" style='color:rgba(70,191,106,1);'>教务审核通过</view>
+          <view wx:elif="{{askforleave_info.verify_list[0].verify_status == 2}}" class="pro-two" style='color:rgba(241,68,68,1);'>教务审核驳回</view>
+          <view class="pro-ope">操作人：{{askforleave_info.verify_list[0].verify_name}}</view>
+          <view class="start-time2">{{askforleave_info.verify_list[0].createtime}}</view>
         </view>
-        <image class="pro-img" src="../../images/route.png"></image>
-        <view class="mask-head">
+        <image wx:if="{{askforleave_info.verify_list[0] != ''}}" class="pro-img" src="../../images/route.png"></image>
+        <view class="mask-head" wx:if="{{askforleave_info.verify_list[1] != ''}}">
           <image class="mask-cir" src="../../images/gc.png"></image>
-          <view class="pro-end">管理员审核通过</view>
-          <view class="pro-ope">操作人：王晓茹</view>
-          <view class="end-time">2019-12-22 15:23:12</view>
+          <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 1}}" style='color:rgba(70,191,106,1);'>管理员审核通过</view>
+          <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 2}}" style='color:rgba(241,68,68,1);'>管理员审核驳回</view>
+          <view class="pro-ope">操作人：{{askforleave_info.verify_list[1].verify_name}}</view>
+          <view class="end-time">{{askforleave_info.verify_list[1].createtime}}</view>
         </view>
       </view>
       

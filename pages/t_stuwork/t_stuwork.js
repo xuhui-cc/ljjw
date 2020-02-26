@@ -29,21 +29,56 @@ Page({
       console.log(d)
       if (d.data.status == 1) {
         that.setData({
+          stu_totle: d.data.data.stucount,
           cutschool: d.data.data.cutschool,
           later: d.data.data.later,
           normal: d.data.data.normal,
           leaveschool: d.data.data.leaveschool,
           askforleave: d.data.data.askforleave,
+          
         })
+        // console.log(that.data.normal.length)
+        if (that.data.normal){
+          that.setData({
+            normal_num: that.data.normal.length,
+          })
+        }
+        if (that.data.cutschool) {
+          that.setData({
+            cutschool_num: that.data.cutschool.length,
+          })
+        }
+        if (that.data.later) {
+          that.setData({
+            later_num: that.data.later.length,
+          })
+        }
+        if (that.data.leaveschool) {
+          that.setData({
+            leaveschool_num: that.data.leaveschool.length,
+          })
+        }
+        if (that.data.askforleave) {
+          that.setData({
+            askforleave_num: that.data.askforleave.length,
+          })
+        }
+
+        
+        
 
       }
       
     })
   },
 
-  look_stu_datail:function(){
+  look_stu_datail:function(e){
     let that = this
+    var askfor_xb = e.currentTarget.dataset.askfor_xb
+    console.log(askfor_xb)
     that.setData({
+      askforleave_info: that.data.askforleave[askfor_xb].askforleave_info,
+      askforleave_avatar: that.data.askforleave[askfor_xb].avatar,
       stu_detail: true
     })
   },

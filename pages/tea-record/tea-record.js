@@ -6,8 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    aud:3,
+    aud:1,
     click_detail:[],
+    click_rank:-1
   },
 
   /**
@@ -52,14 +53,24 @@ Page({
   click_rank:function(e){
     let that = this
     var rank = e.currentTarget.dataset.rank
-    that.setData({
-      click_rank : rank
-    })
-    console.log(that.data.click_rank)
     
-    that.setData({
-      click_detail: that.data.totalscore[that.data.click_rank]
-    })
+    
+    if (that.data.click_detail == '' || rank != that.data.click_rank){
+      that.setData({
+        click_rank: rank
+      })
+      console.log(that.data.click_rank)
+      that.setData({
+        click_detail: that.data.totalscore[that.data.click_rank]
+      })
+    }else{
+      that.setData({
+        click_detail: '',
+        click_rank: -1
+      })
+    }
+    
+    
 
   },
 

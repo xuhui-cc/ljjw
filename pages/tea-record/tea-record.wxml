@@ -32,9 +32,11 @@
 
       <view class="champ-rank" data-rank='{{2}}' bindtap='click_rank'>
         <image class="third-img"  src="../../images/third.png"></image>
-        <image class="third-ava" style="{{click_rank == 2 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="../../images/avatar.png"></image>
-        <view class="third-name" style="{{click_rank == 2 ? 'color:rgba(45,193,160,1);' : ''}}">张帆</view>
-        <view class="third-record {{click_rank == 2 ? 'active': ''}}">175</view>
+        <image class="third-ava" style="{{click_rank == 2 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="{{totalscore[2].avatar}}"></image>
+        <view class="third-name" style="{{click_rank == 2 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[2].realname}}</view>
+        <view wx:if="{{aud == 1}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].totalscore}}</view>
+        <view wx:if="{{aud == 2}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].xc_score}}</view>
+        <view wx:if="{{aud == 3}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[3].sl_score}}</view>
       </view>
     </view>
 

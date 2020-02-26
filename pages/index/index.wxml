@@ -45,12 +45,12 @@
             <view class="calendar-month" wx:if="{{!calendarfold}}">
               <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
                 <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle">{{item[0]}}</view>
                   <view wx:elif="{{item[1] == 'true'}}" class="day">{{item[0]}}</view>
                   <view wx:else="{{item[1] == 'false'}}" class="day1">{{item[0]}}</view>
                  
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                  <view class="dot" ></view>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}} && item[1] == 'true'" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view  class="dot" ></view>
                 </view>
               </view>
             </view>
@@ -294,7 +294,7 @@
           <view class="date-layout">
             <text class="year">2020年</text>
             <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-            <text class="month">1月</text>
+            <text class="month">{{showMonth}}月</text>
             <image class="next-month" src="../../images/next.png"></image>
           </view>
           <view class="heng1"></view>
@@ -309,10 +309,13 @@
             <view class="calendar-month" wx:if="{{!calendarfold}}">
               <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
                 <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
-                  <text wx:else class="day" class="day">{{item[0]}}</text>
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                  <view class="dot" ></view>
+                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                  <view wx:elif="{{item[1] == 'true'}}" class="day">{{item[0]}}</view>
+                  <view wx:else="{{item[1] == 'false'}}" class="day1">{{item[0]}}</view>
+                 
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <view wx:if="{{item[2]}}" class="dot" ></view>
+                  <view wx:else="" class="dot1" ></view>
                 </view>
               </view>
             </view>
@@ -322,7 +325,8 @@
                   <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
                   <text wx:else class="day" >{{item[0]}}</text>
                   <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                  <view class="dot" ></view>
+                  <view wx:if="{{item[2]}}" class="dot" ></view>
+                  <view wx:else="" class="dot1" ></view>
                 </view>
               </view>
           </view>

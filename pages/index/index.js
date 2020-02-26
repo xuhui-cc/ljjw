@@ -21,7 +21,8 @@ Page({
     //当前周数据
     nowWeekData: null,
     //日历是否折叠
-    calendarfold: true
+    calendarfold: true,
+    dot_riqi:[]
   },
   //事件处理函数
   
@@ -55,13 +56,29 @@ Page({
       clickMonth: nowMonth + 1,
       clickDay: nowDay,
     })
-
+    var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) 
     var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
     var nowmonth = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth)
     that.setData({
       nowDate: nowDate,
-      nowmonth: nowmonth
+      nowmonth: nowmonth,
+      showym: showym
     })
+
+    for (var i = 0; i < that.data.nowWeekData.length;i++){
+      var cs = "nowWeekData[" + i + "][2]"
+      that.setData({
+        [cs]:false
+      })
+    }
+    for (var i = 0; i < that.data.weekData.length; i++) {
+      for (var j = 0; j < that.data.weekData[i].length;j++){
+        var cs = "weekData[" + i + "][" + j + "][2]"
+        that.setData({
+          [cs]: false
+        })
+      }
+    }
 
     if(that.data.role == 4){
       var params = {
@@ -108,9 +125,29 @@ Page({
           console.log("或教务")
           console.log(d.data.data)
           that.setData({
-            tea_dayCourse: d.data.data.course_list
+            tea_dayCourse: d.data.data.course_list,
+            tea_courselist: d.data.data.day_list
           })
-          console.log(that.data.tea_dayCourse)
+          for(var i=0;i<that.data.tea_courselist.length;i++){
+            var newarray = [{
+              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
+              d: that.data.tea_courselist[i].riqi.substr(8, 2)
+            }];
+            that.setData({
+              'dot_riqi': that.data.dot_riqi.concat(newarray)
+            });
+            
+          }
+          console.log(that.data.dot_riqi)
+
+          // 日历点点
+          that.dot()
+          
+          
+
+
+           
+          // console.log(that.data.tea_dayCourse)
         }
       })
 
@@ -151,6 +188,53 @@ Page({
 
   },
 
+  dot: function () {
+    let that = this
+    // 本周
+    for (var q = 0; q < that.data.dot_riqi.length; q++) {
+      // console.log(that.data.dot_riqi[q])
+      if (that.data.dot_riqi[q].ym == that.data.showym) {
+        for (var w = 0; w < that.data.nowWeekData.length; w++) {
+          if (that.data.dot_riqi[q].d == that.data.nowWeekData[w][0]) {
+            console.log(that.data.nowWeekData[w][0])
+            var cs = "weekData[" + w + "][2]"
+
+            that.setData({
+              [cs]: true
+            })
+
+          } else {
+            console.log("本周无课")
+          }
+        }
+      }
+
+    }
+
+    // 本月
+    for (var q = 0; q < that.data.dot_riqi.length; q++) {
+      // console.log(that.data.dot_riqi[q])
+      if (that.data.dot_riqi[q].ym == that.data.showym) {
+        for (var w = 0; w < that.data.weekData.length; w++) {
+          for (var e = 0; e < that.data.weekData[w].length; e++) {
+            if (that.data.dot_riqi[q].d == that.data.weekData[w][e][0]) {
+              console.log(that.data.weekData[w][e][0])
+              var cs = "weekData[" + w + "][" + e + "][2]"
+
+              that.setData({
+                [cs]: true
+              })
+            } else {
+              console.log(that.data.weekData[w][e][0] + "无课")
+            }
+          }
+
+        }
+      }
+
+    }
+  },
+
   menu_select:function(e){
     let that = this
     var type = e.currentTarget.dataset.type
@@ -158,6 +242,12 @@ Page({
     that.setData({
       type : type
     })
+    var riqi = ""
+    if (that.data.clickDate) {
+      riqi = that.data.clickDate
+    } else {
+      riqi = that.data.nowDate
+    }
     if(that.data.role == 4 && type == 3){
       //学生某月考勤
       var params = {
@@ -178,7 +268,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "riqi": that.data.nowDate
+        "riqi": riqi
       }
       console.log(params)
       app.ljjw.jwGetDayCheckon(params).then(d => {
@@ -196,7 +286,6 @@ Page({
         }
 
       })
-
 
     }
     else if (that.data.role == 4 && type == 1){
@@ -218,7 +307,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "riqi": nowDate
+        "riqi": riqi
       }
       console.log(params)
       app.ljjw.jwGetDayCourse(params).then(d => {
@@ -292,10 +381,11 @@ Page({
       })
 
     } else if (that.data.role <= 2 && type == 3) {
+      
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "riqi": that.data.nowDate
+        "riqi": riqi
       }
       console.log(params)
       app.ljjw.jwGetCheckOnList(params).then(d => {
@@ -304,15 +394,30 @@ Page({
           console.log("我是老师或教务")
           console.log(d.data.data)
           that.setData({
-            tea_dayCourse: d.data.data.course_list
+            tea_dayCourse: d.data.data.course_list,
+            tea_courselist: d.data.data.day_list
           })
+          for (var i = 0; i < that.data.tea_courselist.length; i++) {
+            var newarray = [{
+              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
+              d: that.data.tea_courselist[i].riqi.substr(8, 2)
+            }];
+            that.setData({
+              'dot_riqi': that.data.dot_riqi.concat(newarray)
+            });
+          }
+          console.log(that.data.dot_riqi)
           console.log(that.data.tea_dayCourse)
+          // 日历点点
+          that.dot()
         }
       })
 
     }
 
   },
+
+  
 
   aud_select : function(e){
     let that = this
@@ -852,6 +957,8 @@ Page({
     that.setData({
       calendarfold: !that.data.calendarfold
     })
+    // 日历点点
+    that.dot()
   },
 
 
