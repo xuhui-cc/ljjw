@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    type : 1
+    // type : 1
 
   },
 
@@ -14,7 +14,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that = this
+    var role = wx.getStorageSync("role")
+    if (!role) {
+      that.setData({
+        role: -1
+      })
+    } else {
+      that.setData({
+        role: role
+      })
+    }
+    var type = options.type
+    var class_id = options.class_id
+    that.setData({
+      type : type,
+      class_id: class_id
+    })
   },
 
   search: function (e) {
@@ -29,7 +45,7 @@ Page({
       })
     }
 
-    if (that.data.type == 1 && that.data.input_title != ''){
+    if (that.data.type == 1 && that.data.input_title != '' && that.data.role == 4){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -55,7 +71,38 @@ Page({
           })
           
           console.log(that.data.csmorningRead)
-          console.log("学生任务首页获取成功")
+          
+        }
+
+
+      })
+    } else if (that.data.type == 1 && that.data.input_title != '' && that.data.role <= 2) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "class_id": that.data.class_id,
+        "keyword": that.data.input_title
+      }
+      console.log(params)
+      app.ljjw.jwTeacherMorningReadMore(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            morningRead: d.data.data
+          })
+
+          for (var i = 0; i < that.data.morningRead.length; i++) {
+            var cs = 'morningRead[' + i + '].pics'
+            that.setData({
+              [cs]: that.data.morningRead[i].pics.split(",")
+            })
+          }
+
+          that.setData({
+            csmorningRead: that.data.morningRead
+          })
+
+          console.log(that.data.csmorningRead)
+
         }
 
 
@@ -73,7 +120,7 @@ Page({
           that.setData({
             mydata: d.data.data
           })
-          console.log("搜索接口获取成功")
+          console.log("资料接口获取成功")
         }else{
           wx.showToast({
             title: d.data.msg,

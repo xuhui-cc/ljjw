@@ -174,7 +174,7 @@
 .head{
   margin-left: 13rpx;
   margin-top: 24rpx;
-  width:120rpx;
+  
   height:42rpx;
   font-size:30rpx;
   font-family:PingFang SC;

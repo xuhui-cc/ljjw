@@ -2,9 +2,9 @@
 
   <!-- 成绩分类显示菜单栏 -->
   <view class="record-bar">
-    <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">总分</text>
-    <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">行测</text>
-    <text class="aud {{aud == 3 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">申论</text>
+    <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">总分</text>
+    <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">行测</text>
+    <text class="aud {{aud == 3 ? 'active': ''}}" bindtap="aud_select" data-aud="{{3}}">申论</text>
   </view>
   <!-- 成绩分类显示菜单栏 -->
 
@@ -36,7 +36,7 @@
         <view class="third-name" style="{{click_rank == 2 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[2].realname}}</view>
         <view wx:if="{{aud == 1}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].totalscore}}</view>
         <view wx:if="{{aud == 2}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].xc_score}}</view>
-        <view wx:if="{{aud == 3}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[3].sl_score}}</view>
+        <view wx:if="{{aud == 3}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].sl_score}}</view>
       </view>
     </view>
 
@@ -109,64 +109,88 @@
 
   <!-- 排名往后 -->
   <view class="rank-layout">
-    <view class="flex">
-      <view class="rank-num">4</view>
-      <image class="rank-ava" src="../../images/avatar.png"></image>
-      <view class="rank-name">哈哈哈哈</view>
-      <view class="rank-record">162</view>
-      <image class="rank-xl" src="../../images/xsj.png"></image>
-    </view>
-    <view class="rank-heng"></view>
-    <view wx:if="{{aud == 2}}">
-
+    <view wx:for="{{scorelist}}" wx:key="list_index">
       <view class="flex">
-        <view class="kemu">科目</view>
-        <view class="bingo">答对题目</view>
-        <view class="bingo">分值</view>
+        <view class="rank-num">{{index + 4}}</view>
+        <image class="rank-ava" src="{{item.avatar}}"></image>
+        <view class="rank-name">{{item.realname}}</view>
+        <view wx:if="{{aud == 1}}" class="rank-record">{{item.totalscore}}</view>
+        <view wx:elif="{{aud == 2}}" class="rank-record">{{item.xc_score}}</view>
+        <view wx:else="{{aud == 3}}" class="rank-record">{{item.sl_score}}</view>
+        <image wx:if="{{item.fold}}" data-xb='{{index}}' class="rank-xl" src="../../images/xsj.png" bindtap='fold'></image>
+        <image wx:else="" data-xb='{{index}}' class="rank-xl" src="../../images/ssj.png" bindtap='fold'></image>
       </view>
+      <view class="rank-heng"></view>
 
-      <view class="rec-for">
-        <view class="flex">
-          <view class="kemu-name">科目名称</view>
-          <view class="bingo-num">25</view>
-          <view class="record">22.5</view>
+      <view wx:if="{{!item.fold}}">
+        <view wx:if="{{aud == 2}}">
+
+          <view class="flex">
+            <view class="kemu">科目</view>
+            <view class="bingo">答对题目</view>
+            <view class="bingo">分值</view>
+          </view>
+
+          <view class="rec-for">
+            <view wx:for="{{item.xc_scoreinfo}}" wx:key="fold_xc_index" wx:for-item="xc_scoreinfo">
+              <view class="flex">
+                <view class="kemu-name">{{xc_scoreinfo.cateName}}</view>
+                <view class="bingo-num">{{xc_scoreinfo.cateDate.correct_num}}</view>
+                <view class="record">{{xc_scoreinfo.cateDate.get_score}}</view>
+                <image wx:if="{{xc_scoreinfo.child_fold == true}}" class='child_xl' src="../../images/xsj.png" data-child_xb='{{index}}' bindtap='child_fold'></image>
+                <image wx:if="{{xc_scoreinfo.child_fold == false}}" class='child_xl' src="../../images/ssj.png" data-child_xb='{{index}}' bindtap='child_fold'></image>
+              </view>
+              <view wx:if="{{!xc_scoreinfo.child_fold}}" wx:for="{{xc_scoreinfo.child}}" wx:key="child" wx:for-item="child">
+                <view class="flex" >
+                  <view class="kemu-name" style='color:rgba(180,180,180,1);'>{{child.cateName}}</view>
+                  <view class="bingo-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.correct_num}}</view>
+                  <view class="record" style='color:rgba(180,180,180,1);'>{{child.cateDate.get_score}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+
+        </view>
+
+        <view wx:if="{{aud == 1}}">
+
+          <view class="flex">
+            <view class="s-kemu">科目</view>
+            <view class="s-bingo">分值</view>
+          </view>
+
+          <view class="rec-for">
+            <view class="flex">
+              <view class="s-kemu-name">行测</view>
+              <view class="s-record">{{item.xc_score}}</view>
+            </view>
+            <view class="flex">
+              <view class="s-kemu-name">申论</view>
+              <view class="s-record">{{item.sl_score}}</view>
+            </view>
+          </view>
+            
+        </view>
+
+        <view wx:if="{{aud == 3}}">
+
+          <view class="flex">
+            <view class="s-kemu">科目</view>
+            <view class="s-bingo">分值</view>
+          </view>
+
+          <view class="rec-for">
+            <view wx:for="{{item.sl_scoreinfo}}" wx:key="fold_sl_index" wx:for-item="sl_scoreinfo">
+              <view class="flex">
+                <view class="s-kemu-name">第{{index + 1 }}题</view>
+                <view class="s-record">{{sl_scoreinfo}}</view>
+              </view>
+            </view>
+          </view>
+            
         </view>
       </view>
-
     </view>
-
-    <view wx:if="{{aud == 1}}">
-
-      <view class="flex">
-        <view class="s-kemu">科目</view>
-        <view class="s-bingo">分值</view>
-      </view>
-
-      <view class="rec-for">
-        <view class="flex">
-          <view class="s-kemu-name">科目</view>
-          <view class="s-record">22.5</view>
-        </view>
-      </view>
-        
-    </view>
-
-    <view wx:if="{{aud == 3}}">
-
-      <view class="flex">
-        <view class="s-kemu">科目</view>
-        <view class="s-bingo">分值</view>
-      </view>
-
-      <view class="rec-for">
-        <view class="flex">
-          <view class="s-kemu-name">科目</view>
-          <view class="s-record">22.5</view>
-        </view>
-      </view>
-        
-    </view>
-  
   </view>
   <!-- 排名往后 -->
 

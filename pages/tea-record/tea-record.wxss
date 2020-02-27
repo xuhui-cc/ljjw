@@ -249,7 +249,7 @@ page{
 .rank-layout{
   margin-top: 16rpx;
   width:750rpx;
-  height:959rpx;
+  /* height:959rpx; */
   background:rgba(255,255,255,1);
   opacity:1;
 }
@@ -288,7 +288,7 @@ page{
   opacity:1;
 }
 .rank-record{
-  margin-left: 280rpx;
+  margin-left: 260rpx;
   margin-top: 32rpx;
   width:50rpx;
   height:40rpx;
@@ -300,8 +300,14 @@ page{
   opacity:1;
 }
 .rank-xl{
-  margin-left: 20rpx;
-  margin-top: 37rpx;
+  margin-left: 40rpx;
+  margin-top: 40rpx;
+  width:22rpx;
+  height:22rpx;
+}
+.child_xl{
+  margin-left: 40rpx;
+  margin-top: 8rpx;
   width:22rpx;
   height:22rpx;
 }

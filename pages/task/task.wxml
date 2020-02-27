@@ -35,8 +35,8 @@
   </view>
 
   <view wx:if="{{role != 3}}">
-    <view class="read-layout" bindtap='to_stu_mornread'>
-      <view class="flex">
+    <view class="read-layout" >
+      <view class="flex" bindtap='to_stu_mornread'>
         <view class="shu"></view>
         <view class="head">每日晨读</view>
         <view class="more">更多</view>
@@ -53,8 +53,8 @@
       <view class="flex">
         <view class="shu"></view>
         <view class="head">任务</view>
-        <image class="tip" src="../../images/tip.png"></image>
-        <view class="tip-num">1</view>
+        <image wx:if="{{role == 4}}" class="tip" src="../../images/tip.png"></image>
+        <view wx:if="{{role == 4}}" class="tip-num">1</view>
         <view class="more">查看</view>
         <image class="more-img" src="../../images/next.png"></image>
       </view>

@@ -32,9 +32,10 @@ Page({
 
   
   to_stu_rearch:function(){
+    let that = this
     var type = 1
     wx.navigateTo({
-      url: '../../pages/stu-rearch/stu-rearch?type=' + type,
+      url: '../../pages/stu-rearch/stu-rearch?type=' + type + '&class_id=' + that.data.class_id,
     })
   },
 

@@ -1,5 +1,6 @@
 page{
-  background: rgba(251,251,252,1)
+  background: rgba(251,251,252,1);
+  margin-bottom: 150rpx;
 }
 .flex_warp{
   margin-left: 100rpx;

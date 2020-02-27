@@ -62,9 +62,9 @@ Page({
     app.ljjw.jwTeacherClassStudents(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
-        // that.setData({
-        //   tea_class: d.data.data.classes
-        // })
+        // var students = d.data.data.students
+        // var cs = JSON.stringify(pySegSort(students.realname))
+        // console.log(cs)
         console.log("老师学生档案获取成功")
       }
 
