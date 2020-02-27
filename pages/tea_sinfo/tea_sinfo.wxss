@@ -116,6 +116,7 @@ color: transparent;
   margin-top: 31rpx;
   width: 60rpx;
   height: 60rpx;
+  border-radius: 50%;
 }
 .xsda-img{
   margin-left: 99rpx;

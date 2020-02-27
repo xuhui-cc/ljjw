@@ -15,13 +15,13 @@
   
   <!-- 左侧列表内容部分 -->
   <scroll-view class="content" enable-back-to-top scroll-into-view="{{toView}}" scroll-y="true" scroll-with-animation="true" bindscroll="onPageScroll"> 
-    <view wx:for="{{listMain}}" wx:for-item="group" wx:key="{{group.id}}"  id="{{ 'inToView'+group.id}}" data-id='{{group.id}}'> 
-      <view class="address_top" >{{group.region}}</view> 
-        <view wx:for="{{group.items}}" wx:for-item="item" wx:key="{{item.brandId}}">
+    <view wx:for="{{dataarr}}" wx:for-item="group" wx:key="{{group.id}}"  id="{{ 'inToView'+group.id}}" data-id='{{group.id}}'> 
+      <view class="address_top" >{{group.groupName}}</view> 
+        <view wx:for="{{group.users}}" wx:for-item="item" wx:key="{{item.brandId}}">
           <view class="flex">
-            <image class="avatar" src="../../images/avatar.png"></image> 
+            <image class="avatar" src="{{item.avatar}}"></image> 
             <view class="heng">
-              <view class="address_bottom" data-id='{{item.brandId}}'>{{item.name}}</view> 
+              <view class="address_bottom" data-id='{{item.brandId}}'>{{item.realname}}</view> 
               <image class="xsda-img" src="../../images/xsda.png"></image>
               <view class="xsda" bindtap="to_tea_xsda">学生档案</view>
               <image class="jczl-img" src="../../images/jczl.png"></image>
@@ -34,9 +34,9 @@
   </scroll-view> 
   <!-- 右侧字母导航 -->
   <view class="orientation_region"> 
-    <block wx:for="{{listMain}}"  wx:key="{{item.id}}"> 
+    <block wx:for="{{dataarr}}"  wx:key="{{item.id}}"> 
       <view class="orientation_city  {{isActive==item.id ? 'active':'' }}" bindtap="scrollToViewFn" data-id="{{item.id}}" >
-        {{item.region}}
+        {{item.groupName}}
       </view> 
     </block> 
   </view>
