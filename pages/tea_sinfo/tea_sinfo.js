@@ -62,9 +62,23 @@ Page({
     app.ljjw.jwTeacherClassStudents(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
+        that.setData({
+          cs:d.data.data.students
+        })
+        console.log(that.data.cs)
         // var students = d.data.data.students
         // var cs = JSON.stringify(pySegSort(students.realname))
         // console.log(cs)
+        // for (var i = 0; i < that.data.cs.length; i++) {
+
+        //   console.log((that.data.cs[i].realname).toPinyin().substr(0, 1))
+
+        // }
+        
+
+
+        
+        
         console.log("老师学生档案获取成功")
       }
 
