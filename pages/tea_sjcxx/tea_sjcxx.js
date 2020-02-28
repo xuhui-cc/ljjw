@@ -13,10 +13,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     let that = this
+    var stu_id = options.stu_id
+    console.log(stu_id + "stu_id")
+    that.setData({
+      stu_id: stu_id
+    })
     var params = {
       "token": wx.getStorageSync("token"),
-      "uid": 2254,
+      "stuid": that.data.stu_id,
     }
     console.log(params)
     app.ljjw.jwViewStudentProfile(params).then(d => {
@@ -25,9 +31,9 @@ Page({
         that.setData({
           student_info: d.data.data
         })
-        var cs = 'student_info.graduate_time'
+        var cs = 'student_info[0].graduate_time'
         that.setData({
-          [cs]: that.timestampToTime(that.data.student_info.graduate_time)
+          [cs]: that.timestampToTime(that.data.student_info[0].graduate_time)
         })
     
         console.log("学生基础信息获取成功")

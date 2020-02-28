@@ -17,11 +17,16 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+    var stu_id = options.stu_id
+    console.log(stu_id +"stu_id")
+    that.setData({
+      stu_id: stu_id
+    })
     if(that.data.aud ==2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id":7
+        "stu_id":that.data.stu_id
       }
       console.log(params)
       app.ljjw.jwViewStudentScores(params).then(d => {
@@ -50,7 +55,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id": 7
+        "stu_id": that.data.stu_id
       }
       console.log(params)
       app.ljjw.jwViewStudentSumary(params).then(d => {
@@ -68,7 +73,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id": 7
+        "stu_id": that.data.stu_id
       }
       console.log(params)
       app.ljjw.jwViewStudentStudyInfo(params).then(d => {
@@ -104,7 +109,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id": 7
+        "stu_id": that.data.stu_id
       }
       console.log(params)
       app.ljjw.jwViewStudentStudyInfo(params).then(d => {
@@ -122,7 +127,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id": 7
+        "stu_id": that.data.stu_id
       }
       console.log(params)
       app.ljjw.jwViewStudentSumary(params).then(d => {
@@ -139,7 +144,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id": 7
+        "stu_id": that.data.stu_id
       }
       console.log(params)
       app.ljjw.jwViewStudentScores(params).then(d => {
@@ -196,7 +201,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id": 7,
+        "stu_id": that.data.stu_id,
         "type": 1,
         "cate_id": that.data.cates[that.data.cates_index].id,
         "memo": that.data.input_condition
@@ -216,7 +221,7 @@ Page({
         var params = {
           "token": wx.getStorageSync("token"),
           "uid": wx.getStorageSync("uid"),    //老师uid
-          "stu_id": 7,
+          "stu_id": that.data.stu_id,
           "cateid": that.data.cates[that.data.cates_index].id
         }
         console.log(params)
@@ -236,7 +241,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),    //老师uid
-        "stu_id": 7,
+        "stu_id": that.data.stu_id,
         "type": 2,
         "memo": that.data.input_condition
       }
@@ -269,7 +274,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),    //老师uid
-      "stu_id": 7,
+      "stu_id": that.data.stu_id,
       "cateid": that.data.cates[that.data.cates_index].id
     }
     console.log(params)

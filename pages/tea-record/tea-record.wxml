@@ -57,7 +57,16 @@
               <view class="kemu-name">{{item.cateName}}</view>
               <view class="bingo-num">{{item.cateDate.correct_num}}</view>
               <view class="record">{{item.cateDate.get_score}}</view>
-            </view>
+                <image wx:if="{{item.child_fold == true}}" class='child_xl' src="../../images/xsj.png" data-child_xb='{{index}}' bindtap='rank_child_fold'></image>
+                <image wx:if="{{item.child_fold == false}}" class='child_xl' src="../../images/ssj.png" data-child_xb='{{index}}' bindtap='rank_child_fold'></image>
+              </view>
+              <view wx:if="{{!item.child_fold}}" wx:for="{{item.child}}" wx:key="child" wx:for-item="child">
+                <view class="flex" >
+                  <view class="kemu-name" style='color:rgba(180,180,180,1);'>{{child.cateName}}</view>
+                  <view class="bingo-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.correct_num}}</view>
+                  <view class="record" style='color:rgba(180,180,180,1);'>{{child.cateDate.get_score}}</view>
+                </view>
+              </view>
           </view>
         </view>
 

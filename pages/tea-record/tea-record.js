@@ -55,8 +55,8 @@ Page({
     var aud = e.currentTarget.dataset.aud
     that.setData({
       aud: aud,
-      // click_detail: '',
-      // click_rank: -1
+      click_detail: '',
+      click_rank: -1
     })
     
     var params = {
@@ -74,9 +74,9 @@ Page({
           totalscore: d.data.data,
           scorelist: d.data.data.splice(3),
         })
-        that.setData({
-          click_detail: that.data.totalscore[that.data.click_rank]
-        })
+        // that.setData({
+        //   click_detail: that.data.totalscore[that.data.click_rank]
+        // })
         
         for (var i = 0; i < that.data.scorelist.length; i++) {
           var cs = "scorelist[" + i + "].fold"
@@ -102,14 +102,31 @@ Page({
               }
             }
           }
+
+          for (var i = 0; i < that.data.totalscore.length; i++) {
+            for (var j = 0; j < that.data.totalscore[i].xc_scoreinfo.length; j++) {
+              if (that.data.totalscore[i].xc_scoreinfo[j].child) {
+                var cs = "totalscore[" + i + "].xc_scoreinfo[" + j + "].child_fold"
+                that.setData({
+                  [cs]: true
+                })
+              }
+              else {
+                var cs = "totalscore[" + i + "].xc_scoreinfo[" + j + "].child_fold"
+                that.setData({
+                  [cs]: 'null'
+                })
+              }
+            }
+          }
         }
         
-        if (that.data.fold_num >= 0){
-          var cs1 = "scorelist[" + that.data.fold_num + "].fold"
-          that.setData({
-            [cs1]: !that.data.scorelist[that.data.fold_num].fold
-          })
-        }
+        // if (that.data.fold_num >= 0){
+        //   var cs1 = "scorelist[" + that.data.fold_num + "].fold"
+        //   that.setData({
+        //     [cs1]: !that.data.scorelist[that.data.fold_num].fold
+        //   })
+        // }
         
         console.log("老师成绩详情页获取成功")
       }
@@ -147,6 +164,16 @@ Page({
     var cs = "scorelist[" + that.data.fold_num + "].xc_scoreinfo[" + child_xb +"].child_fold"
     that.setData({
       [cs]: !that.data.scorelist[that.data.fold_num].xc_scoreinfo[child_xb].child_fold
+    })
+  },
+
+  rank_child_fold: function (e) {
+    let that = this
+    var child_xb = e.currentTarget.dataset.child_xb
+    console.log(child_xb + "=======xb")
+    var cs = "click_detail.xc_scoreinfo[" + child_xb + "].child_fold"
+    that.setData({
+      [cs]: !that.data.click_detail.xc_scoreinfo[child_xb].child_fold
     })
   },
 

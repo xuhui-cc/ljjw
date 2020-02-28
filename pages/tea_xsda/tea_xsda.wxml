@@ -125,6 +125,23 @@
             </view>
           </view>
           <view class="rec-heng"></view>
+
+          <!-- 申论 -->
+          <view class="flex">
+            <view class="km-title">题表</view>
+            <view class="rec_sl">分值</view>
+          </view>
+          <view class="rec-cont">
+            <view wx:for="{{item.sl_scoreinfo}}" wx:key="sl_scoreinfo_index" wx:for-item="sl_scoreinfo">
+              <view class="flex">
+                <view class="km_sl">第{{index+ 1}}题</view>
+                <view class="rec-num_sl">{{sl_scoreinfo}}</view>
+              </view>
+            </view>
+          </view>
+          <!-- 申论结束 -->
+
+          <!-- 行测 -->
           <view class="flex">
             <view class="km-title">科目</view>
             <view class="ans">答对题目</view>
@@ -137,8 +154,16 @@
                 <view class="ans-num">{{xc_scoreinfo.cateDate.correct_num}}</view>
                 <view class="rec-num">{{xc_scoreinfo.cateDate.get_score}}</view>
               </view>
+              <view wx:for="{{xc_scoreinfo.child}}" wx:key="child_index" wx:for-item="child">
+                <view class="flex">
+                  <view class="km" style='color:rgba(180,180,180,1);'>{{child.cateName}}</view>
+                  <view class="ans-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.correct_num}}</view>
+                  <view class="rec-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.get_score}}</view>
+                </view>
+              </view>
             </view>
           </view>
+          <!-- 行测结束 -->
           
 
 
