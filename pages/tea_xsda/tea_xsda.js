@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    aud : 2,
+    aud : 0,
     cates_index:0,
     add_mask:false,
     isfold:true,
@@ -17,6 +17,10 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+    var subject_id = wx.getStorageSync("subject_id")
+    that.setData({
+      subject_id: subject_id
+    })
     var stu_id = options.stu_id
     console.log(stu_id +"stu_id")
     that.setData({

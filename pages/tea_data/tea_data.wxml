@@ -23,42 +23,29 @@
  
 
   <!-- 清晰搜索 -->
-  <view>
+  <view wx:for="{{files}}" wx:key="index">
 
-    <view>
-      <view class="pub-date">2019.10.25  20:05</view>
+    <view data-file_xb='{{index}}' bindtap='open_file'>
+      <view class="pub-date">{{item.createtime}}</view>
       <view class="data-layout">
         <view class="flex">
-          <view class="data-tea">来自：王芳慧和老师</view>
+          <view class="data-tea">来自：{{item.pubname}}老师</view>
         </view>
         <view class="data-heng"></view>
         <view class="flex">
           <image class="pdf" src="../../images/pdf.png"></image>
           <view>
-            <view class="data-name">申论必考热点.pdf</view>
-            <view class="data-intro">重点考点汇总，希望同学们可以仔细阅读</view>
-          </view>
-        </view>
-      </view>
-    </view>
-
-    <view>
-      <view class="pub-date">2019.10.25  20:05</view>
-      <view class="data-layout">
-        <view class="flex">
-          <view class="data-tea">来自：王芳慧和老师</view>
-        </view>
-        <view class="data-heng"></view>
-        <view class="flex">
-          <image class="pdf" src="../../images/pdf.png"></image>
-          <view>
-            <view class="data-name">申论必考热点.pdf</view>
-            <view class="data-intro">重点考点汇总，希望同学们可以仔细阅读</view>
+            <view class="data-name">{{item.title}}</view>
+            <view class="data-intro">{{item.intro}}</view>
           </view>
         </view>
       </view>
     </view>
     
+  </view>
+
+  <view wx:if="{{files == ''}}">
+    <image class='file_null_img' src='../../images/file_null.png'></image>
   </view>
   <!-- 清晰搜索 -->
 

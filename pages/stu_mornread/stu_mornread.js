@@ -117,7 +117,7 @@ Page({
 
 
       })
-    }else if(that.data.role == 1){
+    }else if(that.data.role <= 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),

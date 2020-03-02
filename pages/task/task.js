@@ -96,7 +96,32 @@ Page({
       })
       
     }else if(that.data.role == 2){
-      console.log("我是教务任务onLoad")
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwTeacherTasksMainPage(params).then(d => {
+
+        if (d.data.status == 1) {
+          that.setData({
+            message: d.data.data.messages,
+            morning: d.data.data.morning_read,
+            tea_class: d.data.data.classes
+          })
+          that.data.morning.pics = that.data.morning.pics.split(",")
+
+
+
+          that.setData({
+            csmorningRead: that.data.morning,
+            // new_message: that.data.message
+          })
+        }
+
+        
+        console.log("我是教务任务onLoad")
+      })
     }else if(that.data.role == 3){
       console.log("我是管理员任务onLoad")
     }
@@ -153,10 +178,22 @@ Page({
     
   },
 
-  to_add_read:function(){
-    wx.navigateTo({
-      url: '../../pages/add_read/add_read',
+  to_add_read:function(e){
+    let that = this
+    var addtype = e.currentTarget.dataset.addtype
+    that.setData({
+      add:false
     })
+    if(addtype == 1){
+      wx.navigateTo({
+        url: '../../pages/add_read/add_read',
+      })
+    }else if(addtype == 2){
+      wx.navigateTo({
+        url: '../../pages/add_message/add_message',
+      })
+    }
+    
   },
 
   to_stu_mornread: function () {
@@ -166,7 +203,7 @@ Page({
       wx.navigateTo({
         url: '../../pages/stu_mornread/stu_mornread?class_id=' + thaht.data.stu_class[that.data.stu_class_index].id,
       })
-    }else if(that.data.role == 1){
+    }else if(that.data.role <= 2){
       wx.navigateTo({
         url: '../../pages/stu_mornread/stu_mornread?class_id=' + that.data.tea_class[that.data.tea_class_index].id,
       })
@@ -205,6 +242,7 @@ Page({
     else {
       console.log('未执行')
     }
+    this.onLoad()
   },
 
   /**

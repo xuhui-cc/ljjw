@@ -229,6 +229,8 @@ Page({
                   wx.setStorageSync('uid', d.data.uid);
                   wx.setStorageSync('userInfo', d.data.userInfo)
                   wx.setStorageSync('role', d.data.role)
+                  wx.setStorageSync('subject_id', d.data.cate_info.id)
+                  wx.setStorageSync('subject_name', d.data.cate_info.name)
                   
                   that.onLoad()
 

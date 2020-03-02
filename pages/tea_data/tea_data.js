@@ -23,11 +23,47 @@ Page({
       console.log(d)
       if (d.data.status == 1) {
         that.setData({
-          tea_class: d.data.data.classes
+          tea_class: d.data.data.classes,
+          files: d.data.data.files
         })
         console.log("老师的班级资料获取成功")
       }
       
+    })
+  },
+
+  open_file:function(e){
+    let that = this
+    var file_xb = e.currentTarget.dataset.file_xb
+    console.log(file_xb)
+    console.log(that.data.files[file_xb].fileurl)
+    wx.downloadFile({
+      url: that.data.files[file_xb].fileurl, //仅为示例，并非真实的资源
+      success(res) {
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        
+
+        var filePath = res.tempFilePath
+        console.log(filePath)
+        wx.showLoading({
+          title: '资料打开中...',
+        })
+
+        wx.openDocument({
+
+          filePath: filePath,
+
+          success: function (res) {
+
+            console.log('打开文档成功')
+            wx.hideLoading()
+
+          }
+
+        })
+      }
+      
+
     })
   },
 
@@ -46,9 +82,9 @@ Page({
     app.ljjw.jwTeacherClassFiles(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
-        // that.setData({
-        //   tea_class: d.data.data.classes
-        // })
+        that.setData({
+          files: d.data.data.files
+        })
         console.log("老师更换班级资料获取成功")
       }
       // console.log("我是老师的班级资料")
@@ -66,15 +102,16 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
+      "class_id": that.data.tea_class[that.data.tea_class_index].id,
       "keyword": that.data.input_tltle
     }
     console.log(params)
     app.ljjw.jwTeacherClassFiles(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
-        // that.setData({
-        //   tea_class: d.data.data.classes
-        // })
+        that.setData({
+          files: d.data.data.files
+        })
         console.log("老师搜索班级资料获取成功")
       }
       // console.log("我是老师的班级资料")
