@@ -340,25 +340,25 @@
     <!-- 老师点名 -->
     <view wx:if="{{type == 2}}" >
       <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
-        <view class="t-cour-layout" >
-          <view class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
+        <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
+          <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
             <view class="t-call">去点名</view>
             <image class="t-call-img" src="../../images/gjt.png"></image>
           </view>
           <view class="t-info">
             <image class="t-ava" src="{{item.avatar}}"></image>
             <view class="t-name">老师：{{item.teachername}}</view>
-            <view class="t-class">{{item.classname}}</view>
+            <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>
           </view>
           <view class="t-cour-heng"></view>
           <view class="t-info">
-            <view class="t-cour-date">时间</view>
+            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
             <view class="t-cour-time">{{item.classtime}}</view>
-            <view class="t-cour-date">教室</view>
+            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
             <view class="t-cour-time">{{item.classroom}}</view>
           </view>
           <view class="t-info">
-            <view class="t-cour-cour">课程</view>
+            <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
             <view class="t-cour-name">{{item.title}}</view>
           </view>
         </view>
@@ -375,25 +375,26 @@
     <!-- 老师考勤 -->
     <view wx:if="{{type == 3}}">
       <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
-        <view class="t-cour-layout">
+        <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
           <view class="t-call-lay" data-tea_index='{{index}}' bindtap="to_t_stuwork">
-            <view class="t-call">查看考勤</view>
-            <image class="t-call-img" src="../../images/gjt.png"></image>
+            <view class="t-call" style="{{item.teacher_id == uid?'':'color:rgba(212,212,212,1);'}}">查看考勤</view>
+            <image wx:if="{{item.teacher_id == uid}}" class="t-call-img" src="../../images/gjt.png"></image>
+            <image wx:else="" class="t-call-img" src="../../images/next.png"></image>
           </view>
           <view class="t-info">
             <image class="t-ava" src="{{item.avatar}}"></image>
             <view class="t-name">老师：{{item.teachername}}</view>
-            <view class="t-class">{{item.classname}}</view>
+            <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>
           </view>
           <view class="t-cour-heng"></view>
           <view class="t-info">
-            <view class="t-cour-date">时间</view>
+            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
             <view class="t-cour-time">{{item.classtime}}</view>
-            <view class="t-cour-date">教室</view>
+            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
             <view class="t-cour-time">{{item.classroom}}</view>
           </view>
           <view class="t-info">
-            <view class="t-cour-cour">课程</view>
+            <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
             <view class="t-cour-name">{{item.title}}</view>
           </view>
         </view>

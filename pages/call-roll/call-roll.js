@@ -188,7 +188,32 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    let that = this
+    console.log("hh")
+    
 
+    for (var i = 0; i < that.data.students_unsigned.length; i++) {
+      var newarray = [{
+        stu_id: that.data.students_unsigned[i].stu_id,
+        status: that.data.students_unsigned[i].status
+      }];
+      this.setData({
+        'submit': this.data.submit.concat(newarray)
+      });
+    }
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "sid": that.data.sid,
+      "data": that.data.submit
+    }
+    console.log(params)
+    app.ljjw.jwSaveStudentSignIn(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        console.log("点名返回键保存成功")
+
+      }
+    })
   },
 
   /**

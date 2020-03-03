@@ -31,11 +31,13 @@ Page({
     var role = wx.getStorageSync("role")
     if (!role) {
       that.setData({
-        role: -1
+        role: -1,
+        uid: wx.getStorageSync("uid")
       })
     } else {
       that.setData({
-        role: role
+        role: role,
+        uid: wx.getStorageSync("uid")
       })
     }
     console.log("onload")
@@ -197,7 +199,7 @@ Page({
         for (var w = 0; w < that.data.nowWeekData.length; w++) {
           if (that.data.dot_riqi[q].d == that.data.nowWeekData[w][0]) {
       // //       console.log(that.data.nowWeekData[w][0])
-            var cs = "weekData[" + w + "][2]"
+            var cs = "nowWeekData[" + w + "][2]"
 
             that.setData({
               [cs]: true
@@ -214,27 +216,30 @@ Page({
     // 本月
     for (var q = 0; q < that.data.dot_riqi.length; q++) {
       console.log(that.data.dot_riqi[q])
-      // if (that.data.dot_riqi[q].ym == that.data.showym) {
-        // for (var w = 0; w < that.data.weekData.length; w++) {
-      //     for (var e = 0; e < that.data.weekData[w].length; e++) {
-      //       if (that.data.dot_riqi[q].d == that.data.weekData[w][e][0]) {
-      //         console.log(that.data.weekData[w][e][0])
-      //         var cs = "weekData[" + w + "][" + e + "][2]"
+      if (that.data.dot_riqi[q].ym == that.data.showym) {
+        for (var w = 0; w < that.data.weekData.length; w++) {
+          for (var e = 0; e < that.data.weekData[w].length; e++) {
+            if (that.data.weekData[w][e][1] == "true"){
+              if (that.data.dot_riqi[q].d == that.data.weekData[w][e][0]) {
+                console.log(that.data.weekData[w][e][0])
+                var cs = "weekData[" + w + "][" + e + "][2]"
 
-      //         that.setData({
-      //           [cs]: true
-      //         })
-              
-      //         } else {
-      //           console.log(that.data.weekData[w][e][0] + "无课")
-      //         }
-      //     }
+                that.setData({
+                  [cs]: true
+                })
+
+              } else {
+                console.log(that.data.weekData[w][e][0] + "无课")
+              }
+            }
+            
+          }
             
             
           
 
-        // }
-      // }
+        }
+      }
 
     }
   },
@@ -722,7 +727,7 @@ Page({
       that.getMonthData(that.data.showYear, that.data.showMonth);
     }
     if(that.data.role <= 2){
-      var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + "01"
+      var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -789,7 +794,7 @@ Page({
       that.getMonthData(that.data.showYear, that.data.showMonth);
     }
     if (that.data.role <= 2) {
-      var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + "01"
+      var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
