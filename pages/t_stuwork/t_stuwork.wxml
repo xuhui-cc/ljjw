@@ -9,7 +9,7 @@
       </view>
       <view class="stu-suit" wx:if="{{normal}}">
         <view wx:for="{{normal}}" wx:key="normal_index">
-          <view class="stu-info-layout" bindtap="look_stu_datail">
+          <view class="stu-info-layout" >
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>
           </view>
@@ -22,7 +22,7 @@
       </view>
       <view class="stu-suit" wx:if="{{later}}">
         <view wx:for="{{later}}" wx:key="later_index">
-          <view class="stu-info-layout" bindtap="look_stu_datail">
+          <view class="stu-info-layout" >
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>
           </view>
@@ -49,10 +49,10 @@
       </view>
       <view class="stu-suit" wx:if="{{cutschool}}">
         <view wx:for="{{cutschool}}" wx:key="cutschool_index">
-          <view class="stu-info-layout" bindtap="look_stu_datail">
+          <view class="stu-info-layout" >
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>
-            <!-- <view class="stu-xcx">查看详情</view> -->
+            
           </view>
         </view>
       </view>
@@ -63,10 +63,10 @@
       </view>
       <view class="stu-suit" wx:if="{{leaveschool}}">
         <view wx:for="{{leaveschool}}" wx:key="leaveschool_index">
-          <view class="stu-info-layout" bindtap="look_stu_datail">
+          <view class="stu-info-layout" >
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>
-            <!-- <view class="stu-xcx">查看详情</view> -->
+            
           </view>
         </view>
       </view>

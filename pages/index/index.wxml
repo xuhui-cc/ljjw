@@ -295,7 +295,7 @@
             <text class="year">2020年</text>
             <image class="last-month" src="../../images/last.png" bindtap="last"></image>
             <text class="month">{{showMonth}}月</text>
-            <image class="next-month" src="../../images/next.png"></image>
+            <image class="next-month" src="../../images/next.png" bindtap="next"></image>
           </view>
           <view class="heng1"></view>
           <!-- 课表日历 -->

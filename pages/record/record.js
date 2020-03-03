@@ -45,7 +45,7 @@ Page({
 
 
       })
-    }else if(that.data.role == 1){
+    }else if(that.data.role <= 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -65,9 +65,7 @@ Page({
 
       })
     }
-    else if (that.data.role == 2) {
-      console.log("我是教务成绩首页")
-    }
+    
     
   },
 

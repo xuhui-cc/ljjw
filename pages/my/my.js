@@ -224,11 +224,16 @@ Page({
               app.ljjw.xcxjwlogin(params).then(d => {
                 
                 if (d.data.status == 0) {
+                  
+                  var role = d.data.role.split(",")
+                  if(role.length == 2){
+                    role[0] = role[1]
+                  }
                   console.log("登录成功")
                   wx.setStorageSync('token', d.data.token);
                   wx.setStorageSync('uid', d.data.uid);
                   wx.setStorageSync('userInfo', d.data.userInfo)
-                  wx.setStorageSync('role', d.data.role)
+                  wx.setStorageSync('role', role[0])
                   wx.setStorageSync('subject_id', d.data.cate_info.id)
                   wx.setStorageSync('subject_name', d.data.cate_info.name)
                   

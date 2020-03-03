@@ -21,7 +21,7 @@ Page({
     //当前周数据
     nowWeekData: null,
     //日历是否折叠
-    calendarfold: true,
+    calendarfold: false,
     dot_riqi:[]
   },
   //事件处理函数
@@ -196,7 +196,7 @@ Page({
       if (that.data.dot_riqi[q].ym == that.data.showym) {
         for (var w = 0; w < that.data.nowWeekData.length; w++) {
           if (that.data.dot_riqi[q].d == that.data.nowWeekData[w][0]) {
-            console.log(that.data.nowWeekData[w][0])
+      // //       console.log(that.data.nowWeekData[w][0])
             var cs = "weekData[" + w + "][2]"
 
             that.setData({
@@ -213,24 +213,28 @@ Page({
 
     // 本月
     for (var q = 0; q < that.data.dot_riqi.length; q++) {
-      // console.log(that.data.dot_riqi[q])
-      if (that.data.dot_riqi[q].ym == that.data.showym) {
-        for (var w = 0; w < that.data.weekData.length; w++) {
-          for (var e = 0; e < that.data.weekData[w].length; e++) {
-            if (that.data.dot_riqi[q].d == that.data.weekData[w][e][0]) {
-              console.log(that.data.weekData[w][e][0])
-              var cs = "weekData[" + w + "][" + e + "][2]"
+      console.log(that.data.dot_riqi[q])
+      // if (that.data.dot_riqi[q].ym == that.data.showym) {
+        // for (var w = 0; w < that.data.weekData.length; w++) {
+      //     for (var e = 0; e < that.data.weekData[w].length; e++) {
+      //       if (that.data.dot_riqi[q].d == that.data.weekData[w][e][0]) {
+      //         console.log(that.data.weekData[w][e][0])
+      //         var cs = "weekData[" + w + "][" + e + "][2]"
 
-              that.setData({
-                [cs]: true
-              })
-            } else {
-              console.log(that.data.weekData[w][e][0] + "无课")
-            }
-          }
+      //         that.setData({
+      //           [cs]: true
+      //         })
+              
+      //         } else {
+      //           console.log(that.data.weekData[w][e][0] + "无课")
+      //         }
+      //     }
+            
+            
+          
 
-        }
-      }
+        // }
+      // }
 
     }
   },
@@ -711,20 +715,133 @@ Page({
         showYear: that.data.showYear ,
         showMonth: that.data.showMonth - 1
       })
+      var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth)
+      that.setData({
+        showym: showym
+      })
       that.getMonthData(that.data.showYear, that.data.showMonth);
     }
+    if(that.data.role <= 2){
+      var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + "01"
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": showlast
+      }
+      console.log(params)
+      app.ljjw.jwGetCheckOnList(params).then(d => {
+        // console.log(d.data.status)
+        if (d.data.status == 1) {
+          console.log("或教务")
+          console.log(d.data.data)
+          that.setData({
+            tea_dayCourse: d.data.data.course_list,
+            tea_courselist: d.data.data.day_list
+          })
+          for (var i = 0; i < that.data.tea_courselist.length; i++) {
+            var newarray = [{
+              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
+              d: that.data.tea_courselist[i].riqi.substr(8, 2)
+            }];
+            that.setData({
+              'dot_riqi': that.data.dot_riqi.concat(newarray)
+            });
+
+          }
+          console.log(that.data.dot_riqi)
+
+          // 日历点点
+          that.dot()
+
+
+
+
+
+          // console.log(that.data.tea_dayCourse)
+        }
+      })
+
+    }
+    
     
     that.setData({
       calendarfold: false
     })
   },
 
+  next: function () {
+    let that = this
+    if (that.data.showMonth == 12) {
+      that.setData({
+        showYear: that.data.showYear + 1,
+        showMonth: 1
+      })
+      that.getMonthData(that.data.showYear, that.data.showMonth);
+    } else {
+      that.setData({
+        showYear: that.data.showYear,
+        showMonth: that.data.showMonth + 1
+      })
+      var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth)
+      that.setData({
+        showym: showym
+      })
+      that.getMonthData(that.data.showYear, that.data.showMonth);
+    }
+    if (that.data.role <= 2) {
+      var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + "01"
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": showlast
+      }
+      console.log(params)
+      app.ljjw.jwGetCheckOnList(params).then(d => {
+        // console.log(d.data.status)
+        if (d.data.status == 1) {
+          console.log("或教务")
+          console.log(d.data.data)
+          that.setData({
+            tea_dayCourse: d.data.data.course_list,
+            tea_courselist: d.data.data.day_list
+          })
+          for (var i = 0; i < that.data.tea_courselist.length; i++) {
+            var newarray = [{
+              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
+              d: that.data.tea_courselist[i].riqi.substr(8, 2)
+            }];
+            that.setData({
+              'dot_riqi': that.data.dot_riqi.concat(newarray)
+            });
+
+          }
+          console.log(that.data.dot_riqi)
+
+          // 日历点点
+          that.dot()
+
+
+
+
+
+          // console.log(that.data.tea_dayCourse)
+        }
+      })
+
+    }
+
+
+    that.setData({
+      calendarfold: false
+    })
+  },
+
+
   getMonthData(year, month) {
     let that = this;
     that.setData({
       showMonth: month,
       showYear: year
-
     })
     let nowgetdate = new Date();
     let dayData = [];
@@ -824,12 +941,17 @@ Page({
     //拿到当前日期的本周数据
     for (let i = 0; i < weekData.length;i++){
       for (let j = 0; j < weekData[i].length; j++){
-        if (weekData[i][j][0] == new Date().getDate()) {
-          console.log(weekData[i])
-          that.setData({
-            nowWeekData: weekData[i]
-          })
+        // console.log(weekData[i][j][0]  + "============")
+        // console.log(new Date().getDate() + "============")
+        if (weekData[i][j][1] == "true"){
+          if (weekData[i][j][0] == new Date().getDate()) {
+            console.log(weekData[i])
+            that.setData({
+              nowWeekData: weekData[i]
+            })
+          }
         }
+        
       }
      
     }
@@ -846,8 +968,8 @@ Page({
       clickDay: e.currentTarget.dataset.day,
     })
     // console.log(e.currentTarget.dataset.day1)
-    console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
-    var clickDate = that.data.clickYear + "-" + (that.data.clickMonth < 10 ? '0' + (that.data.clickMonth) : that.data.clickMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
+    // console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
+    var clickDate = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
     that.setData({
       clickDate: clickDate
     })
@@ -901,8 +1023,8 @@ Page({
       clickDay: e.currentTarget.dataset.day,
     })
     console.log(e.currentTarget.dataset.day1)
-    console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
-    var clickDate = that.data.clickYear + "-" + (that.data.clickMonth < 10 ? '0' + (that.data.clickMonth) : that.data.clickMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
+    // console.log(that.data.showYear + "-" + that.data.showMonth + "-" + that.data.clickDay + "==================clickDate")
+    var clickDate = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
     that.setData({
       clickDate: clickDate
     })
@@ -958,7 +1080,7 @@ Page({
       calendarfold: !that.data.calendarfold
     })
     // 日历点点
-    that.dot()
+    // that.dot()
   },
 
 
