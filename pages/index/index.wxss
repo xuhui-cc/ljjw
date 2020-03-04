@@ -229,7 +229,7 @@ page{
   font-weight:400;
   line-height:48rpx;
   color:#FF9853;
-  background:rgba(242,250,255,1);
+  /* background:rgba(242,250,255,1); */
   opacity:1;
   text-align: center;
 
@@ -242,7 +242,7 @@ page{
   font-weight:400;
   line-height:48rpx;
   color:rgba(39,39,39,1);
-  background:rgba(242,250,255,1);
+  /* background:rgba(242,250,255,1); */
   opacity:1;
 }
 .day1{
@@ -253,7 +253,7 @@ page{
   font-weight:400;
   line-height:48rpx;
   color:rgba(197,197,197,1);
-  background:rgba(242,250,255,1);
+  /* background:rgba(242,250,255,1); */
   opacity:1;
 }
 .today{
@@ -549,6 +549,32 @@ page{
   font-weight:400;
   line-height:33rpx;
   color:rgba(180,180,180,1);
+  opacity:1;
+}
+.operator_jw{
+  position: absolute;
+  margin-left: 56rpx;
+  margin-top: 65rpx;
+  width:168rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.reject_reason{
+  position: absolute;
+  margin-left: 56rpx;
+  margin-top: 100rpx;
+  width:312rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(39,39,39,1);
   opacity:1;
 }
 .add-btn{
@@ -1002,7 +1028,19 @@ page{
   opacity:1;
 }
 .hm-aud-pro-time{
-  margin-left: 230rpx;
+  margin-left: 185rpx;
+  margin-top: 30rpx;
+  width:244rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
+}
+.admin-aud-pro-time{
+  margin-left: 225rpx;
   margin-top: 30rpx;
   width:244rpx;
   height:33rpx;
@@ -1241,7 +1279,7 @@ page{
 .hm-un-leacour{
   margin-left: 31rpx;
   margin-top: 28rpx;
-  width:284rpx;
+  width:300rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;
@@ -1255,6 +1293,7 @@ page{
   margin-top: 22rpx;
   width:42rpx;
   height:42rpx;
+  border-radius: 50%;
 }
 .hm-un-tname{
   margin-left: 10rpx;
@@ -1363,6 +1402,11 @@ page{
   border:2rpx solid rgba(222,222,222,1);
   opacity:1;
   border-radius:49rpx;
+}
+.gray{
+  width: 750rpx;
+  height: 15rpx;
+  background: rgba(251,251,252,1)
 }
 .hm-aud-layout{
   margin-left: 30rpx;

@@ -1,5 +1,13 @@
 <view class="container">
 
+
+    <!-- 导航栏 -->
+  <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap='go_back'></image>
+      <view class="bar-class">{{classname}}</view>
+  </view>
+  <!-- 导航栏结束 -->
+
     <view class="mask" wx:if="{{stu_detail}}"></view>
     <view class="stu_num">班级共{{stu_totle}}人</view>
     <view class="stu-work-layout">

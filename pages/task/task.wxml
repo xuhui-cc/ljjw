@@ -10,10 +10,10 @@
       <view class="bar-class">{{tea_class[tea_class_index].name}}</view>
     </picker>
     <picker wx:if="{{role == 4}}" mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
-      <image class="bar-img" src="../../images/wxsj.png"></image>
+      <image wx:if="{{stu_class}}"  class="bar-img" src="../../images/wxsj.png"></image>
     </picker>
     <picker wx:else="{{role == 1}}" mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
-      <image class="bar-img" src="../../images/wxsj.png"></image>
+      <image wx:if="{{tea_class}}" class="bar-img" src="../../images/wxsj.png"></image>
     </picker>
   </view>
   <!-- 导航栏结束 -->

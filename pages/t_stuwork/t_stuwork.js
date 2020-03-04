@@ -16,8 +16,10 @@ Page({
     let that = this
     var i = 0
     var sid = options.sid
+    var classname = options.classname
     that.setData({
-      sid: sid
+      sid: sid,
+      classname:classname
     })
     var params = {
       "token": wx.getStorageSync("token"),
@@ -64,9 +66,6 @@ Page({
           })
         }
 
-        
-        
-
       }
       
     })
@@ -87,6 +86,13 @@ Page({
     let that = this
     that.setData({
       stu_detail : false
+    })
+  },
+
+  // 返回上一页
+  go_back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
     })
   },
 

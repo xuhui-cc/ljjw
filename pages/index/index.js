@@ -21,7 +21,7 @@ Page({
     //当前周数据
     nowWeekData: null,
     //日历是否折叠
-    calendarfold: false,
+    calendarfold: true,
     dot_riqi:[]
   },
   //事件处理函数
@@ -29,15 +29,18 @@ Page({
   onLoad: function () {
     let that = this;
     var role = wx.getStorageSync("role")
+    
     if (!role) {
       that.setData({
         role: -1,
-        uid: wx.getStorageSync("uid")
+        uid: wx.getStorageSync("uid"),
+        userInfo : wx.getStorageSync("userInfo")
       })
     } else {
       that.setData({
         role: role,
-        uid: wx.getStorageSync("uid")
+        uid: wx.getStorageSync("uid"),
+        userInfo: wx.getStorageSync("userInfo")
       })
     }
     console.log("onload")
@@ -114,7 +117,7 @@ Page({
         }
       })
     }
-    else if(that.data.role <= 2){
+    else if(that.data.role <= 3){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -177,11 +180,7 @@ Page({
           console.log("我是管理员请假待审核")
         })
         
-      } else if (that.data.type == 2){
-        console.log("我是管理员课表")
-      } else if (that.data.type == 3){
-        console.log("我是管理员考勤")
-      }
+      } 
       
     }
 
@@ -345,51 +344,13 @@ Page({
       })
     }
     else if (that.data.role == 3 && type == 1) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 1
-      }
-      console.log(params)
-      app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
-        } else {
-          that.setData({
-            admin_auding_lea: false
-          })
-        }
-        console.log("我是管理员请假待审核")
-      })
+      that.admin_askfor()
       
     }
     else if (that.data.role == 2 && type == 1) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 1
-      }
-      console.log(params)
-      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
-        } else {
-          that.setData({
-            jw_auding_lea: false
-          })
-        }
-        console.log("我是教务请假待审核")
-      })
+      that.jw_askfor()
 
-    } else if (that.data.role <= 2 && type == 3) {
+    } else if (that.data.role <= 3 && type == 3) {
       
       var params = {
         "token": wx.getStorageSync("token"),
@@ -466,92 +427,17 @@ Page({
         }
       })
     } else if (aud == 0 && that.data.role == 3){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 1
-      }
-      console.log(params)
-      app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
-        } else {
-          that.setData({
-            admin_auding_lea: false
-          })
-        }
-        console.log("我是管理员请假待审核")
-      })
+      that.admin_askfor()
+
       
     } else if (aud == 1 && that.data.role == 3){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 2
-      }
-      console.log(params)
-      app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
-        }else{
-          that.setData({
-            admin_auding_lea :false
-          })
-        }
-        console.log("我是管理员请假已审核")
-      })
-      
+      that.admin_askfor()
+
     } else if (aud == 0 && that.data.role == 2) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 1
-      }
-      console.log(params)
-      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
-        } else {
-          that.setData({
-            jw_auding_lea: false
-          })
-        }
-        console.log("教务请假待审核")
-      })
+      that.jw_askfor()
 
     } else if (aud == 1 && that.data.role == 2) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 2
-      }
-      console.log(params)
-      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
-        } else {
-          that.setData({
-            jw_auded_lea: false
-          })
-        }
-        console.log("教务请假已审核")
-      })
+      that.jw_askfor()
 
     }
   },
@@ -578,7 +464,7 @@ Page({
     var tea_index = e.currentTarget.dataset.tea_index
     console.log(that.data.tea_dayCourse[tea_index].id)
     wx.navigateTo({
-      url: '../../pages/call-roll/call-roll?sid=' + that.data.tea_dayCourse[tea_index].id,
+      url: '../../pages/call-roll/call-roll?sid=' + that.data.tea_dayCourse[tea_index].id + '&classname=' + that.data.tea_dayCourse[tea_index].classname,
     })
   },
 
@@ -588,7 +474,7 @@ Page({
     var tea_index = e.currentTarget.dataset.tea_index
     console.log(that.data.tea_dayCourse[tea_index].id)
     wx.navigateTo({
-      url: '../../pages/t_stuwork/t_stuwork?sid=' + that.data.tea_dayCourse[tea_index].id,
+      url: '../../pages/t_stuwork/t_stuwork?sid=' + that.data.tea_dayCourse[tea_index].id  + '&classname=' + that.data.tea_dayCourse[tea_index].classname,
     })
     
   },
@@ -599,34 +485,48 @@ Page({
       type : 1
     })
     var lea_role = e.currentTarget.dataset.role
-    console.log(lea_role)
+    var ask_xb = e.currentTarget.dataset.ask_xb
+    console.log(lea_role, ask_xb)
     if (lea_role == 3){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
         "type": 1,
-        "ask_id":1
+        "ask_id":that.data.admin_unaud_leave[ask_xb].id
       }
       console.log(params)
       app.ljjw.jwAdminAskforleaveVerify(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-         that.onLoad()
+          wx.showToast({
+            title: '操作成功',
+            duration: 2000
+          })
+
+          that.admin_askfor()
         } 
-        // console.log("我是管理员请假通过")
+        console.log("我是管理员请假通过")
       })
     } else if (lea_role == 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
         "type": 1,
-        "ask_id": 1
+        "ask_id": that.data.hm_unaud_leave[ask_xb].id
       }
       console.log(params)
       app.ljjw.jwJiaowuAskforleaveVerify(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-          that.onLoad()
+
+          wx.showToast({
+            title: '操作成功',
+            duration: 2000
+          })
+          
+          that.jw_askfor()
+          
+
         }
         console.log("我是教务请假通过")
       })
@@ -637,12 +537,17 @@ Page({
 
   hm_rejest:function(e){
     let that = this
+
+    that.setData({
+      type: 1
+    })
     var lea_role = e.currentTarget.dataset.role
-    console.log(lea_role)
+    var ask_xb = e.currentTarget.dataset.ask_xb
 
     that.setData({
       hm_rejest : true,
-      lea_role: lea_role
+      lea_role: lea_role,
+      ask_xb: ask_xb
     })
     
   },
@@ -657,12 +562,15 @@ Page({
 
   reject_pass:function(){
     let that = this
+    that.setData({
+      type : 1
+    })
     if(that.data.lea_role ==3){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
         "type": 2,
-        "ask_id": 1,
+        "ask_id": that.data.admin_unaud_leave[that.data.ask_xb].id,
         "reason" : that.data.input_reason
       }
       console.log(params)
@@ -672,7 +580,12 @@ Page({
           that.setData({
             hm_rejest: false,
           })
-          that.onLoad()
+          wx.showToast({
+            title: '驳回成功',
+            duration: 2000
+          })
+
+          that.admin_askfor()
           console.log("我是管理员请假驳回成功")
         }
         
@@ -682,7 +595,7 @@ Page({
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
         "type": 2,
-        "ask_id": 1,
+        "ask_id": that.data.hm_unaud_leave[that.data.ask_xb].id,
         "reason": that.data.input_reason
       }
       console.log(params)
@@ -692,7 +605,11 @@ Page({
           that.setData({
             hm_rejest: false,
           })
-          that.onLoad()
+         wx.showToast({
+           title: '驳回成功',
+           duration:1500
+         })
+         that.jw_askfor()
           console.log("我是教务请假驳回成功")
         }
 
@@ -726,7 +643,7 @@ Page({
       })
       that.getMonthData(that.data.showYear, that.data.showMonth);
     }
-    if(that.data.role <= 2){
+    if(that.data.role <= 3){
       var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
       var params = {
         "token": wx.getStorageSync("token"),
@@ -793,7 +710,7 @@ Page({
       })
       that.getMonthData(that.data.showYear, that.data.showMonth);
     }
-    if (that.data.role <= 2) {
+    if (that.data.role <= 3) {
       var showlast = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
       var params = {
         "token": wx.getStorageSync("token"),
@@ -995,7 +912,7 @@ Page({
         }
 
       })
-    }else if(that.data.role <= 2){
+    }else if(that.data.role <= 3){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -1055,7 +972,7 @@ Page({
         }
 
       })
-    } else if (that.data.role <= 2) {
+    } else if (that.data.role <= 3) {
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -1086,6 +1003,139 @@ Page({
     })
     // 日历点点
     // that.dot()
+  },
+
+  // 已审核折叠
+  aud_fold:function(e){
+    let that = this
+    var aud_xb = e.currentTarget.dataset.aud_xb
+    console.log(aud_xb)
+    var cs = "hm_aud_leave[" + aud_xb + "].fold"
+    that.setData({
+      [cs]: !that.data.hm_aud_leave[aud_xb].fold
+    })
+
+  },
+
+  admin_aud_fold: function (e) {
+    let that = this
+    var aud_xb = e.currentTarget.dataset.aud_xb
+    console.log(aud_xb)
+    var cs = "admin_aud_leave[" + aud_xb + "].fold"
+    that.setData({
+      [cs]: !that.data.admin_aud_leave[aud_xb].fold
+    })
+
+  },
+
+  jw_askfor:function(){
+    let that = this
+    if(that.data.aud == 0){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1
+      }
+      console.log(params)
+      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+
+          that.setData({
+            hm_unaud_leave: d.data.data
+          })
+          console.log(that.data.hm_unaud_leave)
+        } else {
+          that.setData({
+            hm_unaud_leave: ''
+          })
+        }
+        console.log("我是教务请假待审核")
+      })
+    } else if (that.data.aud == 1){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 2
+      }
+      console.log(params)
+      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            hm_aud_leave: d.data.data
+          })
+          for (var i = 0; i < that.data.hm_aud_leave.length;i++){
+            var cs = "hm_aud_leave[" + i + "].fold"
+            that.setData({
+              [cs] :false
+            })
+          }
+          console.log(that.data.hm_aud_leave)
+        } else {
+          that.setData({
+            hm_aud_leave: ''
+          })
+        }
+        console.log("教务请假已审核")
+      })
+    }
+    
+  },
+
+  admin_askfor: function () {
+    let that = this
+    if (that.data.aud == 0) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1
+      }
+      console.log(params)
+      app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+
+          that.setData({
+            admin_unaud_leave: d.data.data
+          })
+          console.log(that.data.admin_unaud_leave)
+        } else {
+          that.setData({
+            admin_unaud_leave: ''
+          })
+        }
+        console.log("我是管理员请假待审核")
+      })
+    } else if (that.data.aud == 1) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 2
+      }
+      console.log(params)
+      app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            admin_aud_leave: d.data.data
+          })
+          for (var i = 0; i < that.data.admin_aud_leave.length; i++) {
+            var cs = "admin_aud_leave[" + i + "].fold"
+            that.setData({
+              [cs]: false
+            })
+          }
+          console.log(that.data.admin_aud_leave)
+        } else {
+          that.setData({
+            admin_aud_leave: ''
+          })
+        }
+        console.log("管理员请假已审核")
+      })
+    }
+
   },
 
 
