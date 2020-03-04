@@ -13,7 +13,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      
+    }
+    console.log(params)
+    app.ljjw.jwGetMyCollection(params).then(d => {
+      if (d.data.status == 1) {
+        that.setData({
+          mydata: d.data.data
+        })
+        console.log("我的收藏搜索接口获取成功")
+      } else {
+        wx.showToast({
+          title: d.data.msg,
+          icon: "none",
+          duration: 2000
+        })
+      }
 
+
+    })
   },
 
   search_collect:function(e){

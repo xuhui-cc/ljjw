@@ -22,17 +22,29 @@
       <image class="my-ava" src="{{mydata.avatar}}"></image>
 
       <view class="state-layout">
-        <view class="my-name">{{name}}</view>
+        <view class="my-name">{{userInfo.name}}</view>
         <view class="flex" bindtap="to_stu_info">
+          <image wx:if="{{mydata.status_text == '在校'}}" class="school" src="../../images/inschool.png"></image>
+          <image wx:if="{{mydata.status_text == '离校'}}" class="school" src="../../images/outschool.png"></image>
           <view class="my-state">{{mydata.status_text}}</view>
-          <image class="to-add" src="../../images/next.png"></image>
+          <image wx:if="{{mydata.status_text == '请完成您的基础信息'}}" class="to-add" src="../../images/next.png"></image>
         </view>
       </view>
 
-      <!-- <view class="flex" bindtap="to_stu_info">
+      <view wx:if="{{mydata.status_text == '基础信息审核中...'}}" class="flex" bindtap="to_stu_info">
         <view class="change-state">修改信息</view>
         <image class="to-change" src="../../images/next.png"></image>
-      </view> -->
+      </view>
+
+      <view wx:if="{{mydata.status_text == '在校'}}" class="flex" bindtap="to_stu_jcxx">
+        <view class="change-state">基础信息查看</view>
+        <image class="to-change" src="../../images/next.png"></image>
+      </view>
+      <view wx:if="{{mydata.status_text == '离校'}}" class="flex" bindtap="to_stu_jcxx">
+        <view class="change-state">基础信息查看</view>
+        <image class="to-change" src="../../images/next.png"></image>
+      </view>
+
     
     </view>
 
@@ -56,16 +68,16 @@
       </picker>
     </view>
 
-    <view >
+    <view wx:for="{{mydata.files}}" wx:key="index">
       <view class="data-layout">
         <view class="flex">
-          <view class="data-tea">来自：王芳慧和老师</view>
-          <view class="data-date">2019.10.25  20:05</view>
-          <view class="flex" wx:if="{{!iscollect}}" bindtap='iscollect'>
+          <view class="data-tea">来自：{{item.createuser}}老师</view>
+          <view class="data-date">{{item.createtime}}</view>
+          <view class="flex" wx:if="{{item.colid == null}}" bindtap='iscollect'>
             <image class="class-uncollect" src="../../images/uncollect.png"></image>
             <view class="data-uncollect">未收藏</view>
           </view>
-          <view class="flex" wx:if="{{iscollect}}" bindtap='iscollect'>
+          <view class="flex" wx:if="{{item.colid}}" bindtap='iscollect'>
             <image class="class-uncollect" src="../../images/collect.png"></image>
             <view class="data-collect">收藏</view>
           </view>
@@ -77,8 +89,8 @@
         <view class="flex">
           <image class="pdf" src="../../images/pdf.png"></image>
           <view>
-            <view class="data-name">申论必考热点.pdf</view>
-            <view class="data-intro">重点考点汇总，希望同学们可以仔细阅读</view>
+            <view class="data-name">{{item.title}}</view>
+            <view class="data-intro">{{item.intro}}</view>
           </view>
         </view>
 

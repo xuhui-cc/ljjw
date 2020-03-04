@@ -43,7 +43,8 @@ Page({
       app.ljjw.jwGetStudentMainPage(params).then(d => {
         if(d.data.status == 1){
           that.setData({
-            mydata: d.data.data
+            mydata: d.data.data,
+            
           })
           console.log("我的主页接口获取成功")
         }
@@ -91,6 +92,15 @@ Page({
     })
 
   },
+
+  to_stu_jcxx: function () {
+    let that = this
+    wx.navigateTo({
+      url: '../../pages/stu_jcxx/stu_jcxx?' ,
+    })
+
+  },
+
 
   
   to_class_data: function () {
@@ -234,8 +244,12 @@ Page({
                   wx.setStorageSync('uid', d.data.uid);
                   wx.setStorageSync('userInfo', d.data.userInfo)
                   wx.setStorageSync('role', role[0])
-                  wx.setStorageSync('subject_id', d.data.cate_info.id)
-                  wx.setStorageSync('subject_name', d.data.cate_info.name)
+                  if(role[0] != 4){
+                    wx.setStorageSync('subject_id', d.data.cate_info.id)
+                    wx.setStorageSync('subject_name', d.data.cate_info.name)
+                  }
+                  
+                  
                   
                   that.onLoad()
 

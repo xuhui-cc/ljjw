@@ -22,6 +22,7 @@
     "pages/t_stuwork/t_stuwork",
     "pages/stu_mornread/stu_mornread",
     "pages/add_message/add_message",
+    "pages/stu_jcxx/stu_jcxx",
     "pages/graduation_school/graduation_school"
   ],
 "tabBar": {

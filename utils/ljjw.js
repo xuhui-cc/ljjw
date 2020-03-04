@@ -40,7 +40,7 @@ function jwGetStudentMainPage(params) {
   return fetch.ljjwfetch(URI, 'jwGetStudentMainPage', params)
 }
 
-//我的收藏内搜索
+//我的收藏,内含搜索
 function jwGetMyCollection(params) {
   return fetch.ljjwfetch(URI, 'jwGetMyCollection', params)
 }
