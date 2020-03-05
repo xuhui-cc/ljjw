@@ -40,7 +40,8 @@ Page({
           that.setData({
             message: d.data.data.messages,
             morning: d.data.data.morning_read,
-            stu_class:d.data.data.classes
+            stu_class:d.data.data.classes,
+            newtaskcount: d.data.data.newtaskcount
           })
           if (that.data.morning.pics != ''){
             that.data.morning.pics = that.data.morning.pics.split(",")
@@ -128,9 +129,41 @@ Page({
   },
 
   stu_class_picker: function (e) {
+    let that = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
+    that.setData({
       stu_class_index: e.detail.value
+    })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    console.log(params)
+    app.ljjw.jwGetStudentTaskMain(params).then(d => {
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          message: d.data.data.messages,
+          morning: d.data.data.morning_read,
+          stu_class: d.data.data.classes,
+          newtaskcount: d.data.data.newtaskcount
+        })
+        if (that.data.morning.pics != '') {
+          that.data.morning.pics = that.data.morning.pics.split(",")
+        } else {
+          console.log("morning.pics空")
+        }
+
+        that.setData({
+          csmorningRead: that.data.morning,
+       
+        })
+        console.log(that.data.stu_class)
+        console.log(that.data.csmorningRead)
+        console.log("学生任务首页获取成功")
+      }
+
+
     })
   },
 
@@ -201,7 +234,7 @@ Page({
     if(that.data.role == 4){
 
       wx.navigateTo({
-        url: '../../pages/stu_mornread/stu_mornread?class_id=' + thaht.data.stu_class[that.data.stu_class_index].id,
+        url: '../../pages/stu_mornread/stu_mornread?class_id=' + that.data.stu_class[that.data.stu_class_index].id,
       })
     }else if(that.data.role <= 2){
       wx.navigateTo({

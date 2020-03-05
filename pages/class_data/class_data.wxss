@@ -90,7 +90,7 @@ page{
 .data-date{
   margin-left: 75rpx;
   margin-top: 28rpx;
-  width:200rpx;
+  width:220rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
@@ -154,4 +154,10 @@ page{
   line-height:24rpx;
   color:rgba(148,144,144,1);
   opacity:1;
+}
+.null_img{
+  margin-left: 228rpx;
+  margin-top: 350rpx;
+  width:321rpx;
+  height:318rpx;
 }

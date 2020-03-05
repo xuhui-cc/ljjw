@@ -8,7 +8,7 @@ Page({
    */
   data: {
     // role:0,
-    stu_class: ['西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班', '西安国考集训营逻辑班'],
+    
     stu_class_index: 0,
   },
 
@@ -44,6 +44,7 @@ Page({
         if(d.data.status == 1){
           that.setData({
             mydata: d.data.data,
+            stu_class: d.data.data.classes
             
           })
           console.log("我的主页接口获取成功")
@@ -80,9 +81,63 @@ Page({
   },
 
   stu_class_picker: function (e) {
+    let that = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
+    that.setData({
       stu_class_index: e.detail.value
+    })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "class_id": that.data.stu_class[that.data.stu_class_index].id
+    }
+    console.log(params)
+    app.ljjw.jwGetStudentMainPage(params).then(d => {
+      if (d.data.status == 1) {
+        that.setData({
+          mydata: d.data.data,
+          // stu_class: d.data.data.classes
+
+        })
+        console.log("我的主页接口获取成功")
+      }
+
+
+    })
+  },
+
+  open_file: function (e) {
+    let that = this
+    var file_xb = e.currentTarget.dataset.file_xb
+    console.log(file_xb)
+    console.log(that.data.mydata.files[file_xb].fileurl)
+    wx.downloadFile({
+      url: that.data.mydata.files[file_xb].fileurl, //仅为示例，并非真实的资源
+      success(res) {
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+
+
+        var filePath = res.tempFilePath
+        console.log(filePath)
+        wx.showLoading({
+          title: '资料打开中...',
+        })
+
+        wx.openDocument({
+
+          filePath: filePath,
+
+          success: function (res) {
+
+            console.log('打开文档成功')
+            wx.hideLoading()
+
+          }
+
+        })
+      }
+
+
     })
   },
 
@@ -112,7 +167,7 @@ Page({
   
   to_stu_rea:function(){
     wx.navigateTo({
-      url: '../../pages/stu-rearch/stu-rearch',
+      url: '../../pages/stu-rearch/stu-rearch?type=' + 2 ,
     })
   },
 
@@ -128,16 +183,24 @@ Page({
     })
   },
 
-  iscollect:function(){
+  iscollect:function(e){
     let that = this
-    that.setData({
-      iscollect: !that.data.iscollect
-    })
+    var type
+    var file_xb = e.currentTarget.dataset.file_xb
+    console.log(that.data.mydata.files[file_xb].id)
+    if (that.data.mydata.files[file_xb].colid == null){
+      type = 1
+    }
+    else{
+      type = 2
+    }
+    console.log(type)
+    
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "type":2,  //1-添加，2-取消
-      "fileid":1
+      "type":type,  //1-添加，2-取消
+      "fileid":that.data.mydata.files[file_xb].id
     }
     console.log(params)
     app.ljjw.jwStudentAddCollection(params).then(d => {
@@ -161,6 +224,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.onLoad()
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       console.log('my_onshow')

@@ -214,3 +214,9 @@
   flex-wrap: wrap;
   width: 510rpx;
 }
+.null_img{
+  margin-left: 240rpx;
+  margin-top: 381rpx;
+  width:263rpx;
+  height:351rpx;
+}

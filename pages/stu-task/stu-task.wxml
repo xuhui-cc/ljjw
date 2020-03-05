@@ -1,7 +1,7 @@
 <view class="container">
 
-  <view class="mask-layout" ></view>
-  <view class="reject-layout" >
+  <view class="mask-layout" hidden="true"></view>
+  <view class="reject-layout" hidden="true">
     <image class="reject-close" src="../../images/close.png"></image>
     <view class="reject-head">
       <view class="reject-shu"></view>
@@ -26,30 +26,66 @@
 
   <!-- 待完成 -->
   <view wx:if="{{finish == 0}}">
-    <view class="ques-layout">
-      <view class="flex">
-        <view class="ques-ori">来自：徐颖很好老师</view>
-        <view class="ques-date">2019.10.25  20:05</view>
-      </view>
-      <view class="heng"></view>
-      <!-- 问题循环 -->
-      <view>
-        <view class="ques-title">1. 12月22日是否就餐？</view>
-        <view class="ans-layout">
-          <view class="ques-cont">A.校长不让在校服上别别在校服上别别在校服上别别上别别</view>
-          <view class="ques-cont">A.校长不让在</view>
-          <view class="ques-cont">A.校长不让在</view>
-          <view class="ques-cont">A.校长不让在校服上别别校服上别别</view>
-        </view>
-        <view class="remark-layout">
-          <textarea class="remark" placeholder="说点什么吧……"></textarea>
-        </view>
-      </view>
-      <!-- 问题循环 -->
-      <view class="ques-sub">提交</view>
-    </view>
+    <view wx:for="{{task}}" wx:key="index">
 
-  
+      <!-- type==1 普通式 -->
+      <view wx:if="{{item.type == 1}}">
+        <view class="ques-layout">
+          <view class="flex">
+            <view class="ques-ori">来自：{{item.pubname}}老师</view>
+            <view class="ques-date">{{item.pubtime}}</view>
+          </view>
+          <view class="heng"></view>
+          <!-- 问题循环 -->
+          <view>
+            <view class="task1_head">{{item.subject}}</view>
+            <view class="task1_title">{{item.title}}</view>
+            <view class="img_layout">
+              <image class='big_img' src='../../images/big.png'></image>
+              <image class="task1_img" src="{{item.attach}}"></image>
+            </view>
+            <view class="remark-layout">
+              <textarea class="remark" placeholder="点击输入文字"></textarea>
+            </view>
+          </view>
+          <!-- 问题循环 -->
+          <view class="ques-sub">提交</view>
+        </view>
+      </view>
+      <!-- type==1 普通式 -->
+
+      <!-- type==2 选项式 -->
+      <view wx:if="{{item.type == 2}}">
+        <view class="ques-layout">
+          <view class="flex">
+            <view class="ques-ori">来自：{{item.pubname}}老师</view>
+            <view class="ques-date">{{item.pubtime}}</view>
+          </view>
+          <view class="heng"></view>
+          <view class="task1_title">{{item.title}}</view>
+          <!-- 问题循环 -->
+            <view wx:for="{{item.task_detail}}" wx:key="task_detail_index" wx:for-item="task_detail">
+              <view>
+                <view class="ques-title">{{task_detail.child_title}}</view>
+                <view class="ans-layout">
+                  <view class="ques-cont">A.{{task_detail.options.lists.a}}</view>
+                  <view class="ques-cont">B.{{task_detail.options.lists.b}}</view>
+                  <view class="ques-cont">C.{{task_detail.options.lists.c}}</view>
+                  <view class="ques-cont">D.{{task_detail.options.lists.d}}</view>
+                </view>
+                <view class="remark-layout">
+                  <textarea class="remark" placeholder="说点什么吧……"></textarea>
+                </view>
+              </view>
+            </view>
+          <!-- 问题循环 -->
+          <view class="ques-sub">提交</view>
+        </view>
+      </view>
+      <!-- type==2 选项式 -->
+
+
+    </view>
   
   
     

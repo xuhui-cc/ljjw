@@ -60,10 +60,10 @@
       <view class="my-collect">班级资料</view>
       <image class="search-img" src="../../images/search.png" bindtap="to_stu_rea"></image>
       <view class="search" bindtap="to_stu_rea">搜索</view>
-      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
-        <view class="class-name">{{stu_class[stu_class_index]}}</view>
+      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}" range-key="{{'name'}}">
+        <view class="class-name">{{stu_class[stu_class_index].name}}</view>
       </picker>
-      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}">
+      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}" range-key="{{'name'}}">
         <image class="class-xl" src="../../images/xsj.png"></image>
       </picker>
     </view>
@@ -73,7 +73,7 @@
         <view class="flex">
           <view class="data-tea">来自：{{item.createuser}}老师</view>
           <view class="data-date">{{item.createtime}}</view>
-          <view class="flex" wx:if="{{item.colid == null}}" bindtap='iscollect'>
+          <view class="flex" wx:if="{{item.colid == null}}" data-file_xb="{{index}}" bindtap='iscollect'>
             <image class="class-uncollect" src="../../images/uncollect.png"></image>
             <view class="data-uncollect">未收藏</view>
           </view>
@@ -86,7 +86,7 @@
 
         <view class="data-heng"></view>
 
-        <view class="flex">
+        <view class="flex" data-file_xb="{{index}}" bindtap="open_file">
           <image class="pdf" src="../../images/pdf.png"></image>
           <view>
             <view class="data-name">{{item.title}}</view>

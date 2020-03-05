@@ -172,13 +172,23 @@ Page({
       console.log(params)
       app.ljjw.jwGetMorningReadMore(params).then(d => {
         console.log(d)
-        // if (d.data.status == 1) {
-        //   console.log(d.data.data)
-        //   that.setData({
-        //     stu_class: d.data.data
-        //   })
-        //   console.log("学生任务班级获取成功")
-        // }
+        if (d.data.status == 1) {
+          that.setData({
+            morningRead: d.data.data
+          })
+
+          for (var i = 0; i < that.data.morningRead.length; i++) {
+            var cs = 'morningRead[' + i + '].pics'
+            that.setData({
+              [cs]: that.data.morningRead[i].pics.split(",")
+            })
+          }
+          that.setData({
+            csmorningRead: that.data.morningRead
+          })
+          console.log(that.data.morningRead)
+          console.log("学生每日晨读获取成功")
+        }
 
         // 隐藏加载框
         wx.hideLoading();
