@@ -7,6 +7,8 @@ Page({
    */
   data: {
     finish:0,
+    img: [],
+    imgs: []
   },
 
   /**
@@ -41,27 +43,36 @@ Page({
                   [cs]: arr
                 })
               }
-              // console.log(that.data.task[i].task_detail[j].options.lists);
-              // console.log(that.data.task[i].task_detail[j].options.lists.length)
               for (var k = 0; k < that.data.task[i].task_detail[j].options.list.length;k++){
-                 var css = "task[" + i + "].task_detail[" + j + "].options.list"
-                var newarray = [{
-                  item: String.fromCharCode(65 + k),
-                  id: that.data.task[i].task_detail[j].options.list[k]
-                }];
-
-
+                var css = "task[" + i + "].task_detail[" + j + "].options.list[" + k + "].item"
+                var csss = "task[" + i + "].task_detail[" + j + "].options.list[" + k + "].option"
+                console.log(that.data)
                 that.setData({
-                  [css]:that.data.task[i].task_detail[j].options.list.concat(newarray)
-                });
-                
-                // var css = "task[" + i + "].task_detail[" + j + "].options.list[" + k + "]"
-                // that.setData({
-                //   [css]: String.fromCharCode(65 + k)
-                // })
+                  [css]: that.data.task[i].task_detail[j].options.list[k],
+                  [csss]: String.fromCharCode(65 + k)
+                })
+               
               }
               
             }
+          } else if (that.data.task[i].type == 3) {
+            for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+              // console.log(j)
+              console.log(that.data.task[i].task_detail[j].fieldlist.lists)
+              var arr = []
+              for (let k in that.data.task[i].task_detail[j].fieldlist.lists) {
+                arr.push(that.data.task[i].task_detail[j].fieldlist.lists[k]); //属性
+                console.log(arr)
+                // that.data.task[i].task_detail[j].fieldlist.list.push(arr)
+                var cs = "task[" + i + "].task_detail[" + j + "].fieldlist.list"
+                that.setData({
+                  [cs]: arr
+                })
+              }
+              
+
+            }
+
           }
         }
         // console.log(that.data.task[1])
@@ -158,6 +169,89 @@ Page({
         }
 
 
+      })
+    }
+  },
+
+  chooseImg() {
+    let that = this;
+    let count_img = 3
+
+    let len = that.data.imgs.length;
+    if (len < 3) {
+      count_img = 3 - len
+      console.log(count_img)
+      wx.chooseImage({
+        count: count_img,
+        success: (res) => {
+          let tempFilePaths = res.tempFilePaths;
+          console.log(tempFilePaths)
+          let imgs = [];
+
+          for (let i = 0; i < tempFilePaths.length; i++) {
+
+            var token = wx.getStorageSync('token');
+
+            wx.uploadFile({
+              url: 'http://cs.szgk.cn/api.php?',
+              filePath: tempFilePaths[i],
+              name: 'file',
+              formData: {
+                'file': tempFilePaths[i],
+                "token": token,
+                "action": "jwUploadAvatar", //action=uploads&authhash=445454554
+              },
+              success(r) {
+                let hhh = JSON.parse(r.data);
+                console.log(hhh)
+                if (hhh.status == 1) {
+                  that.data.img.unshift(hhh.data)
+
+                  that.setData({
+                    imgs: that.data.img
+                  })
+
+                  console.log(that.data.img)
+
+                  // console.log(imgs)
+
+                } else {
+                  // that.setData({
+                  //   img : imgs
+                  // })
+                  console.log('失败')
+                  console.log(hhh.status)
+                }
+
+
+
+
+              }
+            })
+
+          }
+
+        }
+      })
+    }
+
+  },
+
+  del_img: function (e) {
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    console.log(xb)
+    that.data.imgs.splice(xb, 1);
+    that.setData({
+      imgs: that.data.imgs
+    })
+    if (that.data.title != '' && that.data.imgs != '') {
+      that.setData({
+        submit: true
+      })
+    } else {
+      that.setData({
+        submit: false
       })
     }
   },
