@@ -45,11 +45,8 @@
               <image class="task1_img" src="{{item.attach}}"></image>
             </view>
             <view class="remark-layout">
-              <textarea class="remark" placeholder="点击输入文字" bindinput="type1_content"></textarea>
+              <textarea class="remark" placeholder="点击输入文字" data-task_type="{{1}}"  data-task_index="{{task_index}}" bindinput="type1_content"></textarea>
             </view>
-            <!-- <view wx:if="{{item.has_remark > 0}}" class="remark-layout" bindinput="memo">
-              <textarea class="remark" placeholder="说点什么吧……"></textarea>
-            </view> -->
             <view wx:if="{{item.has_pics > 0}}" class="add">添加照片</view>
             <view class="add_img_layout" wx:if="{{item.has_pics > 0}}">
               <view wx:for="{{item.task_detail.imgs}}" wx:key="img_index">
@@ -61,7 +58,7 @@
             </view>
           </view>
           <!-- 问题循环 -->
-          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="submit" data-task_index="{{task_index}}">提交</view>
+          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="{{item.submit?'submit':''}}" data-task_index="{{task_index}}">提交</view>
         </view>
       </view>
       <!-- type==1 普通式 -->
@@ -74,27 +71,28 @@
             <view class="ques-date">{{item.pubtime}}</view>
           </view>
           <view class="heng"></view>
-          <view class="task1_title">{{item.title}}</view>
+          
           <!-- 问题循环 -->
             <view wx:for="{{item.task_detail}}" wx:key="task_detail_index"  wx:for-item="task_detail" wx:for-index="task_detail_index">
-              <view>
-                <view class="ques-title">{{task_detail.child_title}}</view>
+              <view class="task1_title">{{task_detail.title}}</view>
+              <view wx:for="{{task_detail.options}}" wx:key="options_index"  wx:for-item="options" wx:for-index="options_index">
+                <view class="ques-title">{{options.title}}</view>
                 <view class="ans-layout">
-                  <view wx:for="{{task_detail.options.list}}" wx:key="list_index"  wx:for-item="list" wx:for-index="list_index">
-                    <view class="ques-cont" style="{{list.select?'color:rgba(45,193,160,1);':''}}"   data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-list_index="{{list_index}}" bindtap="select">{{list.option}}.{{list.item}}</view>
+                  <view wx:for="{{options.list}}" wx:key="list_index"  wx:for-item="list" wx:for-index="list_index">
+                    <view class="ques-cont" style="{{list.select?'color:rgba(45,193,160,1);':''}}"   data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}" data-list_index="{{list_index}}" bindtap="select">{{list.option}}.{{list.item}}</view>
                   </view>
                 </view>
                 <view wx:if="{{task_detail.option_type == 2 || task_detail.option_type == 4}}" class="remark-layout">
-                  <textarea class="remark" placeholder="说点什么吧……"></textarea>
+                  <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}"  placeholder="说点什么吧……" data-task_type="{{2}}" bindinput="type1_content"></textarea>
                 </view>
                 <view wx:if="{{task_detail.option_type >=3}}" class="add">添加照片</view>
                 <view wx:if="{{task_detail.option_type >=3}}" class="add_img_layout">
-                  <view wx:for="{{task_detail.options.imgs}}" wx:key="img_index">
+                  <view wx:for="{{options.imgs}}" wx:key="img_index">
                     <image class="del-img" data-xb='{{index}}' data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" bindtap='del_img' src="../../images/gdel.png"></image>
                     <image class="add_img" src="{{item}}"></image>
                   </view>
                   
-                  <image wx:if="{{task_detail.options.imgs.length < 3 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
+                  <image wx:if="{{options.imgs.length < 3 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
                 </view>
               </view>
             </view>
@@ -114,26 +112,28 @@
           <view class="heng"></view>
            <!-- 问题循环 -->
             <view wx:for="{{item.task_detail}}" wx:key="task_detail_index" wx:for-index="task_detail_index" wx:for-item="task_detail">
-              <view class="type3_layout">
-                <!-- <view class="ques-title">{{task_detail.child_title}}</view> -->
-                <view wx:for="{{task_detail.fieldlist.list}}" wx:key="list_index"  wx:for-item="list">
-                  <view class="ans-layout">
-                    <view class="ques-cont">{{list.item}}</view>
-                    <input class="ans_input" placeholder="请填写"></input>
+            <view class="task1_title">{{task_detail.title}}</view>
+              <view wx:for="{{task_detail.fieldlist}}" wx:key="fieldlist_index" wx:for-index="fieldlist_index" wx:for-item="fieldlist">
+                <view class="type3_layout">
+                  <view wx:for="{{fieldlist.lists}}" wx:key="lists_index"  wx:for-item="lists">
+                    <view class="ans-layout">
+                      <view class="ques-cont">{{lists.item}}</view>
+                      <input class="ans_input" placeholder="请填写"></input>
+                    </view>
+                    <view class="ans_heng"></view>
                   </view>
-                  <view class="ans_heng"></view>
-                </view>
-                <view class="remark-layout">
-                  <textarea class="remark" placeholder="说点什么吧……"></textarea>
-                </view>
-                <view wx:if="{{task_detail.fieldlist_type >=3}}" class="add">添加照片</view>
-                <view wx:if="{{task_detail.fieldlist_type >=3}}" class="add_img_layout">
-                  <view wx:for="{{task_detail.fieldlist.imgs}}" wx:key="img_index">
-                    <image class="del-img" data-xb='{{index}}' data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" bindtap='del_img' src="../../images/gdel.png"></image>
-                    <image class="add_img" src="{{item}}"></image>
+                  <view class="remark-layout">
+                    <textarea class="remark" placeholder="说点什么吧……"></textarea>
                   </view>
-                  
-                  <image wx:if="{{task_detail.fieldlist.imgs.length < 3 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
+                  <view wx:if="{{task_detail.fieldlist_type >=3}}" class="add">添加照片</view>
+                  <view wx:if="{{task_detail.fieldlist_type >=3}}" class="add_img_layout">
+                    <view wx:for="{{fieldlist.imgs}}" wx:key="img_index">
+                      <image class="del-img" data-xb='{{index}}' data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" bindtap='del_img' src="../../images/gdel.png"></image>
+                      <image class="add_img" src="{{item}}"></image>
+                    </view>
+                    
+                    <image wx:if="{{fieldlist.imgs.length < 3 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
+                  </view>
                 </view>
               </view>
             </view>
