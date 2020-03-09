@@ -171,7 +171,99 @@ Page({
     })
   },
 
-  select:function(e){
+  type3_content:function(e){
+    let that = this;
+    var task_index = e.currentTarget.dataset.task_index
+    console.log(task_index + "task_index")
+    var task_detail_index = e.currentTarget.dataset.task_detail_index
+    console.log(task_detail_index + "task_detail_index")
+    var fieldlist_index = e.currentTarget.dataset.fieldlist_index
+    console.log(fieldlist_index + "fieldlist_index")
+    var list_index = e.currentTarget.dataset.list_index
+    console.log(list_index + "list_index")
+
+
+    var type3_content = e.detail.value
+    console.log(type3_content)
+    if (type3_content != ''){
+      that.setData({
+        type3_content: type3_content
+      })
+    }else{
+      that.setData({
+        type3_content: '请填写'
+      })
+    }
+    
+
+
+    for(var i=0;i<that.data.task.length;i++){
+      if (i == task_index){
+        for (var j = 0; j < that.data.task[i].task_detail.length;j++){
+          if (j == task_detail_index){
+            for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length;k++){
+              if (k == fieldlist_index){
+                for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length;n++){
+                  if (n == list_index){
+                    var cs = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
+                    that.setData({
+                      [cs]: that.data.type3_content
+                    })
+                  }
+                  
+                }
+              
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for (var i = 0; i < that.data.task.length; i++) {
+      if (i == task_index) {
+        for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+          var cs = "task[" + i + "].task_detail[" + j + "].ans"
+          var css = "task[" + i + "].task_detail[" + j + "].memo"
+          var csss = "task[" + i + "].task_detail[" + j + "].pics"
+          that.setData({
+            [cs]: [],
+            [css]: [],
+            [csss]: []
+          })
+          for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
+
+            for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
+              if (that.data.task[i].task_detail[j].fieldlist[k].lists[n].content != '') {
+
+                that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].fieldlist[k].lists[n].content)
+
+              }
+              if (that.data.task[i].task_detail[j].fieldlist[k].lists[n].content.indexOf("请填写") >= 0 || that.data.task[i].task_detail[j].fieldlist[k].lists[n].content == ''){
+                var css = "task[" + task_index + "].submit"
+                that.setData({
+                  [css]: false
+                })
+                console.log("cs1")
+              }
+              else{
+                var css = "task[" + task_index + "].submit"
+                that.setData({
+                  [css]: true
+                })
+                // console.log(that.data.task[i].task_detail[j].fieldlist[k].lists[n].content.indexOf("请填写"))
+                console.log("cs2")
+              }
+
+            }
+          }
+
+        }
+      }
+    }
+  },
+
+  select: function (e) {
     let that = this;
     var task_index = e.currentTarget.dataset.task_index
     console.log(task_index + "task_index")
@@ -181,30 +273,71 @@ Page({
     console.log(options_index + "options_index")
     var list_index = e.currentTarget.dataset.list_index
     console.log(list_index + "list_index")
-    for(var i=0;i<that.data.task.length;i++){
-      if (i == task_index){
-        for (var j = 0; j < that.data.task[i].task_detail.length;j++){
-          if (j == task_detail_index){
-            for (var k = 0; k < that.data.task[i].task_detail[j].options.length;k++){
-              if (k == options_index){
-                for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length;n++){
-                  if (n == list_index){
+    for (var i = 0; i < that.data.task.length; i++) {
+      if (i == task_index) {
+        for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+          if (j == task_detail_index) {
+            for (var k = 0; k < that.data.task[i].task_detail[j].options.length; k++) {
+              if (k == options_index) {
+                for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
+                  if (n == list_index) {
                     var cs = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
                     that.setData({
                       [cs]: true
                     })
-                  }else{
+                  } else {
                     var cs = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
                     that.setData({
                       [cs]: false
                     })
                   }
-                  
+
                 }
-              
+
               }
             }
           }
+        }
+      }
+    }
+
+    for (var i = 0; i < that.data.task.length; i++) {
+      if (i == task_index) {
+        for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+          var cs = "task[" + i + "].task_detail[" + j + "].ans"
+          var css = "task[" + i + "].task_detail[" + j + "].memo"
+          var csss = "task[" + i + "].task_detail[" + j + "].pics"
+          that.setData({
+            [cs]: [],
+            [css]: [],
+            [csss]: []
+          })
+          for (var k = 0; k < that.data.task[i].task_detail[j].options.length; k++) {
+
+            for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
+              if (that.data.task[i].task_detail[j].options[k].list[n].select == true) {
+
+                that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].options[k].list[n].item)
+
+              }
+
+            }
+          }
+
+
+          if (that.data.task[i].task_detail[j].ans.length == that.data.task[i].task_detail[j].options.length) {
+            var css = "task[" + task_index + "].submit"
+            that.setData({
+              [css]: true
+            })
+          }
+          else {
+            var css = "task[" + task_index + "].submit"
+            that.setData({
+              [css]: false
+            })
+          }
+
         }
       }
     }
@@ -220,6 +353,8 @@ Page({
     console.log(task_detail_index + "task_detail_index")
     var options_index = e.currentTarget.dataset.options_index
     console.log(options_index + "options_index")
+    var fieldlist_index = e.currentTarget.dataset.fieldlist_index
+    console.log(fieldlist_index + "fieldlist_index")
     
 
     var type1_content = e.detail.value
@@ -240,6 +375,11 @@ Page({
       }
     } else if (task_type == 2){
       var cs = "task[" + task_index + "].task_detail[" + task_detail_index + "].options[" + options_index + "].submit_content"
+      that.setData({
+        [cs]: that.data.type1_content
+      })
+    } else if (task_type == 3){
+      var cs = "task[" + task_index + "].task_detail[" + task_detail_index + "].fieldlist[" + fieldlist_index + "].submit_content"
       that.setData({
         [cs]: that.data.type1_content
       })
@@ -320,46 +460,134 @@ Page({
               that.setData({
                 [hh]: that.data.task[i].task_detail[j].options[k].imgs.join(",")
               })
+              
               that.data.task[i].task_detail[j].memo.push(that.data.task[i].task_detail[j].options[k].submit_content)
               that.data.task[i].task_detail[j].pics.push(that.data.task[i].task_detail[j].options[k].pics)
               
             }
+            var memo, pics, attach
+            
+            if (that.data.task[i].task_detail[j].memo.join("|") == "|"){
+              memo = ""
+            }
+            else{
+              memo = that.data.task[i].task_detail[j].memo.join("|")
+            }
+
+            if (that.data.task[i].task_detail[j].pics.join("|") == "|") {
+              pics = ""
+            }
+            else {
+              pics = that.data.task[i].task_detail[j].pics.join("|")
+            }
+
+            
             var newarray = [{
               info_id: that.data.task[i].task_detail[j].id,
               answers: that.data.task[i].task_detail[j].ans.join(","),
-              memo: that.data.task[i].task_detail[j].memo.join("|"),
-              pics: that.data.task[i].task_detail[j].pics.join("|"),
+              memo: memo,
+              pics: pics,
               attach: '',
             }];
             that.setData({
               'type2_ans': that.data.type2_ans.concat(newarray)
             });
+            
           }
         }
       }
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "tid": that.data.task[task_index].id,
+        "data": that.data.type2_ans
+      }
+      console.log(params)
+      app.ljjw.jwStudentSaveTask(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          wx.showToast({
+            title: '提交成功',
+            duration: 1500
+          })
+          that.un_task()  //刷新任务待完成列表
+          console.log("任务提交成功")
+        }
 
-      // var params = {
-      //   "token": wx.getStorageSync("token"),
-      //   "uid": wx.getStorageSync("uid"),
-      //   "tid": that.data.task[task_index].id,
-      //   "data": that.data.type2_ans
-      // }
-      // console.log(params)
-      // app.ljjw.jwStudentSaveTask(params).then(d => {
-      //   console.log(d)
-      //   if (d.data.status == 1) {
 
-      //     console.log("任务提交成功")
-      //   }
-
-
-      // })
-
-      // console.log(that.data.type2_ans)
+      })
+      
      
     }
     else if (that.data.task[task_index].type == 3) {
+      console.log("字段式提交")
+      for (var i = 0; i < that.data.task.length; i++) {
+        if (i == task_index) {
+          for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+            
+            for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
 
+              
+              var hh = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].pics"
+              that.setData({
+                [hh]: that.data.task[i].task_detail[j].fieldlist[k].imgs.join(",")
+              })
+
+              that.data.task[i].task_detail[j].memo.push(that.data.task[i].task_detail[j].fieldlist[k].submit_content)
+              that.data.task[i].task_detail[j].pics.push(that.data.task[i].task_detail[j].fieldlist[k].pics)
+
+            }
+            var memo, pics, attach
+
+            if (that.data.task[i].task_detail[j].memo.join("|") == "|") {
+              memo = ""
+            }
+            else {
+              memo = that.data.task[i].task_detail[j].memo.join("|")
+            }
+
+            if (that.data.task[i].task_detail[j].pics.join("|") == "|") {
+              pics = ""
+            }
+            else {
+              pics = that.data.task[i].task_detail[j].pics.join("|")
+            }
+
+
+            var newarray = [{
+              info_id: that.data.task[i].task_detail[j].id,
+              answers: that.data.task[i].task_detail[j].ans.join(","),
+              memo: memo,
+              pics: pics,
+              attach: '',
+            }];
+            that.setData({
+              'type2_ans': that.data.type2_ans.concat(newarray)
+            });
+
+          }
+        }
+      }
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "tid": that.data.task[task_index].id,
+        "data": that.data.type2_ans
+      }
+      console.log(params)
+      app.ljjw.jwStudentSaveTask(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          wx.showToast({
+            title: '提交成功',
+            duration: 1500
+          })
+          that.un_task()  //刷新任务待完成列表
+          console.log("任务提交成功")
+        }
+
+
+      })
     }
     
 
@@ -453,6 +681,159 @@ Page({
           that.setData({
             task: d.data.data
           })
+
+          for (var i = 0; i < that.data.task.length; i++) {
+            if (that.data.task[i].title) {
+              var title = "task[" + i + "].title"
+              console.log(i + "i")
+              that.setData({
+                [title]: that.data.task[i].title.split(",")
+              })
+            }
+          
+            if (that.data.task[i].type == 2) {
+              for (var n = 0; n < that.data.task[i].title.length; n++) {
+                var title = "task[" + i + "].task_detail[" + n + "].title"
+                that.setData({
+                  [title]: that.data.task[i].title[n],
+                })
+              }
+
+              for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+
+                if (that.data.task[i].task_detail[j].child_title != null) {
+                  var title1 = "task[" + i + "].task_detail[" + j + "].child_title"
+                  console.log(j + "j")
+                  that.setData({
+                    [title1]: that.data.task[i].task_detail[j].child_title.split(",")
+                  })
+
+                  for (var n = 0; n < that.data.task[i].task_detail[j].child_title.length; n++) {
+                    var title = "task[" + i + "].task_detail[" + j + "].options[" + n + "].title"
+                    that.setData({
+                      [title]: that.data.task[i].task_detail[j].child_title[n],
+                    })
+                  }
+
+                }
+
+                var answers = "task[" + i + "].task_detail[" + j + "].finished_info.answers"
+                var memo = "task[" + i + "].task_detail[" + j + "].finished_info.memo"
+                var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
+                // var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
+                // console.log(j + "j")
+                that.setData({
+                  [answers]: that.data.task[i].task_detail[j].finished_info.answers.split(","),
+                  [memo]: that.data.task[i].task_detail[j].finished_info.memo.split("|"),
+                  [attach]: that.data.task[i].task_detail[j].finished_info.attach.split("|"),
+                  // [attach]: that.data.task[i].task_detail[j].finished_info.attach.split(",")
+                })
+
+                for (var k = 0; k < that.data.task[i].task_detail[j].options.length; k++) {
+                  var arr = []
+
+                  for (let n in that.data.task[i].task_detail[j].options[k].lists) {
+
+                    arr.push(that.data.task[i].task_detail[j].options[k].lists[n]);
+                    console.log(arr)
+                    var imgs = []
+                    var css = "task[" + i + "].task_detail[" + j + "].options[" + k + "].imgs"
+                    var cs = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list"
+
+                    that.setData({
+                      [cs]: arr,
+                      [css]: imgs,
+
+                    })
+                  }
+
+                  for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
+
+                    var css = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].item"
+                    var csss = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].option"
+                    var cssss = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
+                    console.log(that.data)
+                    that.setData({
+
+                      [css]: that.data.task[i].task_detail[j].options[k].list[n],
+                      [csss]: String.fromCharCode(65 + n),
+                      [cssss]: false
+                    })
+
+                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.answers.length;m++){
+                      if (that.data.task[i].task_detail[j].options[k].list[n].item == that.data.task[i].task_detail[j].finished_info.answers[m]){
+                        var select = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
+                        that.setData({
+                          [select]: true
+                        })
+                      }
+                    }
+
+                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.memo.length; m++) {
+                      if(k == m){
+                        var select = "task[" + i + "].task_detail[" + j + "].options[" + k + "].memo"
+                        that.setData({
+                          [select]: that.data.task[i].task_detail[j].finished_info.memo[m]
+                        })
+                      }
+                    }
+
+
+                  }
+
+
+                }
+
+              }
+            } else if (that.data.task[i].type == 3) {
+              for (var n = 0; n < that.data.task[i].title.length; n++) {
+                var title = "task[" + i + "].task_detail[" + n + "].title"
+                that.setData({
+                  [title]: that.data.task[i].title[n],
+                })
+              }
+              for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+                for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
+                  var imgs = []
+                  var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+
+
+                  that.setData({
+
+                    [css]: imgs
+                  })
+
+                  for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
+                    var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].item"
+                    var csss = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
+
+
+                    that.setData({
+                      [css]: that.data.task[i].task_detail[j].fieldlist[k].lists[n],
+                      [csss]: '',
+
+                    })
+
+                  }
+
+                }
+
+              }
+
+            }
+            else if (that.data.task[i].type == 1) {
+
+              var imgs = []
+              var css = "task[" + i + "].task_detail.imgs"
+              that.setData({
+                [css]: imgs
+              })
+              console.log("==========================================imgs")
+
+            }
+
+
+          }
           console.log("学生任务已完成获取成功")
         }else{
           // that.setData({

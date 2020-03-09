@@ -97,7 +97,7 @@
               </view>
             </view>
           <!-- 问题循环 -->
-          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="submit" data-task_index="{{task_index}}">提交</view>
+          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="{{item.submit?'submit':''}}" data-task_index="{{task_index}}">提交</view>
         </view>
       </view>
       <!-- type==2 选项式 -->
@@ -115,15 +115,15 @@
             <view class="task1_title">{{task_detail.title}}</view>
               <view wx:for="{{task_detail.fieldlist}}" wx:key="fieldlist_index" wx:for-index="fieldlist_index" wx:for-item="fieldlist">
                 <view class="type3_layout">
-                  <view wx:for="{{fieldlist.lists}}" wx:key="lists_index"  wx:for-item="lists">
+                  <view wx:for="{{fieldlist.lists}}" wx:key="lists_index"  wx:for-item="lists" wx:for-index="list_index">
                     <view class="ans-layout">
                       <view class="ques-cont">{{lists.item}}</view>
-                      <input class="ans_input" placeholder="请填写"></input>
+                      <input class="ans_input" placeholder="请填写" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-fieldlist_index="{{fieldlist_index}}" data-list_index="{{list_index}}" bindinput="type3_content"></input>
                     </view>
                     <view class="ans_heng"></view>
                   </view>
                   <view class="remark-layout">
-                    <textarea class="remark" placeholder="说点什么吧……"></textarea>
+                    <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-fieldlist_index="{{fieldlist_index}}"  placeholder="说点什么吧……" data-task_type="{{3}}" bindinput="type1_content"></textarea>
                   </view>
                   <view wx:if="{{task_detail.fieldlist_type >=3}}" class="add">添加照片</view>
                   <view wx:if="{{task_detail.fieldlist_type >=3}}" class="add_img_layout">
@@ -138,7 +138,7 @@
               </view>
             </view>
           <!-- 问题循环 -->
-          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}">提交</view>
+          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="{{item.submit?'submit':''}}" data-task_index="{{task_index}}">提交</view>
         </view>
       </view>
       <!-- type==3 字段式 -->
