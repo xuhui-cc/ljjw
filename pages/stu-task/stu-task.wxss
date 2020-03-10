@@ -359,7 +359,7 @@ opacity:1;
 .riqi{
   margin-left: 30rpx;
   margin-top: 35rpx;
-  width:170rpx;
+  width:100rpx;
   height:23rpx;
   font-size:30rpx;
   font-family:PingFang SC;
@@ -367,7 +367,7 @@ opacity:1;
   color:rgba(0,0,0,1);
 }
 .course_time{
-  margin-left: 50rpx;
+  margin-left: 40rpx;
   margin-top: 35rpx;
   width:175rpx;
   
@@ -431,4 +431,34 @@ opacity:1;
   background:rgba(222,222,222,1);
   opacity:1;
   border-radius:49rpx;
+}
+.work_img{
+  margin-left: 583rpx;
+  position: absolute;
+  width:167rpx;
+  height:190rpx;
+}
+.reject_head{
+  margin-left: 30rpx;
+  margin-top: 40rpx;
+  width:130rpx;
+  height:37rpx;
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:47rpx;
+  color:rgba(241,68,68,1);
+  opacity:1;
+}
+.reject_reason{
+  margin-left: 30rpx;
+  margin-top: 12rpx;
+  width:689rpx;
+  
+  font-size:26rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:42rpx;
+  color:rgba(39,39,39,1);
+  opacity:1;
 }

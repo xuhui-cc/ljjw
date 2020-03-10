@@ -53,8 +53,8 @@
       <view class="flex">
         <view class="shu"></view>
         <view class="head">任务</view>
-        <image wx:if="{{role == 4}}" class="tip" src="../../images/tip.png"></image>
-        <view wx:if="{{role == 4}}" class="tip-num">{{newtaskcount}}</view>
+        <image wx:if="{{role == 4 && newtaskcount > 0}}" class="tip" src="../../images/tip.png"></image>
+        <view wx:if="{{role == 4 && newtaskcount > 0}}" class="tip-num">{{newtaskcount}}</view>
         <view class="more">查看</view>
         <image class="more-img" src="../../images/next.png"></image>
       </view>

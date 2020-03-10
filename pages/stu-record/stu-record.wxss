@@ -1,6 +1,11 @@
 page{
   background: rgba(251,251,252,1)
 }
+ec-canvas {
+  
+  width:750rpx;
+  height: 500rpx;
+}
 .record-bar{
   display: flex;
   width:750rpx;

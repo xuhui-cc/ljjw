@@ -166,6 +166,11 @@ Page({
         
         console.log("学生任务列表获取成功")
       }
+      else{
+        that.setData({
+          task: ''
+        })
+      }
 
 
     })
@@ -317,7 +322,7 @@ Page({
             for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
               if (that.data.task[i].task_detail[j].options[k].list[n].select == true) {
 
-                that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].options[k].list[n].item)
+                that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].options[k].list[n].option)
 
               }
 
@@ -387,14 +392,6 @@ Page({
     
   },
 
-  // memo: function (e) {
-  //   let that = this
-  //   var memo = e.detail.value
-  //   console.log(memo)
-  //   that.setData({
-  //     memo: memo
-  //   })
-  // },
 
   submit:function(e){
     let that = this
@@ -451,7 +448,7 @@ Page({
               for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length;n++){
                 if (that.data.task[i].task_detail[j].options[k].list[n].select == true) {
                   
-                  that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].options[k].list[n].item)
+                  that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].options[k].list[n].option)
 
                 }
                 
@@ -761,7 +758,7 @@ Page({
                     })
 
                     for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.answers.length;m++){
-                      if (that.data.task[i].task_detail[j].options[k].list[n].item == that.data.task[i].task_detail[j].finished_info.answers[m]){
+                      if (that.data.task[i].task_detail[j].options[k].list[n].option == that.data.task[i].task_detail[j].finished_info.answers[m]){
                         var select = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
                         that.setData({
                           [select]: true
@@ -792,29 +789,96 @@ Page({
                   [title]: that.data.task[i].title[n],
                 })
               }
+
               for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-                for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
-                  var imgs = []
-                  var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
 
-
+                if (that.data.task[i].task_detail[j].child_title != null) {
+                  var title1 = "task[" + i + "].task_detail[" + j + "].child_title"
+                  console.log(j + "j")
                   that.setData({
-
-                    [css]: imgs
+                    [title1]: that.data.task[i].task_detail[j].child_title.split(",")
                   })
 
-                  for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
-                    var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].item"
-                    var csss = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
+                  for (var n = 0; n < that.data.task[i].task_detail[j].child_title.length; n++) {
+                    var title = "task[" + i + "].task_detail[" + j + "].fieldlist[" + n + "].title"
+                    that.setData({
+                      [title]: that.data.task[i].task_detail[j].child_title[n],
+                    })
+                  }
 
+                }
+
+                var answers = "task[" + i + "].task_detail[" + j + "].finished_info.answers"
+                var memo = "task[" + i + "].task_detail[" + j + "].finished_info.memo"
+                var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
+                // var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
+                // console.log(j + "j")
+                that.setData({
+                  [answers]: that.data.task[i].task_detail[j].finished_info.answers.split(","),
+                  [memo]: that.data.task[i].task_detail[j].finished_info.memo.split("|"),
+                  [attach]: that.data.task[i].task_detail[j].finished_info.attach.split("|"),
+                  // [attach]: that.data.task[i].task_detail[j].finished_info.attach.split(",")
+                })
+
+                for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
+                  var arr = []
+
+                  // for (let n in that.data.task[i].task_detail[j].fieldlist[k].lists) {
+
+                  //   arr.push(that.data.task[i].task_detail[j].fieldlist[k].lists[n]);
+                  //   console.log(arr)
+                  //   var imgs = []
+                  //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+                  //   var cs = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].list"
+
+                  //   that.setData({
+                  //     [cs]: arr,
+                  //     [css]: imgs,
+
+                  //   })
+                  // }
+                    var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+                    
 
                     that.setData({
-                      [css]: that.data.task[i].task_detail[j].fieldlist[k].lists[n],
-                      [csss]: '',
+                  
+                      [css]: imgs,
 
                     })
+                  for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
+
+                    var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].item"
+                    var csss = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
+                    
+                    console.log(that.data)
+                    that.setData({
+
+                      [css]: that.data.task[i].task_detail[j].fieldlist[k].lists[n],
+                      [csss]: ''
+                      
+                    })
+
+                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.answers.length; m++) {
+                      if (n == m) {
+                        var select = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
+                        that.setData({
+                          [select]: that.data.task[i].task_detail[j].finished_info.answers[m]
+                        })
+                      }
+                    }
+
+                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.memo.length; m++) {
+                      if (k == m) {
+                        var select = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].memo"
+                        that.setData({
+                          [select]: that.data.task[i].task_detail[j].finished_info.memo[m]
+                        })
+                      }
+                    }
+
 
                   }
+
 
                 }
 

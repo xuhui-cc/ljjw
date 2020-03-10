@@ -44,12 +44,16 @@
       <view class="stu-rec-flex">
         <view class="shu"></view>
         <view class="analyse-title">模考总分折线图</view>
-      
       </view>
+
+      
+      <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+      
     
      
     
     </view>
+    
   
   </view>
   <!-- 总分 -->
