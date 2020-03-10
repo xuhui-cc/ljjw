@@ -56,9 +56,9 @@ page{
   opacity:1;
 }
 .rec-date{
-  margin-left: 44rpx;
+  margin-left: 37rpx;
   margin-top: 31rpx;
-  width:128rpx;
+  width:135rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
@@ -106,6 +106,7 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:90rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }
@@ -130,6 +131,7 @@ page{
   font-family:PingFang SC;
   font-weight:400;
   line-height:90rpx;
+  text-align: center;
   color:rgba(39,39,39,1);
   opacity:1;
 }

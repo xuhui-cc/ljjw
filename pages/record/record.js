@@ -35,13 +35,13 @@ Page({
       console.log(params)
       app.ljjw.jwGetStudentScore(params).then(d => {
         console.log(d)
-        // if (d.data.status == 1) {
-        //   console.log(d.data.data)
-        //   that.setData({
-        //     stu_class: d.data.data
-        //   })
-        //   console.log("所有班级获取成功")
-        // }
+        if (d.data.status == 1) {
+          console.log(d.data.data)
+          that.setData({
+            stu_score: d.data.data
+          })
+          console.log("学生成绩获取成功")
+        }
 
 
       })
@@ -78,9 +78,12 @@ Page({
   },
 
 
-  to_stu_record:function(){
+  to_stu_record:function(e){
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    console.log(that.data.stu_score[xb].score_id)
     wx.navigateTo({
-      url: '../../pages/stu-record/stu-record',
+      url: '../../pages/stu-record/stu-record?sid=' + that.data.stu_score[xb].score_id,
     })
 
   },

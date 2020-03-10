@@ -111,9 +111,22 @@ Page({
         if (d.data.status == 1) {
           console.log(d)
           that.setData({
-            dayCourse: d.data.data
+            stu_courselist: d.data.data
           })
-          console.log(that.data.dayCourse)
+          for (var i = 0; i < that.data.stu_courselist.length; i++) {
+            var newarray = [{
+              ym: that.data.stu_courselist[i].riqi.substr(0, 7),
+              d: that.data.stu_courselist[i].riqi.substr(8, 2)
+            }];
+            that.setData({
+              'dot_riqi': that.data.dot_riqi.concat(newarray)
+            });
+
+          }
+          console.log(that.data.dot_riqi)
+
+          // 日历点点
+          that.dot()
         }
       })
     }

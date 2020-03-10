@@ -12,22 +12,24 @@
 
   <!-- 学生角色 -->
   <view class="stu-rec" wx:if="{{role == 4}}">
+    <view wx:for="{{stu_score}}" wx:key="index">
+      <view class="rec-layout" data-xb="{{index}}" bindtap="to_stu_record">
+        <view class="rec-flex">
+          <view class="rec-title">{{item.mock_name}}</view>
+          <view class="rec-date">{{item.mock_date}}</view>
+          <view class="rec-more">更多</view>
+          <image class="rec-more-img" src="../../images/next.png"></image>
+        </view>
+        <view class="rec-flex">
+          <view class="rec-total">总分：</view>
+          <view class="rec-total-num">{{item.totalscore}}</view>
+          <view class="rec-rank">排名：</view>
+          <view class="rec-rank-num">{{item.position}}</view>
+        </view>
 
-    <view class="rec-layout" bindtap="to_stu_record">
-      <view class="rec-flex">
-        <view class="rec-title">判断推理第三次测试</view>
-        <view class="rec-date">2019.12.22</view>
-        <view class="rec-more">更多</view>
-        <image class="rec-more-img" src="../../images/next.png"></image>
       </view>
-      <view class="rec-flex">
-        <view class="rec-total">总分：</view>
-        <view class="rec-total-num">118</view>
-        <view class="rec-rank">排名：</view>
-        <view class="rec-rank-num">103</view>
-      </view>
-
     </view>
+      
 
     <!-- <image class="mull-img" src="../../images/rec_null.png"></image> -->
   </view>

@@ -6,6 +6,7 @@ ec-canvas {
   width:750rpx;
   height: 500rpx;
 }
+
 .record-bar{
   display: flex;
   width:750rpx;
