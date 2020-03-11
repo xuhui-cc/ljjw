@@ -279,6 +279,14 @@ page{
   border-radius:50%;
   opacity:1;
 }
+.dot2{
+  margin-top: 7rpx;
+  width:8rpx;
+  height:8rpx;
+  background:rgba(255,152,83,1);
+  border-radius:50%;
+  opacity:1;
+}
 .ct-layout{
   display: flex;
   margin-left: 30rpx;

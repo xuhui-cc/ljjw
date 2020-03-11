@@ -22,7 +22,9 @@ Page({
     nowWeekData: null,
     //日历是否折叠
     calendarfold: true,
-    dot_riqi:[]
+    dot_riqi:[],
+    dot_work: [],
+    lea_date_arr:[]
   },
   //事件处理函数
   
@@ -60,6 +62,7 @@ Page({
       clickYear: nowYear,
       clickMonth: nowMonth + 1,
       clickDay: nowDay,
+      // show_month: nowMonth + 1
     })
     var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) 
     var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
@@ -288,6 +291,86 @@ Page({
     }
   },
 
+  dot_work: function () {
+    let that = this
+    // 本周
+    for (var q = 0; q < that.data.dot_work.length; q++) {
+      // console.log(that.data.dot_work[q])
+      if (that.data.dot_work[q].ym == that.data.showym) {
+        for (var w = 0; w < that.data.nowWeekData.length; w++) {
+          if (that.data.dot_work[q].d == that.data.nowWeekData[w][0]) {
+            if (that.data.dot_work[q].work == 0){
+              var cs = "nowWeekData[" + w + "][2]"
+
+              that.setData({
+                [cs]: 1
+              })
+            }else{
+              var cs = "nowWeekData[" + w + "][2]"
+
+              that.setData({
+                [cs]: 2
+              })
+            }
+            
+            
+
+          } else {
+            var cs = "nowWeekData[" + w + "][2]"
+
+            that.setData({
+              [cs]: 0
+            })
+          }
+        }
+      }
+
+    }
+
+    // 本月
+    for (var q = 0; q < that.data.dot_work.length; q++) {
+      console.log(that.data.dot_work[q])
+      if (that.data.dot_work[q].ym == that.data.showym) {
+        for (var w = 0; w < that.data.weekData.length; w++) {
+          for (var e = 0; e < that.data.weekData[w].length; e++) {
+            if (that.data.weekData[w][e][1] == "true") {
+              if (that.data.dot_work[q].d == that.data.weekData[w][e][0]) {
+                console.log(that.data.weekData[w][e][0])
+                if (that.data.dot_work[q].work == 0){
+                  var cs = "weekData[" + w + "][" + e + "][2]"
+
+                  that.setData({
+                    [cs]: 1
+                  })
+                }else{
+                  var cs = "weekData[" + w + "][" + e + "][2]"
+
+                  that.setData({
+                    [cs]: 2
+                  })
+                }
+                
+
+              } else {
+                var cs = "weekData[" + w + "][" + e + "][2]"
+
+                that.setData({
+                  [cs]: 0
+                })
+              }
+            }
+
+          }
+
+
+
+
+        }
+      }
+
+    }
+  },
+
   class_color: function () {
     let that = this
     // 本周
@@ -342,6 +425,8 @@ Page({
     }
   },
 
+  
+
   menu_select:function(e){
     let that = this
     var type = e.currentTarget.dataset.type
@@ -356,6 +441,24 @@ Page({
       riqi = that.data.nowDate
     }
     if(that.data.role == 4 && type == 3){
+      for (var i = 0; i < that.data.nowWeekData.length; i++) {
+        var cs = "nowWeekData[" + i + "][2]"
+        var css = "nowWeekData[" + i + "][3]"
+        that.setData({
+          [cs]: false,
+          [css]: 0
+        })
+      }
+      for (var i = 0; i < that.data.weekData.length; i++) {
+        for (var j = 0; j < that.data.weekData[i].length; j++) {
+          var cs = "weekData[" + i + "][" + j + "][2]"
+          var css = "weekData[" + i + "][" + j + "][3]"
+          that.setData({
+            [cs]: false,
+            [css]: 0
+          })
+        }
+      }
       //学生某月考勤
       var params = {
         "token": wx.getStorageSync("token"),
@@ -366,25 +469,37 @@ Page({
       app.ljjw.jwGetMonthCheckon(params).then(d => {
         if (d.data.status == 1) {
           console.log(d)
-          that.setData({
-            stu_courselist: d.data.data.info,
-            stu_classlist: d.data.data.period_info
-          })
-          that.cs()
-          for (var i = 0; i < that.data.stu_courselist.length; i++) {
-            var newarray = [{
-              ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-              d: that.data.stu_courselist[i].riqi.substr(8, 2)
-            }];
+          if (d.data.data.info){
             that.setData({
-              'dot_riqi': that.data.dot_riqi.concat(newarray)
-            });
-
+              stu_courselist: d.data.data.info,
+              stu_classlist: d.data.data.period_info
+            })
+          }else{
+            that.setData({
+              stu_courselist: '',
+              stu_classlist: d.data.data.period_info
+            })
           }
-          console.log(that.data.dot_riqi)
+          
+          that.cs()
+          if (that.data.stu_courselist != ''){
+            for (var i = 0; i < that.data.stu_courselist.length; i++) {
+              var newarray = [{
+                ym: that.data.stu_courselist[i].riqi.substr(0, 7),
+                d: that.data.stu_courselist[i].riqi.substr(8, 2),
+                work: that.data.stu_courselist[i].check_status
+              }];
+              that.setData({
+                'dot_work': that.data.dot_work.concat(newarray)
+              });
 
-          // 日历点点
-          that.dot()
+            }
+            console.log(that.data.dot_work)
+
+            // 考勤点点
+            that.dot_work()
+          }
+          
         } else if (d.data.status == -1){
           console.log(d.data.msg)
         }
@@ -424,7 +539,81 @@ Page({
       console.log(params)
       app.ljjw.jwGetStudentAskforleave(params).then(d => {
         if (d.data.status == 1) {
-          console.log(d)
+          that.setData({
+            leave:d.data.data
+          })
+          for(var i=0;i<that.data.leave.length;i++){
+            for(var j=0;j<that.data.leave[i].ask_info.length;j++){
+              var cs = "leave["+ i + "].ask_info[" + j + "].pin"
+              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
+              that.setData({
+                [cs]:hh
+              })
+            }
+          }
+          var newArr = [], tempArr = [];
+          for(var i=0;i<that.data.leave.length;i++){
+             for (var j = 0;j<that.data.leave[i].ask_info.length; j++) {
+              if (that.data.leave[i].ask_info[j].date == that.data.leave[i].ask_info[(j + 1)].date) {
+                tempArr.push(that.data.leave[i].ask_info[j]);
+              } else {
+                tempArr.push(that.data.leave[i].ask_info[j]);
+                newArr.push(tempArr.slice(0));
+                tempArr.length = 0;
+              }
+            }
+            
+
+          }
+          console.log(newArr);
+          that.setData({
+            newArr: newArr
+          })
+          // for(var i=0;i<that.data.leave.length;i++){
+          //   (m => Object.keys(m).map(k => Object.keys(m[k]).map(t => m[k][t])))(that.data.leave[i].ask_info.reduce((m, n) => {
+          //     const { date, title, classtime, pin} = n
+          //     let item1 = m[date] = m[date] || { date, contents: [] }
+          //     // let item2 = item1[title] = item1[title] || { categroyclasstime, title, contents: [] }
+          //     item1.contents.push(pin)
+          //     var qq = "leave[" + i + "].cs"
+          //     that.setData({
+          //       [qq] :m
+          //     })
+          //     console.log(m)
+          //     return m
+          //   }, {}))
+            
+          // }
+            
+          // var cs = []
+          // for (var i = 0; i < that.data.leave.length;i++){
+          //   for (var j = 0; j < that.data.leave[i].ask_info.length; j++){
+          //     var date = that.data.leave[i].ask_info[j].date
+          //       for (var n = 0; n < that.data.leave[i].ask_info.length; n++){
+
+          //       if (date != that.data.leave[i].ask_info[n].date) {
+          //         cs.push(that.data.leave[i].ask_info[n].date)
+          //         that.setData({
+          //           cs:cs
+          //         })
+          //       }   
+          //     }
+          //   }
+            
+          // }
+          // var hash = []
+          // for (let i = 0; i < that.data.cs.length; i++) {
+          //   if (hash.indexOf(that.data.cs[i]) === -1) {
+          //     hash.push(that.data.cs[i]);
+          //   }
+          // }
+          // that.setData({
+          //   hash:hash
+          // })
+          // for(var i=0;i<that.data.hash.length;i++){
+
+          // }
+
         } else if (d.data.status == -1) {
           console.log(d.data.msg)
         }
@@ -747,6 +936,7 @@ Page({
     var showYear, showMonth, showym, showlast
     if (that.data.showMonth == 1){
       showYear = that.data.showYear - 1
+      console.log(showYear)
       showMonth = 12
       // that.setData({
       //   showYear: that.data.showYear - 1,
@@ -754,20 +944,27 @@ Page({
       // })
       // that.getMonthData(that.data.showYear, that.data.showMonth);
     }else{
+      
       showYear = that.data.showYear
+      console.log(showYear)
       showMonth = that.data.showMonth - 1
+    }
       // that.setData({
       //   showYear: that.data.showYear ,
       //   showMonth: that.data.showMonth - 1
       // })
       // var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth)
+      // that.setData({
+      //   show_month: showMonth
+      // })
+      
       showym = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth)
     //   that.setData({
     //     showym: showym
     //   })
     //   that.getMonthData(that.data.showYear, that.data.showMonth);
       showlast = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
-    }
+    
     if(that.data.role <= 3){
       
       var params = {
@@ -886,56 +1083,70 @@ Page({
       app.ljjw.jwGetMonthCheckon(params).then(d => {
         if (d.data.status == 1) {
           console.log(d)
-          if (d.data.data.info != '') {
-            that.setData({
-              showYear: showYear,
-              showMonth: showMonth,
-              showlast: showlast,
-              showym: showym
-            })
-            that.getMonthData(that.data.showYear, that.data.showMonth);
-            // that.setData({
-            //   stu_courselist: d.data.data.info,
-            //   stu_classlist: d.data.data.period_info
-            // })
-            // that.cs()
-            // for (var i = 0; i < that.data.stu_courselist.length; i++) {
-            //   var newarray = [{
-            //     ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-            //     d: that.data.stu_courselist[i].riqi.substr(8, 2)
-            //   }];
-            //   that.setData({
-            //     'dot_riqi': that.data.dot_riqi.concat(newarray)
-            //   });
+          if(d.data.data != ''){
+            if (d.data.data.info != '') {
+              that.setData({
+                showYear: showYear,
+                showMonth: showMonth,
+                showlast: showlast,
+                showym: showym
+              })
+              that.getMonthData(that.data.showYear, that.data.showMonth);
+              if (d.data.data.info) {
+                that.setData({
+                  stu_courselist: d.data.data.info,
+                  stu_classlist: d.data.data.period_info
+                })
+              } else {
+                that.setData({
+                  stu_courselist: '',
+                  stu_classlist: d.data.data.period_info
+                })
+              }
+              that.cs()
+              if (that.data.stu_courselist != '') {
+                for (var i = 0; i < that.data.stu_courselist.length; i++) {
+                  var newarray = [{
+                    ym: that.data.stu_courselist[i].riqi.substr(0, 7),
+                    d: that.data.stu_courselist[i].riqi.substr(8, 2),
+                    work: that.data.stu_courselist[i].check_status
+                  }];
+                  that.setData({
+                    'dot_work': that.data.dot_work.concat(newarray)
+                  });
 
-            // }
-            // console.log(that.data.dot_riqi)
-            // // 日历点点
-            // that.dot()
-            var params = {
-              "token": wx.getStorageSync("token"),
-              "uid": wx.getStorageSync("uid"),
-              "riqi": showlast
+                }
+                console.log(that.data.dot_work)
+
+                // 考勤点点
+                that.dot_work()
+              }
+              var params = {
+                "token": wx.getStorageSync("token"),
+                "uid": wx.getStorageSync("uid"),
+                "riqi": showlast
+              }
+              console.log(params)
+              app.ljjw.jwGetDayCheckon(params).then(d => {
+                if (d.data.status == 1) {
+                  that.setData({
+                    dayCheckon: d.data.data
+                  })
+                  console.log(that.data.dayCheckon)
+                }
+                else if (d.data.status == -1) {
+                  that.setData({
+                    dayCheckon: ''
+                  })
+                  console.log(that.data.dayCheckon)
+                }
+              })
+              that.setData({
+                calendarfold: false
+              })
             }
-            console.log(params)
-            app.ljjw.jwGetDayCheckon(params).then(d => {
-              if (d.data.status == 1) {
-                that.setData({
-                  dayCheckon: d.data.data
-                })
-                console.log(that.data.dayCheckon)
-              }
-              else if (d.data.status == -1) {
-                that.setData({
-                  dayCheckon: ''
-                })
-                console.log(that.data.dayCheckon)
-              }
-            })
-            that.setData({
-              calendarfold: false
-            })
           }
+          
           else {
             wx.showToast({
               title: '上个月还没有安排哦~',
@@ -971,6 +1182,9 @@ Page({
       //   showMonth: that.data.showMonth + 1
       // })
       // var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth)
+      // that.setData({
+      //   show_month: showMonth
+      // })
       showym = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth)
       // that.setData({
       //   showym: showym
@@ -1019,7 +1233,7 @@ Page({
       })
 
     }
-    else if (that.data.role == 4) {
+    else if (that.data.role == 4 && that.data.type == 2) {
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -1029,7 +1243,7 @@ Page({
       app.ljjw.jwGetMonthCourse(params).then(d => {
         if (d.data.status == 1) {
           console.log(d)
-          if (d.data.data.info != ''){
+          if (d.data.data.info != '') {
             that.setData({
               showYear: showYear,
               showMonth: showMonth,
@@ -1073,20 +1287,106 @@ Page({
               calendarfold: false
             })
           }
-          else{
+          else {
             wx.showToast({
-              title: '上个月没有安排哦~',
-              icon:"none",
-              duration:1500
+              title: '下个月还没有安排哦~',
+              icon: "none",
+              duration: 1500
             })
           }
-          
 
-          
+
+
         }
       })
     }
+    else if (that.data.role == 4 && that.data.type == 3) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "month": showym
+      }
+      console.log(params)
+      app.ljjw.jwGetMonthCheckon(params).then(d => {
+        if (d.data.status == 1) {
+          console.log(d)
+          if (d.data.data != '') {
+            if (d.data.data.info != '') {
+              that.setData({
+                showYear: showYear,
+                showMonth: showMonth,
+                showlast: showlast,
+                showym: showym
+              })
+              that.getMonthData(that.data.showYear, that.data.showMonth);
+              if (d.data.data.info) {
+                that.setData({
+                  stu_courselist: d.data.data.info,
+                  stu_classlist: d.data.data.period_info
+                })
+              } else {
+                that.setData({
+                  stu_courselist: '',
+                  stu_classlist: d.data.data.period_info
+                })
+              }
+              that.cs()
+              if (that.data.stu_courselist != '') {
+                for (var i = 0; i < that.data.stu_courselist.length; i++) {
+                  var newarray = [{
+                    ym: that.data.stu_courselist[i].riqi.substr(0, 7),
+                    d: that.data.stu_courselist[i].riqi.substr(8, 2),
+                    work: that.data.stu_courselist[i].check_status
+                  }];
+                  that.setData({
+                    'dot_work': that.data.dot_work.concat(newarray)
+                  });
 
+                }
+                console.log(that.data.dot_work)
+
+                // 考勤点点
+                that.dot_work()
+              }
+              var params = {
+                "token": wx.getStorageSync("token"),
+                "uid": wx.getStorageSync("uid"),
+                "riqi": showlast
+              }
+              console.log(params)
+              app.ljjw.jwGetDayCheckon(params).then(d => {
+                if (d.data.status == 1) {
+                  that.setData({
+                    dayCheckon: d.data.data
+                  })
+                  console.log(that.data.dayCheckon)
+                }
+                else if (d.data.status == -1) {
+                  that.setData({
+                    dayCheckon: ''
+                  })
+                  console.log(that.data.dayCheckon)
+                }
+              })
+              that.setData({
+                calendarfold: false
+              })
+            }
+          }
+
+          else {
+            wx.showToast({
+              title: '下个月还没有安排哦~',
+              icon: "none",
+              duration: 1500
+            })
+          }
+
+
+
+        }
+      })
+    }
 
     
   },
@@ -1210,6 +1510,14 @@ Page({
       }
      
     }
+    if (that.data.nowMonth == that.data.showMonth){
+      that.setData({
+        showMonth: that.data.showMonth,
+        showYear: that.data.showYear
+        // show_month: that.data.showMonth
+      })
+    }
+    
 
   },
 
@@ -1221,6 +1529,7 @@ Page({
     that.setData({
       showDay: e.currentTarget.dataset.day,
       clickDay: e.currentTarget.dataset.day,
+      clickMonth: that.data.showMonth
     })
     // console.log(e.currentTarget.dataset.day1)
     // console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
@@ -1229,7 +1538,7 @@ Page({
       clickDate: clickDate
     })
 
-    if(that.data.role == 4){
+    if(that.data.role == 4 && that.data.type == 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -1245,7 +1554,31 @@ Page({
         }
 
       })
-    }else if(that.data.role <= 3){
+    }
+    else if (that.data.role == 4 && that.data.type == 3){
+      //学生当日考勤
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "riqi": clickDate
+      }
+      console.log(params)
+      app.ljjw.jwGetDayCheckon(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            dayCheckon: d.data.data
+          })
+          console.log(that.data.dayCheckon)
+        }
+        else if (d.data.status == -1) {
+          that.setData({
+            dayCheckon: ''
+          })
+          console.log(that.data.dayCheckon)
+        }
+
+      })
+    } else if(that.data.role <= 3){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),

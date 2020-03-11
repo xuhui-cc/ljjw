@@ -67,6 +67,23 @@ Page({
     that.setData({
       leave_stu_time: e.detail.value
     })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "riqi": that.data.leave_stu_time
+    }
+    console.log(params)
+    app.ljjw.jwGetDayCourse(params).then(d => {
+      if (d.data.status == 1) {
+        that.setData({
+          dayCourse: d.data.data
+        })
+        console.log(that.data.dayCourse)
+      }
+    })
+    that.setData({
+      sel_id:[]
+    })
     
     
   //   // console.log(lea_date_arr)
@@ -82,26 +99,29 @@ Page({
     //     [hh]: false
     //   })
     // }
-    for (var j = 0; j < that.data.course.length; j++){
+    for (var j = 0; j < that.data.dayCourse.length; j++){
       if(index == j){
-        var hhh = "course[" + j + "].xb"
+        var hhh = "dayCourse[" + j + "].xb"
         that.setData({
           [hhh] : true
         })
       }
     }
     console.log(index)
-    that.data.cs.push([that.data.course[index].time])
+    that.data.cs.push([that.data.dayCourse[index].classtime])
     console.log(that.data.cs)
-    that.data.sel_id.push([that.data.course[index].id])
+    that.data.sel_id.push([that.data.dayCourse[index].id])
     var zh = that.data.sel_id.toString()
     console.log(zh)
 
 
-    var jj = "lea_date_arr[0].id"
+    var cccs = that.data.lea_date_arr.length - 1
+
+    var jj = "lea_date_arr[" + cccs + "].id"
     that.setData({
       [jj] : zh
     })
+    
   },
 
   lea_for:function(e){
