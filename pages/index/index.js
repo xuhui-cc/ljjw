@@ -551,24 +551,33 @@ Page({
               })
             }
           }
-          var newArr = [], tempArr = [];
-          for(var i=0;i<that.data.leave.length;i++){
-             for (var j = 0;j<that.data.leave[i].ask_info.length; j++) {
-              if (that.data.leave[i].ask_info[j].date == that.data.leave[i].ask_info[(j + 1)].date) {
-                tempArr.push(that.data.leave[i].ask_info[j]);
-              } else {
-                tempArr.push(that.data.leave[i].ask_info[j]);
-                newArr.push(tempArr.slice(0));
-                tempArr.length = 0;
-              }
-            }
-            
+          // var map = {},
+          //   dest = [];
+          // for(var j=0;j<that.data.leave.length;j++){
+          //   for (var i = 0; i < that.data.leave[j].ask_info.length; i++) {
+          //     var ai = that.data.leave[j].ask_info[i];
+          //     if (!map[ai.date]) {
+          //       dest.push({
+          //         date: ai.date,
+          //         name: ai.name,
+          //         data: [ai]
+          //       });
+          //       map[ai.date] = ai;
+          //     } else {
+          //       for (var j = 0; j < dest.length; j++) {
+          //         var dj = dest[j];
+          //         if (dj.date == ai.date) {
+          //           dj.data.push(ai);
+          //           break;
+          //         }
+          //       }
+          //     }
+          //   }
+          //   console.log(dest);
+          // }
+          
 
-          }
-          console.log(newArr);
-          that.setData({
-            newArr: newArr
-          })
+          
           // for(var i=0;i<that.data.leave.length;i++){
           //   (m => Object.keys(m).map(k => Object.keys(m[k]).map(t => m[k][t])))(that.data.leave[i].ask_info.reduce((m, n) => {
           //     const { date, title, classtime, pin} = n
