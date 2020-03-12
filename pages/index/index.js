@@ -540,88 +540,52 @@ Page({
       app.ljjw.jwGetStudentAskforleave(params).then(d => {
         if (d.data.status == 1) {
           that.setData({
-            leave:d.data.data
+            leave:d.data.data,
+            wscs: d.data.data
           })
           for(var i=0;i<that.data.leave.length;i++){
+            var fold = "leave[" + i + "].fold"
+            that.setData({
+              [fold]: false
+            })
             for(var j=0;j<that.data.leave[i].ask_info.length;j++){
               var cs = "leave["+ i + "].ask_info[" + j + "].pin"
+              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
               var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
               that.setData({
-                [cs]:hh
+                [cs]:hh,
+                [_cs]:[]
               })
+              var date = that.data.leave[i].ask_info[j].date
+              
+              for (var k = 0; k < that.data.wscs[i].ask_info.length;k++){
+                // if (that.data.leave[i].add_arr[k].date == '')
+                
+                if (date == that.data.wscs[i].ask_info[k].date){
+                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
+                }
+                else{
+                  
+                  
+                }
+              }
             }
           }
-          // var map = {},
-          //   dest = [];
-          // for(var j=0;j<that.data.leave.length;j++){
-          //   for (var i = 0; i < that.data.leave[j].ask_info.length; i++) {
-          //     var ai = that.data.leave[j].ask_info[i];
-          //     if (!map[ai.date]) {
-          //       dest.push({
-          //         date: ai.date,
-          //         name: ai.name,
-          //         data: [ai]
-          //       });
-          //       map[ai.date] = ai;
-          //     } else {
-          //       for (var j = 0; j < dest.length; j++) {
-          //         var dj = dest[j];
-          //         if (dj.date == ai.date) {
-          //           dj.data.push(ai);
-          //           break;
-          //         }
-          //       }
-          //     }
-          //   }
-          //   console.log(dest);
-          // }
+
+          for(var i=0;i<that.data.leave.length;i++){
+            for(var j=0;j<that.data.leave[i].ask_info.length;j++){
+              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
+                if (that.data.leave[i].ask_info[j].cs[k] == null){
+                  that.data.leave[i].ask_info.splice(j,1)
+                }
+              }
+            }
+          }
+
+          that.setData({
+            leave:that.data.leave
+          })
           
-
-          
-          // for(var i=0;i<that.data.leave.length;i++){
-          //   (m => Object.keys(m).map(k => Object.keys(m[k]).map(t => m[k][t])))(that.data.leave[i].ask_info.reduce((m, n) => {
-          //     const { date, title, classtime, pin} = n
-          //     let item1 = m[date] = m[date] || { date, contents: [] }
-          //     // let item2 = item1[title] = item1[title] || { categroyclasstime, title, contents: [] }
-          //     item1.contents.push(pin)
-          //     var qq = "leave[" + i + "].cs"
-          //     that.setData({
-          //       [qq] :m
-          //     })
-          //     console.log(m)
-          //     return m
-          //   }, {}))
-            
-          // }
-            
-          // var cs = []
-          // for (var i = 0; i < that.data.leave.length;i++){
-          //   for (var j = 0; j < that.data.leave[i].ask_info.length; j++){
-          //     var date = that.data.leave[i].ask_info[j].date
-          //       for (var n = 0; n < that.data.leave[i].ask_info.length; n++){
-
-          //       if (date != that.data.leave[i].ask_info[n].date) {
-          //         cs.push(that.data.leave[i].ask_info[n].date)
-          //         that.setData({
-          //           cs:cs
-          //         })
-          //       }   
-          //     }
-          //   }
-            
-          // }
-          // var hash = []
-          // for (let i = 0; i < that.data.cs.length; i++) {
-          //   if (hash.indexOf(that.data.cs[i]) === -1) {
-          //     hash.push(that.data.cs[i]);
-          //   }
-          // }
-          // that.setData({
-          //   hash:hash
-          // })
-          // for(var i=0;i<that.data.hash.length;i++){
-
-          // }
 
         } else if (d.data.status == -1) {
           console.log(d.data.msg)
@@ -721,14 +685,61 @@ Page({
       console.log(params)
       app.ljjw.jwGetStudentAskforleave(params).then(d => {
         if (d.data.status == 1) {
-        console.log(d)
+          that.setData({
+            leave: d.data.data,
+            wscs: d.data.data
+          })
+          for (var i = 0; i < that.data.leave.length; i++) {
+            var fold = "leave[" + i + "].fold"
+            that.setData({
+              [fold]: false
+            })
+            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
+              var cs = "leave[" + i + "].ask_info[" + j + "].pin"
+              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
+              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
+              that.setData({
+                [cs]: hh,
+                [_cs]: []
+              })
+              var date = that.data.leave[i].ask_info[j].date
+
+              for (var k = 0; k < that.data.wscs[i].ask_info.length; k++) {
+                // if (that.data.leave[i].add_arr[k].date == '')
+
+                if (date == that.data.wscs[i].ask_info[k].date) {
+                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
+                }
+                else {
+
+
+                }
+              }
+            }
+          }
+
+          for (var i = 0; i < that.data.leave.length; i++) {
+            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
+              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
+                if (that.data.leave[i].ask_info[j].cs[k] == null) {
+                  that.data.leave[i].ask_info.splice(j, 1)
+                }
+              }
+            }
+          }
+
+          that.setData({
+            leave: that.data.leave
+          })
+
+
         } else if (d.data.status == -1) {
           console.log(d.data.msg)
         }
       })
     }
     else if (aud == 1 && that.data.role == 4){
-      //学生请假未审核
+      //学生请假已审核
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -737,7 +748,54 @@ Page({
       console.log(params)
       app.ljjw.jwGetStudentAskforleave(params).then(d => {
         if (d.data.status == 1) {
-        console.log(d)
+          that.setData({
+            leave: d.data.data,
+            wscs: d.data.data
+          })
+          for (var i = 0; i < that.data.leave.length; i++) {
+            var fold = "leave[" + i + "].fold"
+            that.setData({
+              [fold]:false
+            })
+            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
+              var cs = "leave[" + i + "].ask_info[" + j + "].pin"
+              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
+              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
+              that.setData({
+                [cs]: hh,
+                [_cs]: []
+              })
+              var date = that.data.leave[i].ask_info[j].date
+
+              for (var k = 0; k < that.data.wscs[i].ask_info.length; k++) {
+                // if (that.data.leave[i].add_arr[k].date == '')
+
+                if (date == that.data.wscs[i].ask_info[k].date) {
+                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
+                }
+                else {
+
+
+                }
+              }
+            }
+          }
+
+          for (var i = 0; i < that.data.leave.length; i++) {
+            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
+              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
+                if (that.data.leave[i].ask_info[j].cs[k] == null) {
+                  that.data.leave[i].ask_info.splice(j, 1)
+                }
+              }
+            }
+          }
+
+          that.setData({
+            leave: that.data.leave
+          })
+
+
         } else if (d.data.status == -1) {
           console.log(d.data.msg)
         }
@@ -765,12 +823,15 @@ Page({
     })
   },
 
-  stu_lea_open:function(){
+  stu_lea_open:function(e){
+
     let that = this
-    
-      that.setData({
-        audoc: !that.data.audoc
-      })
+    var xb = e.currentTarget.dataset.xb
+    console.log(xb)
+    var cs = "leave[" + xb + "].fold"
+    that.setData({
+      [cs]: !that.data.leave[xb].fold
+    })
     
   },
 

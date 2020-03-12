@@ -198,78 +198,101 @@
       </view>
 
        <view wx:if="{{aud == 0}}" >
+        
         <view class="leave-layout2">
-          <view class="leave">
-            <text class="lea-time">请假时间：2019.12.22</text>
-            <text class="lea-course">请假课程：08:00-09:00  判断推理第一节</text>
-            <text class="lea-for">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</text>
-            <view class="heng2"></view>
-            <view class="step">
-              <image class="gc" src="../../images/gc.png"></image>
-              <text class="lea-sta">发起</text>
-              <text class="apply-time">2019.12.22 15:23:12</text>
+          <view wx:for="{{leave}}" wx:key="index">
+            <view class="leave">
+              <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
+                <text class="lea-time">请假时间：{{ask.date}}</text>
+                <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
+                  <text class="lea-course">请假课程：{{cs}}</text>
+                </view>
+                  
+              </view>
+              <text class="lea-for">请假事由：{{item.reason}}</text>
+              <view class="heng2"></view>
+              <view class="step">
+                <image class="gc" src="../../images/gc.png"></image>
+                <text class="lea-sta">发起</text>
+                <text class="apply-time">2019.12.22 15:23:12</text>
+              </view>
+                
+                
             </view>
-            <image class="route" src="../../images/route.png"></image>
-            <view class="step">
-              <image class="gc1" src="../../images/gc.png"></image>
-              <text class="lea-sta1">教务审核通过</text>
-              <text class="apply-time1">2019.12.22 15:23:12</text>
-            </view>
-            <text class="operator">操作人：王晓茹</text>
+            
           </view>
         </view>
-
         <!-- 新建 -->
-          <view class="add-btn" bindtap="stu_add_leave">
-            <image class="add-img" src="../../images/add.png"></image>
-            <text class="add-new">新建</text>
-          </view>
+        <view class="add-btn" bindtap="stu_add_leave">
+          <image class="add-img" src="../../images/add.png"></image>
+          <text class="add-new">新建</text>
+        </view>
 
     
       </view>
 
       <view wx:if="{{aud == 1}}">
         <view class="leave-layout2">
-          <view class="auded-leave">
-            <view class="hm-flex">
-              <text class="lea-time">请假时间：2019.12.22</text>
-              <text class="auded-result">审核通过</text>
-            </view>
-            
-            <text class="lea-course">请假课程：08:00-09:00  判断推理第一节</text>
-            <text class="lea-for">请假事由：身体不舒服，需要请半天假去医院打针，不会耽搁下午的课程。</text>
-            <image class="xuheng" src="../../images/xu.png"></image>
+          <view wx:for="{{leave}}" wx:key="index" wx:for-key="item_index">
+            <view class="auded-leave">
+              <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
+                <view class="hm-flex">
+                  <text class="lea-time">请假时间：{{ask.date}}</text>
+                  <view wx:if="{{item.verify_list.length == 1}}" >
+                  <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="auded-result">待管理员审核</view>
+                  <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                </view>
+                <view wx:if="{{item.verify_list.length == 2}}">
+                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="auded-result" style="color:rgba(70,191,106,1);">审核通过</view>
+                  <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                </view>
+                  
+                </view>
+                <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
+                  <text class="lea-course">请假课程：{{cs}}</text>
+                </view>
+              </view>
+              <text class="lea-for">请假事由：{{item.reason}}</text>
+              <image class="xuheng" src="../../images/xu.png"></image>
 
-            <view wx:if="{{!audoc}}">
-              <view class="aud-step">
-                <image class="gc" src="../../images/gc.png"></image>
-                <text class="lea-sta">发起</text>
-                <text class="apply-time">2019.12.22 15:23:12</text>
-              </view>
-              <image class="route" src="../../images/route.png"></image>
-              <view class="step">
-                <image class="gc1" src="../../images/gc.png"></image>
-                <text class="lea-sta1">教务审核通过</text>
-                <text class="apply-time1">2019.12.22 15:23:12</text>
-              </view>
-              <text class="operator">操作人：王晓茹</text>
-              <image class="route" src="../../images/route.png"></image>
-              <view class="step">
-                <image class="gc1" src="../../images/gc.png"></image>
-                <text class="lea-sta1">管理员审核通过</text>
-                <text class="apply-time1">2019.12.22 15:23:12</text>
-              </view>
-              <text class="operator">操作人：王晓茹</text>
-              </view>
+              <view wx:if="{{!item.fold}}">
+                <view class="aud-step">
+                  <image class="gc" src="../../images/gc.png"></image>
+                  <text class="lea-sta">发起</text>
+                  <text class="apply-time">2019.12.22 15:23:12</text>
+                </view>
+                <image class="route" src="../../images/route.png"></image>
+                <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
+                  <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
+                  <image wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
+                  <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start2">教务审核通过</view>
+                  <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">教务审核驳回</view>
+                  <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
+                  <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
+                  <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[0].reject_reason}}</view>
+                </view>
+                
+                <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-route-xu" src="../../images/route.png"></image>
+                <view class="hm-pro-two" wx:if="{{item.verify_list.length == 2}}">
+                 <image wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
+                  <image wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
+                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
+                  <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
+                  <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
+                  <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
+                   <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
+                </view>
+                </view>
 
-              <view wx:if="{{audoc}}" class="unfold-btn" bindtap="stu_lea_open"> 
-                <image class="unfold-img" src="../../images/xsj.png"></image>
-                <text class="unfold-font">展开</text>
-              </view>
+                <view wx:if="{{item.fold}}" class="unfold-btn" style="margin-top: 30rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
+                  <image class="unfold-img" src="../../images/xsj.png"></image>
+                  <text class="unfold-font">展开</text>
+                </view>
 
-              <view wx:if="{{!audoc}}" class="unfold-btn" bindtap="stu_lea_open"> 
-                <image class="unfold-img" src="../../images/ssj.png"></image>
-                <text class="unfold-font">收起</text>
+                <view wx:if="{{!item.fold}}" class="unfold-btn" style="margin-top: 50rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
+                  <image class="unfold-img" src="../../images/ssj.png"></image>
+                  <text class="unfold-font">收起</text>
+                </view>
               </view>
             </view>
         </view>

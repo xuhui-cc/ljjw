@@ -1,5 +1,5 @@
 page{
-  background: rgba(251,251,252,1)
+  background:rgba(251,251,252,1);
 }
 .container{
   margin-bottom: 100rpx;
@@ -139,7 +139,7 @@ page{
 }
 .date-layout{
   display: flex;
-  margin-top: 185rpx;
+  margin-top: 177rpx;
 }
 .last-month{
   margin-left: 452rpx;
@@ -372,7 +372,7 @@ page{
   z-index: 5;
 }
 .leave-state{
-  margin-top: 180rpx;
+  margin-top: 176rpx;
   width:750rpx;
   height:88rpx;
   line-height: 88rpx;
@@ -415,14 +415,17 @@ page{
 }
 .leave-layout2{
   position: absolute; 
-  margin-top: 280rpx;
+  /* width: 690rpx;
+  margin-left: 30rpx; */
+  margin-top: 300rpx;
   margin-bottom: 250rpx;
 }
 .leave{
   margin-left: 30rpx;
   margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
   width:690rpx;
-  height:491rpx;
+  
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:14rpx;
@@ -587,7 +590,7 @@ page{
 }
 .add-btn{
   margin-left: 30rpx;
-  margin-top: 1255rpx;
+  margin-top: 1400rpx;
   position: fixed;
   width:690rpx;
   height:90rpx;
@@ -614,6 +617,7 @@ page{
 }
 .auded-leave{
   margin-left: 30rpx;
+  margin-bottom: 30rpx;
   padding-bottom: 25rpx;
   width:690rpx;
   /* height:316rpx; */
@@ -645,7 +649,7 @@ page{
 .unfold-btn{
   display: flex;
   /* position: absolute; */
-  margin-top: 30rpx;
+  
   width:690rpx;
   height:64rpx;
 }
