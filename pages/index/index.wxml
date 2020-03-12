@@ -80,7 +80,7 @@
       <view wx:if="{{dayCourse != ''}}">
         <view wx:for="{{dayCourse}}" wx:key="index">
           <view class="ct-layout">
-            <view class="mask"></view>
+            <view wx:if="{{!item.comp}}" class="mask"></view>
             <view class="c-time">{{item.classtime}}</view>
             <view class="shu"></view>
             <view class="c-name">{{item.title}}</view>

@@ -7,7 +7,7 @@ Page({
     type: 2,  //type 1-请假，2-课表，3-考勤
     aud: 0,
     // role: 3,    //role：4 -学生；1 -老师；2 -教务；3 -管理员
-    audoc:true,
+    // audoc:true,
     week: ["周日", '周一', '周二', '周三', '周四', '周五', '周六'],
     //当前显示的年
     showYear: null,
@@ -104,6 +104,29 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
+          for(var i=0;i<that.data.dayCourse.length;i++){
+            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.dayCourse[i].riqi + " " + end1
+            // console.log(end + "=============end")
+            var aa = Date.parse(end)
+            // console.log(aa +"++++++==========aa")
+            
+            var timestamp = Date.parse(new Date());
+            // console.log(timestamp + "now")
+            if (aa < timestamp){
+              var comp = "dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else{
+              var comp = "dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+            
+          }
           console.log(that.data.dayCourse)
         }
       })
@@ -546,7 +569,7 @@ Page({
           for(var i=0;i<that.data.leave.length;i++){
             var fold = "leave[" + i + "].fold"
             that.setData({
-              [fold]: false
+              [fold]: true
             })
             for(var j=0;j<that.data.leave[i].ask_info.length;j++){
               var cs = "leave["+ i + "].ask_info[" + j + "].pin"
@@ -603,6 +626,29 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
+          for (var i = 0; i < that.data.dayCourse.length; i++) {
+            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.dayCourse[i].riqi + " " + end1
+            // console.log(end + "=============end")
+            var aa = Date.parse(end)
+            // console.log(aa +"++++++==========aa")
+
+            var timestamp = Date.parse(new Date());
+            // console.log(timestamp + "now")
+            if (aa < timestamp) {
+              var comp = "dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
           console.log(that.data.dayCourse)
         }
       })
@@ -692,7 +738,7 @@ Page({
           for (var i = 0; i < that.data.leave.length; i++) {
             var fold = "leave[" + i + "].fold"
             that.setData({
-              [fold]: false
+              [fold]: true
             })
             for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
               var cs = "leave[" + i + "].ask_info[" + j + "].pin"
@@ -755,7 +801,7 @@ Page({
           for (var i = 0; i < that.data.leave.length; i++) {
             var fold = "leave[" + i + "].fold"
             that.setData({
-              [fold]:false
+              [fold]:true
             })
             for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
               var cs = "leave[" + i + "].ask_info[" + j + "].pin"
@@ -1123,6 +1169,29 @@ Page({
                 that.setData({
                   dayCourse: d.data.data
                 })
+                for (var i = 0; i < that.data.dayCourse.length; i++) {
+                  var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+                  var end = that.data.dayCourse[i].riqi + " " + end1
+                  // console.log(end + "=============end")
+                  var aa = Date.parse(end)
+                  // console.log(aa +"++++++==========aa")
+
+                  var timestamp = Date.parse(new Date());
+                  // console.log(timestamp + "now")
+                  if (aa < timestamp) {
+                    var comp = "dayCourse[" + i + "].comp"
+                    that.setData({
+                      [comp]: false
+                    })
+                  }
+                  else {
+                    var comp = "dayCourse[" + i + "].comp"
+                    that.setData({
+                      [comp]: true
+                    })
+                  }
+
+                }
                 console.log(that.data.dayCourse)
               }
             })
@@ -1350,6 +1419,29 @@ Page({
                 that.setData({
                   dayCourse: d.data.data
                 })
+                for (var i = 0; i < that.data.dayCourse.length; i++) {
+                  var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+                  var end = that.data.dayCourse[i].riqi + " " + end1
+                  // console.log(end + "=============end")
+                  var aa = Date.parse(end)
+                  // console.log(aa +"++++++==========aa")
+
+                  var timestamp = Date.parse(new Date());
+                  // console.log(timestamp + "now")
+                  if (aa < timestamp) {
+                    var comp = "dayCourse[" + i + "].comp"
+                    that.setData({
+                      [comp]: false
+                    })
+                  }
+                  else {
+                    var comp = "dayCourse[" + i + "].comp"
+                    that.setData({
+                      [comp]: true
+                    })
+                  }
+
+                }
                 console.log(that.data.dayCourse)
               }
             })
@@ -1620,6 +1712,29 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
+          for (var i = 0; i < that.data.dayCourse.length; i++) {
+            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.dayCourse[i].riqi + " " + end1
+            // console.log(end + "=============end")
+            var aa = Date.parse(end)
+            // console.log(aa +"++++++==========aa")
+
+            var timestamp = Date.parse(new Date());
+            // console.log(timestamp + "now")
+            if (aa < timestamp) {
+              var comp = "dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
           console.log(that.data.dayCourse)
         }
 
