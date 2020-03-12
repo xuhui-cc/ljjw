@@ -313,8 +313,8 @@
           <image wx:if="{{item.ck_finished.verify_status == 2}}" class="work_img" src="../../images/reject_work.png"></image>
 
           <view class="heng"></view>
-          <view class="reject_head">驳回原因：</view>
-          <view class="reject_reason">{{item.ck_finished.refuse_reason}}</view>
+          <view wx:if="{{item.ck_finished.verify_status == 2}}" class="reject_head">驳回原因：</view>
+          <view wx:if="{{item.ck_finished.verify_status == 2}}" class="reject_reason">{{item.ck_finished.refuse_reason}}</view>
           <view class="task1_title">{{item.task_detail.tasktitle}}</view>
           
           <!-- 问题循环 -->
