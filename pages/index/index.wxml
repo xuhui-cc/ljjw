@@ -49,7 +49,7 @@
                   <view wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
                   <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
                  
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}} && item[1] == 'true'" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
                   <view wx:if="{{item[2]}}" class="dot" ></view>
                   <view wx:else="" class="dot1" ></view>
                 </view>
@@ -60,7 +60,7 @@
                 <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
                   <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
                   <text wx:else class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
+                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
                   <view wx:if="{{item[2]}}" class="dot" ></view>
                   <view wx:else="" class="dot1" ></view>
                 </view>
