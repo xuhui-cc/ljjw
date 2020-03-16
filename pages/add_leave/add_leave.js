@@ -6,29 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // course: [
-    //     {
-    //       id:5,
-    //       time: '14:00-15:00',
-    //       name: '逻辑推理第1节',
-    //     },
-    //     {
-    //       id: 6,
-    //       time: '15:00-16:00',
-    //       name: '逻辑推理第2节',
-    //     },
-    //   {
-    //     id: 7,
-    //     time: '16:00-17:00',
-    //     name: '逻辑推理第3节',
-    //   },
-    //   {
-    //     id: 8,
-    //     time: '17:00-18:00',
-    //     name: '逻辑推理第4节',
-    //     sel: false
-    //   },
-    //   ],
     lea_date_arr:[],
     list:[],
     cs:[],
@@ -51,6 +28,7 @@ Page({
     })
   },
 
+  //请假时间选择器
   leave_stu_time: function (e) {
     let that = this
 
@@ -78,7 +56,7 @@ Page({
         that.setData({
           dayCourse: d.data.data
         })
-        console.log(that.data.dayCourse)
+        console.log("选择日期的课表接口获取成功")
       }
     })
     that.setData({
@@ -89,6 +67,7 @@ Page({
   //   // console.log(lea_date_arr)
   },
 
+  //请假课程选择
   lea_sel:function(e){
     let that = this
     
@@ -124,6 +103,8 @@ Page({
     
   },
 
+
+  //请假原因填写
   lea_for:function(e){
     let that = this
     console.log(e.detail.value)
@@ -133,6 +114,9 @@ Page({
 
   },
 
+
+  
+  // 请假提交
   lea_submit:function(){
     let that = this
     var obj = []
@@ -154,16 +138,14 @@ Page({
     }
     console.log(params)
     app.ljjw.jwSaveAskforleave(params).then(d => {
-      // if (d.data.status == 1) {
-      //   that.setData({
-      //     dayCourse: d.data.data
-      //   })
-      //   console.log(that.data.dayCourse)
-      // }
-      wx.showToast({
-        title: '提交成功',
-        duration: 2000
-      })
+      if (d.data.status == 1) {
+        wx.showToast({
+          title: '提交成功',
+          duration: 2000
+        })
+        console.log("请假提交成功")
+      }
+      
     })
     
     // wx.navigateBack({

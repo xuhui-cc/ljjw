@@ -45,13 +45,13 @@ Page({
             [cs] : 0
           })
         }
-        // that.setData({
-        //   students_unsigned : that.data.unsigned
-        // })
+        console.log("老师点名页接口获取成功")
       }
     })
   },
 
+
+  // 已标注学生状态更改
   stu_situ_picker:function(e){
     let that = this
     var xb = e.currentTarget.dataset.xb
@@ -75,6 +75,8 @@ Page({
     
   },
 
+
+  // 未标注学生状态更改
   stu_unsitu_picker: function (e) {
     let that = this
     var unxb = e.currentTarget.dataset.unxb
@@ -128,11 +130,7 @@ Page({
     })
   },
 
-  // change_condition:function(e){
-  //   let that = this
-  //   var xb = e.currentTarget.dataset.xb
-  //   console.log(xb)
-  // },
+  
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -210,7 +208,14 @@ Page({
     app.ljjw.jwSaveStudentSignIn(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
-        console.log("点名返回键保存成功")
+        wx.showToast({
+          title: '提交成功',
+          duration:1500
+        })
+        wx.navigateBack({
+          delta: 1  // 返回上一级页面。
+        })
+        console.log("点名返回键,保存成功")
 
       }
     })

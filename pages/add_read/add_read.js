@@ -68,7 +68,11 @@ Page({
     app.ljjw.jwTeacherAddMorningRead(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
-        console.log("back")
+        wx.showToast({
+          title: '创建成功',
+          duration:1500
+        })
+        console.log("创建成功,back")
         wx.navigateBack({
           delta: 1  // 返回上一级页面。
         })

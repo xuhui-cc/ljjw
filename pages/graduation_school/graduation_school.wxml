@@ -4,7 +4,12 @@
     <view class='head'>毕业院校</view>
   </view>
   <view class='school_layout'>
-    <input class='school' placeholder='请输入毕业院校名称' bindinput='input_school'></input>
+    <input class='school' placeholder='请输入毕业院校名称' bindinput='input_school' value="{{value}}"></input>
+  </view>
+
+  <view wx:for="{{school}}" wx:key="index">
+    <view class="school_name" data-xb="{{index}}" bindtap="selsct_school">{{item.school_name}}</view>
+  
   </view>
 
 

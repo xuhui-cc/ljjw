@@ -1,11 +1,12 @@
 // pages/graduation_school/graduation_school.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    value:''
   },
 
   /**
@@ -15,13 +16,47 @@ Page({
 
   },
 
+  selsct_school:function(e){
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    console.log(xb)
+    that.setData({
+      value: that.data.school[xb].school_name
+    })
+    wx.setStorageSync("input_school", that.data.value)
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
+
   input_school: function (e) {
     let that = this
     console.log(e.detail.value)
     that.setData({
       input_school: e.detail.value
     })
-    wx.setStorageSync("input_school", that.data.input_school)
+    
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "keyword": that.data.input_school
+    }
+    console.log(params)
+    app.ljjw.jwGetSchoolList(params).then(d => {
+      if (d.data.status == 1) {
+        if(d.data.data != ''){
+          that.setData({
+            school:d.data.data
+          })
+        }
+        else{
+          wx.setStorageSync("input_school", that.data.input_school)
+        }
+        
+        
+      }
+      
+
+    })
     // wx.navigateBack({
     //   url: '../../pages/stu-info/stu-info',
     // })

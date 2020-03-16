@@ -47,12 +47,13 @@ Page({
             stu_class: d.data.data.classes
             
           })
-          console.log("我的主页接口获取成功")
+          console.log("学生——我的主页接口获取成功")
         }
         
         
       })
-    } else if (that.data.role == 1){
+    } 
+    else if (that.data.role == 1){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -69,17 +70,18 @@ Page({
 
 
       })
-      console.log("我是老师")
+      console.log("老师——我的主页")
     }
     else if (that.data.role == 2) {
-      console.log("我是教务")
+      console.log("教务——我的主页")
     }
     else if (that.data.role == 3) {
-      console.log("我是管理员")
+      console.log("管理员——我的主页")
     }
     
   },
 
+  //学生班级选择器
   stu_class_picker: function (e) {
     let that = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -96,16 +98,18 @@ Page({
       if (d.data.status == 1) {
         that.setData({
           mydata: d.data.data,
-          // stu_class: d.data.data.classes
+          
 
         })
-        console.log("我的主页接口获取成功")
+        console.log("学生（班级切换）——我的主页接口获取成功")
       }
 
 
     })
   },
 
+
+  // 打开文件
   open_file: function (e) {
     let that = this
     var file_xb = e.currentTarget.dataset.file_xb
@@ -141,6 +145,7 @@ Page({
     })
   },
 
+  // 学生查看基本信息
   to_stu_info:function(){
     wx.navigateTo({
       url: '../../pages/stu-info/stu-info',
@@ -148,6 +153,7 @@ Page({
 
   },
 
+  // 老师基础信息跳转
   to_stu_jcxx: function () {
     let that = this
     wx.navigateTo({
@@ -157,7 +163,7 @@ Page({
   },
 
 
-  
+  // 老师班级档案跳转
   to_class_data: function () {
     wx.navigateTo({
       url: '../../pages/class_data/class_data',
@@ -183,6 +189,7 @@ Page({
     })
   },
 
+  // 收藏
   iscollect:function(e){
     let that = this
     var type

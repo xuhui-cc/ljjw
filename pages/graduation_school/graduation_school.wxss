@@ -46,3 +46,15 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
+.school_name{
+  margin-left: 48rpx;
+  margin-top: 30rpx;
+  
+height:42rpx;
+font-size:30rpx;
+font-family:PingFang SC;
+font-weight:400;
+line-height:49rpx;
+color:rgba(39,39,39,1);
+opacity:1;
+}
