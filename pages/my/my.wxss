@@ -63,7 +63,7 @@ page{
 .my-name{
   margin-left: 28rpx;
   margin-top: 57rpx;
-  width:182rpx;
+  /* width:182rpx; */
   height:45rpx;
   font-size:32rpx;
   font-family:PingFang SC;

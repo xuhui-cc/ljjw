@@ -305,7 +305,7 @@ Page({
               app.ljjw.xcxjwlogin(params).then(d => {
                 
                 if (d.data.status == 0) {
-                  
+                  console.log(d.data)
                   var role = d.data.role.split(",")
                   if(role.length == 2){
                     role[0] = role[1]
