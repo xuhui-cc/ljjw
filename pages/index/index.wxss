@@ -589,8 +589,9 @@ page{
   opacity:1;
 }
 .add-btn{
-  margin-left: 30rpx;
-  margin-top: 1400rpx;
+  /* position: absolute; */
+  left: 30rpx;
+  bottom: 150rpx;
   position: fixed;
   width:690rpx;
   height:90rpx;
@@ -1498,4 +1499,10 @@ page{
   margin-top: 589rpx;
   width: 283rpx;
   height: 350rpx;
+}
+.mull-img{
+  margin-left:238rpx;
+  margin-top: 599rpx;
+  width:294rpx;
+  height:329rpx;
 }

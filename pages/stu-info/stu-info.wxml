@@ -2,7 +2,8 @@
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">我的头像</view>
-    <view class="flex1" bindtap="chooseImg">
+    <image wx:if="{{avatar}}" class='avatar' src='{{avatar}}' bindtap="chooseImg"></image>
+    <view wx:else="" class="flex1" bindtap="chooseImg">
       <view class="tip" wx:if="{{!avatar}}">请选择</view>
       <image class='avatar' src='{{avatar}}' wx:else=""></image>
       <image class="select" src="../../images/next.png"></image>
@@ -14,14 +15,15 @@
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">姓名</view>
-    <input class="tip" placeholder="请填写" bindinput='input_name' ></input>
+    
+    <input class="tip" placeholder="请填写" bindinput='input_name' value="{{input_name}}"></input>
     <!-- <image class="select" src="../../images/next.png"></image> -->
   </view>
 
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">电话</view>
-    <input class="tip" placeholder="请填写" bindinput='input_phone' type="number"></input>
+    <input class="tip" placeholder="请填写" bindinput='input_phone' type="number" value="{{input_phone}}"></input>
     <!-- <image class="select" src="../../images/next.png"></image> -->
   </view>
 
@@ -48,11 +50,11 @@
     <view class="shu"></view>
     <view class="info-tltle">毕业时间</view>
 
-    <picker mode="date" value="{{graduation_time}}" start="2015-09-01" end="{{cur_date}}" bindchange="graduation_time">
+    <picker mode="date" fields="month" value="{{graduation_time}}" start="2015-09-01" end="{{cur_date}}" bindchange="graduation_time">
       <view class="tip">{{graduation_time}}</view>
     </picker>
 
-    <picker mode="date" value="{{graduation_time}}" start="2015-09-01" end="{{cur_date}}" bindchange="graduation_time">
+    <picker mode="date" fields="month" value="{{graduation_time}}" start="2015-09-01" end="{{cur_date}}" bindchange="graduation_time">
       <image class="select" src="../../images/next.png"></image>
     </picker>
   </view>
@@ -60,14 +62,14 @@
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">专业</view>
-    <input class="tip" placeholder="请填写" bindinput='input_major'></input>
+    <input class="tip" placeholder="请填写" bindinput='input_major' value="{{input_major}}"></input>
     <!-- <image class="select" src="../../images/next.png"></image> -->
   </view>
 
   <view class="flex">
     <view class="shu"></view>
     <view class="info-tltle">邮箱</view>
-    <input class="tip" placeholder="请填写" bindinput='input_email'></input>
+    <input class="tip" placeholder="请填写" bindinput='input_email' value="{{input_email}}"></input>
     <!-- <image class="select" src="../../images/next.png"></image> -->
   </view>
 

@@ -18,66 +18,73 @@
   </view>
   <!-- 导航栏结束 -->
 
-  <view wx:if="{{role <= 2}}">
-    <view wx:if="{{add}}">
-      <image class="add-kuang" src="../../images/kuang.png"></image>
-      <view data-addtype='{{1}}' bindtap="to_add_read">
-      <image class="add_read" src="../../images/add_read.png"></image>
-        <view class="add-read-tltle">创建每日晨读</view>
-      </view>
-      <view data-addtype='{{2}}' bindtap="to_add_read">
-        <image class="add_message" src="../../images/add_message.png"></image>
-        <view class="add-message-tltle">创建消息通知</view>
-      </view>
-      
-    </view>
-
+  <view wx:if="{{!login}}">
+    <image class='task-null' src='../../images/null.png'></image>
   </view>
 
-  <view wx:if="{{role != 3}}">
-    <view class="read-layout" >
-      <view class="flex" bindtap='to_stu_mornread'>
-        <view class="shu"></view>
-        <view class="head">每日晨读</view>
-        <view class="more">更多</view>
-        <image class="more-img" src="../../images/next.png"></image>
+  <view wx:if="{{login}}">
+    <view wx:if="{{role <= 2}}">
+      <view wx:if="{{add}}">
+        <image class="add-kuang" src="../../images/kuang.png"></image>
+        <view data-addtype='{{1}}' bindtap="to_add_read">
+        <image class="add_read" src="../../images/add_read.png"></image>
+          <view class="add-read-tltle">创建每日晨读</view>
+        </view>
+        <view data-addtype='{{2}}' bindtap="to_add_read">
+          <image class="add_message" src="../../images/add_message.png"></image>
+          <view class="add-message-tltle">创建消息通知</view>
+        </view>
+        
       </view>
-      <view class="flex_warp">
-        <view wx:for="{{csmorningRead.pics}}" wx:key="img_index" >
-          <image class='read-img' data-xb='{{index}}' bindtap='previewImg' src='{{item}}'></image>
+
+    </view>
+
+    <view wx:if="{{role != 3}}">
+      <view class="read-layout" >
+        <view class="flex" bindtap='to_stu_mornread'>
+          <view class="shu"></view>
+          <view class="head">每日晨读</view>
+          <view class="more">更多</view>
+          <image class="more-img" src="../../images/next.png"></image>
+        </view>
+        <view class="flex_warp">
+          <view wx:for="{{csmorningRead.pics}}" wx:key="img_index" >
+            <image class='read-img' data-xb='{{index}}' bindtap='previewImg' src='{{item}}'></image>
+          </view>
         </view>
       </view>
-    </view>
 
-    <view class="task-layout" bindtap="to_stu_task">
-      <view class="flex">
-        <view class="shu"></view>
-        <view class="head">任务</view>
-        <image wx:if="{{role == 4 && newtaskcount > 0}}" class="tip" src="../../images/tip.png"></image>
-        <view wx:if="{{role == 4 && newtaskcount > 0}}" class="tip-num">{{newtaskcount}}</view>
-        <view class="more">查看</view>
-        <image class="more-img" src="../../images/next.png"></image>
-      </view>
-      <view wx:if="{{role == 4}}" class="task-cont">你有一条新任务未做，快去提交吧！</view>
-      <view wx:else="" class="task-cont">学员们提交的任务动态都在这里呦~</view>
-    </view>
-
-    <view wx:for="{{message}}" wx:key="index" wx:for-index="xb">
-      <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
+      <view class="task-layout" bindtap="to_stu_task">
         <view class="flex">
           <view class="shu"></view>
-          <view class="head">消息通知</view>
-          <view class="message-date">{{item.createtime}}</view>
+          <view class="head">任务</view>
+          <image wx:if="{{role == 4 && newtaskcount > 0}}" class="tip" src="../../images/tip.png"></image>
+          <view wx:if="{{role == 4 && newtaskcount > 0}}" class="tip-num">{{newtaskcount}}</view>
+          <view class="more">查看</view>
+          <image class="more-img" src="../../images/next.png"></image>
         </view>
-      <view class="message-cont">{{item.content}}</view>
+        <view wx:if="{{role == 4}}" class="task-cont">你有一条新任务未做，快去提交吧！</view>
+        <view wx:else="" class="task-cont">学员们提交的任务动态都在这里呦~</view>
       </view>
+
+      <view wx:for="{{message}}" wx:key="index" wx:for-index="xb">
+        <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
+          <view class="flex">
+            <view class="shu"></view>
+            <view class="head">消息通知</view>
+            <view class="message-date">{{item.createtime}}</view>
+          </view>
+        <view class="message-cont">{{item.content}}</view>
+        </view>
+      </view>
+
     </view>
 
+
+    <view wx:if="{{role == 3}}">
+      <image class='task-null' src='../../images/null.png'></image>
   </view>
-
-
-  <view wx:if="{{role == 3}}">
-    <image class='task-null' src='../../images/null.png'></image>
+    
   
   </view>
 

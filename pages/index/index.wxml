@@ -14,688 +14,626 @@
   
   </view>
 
+
   <view class="nabigation_bar">
    <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
    <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
    <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
   </view>
 
-  <!-- 学生角色 -->
-  <view class="student" wx:if="{{role == 4}}">
-    <!-- 课表页 -->
-    <view  wx:if="{{type == 2}}">
-      <!-- 课表日历 -->
-      <view class="rili" >
-        <!-- 年月显示切换 -->
-          <view class="date-layout">
-            <text class="year">2020年</text>
-            <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-            <text class="month">{{showMonth}}月</text>
-            <image class="next-month" src="../../images/next.png" bindtap="next"></image>
-          </view>
-          <view class="heng1"></view>
-          <!-- 课表日历 -->
-          <view class="calendar">
-            <view class="calendar-header">
-              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}" >
-                <text class="ch-item-text">{{item}}</text>
-              </view>
+  <view wx:if="{{!login}}">
+    <image class="mull-img" src="../../images/rec_null.png"></image>
+  </view>
+
+  <view wx:if="{{login}}">
+    <!-- 学生角色 -->
+    <view class="student" wx:if="{{role == 4}}">
+      <!-- 课表页 -->
+      <view  wx:if="{{type == 2}}">
+        <!-- 课表日历 -->
+        <view class="rili" >
+          <!-- 年月显示切换 -->
+            <view class="date-layout">
+              <text class="year">2020年</text>
+              <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              <text class="month">{{showMonth}}月</text>
+              <image class="next-month" src="../../images/next.png" bindtap="next"></image>
             </view>
-            <!-- 完整的当月数据 -->
-            <view class="calendar-month" wx:if="{{!calendarfold}}">
-              <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                  <view wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                  <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
-                 
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                  <view wx:if="{{item[2]}}" class="dot" ></view>
-                  <view wx:else="" class="dot1" ></view>
+            <view class="heng1"></view>
+            <!-- 课表日历 -->
+            <view class="calendar">
+              <view class="calendar-header">
+                <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}" >
+                  <text class="ch-item-text">{{item}}</text>
                 </view>
               </view>
-            </view>
-            <!-- 本周数据 -->
-            <view class="calendar-month-week" wx:else>
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                  <text wx:else class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
-                  <view wx:if="{{item[2]}}" class="dot" ></view>
-                  <view wx:else="" class="dot1" ></view>
+              <!-- 完整的当月数据 -->
+              <view class="calendar-month" wx:if="{{!calendarfold}}">
+                <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
+                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <view wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
+                  
+                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                    <view wx:if="{{item[2]}}" class="dot" ></view>
+                    <view wx:else="" class="dot1" ></view>
+                  </view>
                 </view>
               </view>
-          </view>
-          <!-- 修改年月日 -->
-          <!-- <picker mode="date" value="{{date}}" start="2015-09-01" end="{{nowYear}}-{{nowMonth}}-{{nowDay}}" bindchange="bindDateChange">
-            <view class="picker">
-              当前选择: {{showYear}}-{{showMonth}}-{{showDay}}
-            </view>
-          </picker> -->
-            <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
-
-      </view>
-      <!-- 日历结束 -->
-      <!-- 选择日期的课表 -->
-      <view wx:if="{{dayCourse != ''}}">
-        <view wx:for="{{dayCourse}}" wx:key="index">
-          <view class="ct-layout">
-            <view wx:if="{{!item.comp}}" class="mask"></view>
-            <view class="c-time">{{item.classtime}}</view>
-            <view class="shu"></view>
-            <view class="c-name">{{item.title}}</view>
-          </view>
-        </view>
-      </view>
-
-      <!-- 课表为空 -->
-      <view wx:if="{{!dayCourse}}">
-        <image class='course_null' src='../../images/course_null.png'></image>
-      </view>
-      <!-- 空课表 -->
-
-    </view>
-    <!-- 课表页结束 -->
-
-    <!-- 考勤页 -->
-    <view  wx:if="{{type == 3}}">
-      <!-- 考勤日历 -->
-      <view class="rili" >
-        <!-- 年月显示切换 -->
-          <view class="date-layout">
-            <text class="year">2020年</text>
-            <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-            <text class="month">{{showMonth}}月</text>
-            <image class="next-month" src="../../images/next.png" bindtap="next"></image>
-          </view>
-          <view class="heng1"></view>
-          <!-- 课表日历 -->
-          <view class="calendar">
-            <view class="calendar-header">
-              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
-                <text class="ch-item-text">{{item}}</text>
-              </view>
-            </view>
-            <!-- 完整的当月数据 -->
-            <view class="calendar-month" wx:if="{{!calendarfold}}">
-              <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                  <view wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                  <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
-                 
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                  <view wx:if="{{item[2] == 1}}" class="dot" ></view>
-                  <view wx:if="{{item[2] == 2}}" class="dot2" ></view>
-                  <view wx:if="{{item[2] == 0}}" class="dot1" ></view>
+              <!-- 本周数据 -->
+              <view class="calendar-month-week" wx:else>
+                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <text wx:else class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
+                    <view wx:if="{{item[2]}}" class="dot" ></view>
+                    <view wx:else="" class="dot1" ></view>
+                  </view>
                 </view>
-              </view>
             </view>
-            <!-- 本周数据 -->
-            <view class="calendar-month-week" wx:else>
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                  <text wx:else class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
-                  <view wx:if="{{item[2] == 1}}" class="dot" ></view>
-                  <view wx:if="{{item[2] == 2}}" class="dot2" ></view>
-                  <view wx:if="{{item[2] == 0}}" class="dot1" ></view>
-                </view>
+            <!-- 修改年月日 -->
+            <!-- <picker mode="date" value="{{date}}" start="2015-09-01" end="{{nowYear}}-{{nowMonth}}-{{nowDay}}" bindchange="bindDateChange">
+              <view class="picker">
+                当前选择: {{showYear}}-{{showMonth}}-{{showDay}}
               </view>
-          </view>
-            <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
-      </view>
-    
-      <view class="stu-class">西安国考集训营逻辑班</view>
-
-      <!-- 选择日期考情表 -->
-      <view>
-        <view class="work" wx:if="{{dayCheckon != ''}}" wx:for="{{dayCheckon}}" wx:key="dayCheckon_index">
-          <view class="ct-layout">
-            <view class="c-time">{{item.classtime}}</view>
-            <view class="shu"></view>
-            <view class="c-name">{{item.title}}</view>
-            <image wx:if="{{item.check_status == 0}}" class="state-img" src="../../images/yes.png"></image>
-            <text wx:if="{{item.check_status == 1}}" class="state" style="color:#FF8E43;">迟到</text>
-            <text wx:if="{{item.check_status == 2}}" class="state" style="color:#F86478;">旷课</text>
-            <text wx:if="{{item.check_status == 3}}" class="state" style="color:#46A1FB;">请假</text>
-            <text wx:if="{{item.check_status == 4}}" class="state" style="color:#9A64F8">离校</text>
-          </view>
-
-          <!-- <view class="ct-layout">
-            <view class="c-time">14:00-17:00</view>
-            <view class="shu"></view>
-            <view class="c-name">逻辑推理第三节</view>
-            
-            <text class="state" style="color:rgba(70,161,251,1);">请假</text>
-            
-          </view> -->
+            </picker> -->
+              <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
 
         </view>
+        <!-- 日历结束 -->
+        <!-- 选择日期的课表 -->
+        <view wx:if="{{dayCourse != ''}}">
+          <view wx:for="{{dayCourse}}" wx:key="index">
+            <view class="ct-layout">
+              <view wx:if="{{!item.comp}}" class="mask"></view>
+              <view class="c-time">{{item.classtime}}</view>
+              <view class="shu"></view>
+              <view class="c-name">{{item.title}}</view>
+            </view>
+          </view>
+        </view>
 
-        <view wx:if="{{dayCheckon == ''}}">
-          <image class='course_null' src='../../images/Checkon_null.png'></image>
+        <!-- 课表为空 -->
+        <view wx:if="{{!dayCourse}}">
+          <image class='course_null' src='../../images/course_null.png'></image>
+        </view>
+        <!-- 空课表 -->
+
+      </view>
+      <!-- 课表页结束 -->
+
+      <!-- 考勤页 -->
+      <view  wx:if="{{type == 3}}">
+        <!-- 考勤日历 -->
+        <view class="rili" >
+          <!-- 年月显示切换 -->
+            <view class="date-layout">
+              <text class="year">2020年</text>
+              <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              <text class="month">{{showMonth}}月</text>
+              <image class="next-month" src="../../images/next.png" bindtap="next"></image>
+            </view>
+            <view class="heng1"></view>
+            <!-- 课表日历 -->
+            <view class="calendar">
+              <view class="calendar-header">
+                <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
+                  <text class="ch-item-text">{{item}}</text>
+                </view>
+              </view>
+              <!-- 完整的当月数据 -->
+              <view class="calendar-month" wx:if="{{!calendarfold}}">
+                <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
+                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <view wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
+                  
+                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                    <view wx:if="{{item[2] == 1}}" class="dot" ></view>
+                    <view wx:if="{{item[2] == 2}}" class="dot2" ></view>
+                    <view wx:if="{{item[2] == 0}}" class="dot1" ></view>
+                  </view>
+                </view>
+              </view>
+              <!-- 本周数据 -->
+              <view class="calendar-month-week" wx:else>
+                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <text wx:else class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
+                    <view wx:if="{{item[2] == 1}}" class="dot" ></view>
+                    <view wx:if="{{item[2] == 2}}" class="dot2" ></view>
+                    <view wx:if="{{item[2] == 0}}" class="dot1" ></view>
+                  </view>
+                </view>
+            </view>
+              <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
         </view>
       
-      </view>
-      <!-- 选择日期考情表 -->
-    
-    
-    
+        <view class="stu-class">西安国考集训营逻辑班</view>
 
-
-    </view>
-    <!-- 考勤页结束 -->
-
-    <!-- 请假页 -->
-    <view wx:if="{{type == 1}}">
-
-      <view class="leave-layout">
-        <view class="leave-state">
-          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
-          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
-        </view>
-      </view>
-
-       <view wx:if="{{aud == 0}}" >
-        
-        <view class="leave-layout2">
-          <view wx:for="{{leave}}" wx:key="index">
-            <view class="leave">
-              <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
-                <text class="lea-time">请假时间：{{ask.date}}</text>
-                <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
-                  <text class="lea-course">请假课程：{{cs}}</text>
-                </view>
-                  
-              </view>
-              <text class="lea-for">请假事由：{{item.reason}}</text>
-              <view class="heng2"></view>
-              <view class="step">
-                <image class="gc" src="../../images/gc.png"></image>
-                <text class="lea-sta">发起</text>
-                <text class="apply-time">2019.12.22 15:23:12</text>
-              </view>
-                
-                
+        <!-- 选择日期考情表 -->
+        <view>
+          <view class="work" wx:if="{{dayCheckon != ''}}" wx:for="{{dayCheckon}}" wx:key="dayCheckon_index">
+            <view class="ct-layout">
+              <view class="c-time">{{item.classtime}}</view>
+              <view class="shu"></view>
+              <view class="c-name">{{item.title}}</view>
+              <image wx:if="{{item.check_status == 0}}" class="state-img" src="../../images/yes.png"></image>
+              <text wx:if="{{item.check_status == 1}}" class="state" style="color:#FF8E43;">迟到</text>
+              <text wx:if="{{item.check_status == 2}}" class="state" style="color:#F86478;">旷课</text>
+              <text wx:if="{{item.check_status == 3}}" class="state" style="color:#46A1FB;">请假</text>
+              <text wx:if="{{item.check_status == 4}}" class="state" style="color:#9A64F8">离校</text>
             </view>
-            
+
+            <!-- <view class="ct-layout">
+              <view class="c-time">14:00-17:00</view>
+              <view class="shu"></view>
+              <view class="c-name">逻辑推理第三节</view>
+              
+              <text class="state" style="color:rgba(70,161,251,1);">请假</text>
+              
+            </view> -->
+
+          </view>
+
+          <view wx:if="{{dayCheckon == ''}}">
+            <image class='course_null' src='../../images/Checkon_null.png'></image>
+          </view>
+        
+        </view>
+        <!-- 选择日期考情表 -->
+      
+      
+      
+
+
+      </view>
+      <!-- 考勤页结束 -->
+
+      <!-- 请假页 -->
+      <view wx:if="{{type == 1}}">
+
+        <view class="leave-layout">
+          <view class="leave-state">
+            <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+            <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
           </view>
         </view>
-        <!-- 新建 -->
-        <view class="add-btn" bindtap="stu_add_leave">
-          <image class="add-img" src="../../images/add.png"></image>
-          <text class="add-new">新建</text>
-        </view>
 
-    
-      </view>
-
-      <view wx:if="{{aud == 1}}">
-        <view class="leave-layout2">
-          <view wx:for="{{leave}}" wx:key="index" wx:for-key="item_index">
-            <view class="auded-leave">
-              <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
-                <view class="hm-flex">
+        <view wx:if="{{aud == 0}}" >
+          
+          <view class="leave-layout2">
+            <view wx:for="{{leave}}" wx:key="index">
+              <view class="leave">
+                <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
                   <text class="lea-time">请假时间：{{ask.date}}</text>
-                  <view wx:if="{{item.verify_list.length == 1}}" >
-                  <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="auded-result">待管理员审核</view>
-                  <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                  <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
+                    <text class="lea-course">请假课程：{{cs}}</text>
+                  </view>
+                    
                 </view>
-                <view wx:if="{{item.verify_list.length == 2}}">
-                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="auded-result" style="color:rgba(70,191,106,1);">审核通过</view>
-                  <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
-                </view>
-                  
-                </view>
-                <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
-                  <text class="lea-course">请假课程：{{cs}}</text>
-                </view>
-              </view>
-              <text class="lea-for">请假事由：{{item.reason}}</text>
-              <image class="xuheng" src="../../images/xu.png"></image>
-
-              <view wx:if="{{!item.fold}}">
-                <view class="aud-step">
+                <text class="lea-for">请假事由：{{item.reason}}</text>
+                <view class="heng2"></view>
+                <view class="step">
                   <image class="gc" src="../../images/gc.png"></image>
                   <text class="lea-sta">发起</text>
                   <text class="apply-time">2019.12.22 15:23:12</text>
                 </view>
-                <image class="route" src="../../images/route.png"></image>
-                <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
-                  <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
-                  <image wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
-                  <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start2">教务审核通过</view>
-                  <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">教务审核驳回</view>
-                  <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
-                  <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
-                  <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[0].reject_reason}}</view>
-                </view>
-                
-                <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-route-xu" src="../../images/route.png"></image>
-                <view class="hm-pro-two" wx:if="{{item.verify_list.length == 2}}">
-                 <image wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
-                  <image wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
-                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
-                  <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
-                  <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
-                  <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
-                   <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
-                </view>
-                </view>
+                  
+                  
+              </view>
+              
+            </view>
+          </view>
+          <!-- 新建 -->
+          <view class="add-btn" bindtap="stu_add_leave">
+            <image class="add-img" src="../../images/add.png"></image>
+            <text class="add-new">新建</text>
+          </view>
 
-                <view wx:if="{{item.fold}}" class="unfold-btn" style="margin-top: 30rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
-                  <image class="unfold-img" src="../../images/xsj.png"></image>
-                  <text class="unfold-font">展开</text>
-                </view>
+      
+        </view>
 
-                <view wx:if="{{!item.fold}}" class="unfold-btn" style="margin-top: 50rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
-                  <image class="unfold-img" src="../../images/ssj.png"></image>
-                  <text class="unfold-font">收起</text>
+        <view wx:if="{{aud == 1}}">
+          <view class="leave-layout2">
+            <view wx:for="{{leave}}" wx:key="index" wx:for-key="item_index">
+              <view class="auded-leave">
+                <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
+                  <view class="hm-flex">
+                    <text class="lea-time">请假时间：{{ask.date}}</text>
+                    <view wx:if="{{item.verify_list.length == 1}}" >
+                    <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="auded-result">待管理员审核</view>
+                    <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                  </view>
+                  <view wx:if="{{item.verify_list.length == 2}}">
+                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="auded-result" style="color:rgba(70,191,106,1);">审核通过</view>
+                    <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                  </view>
+                    
+                  </view>
+                  <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
+                    <text class="lea-course">请假课程：{{cs}}</text>
+                  </view>
+                </view>
+                <text class="lea-for">请假事由：{{item.reason}}</text>
+                <image class="xuheng" src="../../images/xu.png"></image>
+
+                <view wx:if="{{!item.fold}}">
+                  <view class="aud-step">
+                    <image class="gc" src="../../images/gc.png"></image>
+                    <text class="lea-sta">发起</text>
+                    <text class="apply-time">2019.12.22 15:23:12</text>
+                  </view>
+                  <image class="route" src="../../images/route.png"></image>
+                  <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
+                    <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
+                    <image wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
+                    <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start2">教务审核通过</view>
+                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">教务审核驳回</view>
+                    <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
+                    <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
+                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[0].reject_reason}}</view>
+                  </view>
+                  
+                  <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-route-xu" src="../../images/route.png"></image>
+                  <view class="hm-pro-two" wx:if="{{item.verify_list.length == 2}}">
+                  <image wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
+                    <image wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
+                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
+                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
+                    <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
+                    <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
+                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
+                  </view>
+                  </view>
+
+                  <view wx:if="{{item.fold}}" class="unfold-btn" style="margin-top: 30rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
+                    <image class="unfold-img" src="../../images/xsj.png"></image>
+                    <text class="unfold-font">展开</text>
+                  </view>
+
+                  <view wx:if="{{!item.fold}}" class="unfold-btn" style="margin-top: 50rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
+                    <image class="unfold-img" src="../../images/ssj.png"></image>
+                    <text class="unfold-font">收起</text>
+                  </view>
                 </view>
               </view>
-            </view>
+          </view>
+
+          <!-- 新建 -->
+          <view class="add-btn" bindtap="stu_add_leave">
+            <image class="add-img" src="../../images/add.png"></image>
+            <text class="add-new">新建</text>
+          </view>
+        
+        
+          <!-- 已审核最大 -->
         </view>
 
-        <!-- 新建 -->
-        <view class="add-btn" bindtap="stu_add_leave">
-          <image class="add-img" src="../../images/add.png"></image>
-          <text class="add-new">新建</text>
-        </view>
       
       
-        <!-- 已审核最大 -->
-      </view>
 
-     
-    
+        <!--  请假最大 -->
+      </view>  
+      <!-- xs -->
+    </view>
+    <!-- 学生角色结束 -->
 
-      <!--  请假最大 -->
-    </view>  
-    <!-- xs -->
-  </view>
-  <!-- 学生角色结束 -->
+    <!-- 老师角色 -->
+    <view wx:else="{{}}">
+      <!-- 课表 -->
 
-  <!-- 老师角色 -->
-  <view wx:else="{{}}">
-    <!-- 课表 -->
-
-    <!-- 公用日历 -->
-    <view wx:if="{{type != 1}}">
-      <!-- 课表日历 -->
-      <view class="rili">
-        <!-- 年月显示切换 -->
-          <view class="date-layout">
-            <text class="year">2020年</text>
-            <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-            <text class="month">{{showMonth}}月</text>
-            <image class="next-month" src="../../images/next.png" bindtap="next"></image>
-          </view>
-          <view class="heng1"></view>
-          <!-- 课表日历 -->
-          <view class="calendar">
-            <view class="calendar-header">
-              <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
-                <text class="ch-item-text">{{item}}</text>
-              </view>
+      <!-- 公用日历 -->
+      <view wx:if="{{type != 1}}">
+        <!-- 课表日历 -->
+        <view class="rili">
+          <!-- 年月显示切换 -->
+            <view class="date-layout">
+              <text class="year">2020年</text>
+              <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              <text class="month">{{showMonth}}月</text>
+              <image class="next-month" src="../../images/next.png" bindtap="next"></image>
             </view>
-            <!-- 完整的当月数据 -->
-            <view class="calendar-month" wx:if="{{!calendarfold}}">
-              <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle">{{item[0]}}</view>
-                  <view wx:elif="{{item[1] == 'true'}}" class="day">{{item[0]}}</view>
-                  <view wx:else="{{item[1] == 'false'}}" class="day1">{{item[0]}}</view>
-                 
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                  <view wx:if="{{item[2]}}" class="dot" ></view>
-                  <view wx:else="" class="dot1" ></view>
+            <view class="heng1"></view>
+            <!-- 课表日历 -->
+            <view class="calendar">
+              <view class="calendar-header">
+                <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
+                  <text class="ch-item-text">{{item}}</text>
                 </view>
               </view>
-            </view>
-            <!-- 本周数据 -->
-            <view class="calendar-month-week" wx:else>
-                <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                  <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
-                  <text wx:else class="day" >{{item[0]}}</text>
-                  <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                  <view wx:if="{{item[2]}}" class="dot" ></view>
-                  <view wx:else="" class="dot1" ></view>
+              <!-- 完整的当月数据 -->
+              <view class="calendar-month" wx:if="{{!calendarfold}}">
+                <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
+                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                    <view wx:elif="{{item[1] == 'true'}}" class="day">{{item[0]}}</view>
+                    <view wx:else="{{item[1] == 'false'}}" class="day1">{{item[0]}}</view>
+                  
+                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                    <view wx:if="{{item[2]}}" class="dot" ></view>
+                    <view wx:else="" class="dot1" ></view>
+                  </view>
                 </view>
               </view>
-          </view>
-            <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
+              <!-- 本周数据 -->
+              <view class="calendar-month-week" wx:else>
+                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
+                    <text wx:else class="day" >{{item[0]}}</text>
+                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                    <view wx:if="{{item[2]}}" class="dot" ></view>
+                    <view wx:else="" class="dot1" ></view>
+                  </view>
+                </view>
+            </view>
+              <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
 
+        </view>
+        <!-- 日历结束 -->
       </view>
-      <!-- 日历结束 -->
+      <!-- 公用日历结束 -->
+
+      <!-- 老师点名 -->
+      <view wx:if="{{type == 2}}" >
+        <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
+          <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
+            <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
+              <view class="t-call">去点名</view>
+              <image class="t-call-img" src="../../images/gjt.png"></image>
+            </view>
+            <view class="t-info">
+              <image class="t-ava" src="{{item.avatar}}"></image>
+              <view class="t-name">老师：{{item.teachername}}</view>
+              <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>
+            </view>
+            <view class="t-cour-heng"></view>
+            <view class="t-info">
+              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
+              <view class="t-cour-time">{{item.classtime}}</view>
+              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
+              <view class="t-cour-time">{{item.classroom}}</view>
+            </view>
+            <view class="t-info">
+              <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
+              <view class="t-cour-name">{{item.title}}</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 课表为空 -->
+        <view wx:if="{{tea_dayCourse == ''}}">
+          <image class='course_null' src='../../images/course_null.png'></image>
+        </view>
+        <!-- 空课表 -->
+      </view>
+      <!-- 老师点名结束 -->
+
+      <!-- 老师考勤 -->
+      <view wx:if="{{type == 3}}">
+        <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
+          <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
+            <view class="t-call-lay" data-tea_index='{{index}}' bindtap="to_t_stuwork">
+              <view class="t-call" style="{{item.teacher_id == uid?'':'color:rgba(212,212,212,1);'}}">查看考勤</view>
+              <image wx:if="{{item.teacher_id == uid}}" class="t-call-img" src="../../images/gjt.png"></image>
+              <image wx:else="" class="t-call-img" src="../../images/next.png"></image>
+            </view>
+            <view class="t-info">
+              <image class="t-ava" src="{{item.avatar}}"></image>
+              <view class="t-name">老师：{{item.teachername}}</view>
+              <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>
+            </view>
+            <view class="t-cour-heng"></view>
+            <view class="t-info">
+              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
+              <view class="t-cour-time">{{item.classtime}}</view>
+              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
+              <view class="t-cour-time">{{item.classroom}}</view>
+            </view>
+            <view class="t-info">
+              <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
+              <view class="t-cour-name">{{item.title}}</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 课表为空 -->
+        <view wx:if="{{tea_dayCourse == ''}}">
+          <image class='course_null' src='../../images/course_null.png'></image>
+        </view>
+        <!-- 空课表 -->
+        
+      </view>
+      <!-- 老师考勤结束 -->
+
     </view>
-    <!-- 公用日历结束 -->
+    <!-- 老师角色结束 -->
 
-    <!-- 老师点名 -->
-    <view wx:if="{{type == 2}}" >
-      <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
-        <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
-          <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
-            <view class="t-call">去点名</view>
-            <image class="t-call-img" src="../../images/gjt.png"></image>
-          </view>
-          <view class="t-info">
-            <image class="t-ava" src="{{item.avatar}}"></image>
-            <view class="t-name">老师：{{item.teachername}}</view>
-            <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>
-          </view>
-          <view class="t-cour-heng"></view>
-          <view class="t-info">
-            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
-            <view class="t-cour-time">{{item.classtime}}</view>
-            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
-            <view class="t-cour-time">{{item.classroom}}</view>
-          </view>
-          <view class="t-info">
-            <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
-            <view class="t-cour-name">{{item.title}}</view>
+    <!-- 教务角色 -->
+    <view wx:if="{{role == 2}} ">
+      <view wx:if="{{type == 1}}">
+        <view class="leave-layout">
+          <view class="leave-state">
+            <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+            <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
           </view>
         </view>
-      </view>
 
-      <!-- 课表为空 -->
-      <view wx:if="{{tea_dayCourse == ''}}">
-        <image class='course_null' src='../../images/course_null.png'></image>
-      </view>
-      <!-- 空课表 -->
-    </view>
-    <!-- 老师点名结束 -->
 
-    <!-- 老师考勤 -->
-    <view wx:if="{{type == 3}}">
-      <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
-        <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
-          <view class="t-call-lay" data-tea_index='{{index}}' bindtap="to_t_stuwork">
-            <view class="t-call" style="{{item.teacher_id == uid?'':'color:rgba(212,212,212,1);'}}">查看考勤</view>
-            <image wx:if="{{item.teacher_id == uid}}" class="t-call-img" src="../../images/gjt.png"></image>
-            <image wx:else="" class="t-call-img" src="../../images/next.png"></image>
+        <view wx:if="{{aud == 0 }}" >
+          <!-- 无记录空显示 wx:else=""-->
+          <view wx:if="{{hm_unaud_leave == ''}}">
+            <image class='admin_lea_null' src='../../images/lea_null.png'></image>
           </view>
-          <view class="t-info">
-            <image class="t-ava" src="{{item.avatar}}"></image>
-            <view class="t-name">老师：{{item.teachername}}</view>
-            <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>
-          </view>
-          <view class="t-cour-heng"></view>
-          <view class="t-info">
-            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
-            <view class="t-cour-time">{{item.classtime}}</view>
-            <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
-            <view class="t-cour-time">{{item.classroom}}</view>
-          </view>
-          <view class="t-info">
-            <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
-            <view class="t-cour-name">{{item.title}}</view>
-          </view>
-        </view>
-      </view>
-
-      <!-- 课表为空 -->
-      <view wx:if="{{tea_dayCourse == ''}}">
-        <image class='course_null' src='../../images/course_null.png'></image>
-      </view>
-      <!-- 空课表 -->
-      
-    </view>
-    <!-- 老师考勤结束 -->
-
-  </view>
-  <!-- 老师角色结束 -->
-
-  <!-- 教务角色 -->
-  <view wx:if="{{role == 2}} ">
-    <view wx:if="{{type == 1}}">
-      <view class="leave-layout">
-        <view class="leave-state">
-          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
-          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
-        </view>
-      </view>
+          <!-- 教务未审核，做循环 -->
+          <view class="hm-unaud-for">
+            <view  wx:for="{{hm_unaud_leave}}" wx:key="index">
+            
+              <!-- 单个未审核样式 -->
+              <view class="hm-unaud-layout">
+                <view class="hm-flex">
+                  <view class="hm-t-name">{{userInfo.name}}</view>
+                  <view class="hm-t-class">{{item.classname}}</view>
+                </view>
+                <view class="hm-un-heng"></view>
+                <!-- 多请假时间循环 -->
+                <view>
+                  
+                  <!-- 一天请多届课循环 -->
+                  <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
+                    <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
+                    <view class="hm-flex">
+                      <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
+                      <image class="hm-un-tava" src="{{course.avatar}}"></image>
+                      <view class="hm-un-tname">{{course.teachername}}老师</view>
+                    </view>
+                    <view class="hm-un-cour">{{course.title}}</view>
+                  </view>
+                  <!-- 一天请多届课循环结束 -->
+                </view>
+                <!-- 多请假时间循环结束 -->
+                <view class="hm-un-leafor">请假事由：{{item.reason}}</view>
+                <image class="hm-un-xu" src="../../images/xu.png"></image>
+                <view class="hm-flex">
+                  <image class="hm-pro-start" src="../../images/gc.png"></image>
+                  <view class="hm-pro-starttitle">发起</view>
+                  <view class="hm-pro-date">2019.12.22 15:23:12</view>
+                </view>
+                <view class="hm-flex">
+                  <view class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_pass">通过</view>
+                  <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
+                </view>
 
 
-      <view wx:if="{{aud == 0 }}" >
-        <!-- 无记录空显示 wx:else=""-->
-        <view wx:if="{{hm_unaud_leave == ''}}">
-          <image class='admin_lea_null' src='../../images/lea_null.png'></image>
-        </view>
-        <!-- 教务未审核，做循环 -->
-        <view class="hm-unaud-for">
-          <view  wx:for="{{hm_unaud_leave}}" wx:key="index">
+
+              </view>
+              <!-- 单个未审核样式 -->
+              <view class="gray"></view>
           
+            </view>
+          </view>
+          <!-- 教务未审核，做循环 -->
+        </view>
+
+        <view wx:if="{{aud == 1 }}" >
+          <!-- 无记录空显示 wx:else=""-->
+          <view wx:if="{{hm_aud_leave == ''}}">
+            <image class='admin_lea_null' src='../../images/lea_null.png'></image>
+          </view>
+          <!-- 教务审核，做循环 -->
+          <view  class="hm-unaud-for">
+            <view wx:for="{{hm_aud_leave}}" wx:key="index">
+              <!-- 单个审核样式 -->
+              <view class="hm-aud-layout">
+                <view class="hm-flex">
+                  <view class="hm-t-name">{{userInfo.name}}</view>
+                  <view class="hm-taud-class">{{item.classname}}</view>
+                </view>
+                <view class="hm-flex-fold">
+                  <view wx:if="{{item.verify_list.length == 1}}" >
+                    <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-aud-tip">待管理员审核</view>
+                    <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
+                  </view>
+                  <view wx:if="{{item.verify_list.length == 2}}">
+                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-aud-tip" style="color:rgba(70,191,106,1);">审核通过</view>
+                    <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
+                  </view>
+                  
+                  <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="aud_fold"></image>
+                  <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="aud_fold"></image>
+                  
+                </view>
+                <view wx:if="{{item.fold}}">
+                <view class="hm-un-heng"></view>
+                <!-- 多请假时间循环 -->
+                <!-- <view ></view> -->
+                <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
+                  
+                  <!-- 一天请多届课循环 -->
+                  <view>
+                    <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
+                    <view class="hm-flex">
+                      <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
+                      <image class="hm-un-tava" src="{{course.avatar}}"></image>
+                      <view class="hm-un-tname">{{course.teachername}}老师</view>
+                    </view>
+                    <view class="hm-un-cour">{{course.title}}</view>
+                  </view>
+                  <!-- 一天请多届课循环结束 -->
+                </view>
+                <!-- 多请假时间循环结束 -->
+                <view class="hm-unaud-leafor">请假事由：{{item.reason}}</view>
+                <image class="hm-un-xu" src="../../images/xu.png"></image>
+                <view class="hm-route">
+                  <view class="hm-flex">
+                    <image class="hm-pro-start" src="../../images/gc.png"></image>
+                    <view class="hm-pro-starttitle">发起</view>
+                    <view class="hm-audpro-date">{{item.createtime}}</view>
+                  </view>
+                  <image class="hm-route-xu" src="../../images/route.png"></image>
+                <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
+                    <image class="hm-pro-start" src="../../images/gc.png"></image>
+                    <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start2">教务审核通过</view>
+                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">教务审核驳回</view>
+                    <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
+                    <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
+                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[0].reject_reason}}</view>
+                  </view>
+                  
+                  <image class="hm-route-xu" src="../../images/route.png"></image>
+                  <view class="hm-pro-two" wx:if="{{item.verify_list.length == 2}}">
+                    <image class="hm-pro-start" src="../../images/gc.png"></image>
+                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
+                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
+                    <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
+                    <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
+                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
+                  </view>
+                  
+                </view>
+
+              </view>
+            <!-- 单个审核样式 -->
+            <view class="gray"></view>
+          
+            </view>
+            <!-- 教务审核，做循环 -->
+          </view>
+        </view>
+        </view>
+
+
+      </view>
+    </view>
+    <!-- 教务角色结束 -->
+
+    <!-- 管理员角色 -->
+    <view wx:if="{{role == 3}}">
+      <view wx:if="{{type == 1}}">
+        <view class="leave-layout">
+          <view class="leave-state">
+            <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+            <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
+          </view>
+        </view>
+
+
+        <view wx:if="{{aud == 0 }}" >
+          <view wx:if="{{admin_unaud_leave == ''}}">
+            <image class='admin_lea_null' src='../../images/lea_null.png'></image>
+          </view>
+          
+        <view  class="hm-unaud-for">
+          <view  wx:for="{{admin_unaud_leave}}"  wx:key="index">
             <!-- 单个未审核样式 -->
             <view class="hm-unaud-layout">
               <view class="hm-flex">
                 <view class="hm-t-name">{{userInfo.name}}</view>
                 <view class="hm-t-class">{{item.classname}}</view>
               </view>
-              <view class="hm-un-heng"></view>
-              <!-- 多请假时间循环 -->
-              <view>
-                
-                <!-- 一天请多届课循环 -->
-                <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
-                  <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
-                  <view class="hm-flex">
-                    <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
-                    <image class="hm-un-tava" src="{{course.avatar}}"></image>
-                    <view class="hm-un-tname">{{course.teachername}}老师</view>
-                  </view>
-                  <view class="hm-un-cour">{{course.title}}</view>
-                </view>
-                <!-- 一天请多届课循环结束 -->
-              </view>
-              <!-- 多请假时间循环结束 -->
-              <view class="hm-un-leafor">请假事由：{{item.reason}}</view>
-              <image class="hm-un-xu" src="../../images/xu.png"></image>
-              <view class="hm-flex">
-                <image class="hm-pro-start" src="../../images/gc.png"></image>
-                <view class="hm-pro-starttitle">发起</view>
-                <view class="hm-pro-date">2019.12.22 15:23:12</view>
-              </view>
-              <view class="hm-flex">
-                <view class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_pass">通过</view>
-                <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
-              </view>
-
-
-
-            </view>
-            <!-- 单个未审核样式 -->
-            <view class="gray"></view>
-        
-          </view>
-        </view>
-        <!-- 教务未审核，做循环 -->
-      </view>
-
-      <view wx:if="{{aud == 1 }}" >
-        <!-- 无记录空显示 wx:else=""-->
-        <view wx:if="{{hm_aud_leave == ''}}">
-          <image class='admin_lea_null' src='../../images/lea_null.png'></image>
-        </view>
-        <!-- 教务审核，做循环 -->
-        <view  class="hm-unaud-for">
-          <view wx:for="{{hm_aud_leave}}" wx:key="index">
-            <!-- 单个审核样式 -->
-            <view class="hm-aud-layout">
-              <view class="hm-flex">
-                <view class="hm-t-name">{{userInfo.name}}</view>
-                <view class="hm-taud-class">{{item.classname}}</view>
-              </view>
-              <view class="hm-flex-fold">
-                <view wx:if="{{item.verify_list.length == 1}}" >
-                  <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-aud-tip">待管理员审核</view>
-                  <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
-                </view>
-                <view wx:if="{{item.verify_list.length == 2}}">
-                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-aud-tip" style="color:rgba(70,191,106,1);">审核通过</view>
-                  <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
-                </view>
-                
-                <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="aud_fold"></image>
-                <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="aud_fold"></image>
-                
-              </view>
-              <view wx:if="{{item.fold}}">
-              <view class="hm-un-heng"></view>
-              <!-- 多请假时间循环 -->
-              <!-- <view ></view> -->
-              <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
-                
-                <!-- 一天请多届课循环 -->
-                <view>
-                  <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
-                  <view class="hm-flex">
-                    <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
-                    <image class="hm-un-tava" src="{{course.avatar}}"></image>
-                    <view class="hm-un-tname">{{course.teachername}}老师</view>
-                  </view>
-                  <view class="hm-un-cour">{{course.title}}</view>
-                </view>
-                <!-- 一天请多届课循环结束 -->
-              </view>
-              <!-- 多请假时间循环结束 -->
-              <view class="hm-unaud-leafor">请假事由：{{item.reason}}</view>
-              <image class="hm-un-xu" src="../../images/xu.png"></image>
-              <view class="hm-route">
-                <view class="hm-flex">
-                  <image class="hm-pro-start" src="../../images/gc.png"></image>
-                  <view class="hm-pro-starttitle">发起</view>
-                  <view class="hm-audpro-date">{{item.createtime}}</view>
-                </view>
-                <image class="hm-route-xu" src="../../images/route.png"></image>
-              <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
-                  <image class="hm-pro-start" src="../../images/gc.png"></image>
-                  <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start2">教务审核通过</view>
-                  <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">教务审核驳回</view>
-                  <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
-                  <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
-                  <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[0].reject_reason}}</view>
-                </view>
-                
-                <image class="hm-route-xu" src="../../images/route.png"></image>
-                <view class="hm-pro-two" wx:if="{{item.verify_list.length == 2}}">
-                  <image class="hm-pro-start" src="../../images/gc.png"></image>
-                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
-                  <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
-                  <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
-                  <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
-                   <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
-                </view>
-                
-              </view>
-
-            </view>
-          <!-- 单个审核样式 -->
-          <view class="gray"></view>
-        
-          </view>
-          <!-- 教务审核，做循环 -->
-        </view>
-      </view>
-      </view>
-
-
-    </view>
-  </view>
-  <!-- 教务角色结束 -->
-
-  <!-- 管理员角色 -->
-  <view wx:if="{{role == 3}}">
-    <view wx:if="{{type == 1}}">
-      <view class="leave-layout">
-        <view class="leave-state">
-          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
-          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
-        </view>
-      </view>
-
-
-      <view wx:if="{{aud == 0 }}" >
-        <view wx:if="{{admin_unaud_leave == ''}}">
-          <image class='admin_lea_null' src='../../images/lea_null.png'></image>
-        </view>
-        
-      <view  class="hm-unaud-for">
-        <view  wx:for="{{admin_unaud_leave}}"  wx:key="index">
-          <!-- 单个未审核样式 -->
-          <view class="hm-unaud-layout">
-            <view class="hm-flex">
-              <view class="hm-t-name">{{userInfo.name}}</view>
-              <view class="hm-t-class">{{item.classname}}</view>
-            </view>
-            <view class="hm-un-heng"></view>
-            <!-- 多请假时间循环 -->
-            <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
-              <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
-              <!-- 一天请多届课循环 -->
-              <view>
-                <view class="hm-flex">
-                  <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
-                  <image class="hm-un-tava" src="{{course.avatar}}"></image>
-                  <view class="hm-un-tname">{{course.teachername}}老师</view>
-                </view>
-                <view class="hm-un-cour">{{course.title}}</view>
-              </view>
-              <!-- 一天请多届课循环结束 -->
-            </view>
-            <!-- 多请假时间循环结束 -->
-            <view class="hm-un-leafor">请假事由：{{item.reason}}</view>
-            <image class="hm-un-xu" src="../../images/xu.png"></image>
-            <view class="hm-flex">
-              <image class="hm-pro-start" src="../../images/gc.png"></image>
-              <view class="hm-pro-starttitle">发起</view>
-              <view class="hm-pro-date">{{item.createtime}}</view>
-            </view>
-            <image class="hm-route-xu" src="../../images/route.png"></image>
-              <view class="hm-pro-two">
-                <image class="hm-pro-start" src="../../images/gc.png"></image>
-                <view class="hm-pro-start2">教务审核通过</view>
-                <view class="admin-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
-                <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
-              </view>
-            <view class="hm-flex">
-              <view class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}" bindtap="hm_pass">通过</view>
-              <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
-            </view>
-          </view>
-
-        <view class="gray"></view>
-        </view>
-        <!-- 单个未审核样式 -->
-        
-      
-        </view>
-        <!-- 管理员未审核，做循环 -->
-
-      </view>
-
-      <view wx:if="{{aud == 1 }}" >
-        <view wx:if="{{admin_aud_leave == ''}}">
-          <image class='admin_lea_null' src='../../images/lea_null.png'></image>
-        </view>
-        <!-- 管理员审核，做循环 -->
-        <view class="hm-unaud-for">
-          <view wx:for="{{admin_aud_leave}}" wx:key="index">
-            <!-- 单个审核样式 -->
-            <view class="hm-aud-layout">
-              <view class="hm-flex">
-                <view class="hm-t-name">{{userInfo.name}}</view>
-                <view class="hm-taud-class">{{item.classname}}</view>
-              </view>
-              <view class="hm-flex-fold">
-                
-                <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-aud-tip" style="color:rgba(70,191,106,1);">审核通过</view>
-                <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
-                
-                <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="admin_aud_fold"></image>
-                <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="admin_aud_fold"></image>
-              </view>
-              <view wx:if="{{item.fold}}">
               <view class="hm-un-heng"></view>
               <!-- 多请假时间循环 -->
               <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
@@ -712,49 +650,117 @@
                 <!-- 一天请多届课循环结束 -->
               </view>
               <!-- 多请假时间循环结束 -->
-              <view class="hm-unaud-leafor">请假事由：{{item.reason}}</view>
+              <view class="hm-un-leafor">请假事由：{{item.reason}}</view>
               <image class="hm-un-xu" src="../../images/xu.png"></image>
-              <view class="hm-route">
-                <view class="hm-flex">
-                  <image class="hm-pro-start" src="../../images/gc.png"></image>
-                  <view class="hm-pro-starttitle">发起</view>
-                  <view class="hm-audpro-date">{{item.createtime}}</view>
-                </view>
-                <image class="hm-route-xu" src="../../images/route.png"></image>
-              <view class="hm-pro-two">
+              <view class="hm-flex">
+                <image class="hm-pro-start" src="../../images/gc.png"></image>
+                <view class="hm-pro-starttitle">发起</view>
+                <view class="hm-pro-date">{{item.createtime}}</view>
+              </view>
+              <image class="hm-route-xu" src="../../images/route.png"></image>
+                <view class="hm-pro-two">
                   <image class="hm-pro-start" src="../../images/gc.png"></image>
                   <view class="hm-pro-start2">教务审核通过</view>
-                  <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
+                  <view class="admin-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
                   <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
                 </view>
-                <image class="hm-route-xu" src="../../images/route.png"></image>
-                <view class="hm-pro-two">
-                  <image wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
-                  <image wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
-                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
-                  <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
-                  <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
-                  <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
-                  <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
-                </view>
+              <view class="hm-flex">
+                <view class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}" bindtap="hm_pass">通过</view>
+                <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
               </view>
-
             </view>
-            <!-- 单个审核样式 -->
-            <view class="gray"></view>
+
+          <view class="gray"></view>
           </view>
-      
+          <!-- 单个未审核样式 -->
+          
+        
+          </view>
+          <!-- 管理员未审核，做循环 -->
+
         </view>
-        <!-- 教务审核，做循环 -->
-      </view>
-      </view>
+
+        <view wx:if="{{aud == 1 }}" >
+          <view wx:if="{{admin_aud_leave == ''}}">
+            <image class='admin_lea_null' src='../../images/lea_null.png'></image>
+          </view>
+          <!-- 管理员审核，做循环 -->
+          <view class="hm-unaud-for">
+            <view wx:for="{{admin_aud_leave}}" wx:key="index">
+              <!-- 单个审核样式 -->
+              <view class="hm-aud-layout">
+                <view class="hm-flex">
+                  <view class="hm-t-name">{{userInfo.name}}</view>
+                  <view class="hm-taud-class">{{item.classname}}</view>
+                </view>
+                <view class="hm-flex-fold">
+                  
+                  <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-aud-tip" style="color:rgba(70,191,106,1);">审核通过</view>
+                  <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
+                  
+                  <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="admin_aud_fold"></image>
+                  <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="admin_aud_fold"></image>
+                </view>
+                <view wx:if="{{item.fold}}">
+                <view class="hm-un-heng"></view>
+                <!-- 多请假时间循环 -->
+                <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
+                  <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
+                  <!-- 一天请多届课循环 -->
+                  <view>
+                    <view class="hm-flex">
+                      <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
+                      <image class="hm-un-tava" src="{{course.avatar}}"></image>
+                      <view class="hm-un-tname">{{course.teachername}}老师</view>
+                    </view>
+                    <view class="hm-un-cour">{{course.title}}</view>
+                  </view>
+                  <!-- 一天请多届课循环结束 -->
+                </view>
+                <!-- 多请假时间循环结束 -->
+                <view class="hm-unaud-leafor">请假事由：{{item.reason}}</view>
+                <image class="hm-un-xu" src="../../images/xu.png"></image>
+                <view class="hm-route">
+                  <view class="hm-flex">
+                    <image class="hm-pro-start" src="../../images/gc.png"></image>
+                    <view class="hm-pro-starttitle">发起</view>
+                    <view class="hm-audpro-date">{{item.createtime}}</view>
+                  </view>
+                  <image class="hm-route-xu" src="../../images/route.png"></image>
+                <view class="hm-pro-two">
+                    <image class="hm-pro-start" src="../../images/gc.png"></image>
+                    <view class="hm-pro-start2">教务审核通过</view>
+                    <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
+                    <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
+                  </view>
+                  <image class="hm-route-xu" src="../../images/route.png"></image>
+                  <view class="hm-pro-two">
+                    <image wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
+                    <image wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
+                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
+                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
+                    <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
+                    <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
+                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
+                  </view>
+                </view>
+
+              </view>
+              <!-- 单个审核样式 -->
+              <view class="gray"></view>
+            </view>
+        
+          </view>
+          <!-- 教务审核，做循环 -->
+        </view>
+        </view>
 
 
+      </view>
     </view>
-  </view>
-  <!-- 管理员角色结束 -->
+    <!-- 管理员角色结束 -->
   
-
+  </view>
 
 
 

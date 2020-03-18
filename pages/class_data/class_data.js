@@ -14,6 +14,16 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+    let nowTime = new Date();
+
+    var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
+
+    var yestday = new Date(today - 24 * 3600 * 1000).getTime();
+    that.setData({
+      today: that.timestampToTime(today),
+      yestday: that.timestampToTime(yestday)
+    })
+
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
@@ -25,6 +35,29 @@ Page({
         that.setData({
           mydata: d.data.data
         })
+        for (var i = 0; i < that.data.mydata.length; i++) {
+
+          var d = that.data.mydata[i].col_time.substr(10, 15)
+
+          if (that.data.mydata[i].col_time.indexOf(that.data.today) != -1) {
+            var col_time = "今天" + d
+            console.log(col_time)
+            var cs = "mydata[" + i + "].col_time"
+            that.setData({
+              [cs]: col_time
+            })
+          }
+          if (that.data.mydata[i].col_time.indexOf(that.data.yestday) != -1) {
+            var col_time = "昨天" + d
+            console.log(col_time)
+            var cs = "mydata[" + i + "].col_time"
+            that.setData({
+              [cs]: col_time
+            })
+          }
+
+        }
+
         console.log("我的收藏搜索接口获取成功")
       } else {
         that.setData({
@@ -33,6 +66,23 @@ Page({
       }
 
 
+    })
+  },
+
+  timestampToTime: function (timestamp) {
+    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = date.getDate() + ' ';
+    var h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
+    var m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes());
+    var s = date.getSeconds();
+    return Y + M + D;
+  },
+
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
     })
   },
 

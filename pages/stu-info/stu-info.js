@@ -18,7 +18,10 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    
+    var type = options.type
+    that.setData({
+      type:type
+    })
     var date = new Date()
     var cur_year = date.getFullYear()
     // console.log(cur_year)
@@ -49,15 +52,60 @@ Page({
 
     })
 
+    if(that.data.type == 2){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentMainPage(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            madata: d.data.data,
+            avatar: d.data.data.avatar,
+            input_name: d.data.data.realname,
+            input_phone: d.data.data.phone,
+            sex_index: d.data.data.sex,
+            input_school: d.data.data.graduate_school,
+            input_major: d.data.data.subject,
+            input_email: d.data.data.email,
+            graduation_time: that.timestampToTime(d.data.data.graduate_time)
+            // input_name: d.data.data.avatar,
+            // input_name: d.data.data.avatar,
+            // input_name: d.data.data.avatar,
+
+
+
+          })
+          console.log("我的主页接口获取成功")
+        }
+
+
+      })
+    }
+    
+
 
 
 
 
   },
 
+  timestampToTime: function (timestamp) {
+    var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = date.getDate() + ' ';
+    var h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
+    var m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes());
+    var s = date.getSeconds();
+    return Y + M;
+  },
+
   chooseImg() {
     let that = this;
     wx.chooseImage({
+      sourceType: ['album', 'camera'],
       success: (res) => {
         let tempFilePaths = res.tempFilePaths;
         console.log(tempFilePaths)
@@ -67,6 +115,7 @@ Page({
           url: 'http://cs.szgk.cn/api.php?',
           filePath: tempFilePaths[0],
           name: 'file',
+          
           formData: {
             'file': tempFilePaths[0],
             "token": token,
@@ -422,13 +471,11 @@ Page({
       console.log(params)
       app.ljjw.jwSaveStudentBaseInfo(params).then(d => {
         console.log(d)
-        // if (d.data.status == 1) {
-        //   console.log(d.data.data)
-        //   that.setData({
-        //     stu_class: d.data.data
-        //   })
-        //   console.log("所有班级获取成功")
-        // }
+        if (d.data.status == 1) {
+          wx.navigateBack({
+            delta: 1  // 返回上一级页面。
+          })
+        }
 
 
       })

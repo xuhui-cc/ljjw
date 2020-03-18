@@ -10,68 +10,69 @@
   </view>
   <!-- 导航栏结束 -->
 
-  <!-- 学生角色 -->
-  <view class="stu-rec" wx:if="{{role == 4}}">
-    <view wx:for="{{stu_score}}" wx:key="index">
-      <view class="rec-layout" data-xb="{{index}}" bindtap="to_stu_record">
-        <view class="rec-flex">
-          <view class="rec-title">{{item.mock_name}}</view>
-          <view class="rec-date">{{item.mock_date}}</view>
-          <view class="rec-more">更多</view>
-          <image class="rec-more-img" src="../../images/next.png"></image>
-        </view>
-        <view class="rec-flex">
-          <view class="rec-total">总分：</view>
-          <view class="rec-total-num">{{item.totalscore}}</view>
-          <view class="rec-rank">排名：</view>
-          <view class="rec-rank-num">{{item.position}}</view>
-        </view>
-
-      </view>
-    </view>
-      
-
-    <!-- <image class="mull-img" src="../../images/rec_null.png"></image> -->
-  </view>
-  <!-- 学生角色结束 -->
-
-  <!-- 老师角色 -->
-  <view class="stu-rec" wx:elif="{{role <= 2}}">
-
-    <view wx:for="{{tea_mock_list}}" wx:key="tea_mock_list_index">
-      <view class="tea-rec-layout" bindtap="to_tea_record" data-xb='{{index}}'>
-        <view class="rec-flex">
-          <image class="t-rec-img" src="../../images/trec.png"></image>
-          <view class="t-rec-date">{{item.mock_date}}</view>
-          <view class="t-rec-more">详情</view>
-          <image class="t-rec-more-img" src="../../images/next.png"></image>
-        </view>
-
-        <image class="t-rec-xu" src="../../images/xu.png"></image>
-
-        <view class="rec-flex">
-          <view class="t-rec-shu"></view>
-          <view class="t-rec-title">{{item.name}}</view>
-        </view>
-
-      </view>
-    </view>
-
-    <image wx:if="{{tea_mock_list == ''}}" class="mull-img" src="../../images/rec_null.png"></image>
-  
-  </view>
-  <!-- 老师角色 -->
-
-  <view  wx:else="{{role == 3}}">
-
+  <view wx:if="{{!login}}">
     <image class="mull-img" src="../../images/rec_null.png"></image>
-  
-  
-  
-  
   </view>
 
+  <view wx:if="{{login}}">
 
+    <!-- 学生角色 -->
+    <view class="stu-rec" wx:if="{{role == 4}}">
+      <view wx:for="{{stu_score}}" wx:key="index">
+        <view class="rec-layout" data-xb="{{index}}" bindtap="to_stu_record">
+          <view class="rec-flex">
+            <view class="rec-title">{{item.mock_name}}</view>
+            <view class="rec-date">{{item.mock_date}}</view>
+            <view class="rec-more">更多</view>
+            <image class="rec-more-img" src="../../images/next.png"></image>
+          </view>
+          <view class="rec-flex">
+            <view class="rec-total">总分：</view>
+            <view class="rec-total-num">{{item.totalscore}}</view>
+            <view class="rec-rank">排名：</view>
+            <view class="rec-rank-num">{{item.position}}</view>
+          </view>
+
+        </view>
+      </view>
+        
+
+      <!-- <image class="mull-img" src="../../images/rec_null.png"></image> -->
+    </view>
+    <!-- 学生角色结束 -->
+
+    <!-- 老师角色 -->
+    <view class="stu-rec" wx:elif="{{role <= 2}}">
+
+      <view wx:for="{{tea_mock_list}}" wx:key="tea_mock_list_index">
+        <view class="tea-rec-layout" bindtap="to_tea_record" data-xb='{{index}}'>
+          <view class="rec-flex">
+            <image class="t-rec-img" src="../../images/trec.png"></image>
+            <view class="t-rec-date">{{item.mock_date}}</view>
+            <view class="t-rec-more">详情</view>
+            <image class="t-rec-more-img" src="../../images/next.png"></image>
+          </view>
+
+          <image class="t-rec-xu" src="../../images/xu.png"></image>
+
+          <view class="rec-flex">
+            <view class="t-rec-shu"></view>
+            <view class="t-rec-title">{{item.name}}</view>
+          </view>
+
+        </view>
+      </view>
+
+      <image wx:if="{{tea_mock_list == ''}}" class="mull-img" src="../../images/rec_null.png"></image>
+    
+    </view>
+    <!-- 老师角色 -->
+
+    <view  wx:else="{{role == 3}}">
+      <image class="mull-img" src="../../images/rec_null.png"></image>
+    </view>
+
+  </view>
 
 
 

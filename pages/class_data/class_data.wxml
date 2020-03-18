@@ -1,5 +1,10 @@
 <view class="container">
 
+  <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <text class="my-head">我的收藏</text> 
+  </view>
+
   <view class="flex">
     <view class="search-layout">
       <image class="search-img" src="../../images/search_w.png"></image>

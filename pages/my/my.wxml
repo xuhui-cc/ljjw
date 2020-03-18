@@ -1,6 +1,7 @@
 <view class="container">
 
   <view class="nabigation_bar">
+    
     <text class="my-head">我的</text> 
   </view>
 
@@ -22,16 +23,21 @@
       <image class="my-ava" src="{{mydata.avatar}}"></image>
 
       <view class="state-layout">
-        <view class="my-name">{{userInfo.name}}</view>
-        <view class="flex" bindtap="to_stu_info">
+        <view class="my-name">{{mydata.realname}}</view>
+        <view class="flex" bindtap="to_stu_info" data-type="{{0}}">
           <image wx:if="{{mydata.status_text == '在校'}}" class="school" src="../../images/inschool.png"></image>
           <image wx:if="{{mydata.status_text == '离校'}}" class="school" src="../../images/outschool.png"></image>
           <view class="my-state">{{mydata.status_text}}</view>
-          <image wx:if="{{mydata.status_text == '请完成您的基础信息'}}" class="to-add" src="../../images/next.png"></image>
+          <image wx:if="{{mydata.status_text == '请完成您的基础信息'}}" class="to-add" src="../../images/next.png" ></image>
         </view>
       </view>
 
-      <view wx:if="{{mydata.status_text == '基础信息审核中...'}}" class="flex" bindtap="to_stu_info">
+      <view wx:if="{{mydata.status_text == '基础信息审核中'}}" class="flex" bindtap="to_stu_info" data-type="2">
+        <view class="change-state">修改信息</view>
+        <image class="to-change" src="../../images/next.png"></image>
+      </view>
+
+      <view wx:if="{{mydata.status_text == '您还没有班级！'}}" class="flex" bindtap="to_stu_info" data-type="2">
         <view class="change-state">修改信息</view>
         <image class="to-change" src="../../images/next.png"></image>
       </view>
@@ -77,7 +83,7 @@
             <image class="class-uncollect" src="../../images/uncollect.png"></image>
             <view class="data-uncollect">未收藏</view>
           </view>
-          <view class="flex" wx:if="{{item.colid}}" bindtap='iscollect'>
+          <view class="flex" wx:if="{{item.colid}}" data-file_xb="{{index}}" bindtap='iscollect'>
             <image class="class-uncollect" src="../../images/collect.png"></image>
             <view class="data-collect">收藏</view>
           </view>

@@ -20,11 +20,14 @@ Page({
     var role = wx.getStorageSync("role")
     if (!role) {
       that.setData({
-        role: -1
+        role: -1,
+        login: flase
       })
+
     } else {
       that.setData({
-        role: role
+        role: role,
+        login: true
       })
     }
     if(that.data.role == 4){
