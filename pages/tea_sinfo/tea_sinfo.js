@@ -36,8 +36,11 @@ Page({
       console.log(d)
       if (d.data.status == 1) {
         that.setData({
-          tea_class: d.data.data.classes
+          tea_class: d.data.data.classes,
+          cs: d.data.data.students
         })
+        that.getdata(that.data.cs)
+        console.log(that.data.tea_class)
         console.log("老师学生档案获取成功")
       }
 
