@@ -60,6 +60,14 @@ Page({
       console.log(params)
       app.ljjw.jwGetStudentMainPage(params).then(d => {
         if (d.data.status == 1) {
+          for(var i=0;i<that.data.stu_class.length;i++){
+            // console.log(d.data.data.classes[0].id)
+            if (d.data.data.classes[0].id == that.data.stu_class[i].id){
+              that.setData({
+                stu_class_index: i
+              })
+            }
+          }
           that.setData({
             madata: d.data.data,
             avatar: d.data.data.avatar,
@@ -91,10 +99,17 @@ Page({
 
   },
 
+
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
+
   timestampToTime: function (timestamp) {
     var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
     var Y = date.getFullYear() + '-';
-    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
     var D = date.getDate() + ' ';
     var h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
     var m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes());

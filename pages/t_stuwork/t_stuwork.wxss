@@ -41,6 +41,7 @@ page{
   opacity:0.54;
 }
 .stu_num{
+  margin-top: 176rpx;
   padding-left: 30rpx;
   width:750rpx;
   height:76rpx;

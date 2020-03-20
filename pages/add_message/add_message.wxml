@@ -1,5 +1,10 @@
 <view class="container">
 
+  <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <text class="my-head">创建消息通知</text> 
+  </view>
+
     <textarea class="read-cont" placeholder="点击输入文字……" bindinput='input_title'></textarea>
 
   <view class="tjzp">添加照片</view>

@@ -1,7 +1,37 @@
 page{
   background: rgba(251,251,252,1)
 }
+.nabigation_bar{
+  position: fixed;
+  width:750rpx;
+  height:176rpx;
+  background:linear-gradient(90deg,rgba(20,203,162,1) 0%,rgba(111,238,209,1) 100%);
+  opacity:1;
+  display: flex;
+  z-index: 100;
+}
+.my-head{
+  /* margin-left: 341rpx; */
+  margin-top: 108rpx;
+  width:530rpx;
+  height:48rpx;
+  font-size:34rpx;
+  font-family:PingFang SC;
+  font-weight:bold;
+  line-height:48rpx;
+  text-align: center;
+  color:rgba(255,255,255,1);
+  opacity:1;
+}
+.back-img{
+  margin-left: 30rpx;
+  margin-top: 120rpx;
+  margin-right: 57rpx;
+  width: 27rpx;
+  height: 27rpx;
+}
 .layout{
+  margin-top: 176rpx;
   width:750rpx;
   height:835rpx;
   background:rgba(255,255,255,1);
@@ -63,9 +93,9 @@ page{
   opacity:1;
 }
 .byyx-cont{
-  margin-left: 162rpx;
+  margin-left: 132rpx;
   margin-top: 58rpx;
-  width:350rpx;
+  width:380rpx;
   height:40rpx;
   font-size:28rpx;
   font-family:PingFang SC;

@@ -23,6 +23,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "stuid": that.data.stu_id,
+      // "stuid": 2290,   //测试
     }
     console.log(params)
     app.ljjw.jwViewStudentProfile(params).then(d => {
@@ -39,6 +40,12 @@ Page({
         console.log("学生基础信息获取成功")
       }
 
+    })
+  },
+
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
     })
   },
 

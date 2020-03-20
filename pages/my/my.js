@@ -70,29 +70,33 @@ Page({
             stu_class: d.data.data.classes
             
           })
-          
-          for (var i = 0; i < that.data.mydata.files.length; i++) {
-            
-            var d = that.data.mydata.files[i].createtime.substr(10, 15)
-           
-            if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
-              var createtime = "今天" + d
-              console.log(createtime)
-              var cs = "mydata.files[" + i + "].createtime"
-              that.setData({
-                [cs]: createtime
-              })
-            }
-            if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1){
+
+          if (that.data.mydata.files){
+            for (var i = 0; i < that.data.mydata.files.length; i++) {
+
+              var d = that.data.mydata.files[i].createtime.substr(10, 15)
+
+              if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
+                var createtime = "今天" + d
+                console.log(createtime)
+                var cs = "mydata.files[" + i + "].createtime"
+                that.setData({
+                  [cs]: createtime
+                })
+              }
+              if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
                 var createtime = "昨天" + d
-              console.log(createtime)
-              var cs = "mydata.files[" + i + "].createtime"
-              that.setData({
-                [cs]: createtime
-              })
+                console.log(createtime)
+                var cs = "mydata.files[" + i + "].createtime"
+                that.setData({
+                  [cs]: createtime
+                })
+              }
+
             }
-            
           }
+          
+          
           console.log("学生——我的主页接口获取成功")
         }
         
@@ -360,6 +364,7 @@ Page({
                   wx.setStorageSync('uid', d.data.uid);
                   wx.setStorageSync('userInfo', d.data.userInfo)
                   wx.setStorageSync('role', role[0])
+                  
                   if(role[0] != 4){
                     wx.setStorageSync('subject_id', d.data.cate_info.id)
                     wx.setStorageSync('subject_name', d.data.cate_info.name)

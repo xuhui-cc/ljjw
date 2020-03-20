@@ -63,7 +63,7 @@
           <view class="more">查看</view>
           <image class="more-img" src="../../images/next.png"></image>
         </view>
-        <view wx:if="{{role == 4}}" class="task-cont">你有一条新任务未做，快去提交吧！</view>
+        <view wx:if="{{role == 4}}" class="task-cont">你有任务未做，快去提交吧！</view>
         <view wx:else="" class="task-cont">学员们提交的任务动态都在这里呦~</view>
       </view>
 

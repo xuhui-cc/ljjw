@@ -1,13 +1,23 @@
 <view class="container">
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">我的头像</view>
-    <image wx:if="{{avatar}}" class='avatar' src='{{avatar}}' bindtap="chooseImg"></image>
-    <view wx:else="" class="flex1" bindtap="chooseImg">
+
+    <view class="nabigation_bar">
+      <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+      <text class="my-head">完善基础信息</text> 
+    </view>
+
+
+  <view class="layout">
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">我的头像</view>
+      <image wx:if="{{avatar}}" class='avatar' src='{{avatar}}' bindtap="chooseImg"></image>
+      <view wx:else="" class="flex1" bindtap="chooseImg">
       <view class="tip" wx:if="{{!avatar}}">请选择</view>
       <image class='avatar' src='{{avatar}}' wx:else=""></image>
       <image class="select" src="../../images/next.png"></image>
+      </view>
     </view>
+    
     <!-- <view class="tip">请选择</view>
     <image class="select" src="../../images/next.png"></image> -->
   </view>
@@ -50,11 +60,11 @@
     <view class="shu"></view>
     <view class="info-tltle">毕业时间</view>
 
-    <picker mode="date" fields="month" value="{{graduation_time}}" start="2015-09-01" end="{{cur_date}}" bindchange="graduation_time">
+    <picker mode="date" fields="month" value="{{graduation_time}}"  end="{{cur_date}}" bindchange="graduation_time">
       <view class="tip">{{graduation_time}}</view>
     </picker>
 
-    <picker mode="date" fields="month" value="{{graduation_time}}" start="2015-09-01" end="{{cur_date}}" bindchange="graduation_time">
+    <picker mode="date" fields="month" value="{{graduation_time}}"  end="{{cur_date}}" bindchange="graduation_time">
       <image class="select" src="../../images/next.png"></image>
     </picker>
   </view>

@@ -16,6 +16,11 @@ Page({
   onLoad: function (options) {
 
   },
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
 
   input_title: function (e) {
     let that = this

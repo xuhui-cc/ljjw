@@ -1,5 +1,10 @@
 <view class="container">
 
+  <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <text class="my-head">任务</text> 
+  </view>
+
   <view class="mask-layout" hidden="true"></view>
   <view class="reject-layout" hidden="true">
     <image class="reject-close" src="../../images/close.png"></image>

@@ -23,7 +23,8 @@
       <image class="my-ava" src="{{mydata.avatar}}"></image>
 
       <view class="state-layout">
-        <view class="my-name">{{mydata.realname}}</view>
+        <view wx:if="{{mydata.realname != null}}" class="my-name">{{mydata.realname}}</view>
+        <view wx:else="" class="my-name">{{userInfo.name}}</view>
         <view class="flex" bindtap="to_stu_info" data-type="{{0}}">
           <image wx:if="{{mydata.status_text == '在校'}}" class="school" src="../../images/inschool.png"></image>
           <image wx:if="{{mydata.status_text == '离校'}}" class="school" src="../../images/outschool.png"></image>

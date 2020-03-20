@@ -21,6 +21,12 @@ Page({
     that.un_task()
   },
 
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
+
   un_task:function(){
     let that = this
     var params = {

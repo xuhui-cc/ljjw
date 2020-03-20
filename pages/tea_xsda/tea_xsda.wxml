@@ -1,5 +1,10 @@
 <view class="container">
 
+  <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <text class="my-head">学生档案</text> 
+  </view>
+
   <view class="mask-layout" wx:if="{{add_mask}}"></view>
   <view class="reject-layout" wx:if="{{add_mask}}">
     <image class="reject-close" src="../../images/close.png" bindtap='close'></image>

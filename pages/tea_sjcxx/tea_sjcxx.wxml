@@ -1,5 +1,10 @@
 <view class="container">
 
+   <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <text class="my-head">基础资料</text> 
+  </view>
+
   <view class="layout">
     <view class="flex">
       <image class="ava" src="{{student_info[0].avatar}}"></image>
@@ -26,7 +31,7 @@
     <view class="flex">
       <image class="byyx-img" src="../../images/banji.png"></image>
       <view class="byyx">班级</view>
-      <view class="byyx-cont">{{student_info[0].market_teacher}}</view>
+      <view class="byyx-cont">{{student_info[0].classname}}</view>
     </view>
     <view class="flex">
       <image class="byyx-img" src="../../images/zxsj.png"></image>

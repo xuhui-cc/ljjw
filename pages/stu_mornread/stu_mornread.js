@@ -30,6 +30,12 @@ Page({
     }
   },
 
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
+
   
   to_stu_rearch:function(){
     let that = this

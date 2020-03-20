@@ -95,6 +95,12 @@ Page({
     }
   },
 
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
+
   score_fold:function(){
     let that = this
     that.setData({

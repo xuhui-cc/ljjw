@@ -1,5 +1,9 @@
 <view class="container">
 
+  <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <text class="my-head">消息通知</text> 
+  </view>
 
   <view class="news-title">消息通知</view>
   <view class="nwes-time">{{date}}</view>
