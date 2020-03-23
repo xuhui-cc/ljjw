@@ -320,7 +320,7 @@ page{
 .c-name{
   margin-left: 18rpx;
   margin-top: 56rpx;
-  width:224rpx;
+  width:320rpx;
   height:45rpx;
   font-size:32rpx;
   font-family:PingFang SC;
@@ -338,7 +338,7 @@ page{
   border-radius:14rpx;
 }
 .state{
-  margin-left: 149rpx;
+  margin-left: 53rpx;
   margin-top: 54rpx;
   width:72rpx;
   height:50rpx;
@@ -349,7 +349,7 @@ page{
   opacity:1;
 }
 .state-img{
-  margin-left: 168rpx;
+  margin-left: 72rpx;
   margin-top: 71rpx;
   width:34.72rpx;
   height:25.65rpx;
@@ -764,7 +764,7 @@ page{
 .t-cour-name{
   margin-left: 16rpx;
   margin-top: 26rpx;
-  width:182rpx;
+  /* width:182rpx; */
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;

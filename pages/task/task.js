@@ -11,6 +11,7 @@ Page({
     stu_class: [],
     stu_class_index: 0,
     tea_class_index: 0,
+    stu_info:true
   },
 
   /**
@@ -52,14 +53,7 @@ Page({
             console.log("morning.pics空")
           }
           
-          // for (var j = 0; j < that.data.message.length; j++) {
-           
-          //     var cscs = 'message[' + j + '].pics'
-          //     that.setData({
-          //       [cscs]: that.data.message[j].pics.split(",")
-          //     })
-            
-          // }
+          
 
           that.setData({
             csmorningRead: that.data.morning,
@@ -68,6 +62,15 @@ Page({
           console.log(that.data.stu_class)
           console.log(that.data.csmorningRead)
           console.log("学生任务首页获取成功")
+        } else if(d.data.status == -1){
+          that.setData({
+            stu_info:false
+          })
+          wx.showToast({
+            title: '请先完善个人信息',
+            icon:"none",
+            duration: 2500,
+          })
         }
 
 

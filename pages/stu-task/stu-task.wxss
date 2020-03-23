@@ -2,15 +2,16 @@ page{
   background: rgba(251,251,252,1)
 }
 .nabigation_bar{
-  position: fixed;
+  
   width:750rpx;
   height:176rpx;
   background:linear-gradient(90deg,rgba(20,203,162,1) 0%,rgba(111,238,209,1) 100%);
   opacity:1;
   display: flex;
-  z-index: 100;
+  z-index: 200;
 }
 .my-head{
+  position: fixed;
   /* margin-left: 341rpx; */
   margin-top: 108rpx;
   width:530rpx;
@@ -24,6 +25,7 @@ page{
   opacity:1;
 }
 .back-img{
+  position: fixed;
   margin-left: 30rpx;
   margin-top: 120rpx;
   margin-right: 57rpx;
@@ -140,7 +142,7 @@ page{
   border-radius:49rpx;
 }
 .record-bar{
-  margin-top: 176rpx;
+  /* margin-top: 176rpx; */
   display: flex;
   width:750rpx;
   height:88rpx;
@@ -397,7 +399,7 @@ opacity:1;
   color:rgba(0,0,0,1);
 }
 .course_time{
-  margin-left: 40rpx;
+  margin-left: 50rpx;
   margin-top: 35rpx;
   width:175rpx;
   
@@ -407,7 +409,7 @@ opacity:1;
   color:rgba(114,114,114,1);
 }
 .stu_condition{
-  margin-left: 19rpx;
+  margin-left: 20rpx;
   margin-top: 35rpx;
   width:60rpx;
   height:26rpx;
@@ -416,7 +418,7 @@ opacity:1;
   font-weight:bold;
 }
 .stu_img{
-  margin-left: 15rpx;
+  margin-left: 20rpx;
   margin-top: 45rpx;
   width:25rpx;
   height:18rpx;

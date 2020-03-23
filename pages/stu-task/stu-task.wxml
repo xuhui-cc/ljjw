@@ -1,12 +1,12 @@
 <view class="container">
-
-  <view class="nabigation_bar">
+<!-- 
+  <cover-view class="nabigation_bar">
     <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
-    <text class="my-head">任务</text> 
-  </view>
+    <view class="my-head">任务</view> 
+  </cover-view> -->
 
-  <view class="mask-layout" hidden="true"></view>
-  <view class="reject-layout" hidden="true">
+  <view class="mask-layout" wx:if="{{work_reject}}"></view>
+  <view class="reject-layout" wx:if="{{work_reject}}">
     <image class="reject-close" src="../../images/close.png"></image>
     <view class="reject-head">
       <view class="reject-shu"></view>
@@ -156,20 +156,22 @@
             <view class="ques-date">{{item.pubtime}}</view>
           </view>
           <view class="heng"></view>
-          <view class="task1_title">{{item.task_detail.tasktitle}}</view>
+          <view class="task1_title">{{item.tasktitle}}</view>
           <!-- 问题循环 -->
           <view wx:for="{{item.task_detail}}" wx:key="task_detail_index" wx:for-item="task_detail">
             
             <view class="flex">
               <view class="riqi">{{task_detail.classdate}}</view>
+              <view wx:for="{{task_detail.cs}}" wx:key="cs_index" wx:for-item="cs">
               <view class="flex_wrap">
-                <view class="course_time">{{task_detail.classtime}}</view>
-                <image wx:if="{{task_detail.check_status == 0}}" class="stu_img" src="../../images/yes.png"></image>
-                <view wx:if="{{task_detail.check_status == 1}}" class="stu_condition" style="color:rgba(255,152,83,1);">迟到</view>
-                <view wx:if="{{task_detail.check_status == 2}}" class="stu_condition" style="color:#F86478;">旷课</view>
-                <view wx:if="{{task_detail.check_status == 3}}" class="stu_condition" style="color:rgba(70,161,251,1);">请假</view>
-                <view wx:if="{{task_detail.check_status == 4}}" class="stu_condition" style="color:rgba(154,100,248,1);">离校</view>
+                <view class="course_time">{{cs[0]}}</view>
+                <image wx:if="{{cs[1] == 0}}" class="stu_img" src="../../images/yes.png"></image>
+                <view wx:if="{{cs[1] == 1}}" class="stu_condition" style="color:rgba(255,152,83,1);">迟到</view>
+                <view wx:if="{{cs[1] == 2}}" class="stu_condition" style="color:#F86478;">旷课</view>
+                <view wx:if="{{cs[1] == 3}}" class="stu_condition" style="color:rgba(70,161,251,1);">请假</view>
+                <view wx:if="{{cs[1] == 4}}" class="stu_condition" style="color:rgba(154,100,248,1);">离校</view>
                 
+              </view>
               </view>
             </view>
             
@@ -177,7 +179,7 @@
           <!-- 问题循环 -->
           <view class="flex">
             <view class="type4_submit" data-task_index="{{task_index}}" bindtap="type4_submit">确定</view>
-            <view class="type4_reject">驳回</view>
+            <view class="type4_reject" data-task_index="{{task_index}}" bindtap="type4_reject">驳回</view>
           </view>
         </view>
       </view>

@@ -96,7 +96,7 @@ Page({
             }
           }
           
-          
+          console.log(that.data.mydata.files)
           console.log("学生——我的主页接口获取成功")
         }
         

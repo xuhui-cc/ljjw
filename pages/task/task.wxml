@@ -22,7 +22,11 @@
     <image class='task-null' src='../../images/null.png'></image>
   </view>
 
-  <view wx:if="{{login}}">
+  <view wx:if="{{!stu_info}}">
+    <image class='task-null' src='../../images/null.png'></image>
+  </view>
+
+  <view wx:if="{{login && stu_info}}">
     <view wx:if="{{role <= 2}}">
       <view wx:if="{{add}}">
         <image class="add-kuang" src="../../images/kuang.png"></image>

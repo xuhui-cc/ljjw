@@ -10,7 +10,8 @@ Page({
     img: [],
     imgs: [],
     submit_arr:[],
-    type2_ans:[]
+    type2_ans:[],
+    work_reject:false,
   },
 
   /**
@@ -27,6 +28,15 @@ Page({
     })
   },
 
+  type4_reject:function(e){
+    let that = this
+    var task_index = e.currentTarget.dataset.task_index
+    that.setData({
+      task_index: task_index,
+      work_reject:true
+    })
+  },
+
   un_task:function(){
     let that = this
     var params = {
@@ -39,7 +49,8 @@ Page({
       if (d.data.status == 1) {
         console.log(d.data.data)
         that.setData({
-          task: d.data.data
+          task: d.data.data,
+          task1: d.data.data
         })
 
         for (var i = 0; i < that.data.task.length; i++) {
@@ -166,6 +177,47 @@ Page({
             console.log("==========================================imgs")
             
           }
+          else if (that.data.task[i].type == 4){
+            for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+              // var cs = "leave[" + i + "].ask_info[" + j + "].pin"
+              var _cs = "task[" + i + "].task_detail[" + j + "].cs"
+              // var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
+              that.setData({
+                // [cs]: hh,
+                [_cs]: []
+              })
+              var date = that.data.task[i].task_detail[j].classdate
+
+              for (var k = 0; k < that.data.task1[i].task_detail.length; k++) {
+                // if (that.data.leave[i].add_arr[k].date == '')
+
+                if (date == that.data.task1[i].task_detail[k].classdate) {
+                  that.data.task[i].task_detail[j].cs.push([that.data.task1[i].task_detail[k].classtime, that.data.task1[i].task_detail[k].check_status])
+                }
+                else {
+
+
+                }
+              }
+            }
+
+            
+                for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+                  // for (var k = 0; k < that.data.task[i].task_detail[j].cs.length; k++) {
+                  if (that.data.task[i].task_detail[j].classdate == that.data.task[i].task_detail[j + 1].classdate) {
+                    that.data.task[i].task_detail.splice(j, 1)
+                  }
+                  // }
+               
+              
+            }
+
+            
+          }
+
+          that.setData({
+            task : that.data.task
+          })
 
 
         }
@@ -644,7 +696,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "tid":1,
+      "tid": that.data.task[that.data.task_index].id,
       "type": 2,
       "reason": that.data.reject_reason
     }

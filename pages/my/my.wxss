@@ -1,5 +1,6 @@
 page{
-  background: rgba(251,251,252,1)
+  background: rgba(251,251,252,1);
+  margin-bottom: 150rpx;
 }
 .nabigation_bar{
   position: fixed;

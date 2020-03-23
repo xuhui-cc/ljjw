@@ -60,6 +60,7 @@ Page({
       console.log(params)
       app.ljjw.jwGetStudentMainPage(params).then(d => {
         if (d.data.status == 1) {
+          console.log(d.data.data)
           for(var i=0;i<that.data.stu_class.length;i++){
             // console.log(d.data.data.classes[0].id)
             if (d.data.data.classes[0].id == that.data.stu_class[i].id){
@@ -484,6 +485,7 @@ Page({
         
       }
       console.log(params)
+      console.log(that.data.input_school + "that.data.input_school")
       app.ljjw.jwSaveStudentBaseInfo(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
@@ -508,46 +510,46 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    let that = this
-    var input_school = wx.getStorageSync("input_school")
-    if (input_school) {
-      that.setData({
-        input_school: input_school
-      })
-      if(that.data.input_school.indexOf("请选择") == -1){
-      //提交判断
-        if (that.data.input_name != undefined ) {
-          if (that.data.input_phone != undefined ) {
-          if (that.data.avatar != undefined) {
-            if (that.data.sex_index != 0) {
-              if (that.data.graduation_time != 0) {
-                if (that.data.input_major != undefined ) {
-                  if (that.data.input_email != undefined ) {
-                    if (that.data.stu_class_index != -1) {
-                      that.setData({
-                        issubmit: true
-                      })
-                      console.log(that.data.issubmit)
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    //提交判断结束
-      } else {
-        that.setData({
-          issubmit: false
-        })
-      }
-    }
-    else {
-      that.setData({
-        input_school: "请输入"
-      })
-    }
+    // let that = this
+    // var input_school = wx.getStorageSync("input_school")
+    // if (input_school) {
+    //   that.setData({
+    //     input_school: input_school
+    //   })
+    //   if(that.data.input_school.indexOf("请输入") == -1){
+    //   //提交判断
+    //     if (that.data.input_name != undefined ) {
+    //       if (that.data.input_phone != undefined ) {
+    //       if (that.data.avatar != undefined) {
+    //         if (that.data.sex_index != 0) {
+    //           if (that.data.graduation_time != 0) {
+    //             if (that.data.input_major != undefined ) {
+    //               if (that.data.input_email != undefined ) {
+    //                 if (that.data.stu_class_index != -1) {
+    //                   that.setData({
+    //                     issubmit: true
+    //                   })
+    //                   console.log(that.data.issubmit)
+    //                 }
+    //               }
+    //             }
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // //提交判断结束
+    //   } else {
+    //     that.setData({
+    //       issubmit: false
+    //     })
+    //   }
+    // }
+    // else {
+    //   that.setData({
+    //     input_school: "请输入"
+    //   })
+    // }
   },
 
   /**

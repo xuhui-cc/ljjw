@@ -1,6 +1,11 @@
 <!-- container -->
 <view class="container">
 
+  <view class="nabigation_bar">
+    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <text class="my-head">{{tea_info.classname}}</text> 
+  </view>
+
   <view class="mask" hidden="true"></view>
   <!-- <view class="popup" wx:if="{{condition}}">
     <image class="popup-close" src="../../images/close.png"></image>

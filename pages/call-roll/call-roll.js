@@ -12,6 +12,12 @@ Page({
     // unsigned:[]
   },
 
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -47,6 +53,7 @@ Page({
         }
         console.log("老师点名页接口获取成功")
       }
+      console.log(that.data.students_unsigned)
     })
   },
 

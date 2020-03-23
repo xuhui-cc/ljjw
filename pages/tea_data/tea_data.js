@@ -9,11 +9,31 @@ Page({
     tea_class_index:0,
   },
 
+  timestampToTime: function (timestamp) {
+    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+    var Y = date.getFullYear() + '-';
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+    var D = date.getDate() + ' ';
+    var h = (date.getHours() < 10 ? '0' + (date.getHours()) : date.getHours()) + ':';
+    var m = (date.getMinutes() < 10 ? '0' + (date.getMinutes()) : date.getMinutes());
+    var s = date.getSeconds();
+    return Y + M + D;
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     let that = this
+    let nowTime = new Date();
+
+    var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
+
+    var yestday = new Date(today - 24 * 3600 * 1000).getTime();
+    that.setData({
+      today: that.timestampToTime(today),
+      yestday: that.timestampToTime(yestday)
+    })
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
@@ -26,6 +46,30 @@ Page({
           tea_class: d.data.data.classes,
           files: d.data.data.files
         })
+        if (that.data.files) {
+          for (var i = 0; i < that.data.files.length; i++) {
+
+            var d = that.data.files[i].createtime.substr(10, 15)
+
+            if (that.data.files[i].createtime.indexOf(that.data.today) != -1) {
+              var createtime = "今天" + d
+              console.log(createtime)
+              var cs = "files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+            if (that.data.files[i].createtime.indexOf(that.data.yestday) != -1) {
+              var createtime = "昨天" + d
+              console.log(createtime)
+              var cs = "files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+
+          }
+        }
         console.log("老师的班级资料获取成功")
       }
       
