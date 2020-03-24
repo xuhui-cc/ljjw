@@ -1,5 +1,6 @@
 page{
   background:rgba(251,251,252,1);
+  margin-bottom: 200rpx;
 }
 .container{
   margin-bottom: 100rpx;
@@ -368,16 +369,18 @@ page{
 .leave-layout{
   position: fixed;
   
-  /* margin-bottom: 70rpx; */
+  
   z-index: 5;
 }
 .leave-state{
+  position: fixed;
   margin-top: 176rpx;
   width:750rpx;
   height:88rpx;
   line-height: 88rpx;
   background:rgba(255,255,255,1);
   opacity:1;
+
 }
 .aud{
   margin-left: 163rpx;
@@ -1234,6 +1237,7 @@ page{
 .hm-unaud-for{
   position: absolute;
   margin-top: 280rpx;
+  margin-bottom: 200rpx;
 }
 .hm-unaud-layout{
   width:750rpx;

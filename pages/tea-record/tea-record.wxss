@@ -7,6 +7,12 @@ page{
   height:88rpx;
   background:rgba(255,255,255,1);
 }
+.task-null{
+  margin-left: 238rpx;
+  margin-top: 599rpx;
+  width: 294rpx;
+  height: 329rpx;
+}
 .aud{
   margin-left: 151rpx;
   margin-right: -23rpx;
@@ -125,7 +131,7 @@ page{
 .champion-name{
   margin-left: 130rpx;
   margin-top: 9rpx;
-  width:78rpx;
+  width:100rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;

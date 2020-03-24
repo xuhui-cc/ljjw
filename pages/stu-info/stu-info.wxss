@@ -31,7 +31,7 @@ page{
   height: 27rpx;
 }
 .layout{
-  margin-top: 176rpx;
+  /* margin-top: 176rpx; */
 }
 .submit{
   margin-left: 30rpx;

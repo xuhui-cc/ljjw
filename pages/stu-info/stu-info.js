@@ -22,6 +22,10 @@ Page({
     that.setData({
       type:type
     })
+    var userInfo = wx.getStorageSync("userInfo")
+    that.setData({
+      phone: userInfo.phone
+    })
     var date = new Date()
     var cur_year = date.getFullYear()
     // console.log(cur_year)
@@ -29,7 +33,7 @@ Page({
     // console.log(cur_month)
     var cur_day = date.getDate()
     // console.log(cur_day)
-    var cur_date = cur_year + '-' + (cur_month < 10 ? '0' + (cur_month) : cur_month) + '-' + (cur_day < 10 ? '0' + (cur_day) : cur_day)
+    var cur_date = cur_year + '/' + (cur_month < 10 ? '0' + (cur_month) : cur_month) + '/' + (cur_day < 10 ? '0' + (cur_day) : cur_day)
     console.log(cur_date)
     that.setData({
       cur_date : cur_date
@@ -73,7 +77,7 @@ Page({
             madata: d.data.data,
             avatar: d.data.data.avatar,
             input_name: d.data.data.realname,
-            input_phone: d.data.data.phone,
+            // input_phone: d.data.data.phone,
             sex_index: d.data.data.sex,
             input_school: d.data.data.graduate_school,
             input_major: d.data.data.subject,
@@ -150,7 +154,7 @@ Page({
               // console.log(that.data.input_name + "=======that.data.input_name")
               //提交判断
               if (that.data.input_name != undefined ){
-                if (that.data.input_phone != undefined){
+                
                   if (that.data.sex_index != 0){
                     if (that.data.input_school.indexOf("请选择") == -1){
                       if (that.data.graduation_time != 0){
@@ -162,7 +166,7 @@ Page({
                               })
                               console.log(that.data.issubmit)
                             }
-                          }
+                          
                         }
                       }
                     }
@@ -195,7 +199,7 @@ Page({
     if (that.data.sex_index != 0){
     //提交判断
       if (that.data.input_name != undefined) {
-        if (that.data.input_phone != undefined ) {
+       
         if (that.data.avatar != undefined) {
           if (that.data.input_school.indexOf("请选择") == -1) {
             if (that.data.graduation_time != 0) {
@@ -207,7 +211,7 @@ Page({
                     })
                     console.log(that.data.issubmit)
                   }
-                }
+               
               }
             }
           }
@@ -231,7 +235,7 @@ Page({
     if(that.data.stu_class_index != -1){
     //提交判断
       if (that.data.input_name != undefined) {
-        if (that.data.input_phone != undefined ) {
+        
         if (that.data.avatar != undefined) {
           if (that.data.input_school.indexOf("请选择") == -1) {
             if (that.data.graduation_time != 0) {
@@ -243,7 +247,7 @@ Page({
                     })
                     console.log(that.data.issubmit)
                   }
-                }
+                
               }
             }
           }
@@ -266,7 +270,7 @@ Page({
     if(that.data.graduation_time != 0){
     //提交判断
       if (that.data.input_name != undefined ) {
-        if (that.data.input_phone != undefined ) {
+        
         if (that.data.avatar != undefined) {
           if (that.data.input_school.indexOf("请选择") == -1) {
             if (that.data.sex_index != 0) {
@@ -279,7 +283,7 @@ Page({
                     console.log(that.data.issubmit)
                   }
                 }
-              }
+              
             }
           }
         }
@@ -307,7 +311,7 @@ Page({
     if (that.data.input_name != undefined) {
     //提交判断
     if (that.data.sex_index != 0) {
-      if (that.data.input_phone != undefined ) {
+      
         if (that.data.avatar != undefined) {
           if (that.data.input_school.indexOf("请选择") == -1) {
             if (that.data.graduation_time != 0) {
@@ -319,7 +323,7 @@ Page({
                     })
                     console.log(that.data.issubmit)
                   }
-                }
+                
               }
             }
           }
@@ -400,7 +404,7 @@ Page({
     if (that.data.input_major != undefined){
     //提交判断
       if (that.data.input_name != undefined ) {
-        if (that.data.input_phone != undefined ) {
+        
         if (that.data.avatar != undefined) {
           if (that.data.input_school.indexOf("请选择") == -1) {
             if (that.data.graduation_time != 0) {
@@ -412,7 +416,7 @@ Page({
                     })
                     console.log(that.data.issubmit)
                   }
-                }
+                
               }
             }
           }
@@ -440,7 +444,7 @@ Page({
     if (that.data.input_email != undefined) {
     //提交判断
       if (that.data.input_name != undefined ) {
-        if (that.data.input_phone != undefined ) {
+        
         if (that.data.avatar != undefined) {
           if (that.data.input_school.indexOf("请选择") == -1) {
             if (that.data.graduation_time != 0) {
@@ -452,7 +456,7 @@ Page({
                     })
                     console.log(that.data.issubmit)
                   }
-                }
+                
               }
             }
           }
@@ -475,7 +479,7 @@ Page({
         "uid": wx.getStorageSync("uid"),
         "avatar": that.data.avatar,
         "realname": that.data.input_name,
-        "phone": that.data.input_phone,
+        "phone": that.data.phone,
         "school": that.data.input_school,
         "graduate_time": that.data.graduation_time,
         "subject": that.data.input_major,
@@ -510,46 +514,49 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // let that = this
-    // var input_school = wx.getStorageSync("input_school")
-    // if (input_school) {
-    //   that.setData({
-    //     input_school: input_school
-    //   })
-    //   if(that.data.input_school.indexOf("请输入") == -1){
-    //   //提交判断
-    //     if (that.data.input_name != undefined ) {
-    //       if (that.data.input_phone != undefined ) {
-    //       if (that.data.avatar != undefined) {
-    //         if (that.data.sex_index != 0) {
-    //           if (that.data.graduation_time != 0) {
-    //             if (that.data.input_major != undefined ) {
-    //               if (that.data.input_email != undefined ) {
-    //                 if (that.data.stu_class_index != -1) {
-    //                   that.setData({
-    //                     issubmit: true
-    //                   })
-    //                   console.log(that.data.issubmit)
-    //                 }
-    //               }
-    //             }
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // //提交判断结束
-    //   } else {
-    //     that.setData({
-    //       issubmit: false
-    //     })
-    //   }
+    let that = this
+    // if(that.data.type == 0){
+      var input_school = wx.getStorageSync("input_school")
+      if (input_school) {
+        that.setData({
+          input_school: input_school
+        })
+        if (that.data.input_school.indexOf("请输入") == -1) {
+          //提交判断
+          if (that.data.input_name != undefined) {
+            
+              if (that.data.avatar != undefined) {
+                if (that.data.sex_index != 0) {
+                  if (that.data.graduation_time != 0) {
+                    if (that.data.input_major != undefined) {
+                      if (that.data.input_email != undefined) {
+                        if (that.data.stu_class_index != -1) {
+                          that.setData({
+                            issubmit: true
+                          })
+                          console.log(that.data.issubmit)
+                        }
+                      
+                    }
+                  }
+                }
+              }
+            }
+          }
+          //提交判断结束
+        } else {
+          that.setData({
+            issubmit: false
+          })
+        }
+      }
+      else {
+        that.setData({
+          input_school: input_school
+        })
+      }
     // }
-    // else {
-    //   that.setData({
-    //     input_school: "请输入"
-    //   })
-    // }
+    
   },
 
   /**

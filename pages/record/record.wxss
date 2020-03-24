@@ -153,7 +153,7 @@ page{
 .t-rec-date{
   margin-left: 15rpx;
   margin-top: 23rpx;
-  width:150rpx;
+  width:170rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;
@@ -163,7 +163,7 @@ page{
   opacity:1;
 }
 .t-rec-more{
-  margin-left: 365rpx;
+  margin-left: 345rpx;
   margin-top: 22rpx;
   width:52rpx;
   height:37rpx;

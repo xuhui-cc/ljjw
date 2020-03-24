@@ -72,12 +72,7 @@
                   </view>
                 </view>
             </view>
-            <!-- 修改年月日 -->
-            <!-- <picker mode="date" value="{{date}}" start="2015-09-01" end="{{nowYear}}-{{nowMonth}}-{{nowDay}}" bindchange="bindDateChange">
-              <view class="picker">
-                当前选择: {{showYear}}-{{showMonth}}-{{showDay}}
-              </view>
-            </picker> -->
+            
               <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
 
         </view>
@@ -168,14 +163,7 @@
               <text wx:if="{{item.check_status == 4}}" class="state" style="color:#9A64F8">离校</text>
             </view>
 
-            <!-- <view class="ct-layout">
-              <view class="c-time">14:00-17:00</view>
-              <view class="shu"></view>
-              <view class="c-name">逻辑推理第三节</view>
-              
-              <text class="state" style="color:rgba(70,161,251,1);">请假</text>
-              
-            </view> -->
+            
 
           </view>
 
@@ -196,12 +184,12 @@
       <!-- 请假页 -->
       <view wx:if="{{type == 1}}">
 
-        <view class="leave-layout">
+        <!-- <view class="leave-layout"> -->
           <view class="leave-state">
             <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
             <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
           </view>
-        </view>
+        <!-- </view> -->
 
         <view wx:if="{{aud == 0}}" >
           
@@ -220,7 +208,7 @@
                 <view class="step">
                   <image class="gc" src="../../images/gc.png"></image>
                   <text class="lea-sta">发起</text>
-                  <text class="apply-time">2019.12.22 15:23:12</text>
+                  <text class="apply-time">{{item.createtime}}</text>
                 </view>
                   
                   
@@ -265,7 +253,7 @@
                   <view class="aud-step">
                     <image class="gc" src="../../images/gc.png"></image>
                     <text class="lea-sta">发起</text>
-                    <text class="apply-time">2019.12.22 15:23:12</text>
+                    <text class="apply-time">{{item.createtime}}</text>
                   </view>
                   <image class="route" src="../../images/route.png"></image>
                   <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
@@ -327,7 +315,8 @@
       <!-- 课表 -->
 
       <!-- 公用日历 -->
-      <view wx:if="{{type != 1}}">
+      <view wx:if="{{type == 2 || type == 3}}">
+        <!-- <view wx:if="{{type != 1}}"> -->
         <!-- 课表日历 -->
         <view class="rili">
           <!-- 年月显示切换 -->
@@ -382,7 +371,7 @@
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
             <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
-              <view class="t-call">去点名</view>
+              <view class="t-call" wx:if="{{item.cancheckon == 1}}">去点名</view>
               <image class="t-call-img" src="../../images/gjt.png"></image>
             </view>
             <view class="t-info">
@@ -455,12 +444,7 @@
     <!-- 教务角色 -->
     <view wx:if="{{role == 2}} ">
       <view wx:if="{{type == 1}}">
-        <view class="leave-layout">
-          <view class="leave-state">
-            <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
-            <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
-          </view>
-        </view>
+        
 
 
         <view wx:if="{{aud == 0 }}" >
@@ -475,7 +459,7 @@
               <!-- 单个未审核样式 -->
               <view class="hm-unaud-layout">
                 <view class="hm-flex">
-                  <view class="hm-t-name">{{userInfo.name}}</view>
+                  <view class="hm-t-name">{{item.realname}}</view>
                   <view class="hm-t-class">{{item.classname}}</view>
                 </view>
                 <view class="hm-un-heng"></view>
@@ -500,7 +484,7 @@
                 <view class="hm-flex">
                   <image class="hm-pro-start" src="../../images/gc.png"></image>
                   <view class="hm-pro-starttitle">发起</view>
-                  <view class="hm-pro-date">2019.12.22 15:23:12</view>
+                  <view class="hm-pro-date">{{item.createtime}}</view>
                 </view>
                 <view class="hm-flex">
                   <view class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_pass">通过</view>
@@ -529,7 +513,7 @@
               <!-- 单个审核样式 -->
               <view class="hm-aud-layout">
                 <view class="hm-flex">
-                  <view class="hm-t-name">{{userInfo.name}}</view>
+                  <view class="hm-t-name">{{item.realname}}</view>
                   <view class="hm-taud-class">{{item.classname}}</view>
                 </view>
                 <view class="hm-flex-fold">
@@ -613,12 +597,7 @@
     <!-- 管理员角色 -->
     <view wx:if="{{role == 3}}">
       <view wx:if="{{type == 1}}">
-        <view class="leave-layout">
-          <view class="leave-state">
-            <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
-            <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
-          </view>
-        </view>
+        
 
 
         <view wx:if="{{aud == 0 }}" >
@@ -631,7 +610,7 @@
             <!-- 单个未审核样式 -->
             <view class="hm-unaud-layout">
               <view class="hm-flex">
-                <view class="hm-t-name">{{userInfo.name}}</view>
+                <view class="hm-t-name">{{item.realname}}</view>
                 <view class="hm-t-class">{{item.classname}}</view>
               </view>
               <view class="hm-un-heng"></view>
@@ -690,7 +669,7 @@
               <!-- 单个审核样式 -->
               <view class="hm-aud-layout">
                 <view class="hm-flex">
-                  <view class="hm-t-name">{{userInfo.name}}</view>
+                  <view class="hm-t-name">{{item.realname}}</view>
                   <view class="hm-taud-class">{{item.classname}}</view>
                 </view>
                 <view class="hm-flex-fold">

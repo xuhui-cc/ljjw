@@ -121,16 +121,27 @@ Page({
     that.setData({
       lea_date_arr1: that.data.lea_date_arr1
     })
+    for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
+      if (that.data.lea_date_arr1[i].hh == '') {
+        that.data.lea_date_arr1.splice(i, 1)
+      }
+    }
+    that.setData({
+      lea_date_arr1: that.data.lea_date_arr1
+    })
 
-    if (that.data.lea_for != '') {
+    if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
       for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
         if (that.data.lea_date_arr1[i].hh != '') {
           that.setData({
             submit_yes: true
           })
-        } that.setData({
-          submit_yes: false
-        })
+        } else {
+          that.setData({
+            submit_yes: false
+          })
+        }
+
       }
     } else {
       that.setData({
@@ -143,6 +154,17 @@ Page({
   //请假课程选择
   lea_sel:function(e){
     let that = this
+    if(that.data.lea_date_arr1 == ''){
+      var newarray1 = [{
+        date: that.data.leave_stu_time,
+        hh: []
+      }];
+
+
+      this.setData({
+        'lea_date_arr1': this.data.lea_date_arr1.concat(newarray1)
+      });
+    }
     
     var index = e.currentTarget.dataset.index;
     for (var j = 0; j < that.data.dayCourse.length; j++){
@@ -178,6 +200,11 @@ Page({
             }
 
           }
+          for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
+            if (that.data.lea_date_arr1[i].hh == '') {
+              that.data.lea_date_arr1.splice(i, 1)
+            }
+          }
         }
         
       }
@@ -206,15 +233,18 @@ Page({
     })
 
     
-    if (that.data.lea_for != '') {
+    if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
       for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
         if (that.data.lea_date_arr1[i].hh != '') {
           that.setData({
             submit_yes: true
           })
-        } that.setData({
-          submit_yes: false
-        })
+        } else {
+          that.setData({
+            submit_yes: false
+          })
+        }
+
       }
     } else {
       that.setData({
@@ -232,17 +262,20 @@ Page({
     that.setData({
       lea_for: e.detail.value
     })
-    if (that.data.lea_for != '') {
+    if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
       for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
         if (that.data.lea_date_arr1[i].hh != '') {
           that.setData({
             submit_yes: true
           })
-        } that.setData({
-          submit_yes: false
-        })
+        } else {
+          that.setData({
+            submit_yes: false
+          })
+        }
+
       }
-    }else{
+    } else {
       that.setData({
         submit_yes: false
       })
@@ -286,27 +319,27 @@ Page({
     var date_ids = JSON.stringify(that.data.ojb)
     console.log(date_ids)
     
-    // var params = {
-    //   "token": wx.getStorageSync("token"),
-    //   "uid": wx.getStorageSync("uid"),
-    //   "date_ids": date_ids,
-    //   "reason": that.data.lea_for
-    // }
-    // console.log(params)
-    // app.ljjw.jwSaveAskforleave(params).then(d => {
-    //   if (d.data.status == 1) {
-    //     wx.showToast({
-    //       title: '提交成功',
-    //       duration: 2000
-    //     })
-    //     console.log("请假提交成功")
-    //   }
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "date_ids": date_ids,
+      "reason": that.data.lea_for
+    }
+    console.log(params)
+    app.ljjw.jwSaveAskforleave(params).then(d => {
+      if (d.data.status == 1) {
+        wx.showToast({
+          title: '提交成功',
+          duration: 2000
+        })
+        console.log("请假提交成功")
+      }
       
-    // })
+    })
     
-    // wx.navigateBack({
-    //   url: "../../pages/index/index"
-    // })
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
   },
 
   /**

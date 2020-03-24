@@ -9,7 +9,7 @@
   <!-- 成绩分类显示菜单栏 -->
 
   <!-- 冠亚季 -->
-  <view class="champ-layout">
+  <view class="champ-layout" wx:if="{{totalscore != ''}}">
 
     <view class="flex">
       <view class="champ-rank" data-rank='{{1}}' bindtap='click_rank'>
@@ -117,7 +117,7 @@
 
 
   <!-- 排名往后 -->
-  <view class="rank-layout">
+  <view class="rank-layout" wx:if="{{scorelist != ''}}">
     <view wx:for="{{scorelist}}" wx:key="list_index">
       <view class="flex">
         <view class="rank-num">{{index + 4}}</view>
@@ -203,6 +203,9 @@
   </view>
   <!-- 排名往后 -->
 
+<view wx:if="{{totalscore == ''}}">
+  <image class='task-null' src='../../images/tera_record_null.png'></image>
+</view>
 
 
 

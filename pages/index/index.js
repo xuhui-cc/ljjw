@@ -180,6 +180,7 @@ Page({
             tea_dayCourse: d.data.data.course_list,
             tea_courselist: d.data.data.day_list
           })
+          console.log(that.data.tea_dayCourse)
           for(var i=0;i<that.data.tea_courselist.length;i++){
             var newarray = [{
               ym: that.data.tea_courselist[i].riqi.substr(0, 7),
@@ -1893,7 +1894,7 @@ Page({
       app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-
+          console.log(d)
           that.setData({
             hm_unaud_leave: d.data.data
           })
@@ -2004,5 +2005,70 @@ Page({
     else{
       console.log('未执行')
     }
+
+    let that = this
+    if (that.data.type == 1){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 0
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentAskforleave(params).then(d => {
+        if (d.data.status == 1) {
+          that.setData({
+            leave: d.data.data,
+            wscs: d.data.data
+          })
+          for (var i = 0; i < that.data.leave.length; i++) {
+            var fold = "leave[" + i + "].fold"
+            that.setData({
+              [fold]: true
+            })
+            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
+              var cs = "leave[" + i + "].ask_info[" + j + "].pin"
+              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
+              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
+              that.setData({
+                [cs]: hh,
+                [_cs]: []
+              })
+              var date = that.data.leave[i].ask_info[j].date
+
+              for (var k = 0; k < that.data.wscs[i].ask_info.length; k++) {
+                // if (that.data.leave[i].add_arr[k].date == '')
+
+                if (date == that.data.wscs[i].ask_info[k].date) {
+                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
+                }
+                else {
+
+
+                }
+              }
+            }
+          }
+
+          for (var i = 0; i < that.data.leave.length; i++) {
+            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
+              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
+                if (that.data.leave[i].ask_info[j].cs[k] == null) {
+                  that.data.leave[i].ask_info.splice(j, 1)
+                }
+              }
+            }
+          }
+
+          that.setData({
+            leave: that.data.leave
+          })
+
+
+        } else if (d.data.status == -1) {
+          console.log(d.data.msg)
+        }
+      })
+    }
   }
+  
 })

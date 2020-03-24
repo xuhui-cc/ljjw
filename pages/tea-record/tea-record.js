@@ -18,14 +18,14 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    // var mid = options.mid
-    // that.setData({
-    //   mid : mid
-    // })
+    var mid = options.mid
+    that.setData({
+      mid : mid
+    })
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "mid": 1,                   //that.data.mid,
+      "mid": that.data.mid,                   //that.data.mid,
       "type": that.data.aud    //type=1总分type=2行测 type=3 申论
     }
     console.log(params)
@@ -62,7 +62,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "mid": 1,                   //that.data.mid,
+      "mid": that.data.mid,                   //that.data.mid,
       "type": that.data.aud    //type=1总分type=2行测 type=3 申论
     }
     console.log(params)
@@ -70,10 +70,43 @@ Page({
       console.log(d)
       if (d.data.status == 1) {
         console.log(d.data.data)
-        that.setData({
-          totalscore: d.data.data,
-          scorelist: d.data.data.splice(3),
-        })
+        if (that.data.aud == 2){
+          for(var i=0;i<d.data.data.length;i++){
+            if (d.data.data[i].xc_score == null){
+              that.setData({
+                totalscore: '',
+                scorelist: '',
+              })
+            }
+            else{
+              that.setData({
+                totalscore: d.data.data,
+                scorelist: d.data.data.splice(3),
+              })
+            }
+          }
+        } else if (that.data.aud == 3){
+          for (var i = 0; i < d.data.data.length; i++) {
+            if (d.data.data[i].sl_score == null) {
+              that.setData({
+                totalscore: '',
+                scorelist: '',
+              })
+            }
+            else {
+              that.setData({
+                totalscore: d.data.data,
+                scorelist: d.data.data.splice(3),
+              })
+            }
+        }
+        }else{
+          that.setData({
+            totalscore: d.data.data,
+            scorelist: d.data.data.splice(3),
+          })
+        }
+        
         // that.setData({
         //   click_detail: that.data.totalscore[that.data.click_rank]
         // })
