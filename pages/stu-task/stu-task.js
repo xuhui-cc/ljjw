@@ -11,7 +11,8 @@ Page({
     imgs: [],
     submit_arr:[],
     type2_ans:[],
-    work_reject:false,
+    work_reject : false
+    
   },
 
   /**
@@ -31,9 +32,28 @@ Page({
   type4_reject:function(e){
     let that = this
     var task_index = e.currentTarget.dataset.task_index
+    console.log(task_index)
+    // var query = wx.createSelectorQuery();
+    // query.select('.type4_reject').boundingClientRect()
+    // query.exec((res) => {
+    //   var listHeight = res[0].top; // 获取list高度
+    //   console.log(listHeight + "listHeight")
+      
+    // })
+    
     that.setData({
       task_index: task_index,
-      work_reject:true
+    })
+    that.setData({
+      work_reject : true
+    })
+    
+    
+  },
+  work_reject_del:function(){
+    let that = this
+    that.setData({
+      work_reject: false
     })
   },
 

@@ -1,7 +1,7 @@
 page{
   background: rgba(251,251,252,1)
 }
-.nabigation_bar{
+/* .nabigation_bar{
   
   width:750rpx;
   height:176rpx;
@@ -12,7 +12,7 @@ page{
 }
 .my-head{
   position: fixed;
-  /* margin-left: 341rpx; */
+  margin-left: 341rpx;
   margin-top: 108rpx;
   width:530rpx;
   height:48rpx;
@@ -31,7 +31,7 @@ page{
   margin-right: 57rpx;
   width: 27rpx;
   height: 27rpx;
-}
+} */
 .img_null{
   margin-top: 423rpx;
   margin-left: 238rpx;
@@ -39,16 +39,16 @@ page{
   height: 329rpx;
 }
 .mask-layout{
-  position: absolute;
+  position: fixed;
   display: block;
   width:750rpx;
   height:1624rpx;
   background:rgba(0,0,0,1);
   opacity:0.54;
-  z-index: 200;
+  z-index: 600;
 }
 .reject-layout{
-  position: absolute;
+  position: fixed;
   margin-top: 300rpx;
   margin-left: 86rpx;
   width:578rpx;
@@ -56,7 +56,7 @@ page{
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:14rpx;
-  z-index: 210;
+  z-index: 610;
 }
 .reject-close{
   margin-top: 21rpx;
@@ -142,6 +142,7 @@ page{
   border-radius:49rpx;
 }
 .record-bar{
+  position: fixed;
   /* margin-top: 176rpx; */
   display: flex;
   width:750rpx;
@@ -459,8 +460,9 @@ opacity:1;
   font-weight:400;
   line-height:80rpx;
   text-align: center;
-  color:rgba(255,255,255,1);
-  background:rgba(222,222,222,1);
+  color:rgba(45,193,160,1);
+  background:rgba(255,255,255,1);
+  border:2rpx solid rgba(45,193,160,1);
   opacity:1;
   border-radius:49rpx;
 }

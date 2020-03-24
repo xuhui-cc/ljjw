@@ -1,24 +1,7 @@
 <view class="container">
-<!-- 
-  <cover-view class="nabigation_bar">
-    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
-    <view class="my-head">任务</view> 
-  </cover-view> -->
 
-  <view class="mask-layout" wx:if="{{work_reject}}"></view>
-  <view class="reject-layout" wx:if="{{work_reject}}">
-    <image class="reject-close" src="../../images/close.png"></image>
-    <view class="reject-head">
-      <view class="reject-shu"></view>
-      <view class="reject-title">驳回原因</view>
-    </view>
-    <view class="reject-cont-lay">
-      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='reject_for'></textarea>
-    </view>
-    <view wx:if="{{isreject}}" class="reject-sub" bindtap='reject'>确定</view>
-    <view wx:else="{{isreject}}" class="reject-sub1" >确定</view>
+
   
-  </view>
 
   <!-- 成绩分类显示菜单栏 -->
   <view class="record-bar">
@@ -197,6 +180,21 @@
     
   </view>
   <!-- 待完成 -->
+
+  <view class="mask-layout"  wx:if="{{work_reject}}"></view>
+  <view class="reject-layout" wx:if="{{work_reject}}">
+    <image class="reject-close" src="../../images/close.png" bindtap="work_reject_del"></image>
+    <view class="reject-head">
+      <view class="reject-shu"></view>
+      <view class="reject-title">驳回原因</view>
+    </view>
+    <view class="reject-cont-lay">
+      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='reject_for'></textarea>
+    </view>
+    <view wx:if="{{isreject}}" class="reject-sub" bindtap='reject'>确定</view>
+    <view wx:else="{{isreject}}" class="reject-sub1" >确定</view>
+  
+  </view>
 
   <!-- 已完成 -->
   <view wx:if="{{finish == 1}}">

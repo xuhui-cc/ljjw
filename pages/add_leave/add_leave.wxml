@@ -23,37 +23,40 @@
   
 
   <!-- 请假课程显示 -->
-  <view class="tobelea-cour-layout">
-    <view class="tobelea-cour-head">
-      <view class="tobelea-cour-shu"></view>
-      <view class="tobelea-cour-title">需请假的课程</view>
-    </view>
-    <!-- <view class="tobelea-cour-head"> -->
-      <view class="tobelea-cour-timetitle">请假时间：2019.12.22</view>
-      <!-- <view class="tobelea-cour-timedate">2019.12.22</view> -->
-    <!-- </view> -->
-
-    <view>
+  <view class="tobelea-cour-layout" wx:if="{{lea_date_arr1}}">
+  <view wx:for="{{lea_date_arr1}}" wx:key="index" wx:for-index="item_index">
       <view class="tobelea-cour-head">
-        <view class="tobelea-cour-content-layout">请假课程：</view>
-          <!-- 请假课程详情 -->
-          <view class="tobelea-cour-content">
-            <view class="tobelea-cour-content-list">
-              <view class="tobelea-cour-cont-time">08:00-09:00</view>
-              <view class="tobelea-cour-cont-name">逻辑推理第三节</view>
-              <image class="tobelea-cour-cont-del" src="../../images/del.png"></image>
-            </view>
-
-            <view class="tobelea-cour-content-list">
-              <view class="tobelea-cour-cont-time">08:00-09:00</view>
-              <view class="tobelea-cour-cont-name">逻辑推理第三节</view>
-              <image class="tobelea-cour-cont-del" src="../../images/del.png"></image>
-            </view>
-          </view>
+        <view class="tobelea-cour-shu"></view>
+        <view class="tobelea-cour-title">需请假的课程</view>
       </view>
-      <image class="tobelea-cour-content-xu" src="../../images/xu.png"></image>
-    </view>
+      
+      <view class="tobelea-cour-timetitle">请假时间：{{item.date}}</view>
+        
 
+      <view >
+        <view class="tobelea-cour-head">
+          <view class="tobelea-cour-content-layout">请假课程：</view>
+            <!-- 请假课程详情 -->
+            
+            <view class="tobelea-cour-content" >
+            <view wx:for="{{item.hh}}" wx:key="hh_index" wx:for-key="hh_index" wx:for-item="hh">  
+              <view class="tobelea-cour-content-list">
+                <view class="tobelea-cour-cont-time">{{hh[0]}}</view>
+                <view class="tobelea-cour-cont-name">{{hh[1]}}</view>
+                <image class="tobelea-cour-cont-del" src="../../images/del.png" data-xb="{{index}}" data-dxb="{{item_index}}" bindtap="del_lea"></image>
+              </view>
+
+              <!-- <view class="tobelea-cour-content-list">
+                <view class="tobelea-cour-cont-time">08:00-09:00</view>
+                <view class="tobelea-cour-cont-name">逻辑推理第三节</view>
+                <image class="tobelea-cour-cont-del" src="../../images/del.png"></image>
+              </view> -->
+            </view>
+            </view>
+        </view>
+        <image class="tobelea-cour-content-xu" src="../../images/xu.png"></image>
+      </view>
+    </view>
 
   <!-- 需请假课程最大框 -->
   </view>
@@ -70,7 +73,8 @@
   <!-- 请假事由最大kuang -->
   </view>
 
-  <view class="submit" bindtap='lea_submit'>提交</view>
+  <view class="submit" wx:if="{{submit_yes}}" bindtap='lea_submit' style="background:rgba(45,193,160,1);">提交</view>
+  <view class="submit" wx:else="">提交</view>
 
 
 

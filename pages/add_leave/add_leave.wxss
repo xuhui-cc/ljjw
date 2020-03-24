@@ -82,7 +82,7 @@ page{
 .tobelea-cour-layout{
   margin-top: 10rpx;
   width:750rpx;
-  height:495rpx;
+  /* height:495rpx; */
   background:rgba(255,255,255,1);
   opacity:1;
 }
@@ -113,7 +113,7 @@ page{
 .tobelea-cour-timetitle{
   margin-left: 30rpx;
   margin-top: 24rpx;
-  width:310rpx;
+  /* width:310rpx; */
   height:42rpx;
   font-size:30rpx;
   font-family:PingFang SC;
@@ -145,7 +145,7 @@ page{
   margin-bottom: 24rpx;
 }
 .tobelea-cour-cont-time{
-  width:178rpx;
+  width:200rpx;
   height:42rpx;
   font-size:30rpx;
   font-family:PingFang SC;
@@ -155,7 +155,7 @@ page{
   opacity:1;
 }
 .tobelea-cour-cont-name{
-  margin-left: 31rpx;
+  /* margin-left: 31rpx; */
   width:210rpx;
   height:42rpx;
   font-size:30rpx;
