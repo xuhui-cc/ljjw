@@ -61,7 +61,11 @@
   <!-- 行测 -->
   <view wx:if="{{aud == 1}}">
 
-    <view class="rec-total-layout">
+    <view wx:if="{{score == ''}}">
+      <image class='task-null' src='../../images/tera_record_null.png'></image>
+    </view>
+
+    <view class="rec-total-layout" wx:if="{{score != ''}}">
       <view class="total-layout">
         <view class="rec-total">总分：</view>
         <view class="rec-total-num">{{score.scores}}</view>
@@ -90,15 +94,15 @@
         
     </view>
 
-    <view class="xc-single-rec">
+    <view class="xc-single-rec" wx:if="{{score != ''}}">
       <view class="stu-rec-flex">
         <view class="kemu">科目</view>
         <view class="bingo">答对题目</view>
         <view class="bingo">分值</view>
       </view>
 
-      <view class="rec-for">
-        <view class="stu-rec-flex">
+      <view class="rec-for" wx:if="{{score != ''}}">
+        <view class="stu-rec-flex" >
           <view class="kemu-name">科目名称</view>
           <view class="bingo-num">25</view>
           <view class="record">22.5</view>
@@ -107,14 +111,14 @@
     
     </view >
   
-    <view class="analyse-layout">
+    <view class="analyse-layout" wx:if="{{score != ''}}">
       <view class="stu-rec-flex">
         <view class="shu"></view>
         <view class="analyse-title">模考总分折线图</view>
       
 
       </view>
-      <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+      <ec-canvas wx:if="{{score != ''}}" id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
      
     
     </view>
@@ -125,7 +129,11 @@
   <!-- 申论 -->
   <view wx:if="{{aud == 2}}">
 
-    <view class="rec-total-layout">
+    <view wx:if="{{score == ''}}">
+      <image class='task-null' src='../../images/tera_record_null.png'></image>
+    </view>
+
+    <view class="rec-total-layout" wx:if="{{score != ''}}">
       <view class="total-layout">
         <view class="rec-total">总分：</view>
         <view class="rec-total-num">{{score.scores}}</view>
@@ -154,29 +162,33 @@
         
     </view>
 
-    <view class="xc-single-rec">
+    <view class="xc-single-rec" wx:if="{{score != ''}}">
       <view class="stu-rec-flex">
         <view class="s-kemu">科目</view>
         <view class="s-bingo">分值</view>
       </view>
 
-      <view class="rec-for">
-        <view class="stu-rec-flex">
-          <view class="s-kemu-name">科目名</view>
-        
-          <view class="s-record">22.5</view>
+      
+      <view class="rec-for" >
+        <view wx:if="{{score != ''}}" wx:for="{{score.score_info}}" wx:key="{{index}}">
+          <view class="stu-rec-flex">
+            <view class="s-kemu-name">第{{index}}题</view>
+          
+            <view class="s-record">{{item}}</view>
+          </view>
         </view>
       </view>
+      
     
     </view>
   
-    <view class="analyse-layout">
+    <view class="analyse-layout" wx:if="{{score != ''}}">
       <view class="stu-rec-flex">
         <view class="shu"></view>
         <view class="analyse-title">模考总分折线图</view>
       
       </view>
-      <ec-canvas id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+      <ec-canvas wx:if="{{score != ''}}" id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
      
     
     </view>

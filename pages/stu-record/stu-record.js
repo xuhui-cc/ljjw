@@ -169,9 +169,32 @@ Page({
       console.log(d)
       if (d.data.status == 1) {
         console.log(d.data.data)
-        that.setData({
-          score: d.data.data
-        })
+        if (that.data.aud + 1 == 2){
+          if (d.data.data.scores == null){
+            that.setData({
+              score: ''
+            })
+          } else {
+            that.setData({
+              score: d.data.data
+            })
+          }
+        } else if (that.data.aud + 1 == 3){
+          if (d.data.data.scores == null) {
+            that.setData({
+              score: ''
+            })
+          }else{
+            that.setData({
+              score: d.data.data
+            })
+          }
+        }else{
+          that.setData({
+            score: d.data.data
+          })
+        }
+        
 
         for (var i = 0; i < that.data.score.score_data.length; i++) {
           that.data.num.push(that.data.score.score_data[i].scores)

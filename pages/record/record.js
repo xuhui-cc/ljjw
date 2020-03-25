@@ -9,6 +9,7 @@ Page({
     type: 1,
     aud: 1,
     tea_class_index:0,
+    stu_class_index: 0,
     // role: 4,  //role：4 -学生；1 -老师；2 -教务；3 -管理员
   },
 
@@ -41,7 +42,8 @@ Page({
         if (d.data.status == 1) {
           console.log(d.data.data)
           that.setData({
-            stu_score: d.data.data
+            stu_score: d.data.data.list,
+            stu_class: d.data.data.classes
           })
           console.log("学生成绩获取成功")
         }
@@ -77,6 +79,33 @@ Page({
     console.log('picker发送选择改变，携带值为', e.detail.value)
     that.setData({
       tea_class_index: e.detail.value
+    })
+  },
+
+  stu_class_picker: function (e) {
+    let that = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    that.setData({
+      stu_class_index: e.detail.value
+    })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "class_id":that.data.stu_class[that.data.stu_class_index].id
+    }
+    console.log(params)
+    app.ljjw.jwGetStudentScore(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          stu_score: d.data.data.list,
+          // stu_class: d.data.data.classes
+        })
+        console.log("学生成绩获取成功")
+      }
+
+
     })
   },
 
