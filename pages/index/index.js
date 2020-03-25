@@ -325,23 +325,26 @@ Page({
       if (that.data.dot_work[q].ym == that.data.showym) {
         for (var w = 0; w < that.data.nowWeekData.length; w++) {
           if (that.data.dot_work[q].d == that.data.nowWeekData[w][0]) {
-            if (that.data.dot_work[q].work == 0){
-              var cs = "nowWeekData[" + w + "][2]"
-
-              that.setData({
-                [cs]: 1
-              })
-            }else{
+            console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
+            if (that.data.dot_work[q].work != 0 ){
               var cs = "nowWeekData[" + w + "][2]"
 
               that.setData({
                 [cs]: 2
               })
+            }else{
+              var cs = "nowWeekData[" + w + "][2]"
+
+              that.setData({
+                [cs]: 1
+              })
             }
             
             
 
-          } else {
+          } 
+          else {
+            console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
             var cs = "nowWeekData[" + w + "][2]"
 
             that.setData({
@@ -512,8 +515,8 @@ Page({
             for (var i = 0; i < that.data.stu_courselist.length; i++) {
               var newarray = [{
                 ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                d: that.data.stu_courselist[i].riqi.substr(8, 2),
-                work: that.data.stu_courselist[i].check_status
+                d: Number(that.data.stu_courselist[i].riqi.substr(8, 2)),
+                work: Number(that.data.stu_courselist[i].check_status)
               }];
               that.setData({
                 'dot_work': that.data.dot_work.concat(newarray)
@@ -655,20 +658,34 @@ Page({
           console.log(that.data.dayCourse)
         }
       })
-
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "month": nowmonth
+        "month": that.data.nowmonth
       }
       console.log(params)
       app.ljjw.jwGetMonthCourse(params).then(d => {
         if (d.data.status == 1) {
           console.log(d)
-          // that.setData({
-          //   dayCourse: d.data.data
-          // })
-          // console.log(that.data.dayCourse)
+          that.setData({
+            stu_courselist: d.data.data.info,
+            stu_classlist: d.data.data.period_info
+          })
+          that.cs()
+          for (var i = 0; i < that.data.stu_courselist.length; i++) {
+            var newarray = [{
+              ym: that.data.stu_courselist[i].riqi.substr(0, 7),
+              d: that.data.stu_courselist[i].riqi.substr(8, 2)
+            }];
+            that.setData({
+              'dot_riqi': that.data.dot_riqi.concat(newarray)
+            });
+
+          }
+          console.log(that.data.dot_riqi)
+
+          // 日历点点
+          that.dot()
         }
       })
     }
@@ -1250,8 +1267,8 @@ Page({
                 for (var i = 0; i < that.data.stu_courselist.length; i++) {
                   var newarray = [{
                     ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                    d: that.data.stu_courselist[i].riqi.substr(8, 2),
-                    work: that.data.stu_courselist[i].check_status
+                    d: Number(that.data.stu_courselist[i].riqi.substr(8, 2)),
+                    work: Number(that.data.stu_courselist[i].check_status)
                   }];
                   that.setData({
                     'dot_work': that.data.dot_work.concat(newarray)
@@ -1500,8 +1517,8 @@ Page({
                 for (var i = 0; i < that.data.stu_courselist.length; i++) {
                   var newarray = [{
                     ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                    d: that.data.stu_courselist[i].riqi.substr(8, 2),
-                    work: that.data.stu_courselist[i].check_status
+                    d: Number(that.data.stu_courselist[i].riqi.substr(8, 2)),
+                    work: Number(that.data.stu_courselist[i].check_status)
                   }];
                   that.setData({
                     'dot_work': that.data.dot_work.concat(newarray)

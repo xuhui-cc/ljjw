@@ -1,9 +1,22 @@
 page{
   background:rgba(251,251,252,1);
-  margin-bottom: 200rpx;
+  /* margin-bottom: 200rpx; */
 }
-.container{
+/* .container{
   margin-bottom: 100rpx;
+} */
+.cs_layout{
+  padding-bottom: 200rpx;
+}
+.aud_cs{
+  position: fixed;
+  margin-top: 176rpx;
+  width:750rpx;
+  height:88rpx;
+  line-height: 88rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  z-index: 10;
 }
 .course_null{
   margin-top: 239rpx;
@@ -366,22 +379,8 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
-.leave-layout{
-  position: fixed;
-  
-  
-  z-index: 5;
-}
-.leave-state{
-  position: fixed;
-  margin-top: 176rpx;
-  width:750rpx;
-  height:88rpx;
-  line-height: 88rpx;
-  background:rgba(255,255,255,1);
-  opacity:1;
 
-}
+
 .aud{
   margin-left: 163rpx;
   margin-right: 70rpx;
@@ -1044,7 +1043,7 @@ page{
   opacity:1;
 }
 .hm-aud-pro-time{
-  margin-left: 185rpx;
+  margin-left: 175rpx;
   margin-top: 30rpx;
   width:244rpx;
   height:33rpx;
@@ -1237,7 +1236,7 @@ page{
 .hm-unaud-for{
   position: absolute;
   margin-top: 280rpx;
-  margin-bottom: 200rpx;
+  padding-bottom: 300rpx;
 }
 .hm-unaud-layout{
   width:750rpx;
@@ -1284,7 +1283,7 @@ page{
 .hm-un-leadate{
   margin-left: 31rpx;
   margin-top: 28rpx;
-  width:286rpx;
+  width:300rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;
@@ -1296,7 +1295,7 @@ page{
 .hm-un-leacour{
   margin-left: 31rpx;
   margin-top: 28rpx;
-  width:300rpx;
+  width:350rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;

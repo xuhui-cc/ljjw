@@ -120,10 +120,13 @@ Page({
     app.ljjw.jwSaveStudentSignIn(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
-        that.onShow()
+        // that.onShow()
         wx.showToast({
           title: '提交成功',
           duration:1500
+        })
+        wx.navigateBack({
+          delta: 1  // 返回上一级页面。
         })
         
       }

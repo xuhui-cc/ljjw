@@ -74,6 +74,7 @@ Page({
         })
 
         for (var i = 0; i < that.data.task.length; i++) {
+          console.log(i)
           var cs = "task[" + i + "].submit"
           that.setData({
             [cs]: false
@@ -978,9 +979,9 @@ Page({
           }
           console.log("学生任务已完成获取成功")
         }else{
-          // that.setData({
-          //   finish_task : ''
-          // })
+          that.setData({
+            task : ''
+          })
         }
 
 

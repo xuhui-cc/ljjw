@@ -67,9 +67,9 @@ page{
   opacity:1;
 }
 .cour-content{
-  margin-left: 215rpx;
+  margin-left: 115rpx;
   margin-top: 24rpx;
-  width:210rpx;
+  width:310rpx;
   height:42rpx;
   font-size:30rpx;
   font-family:PingFang SC;

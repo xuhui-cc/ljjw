@@ -55,7 +55,8 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "riqi": that.data.leave_stu_time
+      "riqi": that.data.leave_stu_time,
+      "type":1
     }
     console.log(params)
     app.ljjw.jwGetDayCourse(params).then(d => {

@@ -187,7 +187,7 @@ page{
   left: 35rpx; 
 }
 .ques-layout{
-  margin-top: 16rpx;
+  margin-top: 100rpx;
   width:750rpx;
   padding-bottom: 72rpx;
   background:rgba(255,255,255,1);
@@ -213,9 +213,9 @@ page{
   opacity:1;
 }
 .ques-date{
-  margin-left: 220rpx;
+  margin-left: 190rpx;
   margin-top: 25rpx;
-  width:220rpx;
+  width:250rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;
@@ -354,9 +354,9 @@ page{
 .ans_heng{
   margin-left: 30rpx;
   margin-top: 15rpx;
-  width:690px;
-height:0px;
-border:1px solid rgba(242,241,241,1);
+  width:690rpx;
+height:0rpx;
+border:1rpx solid rgba(242,241,241,1);
 opacity:1;
 }
 .add{

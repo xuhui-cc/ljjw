@@ -78,7 +78,7 @@
         </view>
         <!-- 日历结束 -->
         <!-- 选择日期的课表 -->
-        <view wx:if="{{dayCourse != ''}}">
+        <view wx:if="{{dayCourse != ''}}" class="cs_layout">
           <view wx:for="{{dayCourse}}" wx:key="index">
             <view class="ct-layout">
               <view wx:if="{{!item.comp}}" class="mask"></view>
@@ -147,10 +147,10 @@
               <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
         </view>
       
-        <view class="stu-class">西安国考集训营逻辑班</view>
+        <view class="stu-class">{{dayCheckon[0].classname}}</view>
 
         <!-- 选择日期考情表 -->
-        <view>
+        <view class="cs_layout">
           <view class="work" wx:if="{{dayCheckon != ''}}" wx:for="{{dayCheckon}}" wx:key="dayCheckon_index">
             <view class="ct-layout">
               <view class="c-time">{{item.classtime}}</view>
@@ -184,15 +184,12 @@
       <!-- 请假页 -->
       <view wx:if="{{type == 1}}">
 
-        <!-- <view class="leave-layout"> -->
-          <view class="leave-state">
-            <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
-            <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
-          </view>
-        <!-- </view> -->
+        <view class="aud_cs">
+          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
+        </view>
 
-        <view wx:if="{{aud == 0}}" >
-          
+        <view wx:if="{{aud == 0}}">
           <view class="leave-layout2">
             <view wx:for="{{leave}}" wx:key="index">
               <view class="leave">
@@ -201,8 +198,8 @@
                   <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
                     <text class="lea-course">请假课程：{{cs}}</text>
                   </view>
-                    
                 </view>
+
                 <text class="lea-for">请假事由：{{item.reason}}</text>
                 <view class="heng2"></view>
                 <view class="step">
@@ -210,20 +207,19 @@
                   <text class="lea-sta">发起</text>
                   <text class="apply-time">{{item.createtime}}</text>
                 </view>
-                  
-                  
               </view>
               
             </view>
           </view>
+
           <!-- 新建 -->
           <view class="add-btn" bindtap="stu_add_leave">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
-
-      
+        
         </view>
+        <!-- aud==0 结束 -->
 
         <view wx:if="{{aud == 1}}">
           <view class="leave-layout2">
@@ -297,10 +293,13 @@
             <text class="add-new">新建</text>
           </view>
         
-        
-          <!-- 已审核最大 -->
         </view>
+         
+            
+        
+       
 
+        
       
       
 
@@ -367,7 +366,7 @@
       <!-- 公用日历结束 -->
 
       <!-- 老师点名 -->
-      <view wx:if="{{type == 2}}" >
+      <view wx:if="{{type == 2}}" class="cs_layout">
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
             <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
@@ -402,7 +401,7 @@
       <!-- 老师点名结束 -->
 
       <!-- 老师考勤 -->
-      <view wx:if="{{type == 3}}">
+      <view wx:if="{{type == 3}}" class="cs_layout">
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
             <view class="t-call-lay" data-tea_index='{{index}}' bindtap="to_t_stuwork">
@@ -445,7 +444,10 @@
     <view wx:if="{{role == 2}} ">
       <view wx:if="{{type == 1}}">
         
-
+        <view class="aud_cs">
+          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
+        </view>
 
         <view wx:if="{{aud == 0 }}" >
           <!-- 无记录空显示 wx:else=""-->
@@ -598,7 +600,10 @@
     <view wx:if="{{role == 3}}">
       <view wx:if="{{type == 1}}">
         
-
+        <view class="aud_cs">
+          <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
+          <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
+        </view>
 
         <view wx:if="{{aud == 0 }}" >
           <view wx:if="{{admin_unaud_leave == ''}}">
