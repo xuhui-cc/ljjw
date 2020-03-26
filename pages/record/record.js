@@ -80,6 +80,25 @@ Page({
     that.setData({
       tea_class_index: e.detail.value
     })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "class_id": that.data.tea_class[that.data.tea_class_index].id
+    }
+    console.log(params)
+    app.ljjw.jwTeacherScoreMainPage(params).then(d => {
+      console.log(d)
+      if (d.data.status == 1) {
+        console.log(d.data.data)
+        that.setData({
+          tea_class: d.data.data.classes,
+          tea_mock_list: d.data.data.mock_list
+        })
+        console.log("老师成绩首页获取成功")
+      }
+
+
+    })
   },
 
   stu_class_picker: function (e) {

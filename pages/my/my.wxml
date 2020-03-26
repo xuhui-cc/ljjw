@@ -75,6 +75,8 @@
       </picker>
     </view>
 
+    <image wx:if="{{mydata.files == ''}}" class="file_null" src="../../images/file_null.png"></image>
+
     <view wx:for="{{mydata.files}}" wx:key="index">
       <view class="data-layout">
         <view class="flex">

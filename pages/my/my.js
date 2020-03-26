@@ -366,8 +366,9 @@ Page({
                   wx.setStorageSync('role', role[0])
                   
                   if(role[0] != 4){
-                    wx.setStorageSync('subject_id', d.data.cate_info.id)
-                    wx.setStorageSync('subject_name', d.data.cate_info.name)
+                    wx.setStorageSync('subject', d.data.cate_info)
+                    // wx.setStorageSync('subject_name', d.data.cate_info.name)
+                    console.log(d.data.cate_info)
                   }
                   
                   

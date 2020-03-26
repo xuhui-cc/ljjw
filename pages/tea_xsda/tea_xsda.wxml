@@ -65,7 +65,7 @@
 
     <image wx:else="" class='null_img' src='../../images/rec_null.png'></image>
 
-    <view wx:if="{{subject_id == cates[cates_index].id}}" class="add" bindtap='add'>
+    <view wx:if="{{cates[cates_index].com}}" class="add" bindtap='add'>
         <image class="add-img" src="../../images/add.png"></image>
         <view class="xj">新建</view>
     </view>

@@ -18,7 +18,8 @@ function setOption(chart, xdata, ydata) {
     //   z: 100
     // },
     grid: {
-      containLabel: true
+      containLabel: true,
+      
     },
     tooltip: {
       show: true,
@@ -30,42 +31,47 @@ function setOption(chart, xdata, ydata) {
     xAxis: {
       
       axisLabel: {//坐标轴刻度标签的相关设置。
-        formatter: function (params) {
-          var newParamsName = "";// 最终拼接成的字符串
-          var paramsNameNumber = params.length;// 实际标签的个数
-          var provideNumber = 3;// 每行能显示的字的个数
-          var rowNumber = Math.ceil(paramsNameNumber / provideNumber);
-          /**
-                                   * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
-                                    */
-          // 条件等同于rowNumber>1
-          if (paramsNameNumber > provideNumber) {
-            /** 循环每一行,p表示行 */
-            for (var p = 0; p < rowNumber; p++) {
-              var tempStr = "";// 表示每一次截取的字符串
-              var start = p * provideNumber;// 开始截取的位置
-              var end = start + provideNumber;// 结束截取的位置
-              // 此处特殊处理最后一行的索引值
-              if (p == rowNumber - 1) {
-                // 最后一次不换行
-                tempStr = params.substring(start, paramsNameNumber);
-
-              } else {
-                // 每一次拼接字符串并换行
-                tempStr = params.substring(start, end) + "\n";
-
-              }
-              newParamsName += tempStr;// 最终拼成的字符串
-
-            }
-          } else {
-            // 将旧标签的值赋给新标签
-            newParamsName = params;
-          }
-          //将最终的字符串返回
-          return newParamsName
-
+        nameLocation: 'end',//坐标轴名称显示位置。
+        axisLabel: {//坐标轴刻度标签的相关设置。
+          interval: 0,
+          rotate: "45"
         }
+        // formatter: function (params) {
+        //   var newParamsName = "";// 最终拼接成的字符串
+        //   var paramsNameNumber = params.length;// 实际标签的个数
+        //   var provideNumber = 3;// 每行能显示的字的个数
+        //   var rowNumber = Math.ceil(paramsNameNumber / provideNumber);
+        //   /**
+        //                            * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+        //                             */
+        //   // 条件等同于rowNumber>1
+        //   if (paramsNameNumber > provideNumber) {
+        //     /** 循环每一行,p表示行 */
+        //     for (var p = 0; p < rowNumber; p++) {
+        //       var tempStr = "";// 表示每一次截取的字符串
+        //       var start = p * provideNumber;// 开始截取的位置
+        //       var end = start + provideNumber;// 结束截取的位置
+        //       // 此处特殊处理最后一行的索引值
+        //       if (p == rowNumber - 1) {
+        //         // 最后一次不换行
+        //         tempStr = params.substring(start, paramsNameNumber);
+
+        //       } else {
+        //         // 每一次拼接字符串并换行
+        //         tempStr = params.substring(start, end) + "\n";
+
+        //       }
+        //       newParamsName += tempStr;// 最终拼成的字符串
+
+        //     }
+        //   } else {
+        //     // 将旧标签的值赋给新标签
+        //     newParamsName = params;
+        //   }
+        //   //将最终的字符串返回
+        //   return newParamsName
+
+        // }
       },
       
       data: xdata
@@ -143,6 +149,17 @@ Page({
 
     
   },
+
+  child_fold: function (e) {
+    let that = this
+    var child_xb = e.currentTarget.dataset.child_xb
+    console.log(child_xb)
+    var cs = "score.score_info[" + child_xb + "].child_fold"
+    that.setData({
+      [cs]: !that.data.score.score_info[child_xb].child_fold
+    })
+  },
+
   back: function () {
     wx.navigateBack({
       delta: 1  // 返回上一级页面。
@@ -199,6 +216,28 @@ Page({
             score: d.data.data
           })
         }
+        if (that.data.score != ''){
+          if (that.data.score.score_info){
+
+          
+          for (var i = 0; i < that.data.score.score_info.length; i++) {
+            
+              if (that.data.score.score_info[i].child) {
+                var cs = "score.score_info[" + i + "].child_fold"
+                that.setData({
+                  [cs]: true
+                })
+              }
+              else {
+                var cs = "score.score_info[" + i + "].child_fold"
+                that.setData({
+                  [cs]: 'null'
+                })
+              }
+          }
+          }
+        }
+        
         
         if(that.data.score != ''){
           for (var i = 0; i < that.data.score.score_data.length; i++) {

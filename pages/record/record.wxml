@@ -43,7 +43,7 @@
       </view>
         
 
-      <!-- <image class="mull-img" src="../../images/rec_null.png"></image> -->
+      <image wx:if="{{stu_score == ''}}" class="mull-img" src="../../images/tera_record_null.png"></image>
     </view>
     <!-- 学生角色结束 -->
 

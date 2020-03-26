@@ -53,6 +53,12 @@ ec-canvas {
   height:88rpx;
   background:rgba(255,255,255,1);
 }
+.child_xl{
+  margin-left: 40rpx;
+  margin-top: 8rpx;
+  width:22rpx;
+  height:22rpx;
+}
 .aud{
   margin-left: 151rpx;
   margin-right: -23rpx;
@@ -101,6 +107,9 @@ ec-canvas {
 .total-layout{
   display: flex;
   padding-bottom: 25rpx;
+}
+.flex{
+  display: flex;
 }
 .ana-layout{
   margin-top: 41rpx;

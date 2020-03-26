@@ -32,6 +32,12 @@ page{
 .no_login::after {
   border: none;
 }
+.file_null{
+  margin-left: 200rpx;
+  margin-top: 237rpx;
+  width:269rpx;
+  height:341rpx;
+}
 .my-head{
   margin-left: 341rpx;
   margin-top: 108rpx;
