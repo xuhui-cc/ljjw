@@ -16,7 +16,7 @@
         <image class="second-img" src="../../images/second.png"></image>
         <image class="runner-up-ava" style="{{click_rank == 1 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="{{totalscore[1].avatar}}"></image>
         <view class="runner-up-name" style="{{click_rank == 1 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[1].realname}}</view>
-        <view wx:if="{{aud == 1}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].totalscore}}</view>
+        <view wx:if="{{aud == 1 }}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].totalscore}}</view>
         <view wx:elif="{{aud == 2}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].xc_score}}</view>
         <view wx:else="{{aud == 3}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].sl_score}}</view>
       </view>
@@ -82,11 +82,13 @@
         <view class="rec-for">
           <view class="flex">
             <view class="s-kemu-name">行测</view>
-            <view class="s-record">{{click_detail.xc_score}}</view>
+            <view wx:if="{{click_detail.xc_score != null}}" class="s-record">{{click_detail.xc_score}}</view>
+            <view wx:if="{{click_detail.xc_score == null}}" class="s-record">0</view>
           </view>
           <view class="flex">
             <view class="s-kemu-name">申论</view>
-            <view class="s-record">{{click_detail.sl_score}}</view>
+            <view wx:if="{{click_detail.sl_score != null}}" class="s-record">{{click_detail.sl_score}}</view>
+            <view wx:if="{{click_detail.sl_score == null}}" class="s-record">0</view>
           </view>
         </view>
         
@@ -171,11 +173,13 @@
           <view class="rec-for">
             <view class="flex">
               <view class="s-kemu-name">行测</view>
-              <view class="s-record">{{item.xc_score}}</view>
+              <view wx:if="{{item.xc_score != null}}" class="s-record">{{item.xc_score}}</view>
+              <view wx:if="{{item.xc_score == null}}" class="s-record">0</view>
             </view>
             <view class="flex">
               <view class="s-kemu-name">申论</view>
-              <view class="s-record">{{item.sl_score}}</view>
+              <view wx:if="{{item.sl_score != null}}" class="s-record">{{item.sl_score}}</view>
+              <view wx:if="{{item.sl_score == null}}" class="s-record">0</view>
             </view>
           </view>
             
