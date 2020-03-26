@@ -44,7 +44,7 @@ Page({
             [cs]:true
           })
         }
-        console.log("老师d 成绩详情页获取成功")
+        console.log("老师d成绩详情页获取成功")
       }
 
 
