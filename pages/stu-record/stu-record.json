@@ -2,5 +2,5 @@
   "usingComponents": {
     "ec-canvas": "../../ec-canvas/ec-canvas"
   },
-  "navigationBarTitleText": "理论测试"
+  "navigationStyle": "custom"
 }

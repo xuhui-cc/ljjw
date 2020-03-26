@@ -1,7 +1,9 @@
 <view class="container">
 
    <view class="nabigation_bar">
-    <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
+    <view class="backimg_layout" bindtap="back">
+      <image class='back-img' src='../../images/back_img.png' ></image>
+    </view>
     <text class="my-head">基础资料</text> 
   </view>
 

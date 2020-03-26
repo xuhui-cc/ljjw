@@ -39,17 +39,7 @@ Page({
           that.setData({
             student_score: d.data.data
           })
-          // console.log(that.data.student_score[0].mock_date.substr(0, 19))
-          // for (var i = 0; i < that.data.student_score.length;i++){
-          //   for (var j = 0;j < that.data.student_score[i].xc_scoreinfo.length;j++){
-          //     var ccs = "student_score[" + i + "].xc_scoreinfo[" + j + "].cateDate[2]"
-          //     // console.log(that.data.student_score[i].xc_scoreinfo[j].cateDate[2].toFixed(1))
-          //     that.setData({
-          //       [ccs]: that.data.student_score[i].xc_scoreinfo[j].cateDate[2].toFixed(1)
-          //     })
-
-          //   }
-          // }
+          
 
           console.log("学生档案——成绩获取成功")
         }
@@ -267,7 +257,22 @@ Page({
         that.setData({
           add_mask:false
         })
-        that.onLoad()
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),    //老师uid
+          "stu_id": that.data.stu_id
+        }
+        console.log(params)
+        app.ljjw.jwViewStudentSumary(params).then(d => {
+          console.log(d)
+          if (d.data.status == 1) {
+            that.setData({
+              condition: d.data.data
+            })
+            console.log("学生档案——概况获取成功")
+          }
+
+        })
 
       })
     }
@@ -312,7 +317,73 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    let that = this
+    var subject_id = wx.getStorageSync("subject_id")
+    that.setData({
+      subject_id: subject_id
+    })
+    // var stu_id = options.stu_id
+    // console.log(stu_id + "stu_id")
+    // that.setData({
+    //   stu_id: stu_id
+    // })
+    if (that.data.aud == 2) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),    //老师uid
+        "stu_id": that.data.stu_id
+      }
+      console.log(params)
+      app.ljjw.jwViewStudentScores(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            student_score: d.data.data
+          })
+
+
+          console.log("学生档案——成绩获取成功")
+        }
+
+      })
+    } else if (that.data.aud == 1) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),    //老师uid
+        "stu_id": that.data.stu_id
+      }
+      console.log(params)
+      app.ljjw.jwViewStudentSumary(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            condition: d.data.data
+          })
+          console.log("学生档案——概况获取成功")
+        }
+
+      })
+
+    } else if (that.data.aud == 0) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),    //老师uid
+        "stu_id": that.data.stu_id
+      }
+      console.log(params)
+      app.ljjw.jwViewStudentStudyInfo(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          that.setData({
+            studyinfo: d.data.data.studyinfo,
+            cates: d.data.data.cates,
+          })
+          console.log("学生档案——学情获取成功")
+        }
+
+      })
+      console.log("我是学生档案学情")
+    }
   },
 
   /**

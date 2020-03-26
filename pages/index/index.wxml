@@ -73,7 +73,10 @@
                 </view>
             </view>
             
+            <view class="xl_layout">
               <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
+            </view>
+              
 
         </view>
         <!-- 日历结束 -->
@@ -144,7 +147,9 @@
                   </view>
                 </view>
             </view>
+            <view class="xl_layout">
               <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
+            </view>
         </view>
       
         <view class="stu-class">{{dayCheckon[0].classname}}</view>
@@ -358,7 +363,9 @@
                   </view>
                 </view>
             </view>
+            <view class="xl_layout">
               <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
+            </view>
 
         </view>
         <!-- 日历结束 -->

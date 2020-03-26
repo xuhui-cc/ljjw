@@ -1,5 +1,12 @@
 <view class="container">
 
+  <view class="nabigation_bar">
+    <view class="backimg_layout" bindtap="back">
+      <image class='back-img' src='../../images/back_img.png' ></image>
+    </view>
+    <text class="my-head">理论测试</text> 
+  </view>
+
   <!-- 成绩分类显示菜单栏 -->
   <view class="record-bar">
     <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">总分</text>
@@ -172,7 +179,7 @@
       <view class="rec-for" >
         <view wx:if="{{score != ''}}" wx:for="{{score.score_info}}" wx:key="{{index}}">
           <view class="stu-rec-flex">
-            <view class="s-kemu-name">第{{index}}题</view>
+            <view class="s-kemu-name">第{{index + 1}}题</view>
           
             <view class="s-record">{{item}}</view>
           </view>

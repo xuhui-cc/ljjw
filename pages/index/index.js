@@ -343,7 +343,7 @@ Page({
             
 
           } 
-          else {
+          else if (that.data.nowWeekData[w][2]  <1) {
             console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
             var cs = "nowWeekData[" + w + "][2]"
 
@@ -380,8 +380,9 @@ Page({
                 }
                 
 
-              } else {
-                var cs = "weekData[" + w + "][" + e + "][2]"
+              } else if (that.data.nowWeekData[w][2] < 1) {
+                console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
+                var cs = "nowWeekData[" + w + "][2]"
 
                 that.setData({
                   [cs]: 0

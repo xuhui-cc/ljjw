@@ -3,7 +3,9 @@
 
     <!-- 导航栏 -->
   <view class="nabigation_bar">
-    <image class='back-img' src='../../images/back_img.png' bindtap='go_back'></image>
+    <view class="backimg_layout" bindtap="go_back">
+      <image class='back-img' src='../../images/back_img.png' ></image>
+    </view>
       <view class="bar-class">{{classname}}</view>
   </view>
   <!-- 导航栏结束 -->

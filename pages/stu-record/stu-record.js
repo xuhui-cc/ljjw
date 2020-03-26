@@ -143,6 +143,11 @@ Page({
 
     
   },
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
 
   init_one: function (xdata, ydata) {           //初始化第一个图表
     this.echartsComponnet.init((canvas, width, height) => {
@@ -195,16 +200,30 @@ Page({
           })
         }
         
-
-        for (var i = 0; i < that.data.score.score_data.length; i++) {
-          that.data.num.push(that.data.score.score_data[i].scores)
-          that.data.x_name.push(that.data.score.score_data[i].mock_name)
+        if(that.data.score != ''){
+          for (var i = 0; i < that.data.score.score_data.length; i++) {
+            that.data.num.push(that.data.score.score_data[i].scores)
+            that.data.x_name.push(that.data.score.score_data[i].mock_name)
+            // that.setData({
+            //   num: num,
+            //   x_name: x_name
+            // })
+            that.setData({
+              num: that.data.num,
+              x_name: that.data.x_name
+            })
+          }
+          this.echartsComponnet = this.selectComponent('#mychart-dom-line');
+          that.init_one(that.data.x_name, that.data.num)
+        } else {
           // that.setData({
-          //   num: num,
-          //   x_name: x_name
+          //   num: that.data.last_num,
+          //   x_name: that.data.last_name
           // })
+          // this.echartsComponnet = this.selectComponent('#mychart-dom-line');
+          // that.init_one(that.data.x_name, that.data.num)
         }
-        that.init_one(that.data.x_name, that.data.num)
+        
         // that.getData(); //获取数据
         console.log("总成绩获取成功")
       }
@@ -380,10 +399,16 @@ Page({
     let that = this
     var aud = e.currentTarget.dataset.aud
     that.setData({
+      last_num: that.data.num,
+      last_name: that.data.x_name
+    })
+    that.setData({
       aud: aud,
       num:[],
       x_name:[]
     })
+    
+    console.log(that.data.num,that.data.x_name)
     
     that.echartsComponnet = that.selectComponent('#mychart-dom-line');
     that.getOneOption();

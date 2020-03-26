@@ -11,11 +11,16 @@ page{
   z-index: 100;
 }
 .back-img{
-  margin-left: 30rpx;
-  margin-top: 120rpx;
-  margin-right: 57rpx;
+  margin-top: 118rpx;
   width: 27rpx;
   height: 27rpx;
+}
+.backimg_layout{
+  margin-left: 30rpx;
+  
+  margin-right: 57rpx;
+  width: 50rpx;
+  height: 50rpx;
 }
 .bar-class{
   margin-left: 30rpx;

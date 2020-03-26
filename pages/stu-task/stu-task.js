@@ -225,9 +225,13 @@ Page({
             
                 for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
                   // for (var k = 0; k < that.data.task[i].task_detail[j].cs.length; k++) {
-                  if (that.data.task[i].task_detail[j].classdate == that.data.task[i].task_detail[j + 1].classdate) {
-                    that.data.task[i].task_detail.splice(j, 1)
+                  var cs = j+1
+                  if (cs < that.data.task[i].task_detail.length){
+                    if (that.data.task[i].task_detail[j].classdate == that.data.task[i].task_detail[cs].classdate) {
+                      that.data.task[i].task_detail.splice(j, 1)
+                    }
                   }
+                  
                   // }
                
               

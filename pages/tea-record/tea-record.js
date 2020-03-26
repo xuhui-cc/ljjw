@@ -37,6 +37,7 @@ Page({
           totalscore: d.data.data,
           scorelist: d.data.data.splice(3),
         })
+        
         for(var i=0;i<that.data.scorelist.length;i++){
           var cs = "scorelist[" + i + "].fold"
           that.setData({
