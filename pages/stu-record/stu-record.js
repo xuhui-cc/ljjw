@@ -216,7 +216,7 @@ Page({
             score: d.data.data
           })
         }
-        if (that.data.score != ''){
+        if (that.data.aud == 1 && that.data.score != ''){
           if (that.data.score.score_info){
 
           

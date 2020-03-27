@@ -228,7 +228,8 @@ Page({
                   var cs = j+1
                   if (cs < that.data.task[i].task_detail.length){
                     if (that.data.task[i].task_detail[j].classdate == that.data.task[i].task_detail[cs].classdate) {
-                      that.data.task[i].task_detail.splice(j, 1)
+                      that.data.task[i].task_detail.splice(cs, 1)
+                      j = j-1
                     }
                   }
                   
@@ -728,13 +729,17 @@ Page({
     console.log(params)
     app.ljjw.jwStudentCheckonVerify(params).then(d => {
       console.log(d)
-      // if (d.data.status == 1) {
-      //   console.log(d.data.data)
-      //   that.setData({
-      //     stu_class: d.data.data
-      //   })
-      //   console.log("所有班级获取成功")
-      // }
+      if (d.data.status == 1) {
+        that.setData({
+          work_reject: false
+        })
+        wx.showToast({
+          title: '驳回成功',
+          duration:2000
+        })
+        that.un_task()
+        console.log("驳回成功")
+      }
 
 
     })
@@ -757,9 +762,10 @@ Page({
       app.ljjw.jwStudentTaskFinished(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-          console.log(d.data.data)
+          console.log(d.data.data + "d.data.data")
           that.setData({
-            task: d.data.data
+            task: d.data.data,
+            task1: d.data.data
           })
 
           for (var i = 0; i < that.data.task.length; i++) {
@@ -978,9 +984,72 @@ Page({
               console.log("==========================================imgs")
 
             }
+            else if (that.data.task[i].type == 4) {
+              for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+                // var cs = "leave[" + i + "].ask_info[" + j + "].pin"
+                var _cs = "task[" + i + "].task_detail[" + j + "].cs"
+                // var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
+                that.setData({
+                  // [cs]: hh,
+                  [_cs]: []
+                })
+                var date = that.data.task[i].task_detail[j].classdate
 
+                for (var k = 0; k < that.data.task1[i].task_detail.length; k++) {
+                  // if (that.data.leave[i].add_arr[k].date == '')
+
+                  if (date == that.data.task1[i].task_detail[k].classdate) {
+                    that.data.task[i].task_detail[j].cs.push([that.data.task1[i].task_detail[k].classtime, that.data.task1[i].task_detail[k].check_status])
+                  }
+                  else {
+
+
+                  }
+                }
+              }
+
+              that.setData({
+                task:that.data.task
+              })
+              console.log(that.data.task)
+              console.log("cs")
+
+
+              
+
+
+            }
+            
 
           }
+
+          for(var q=0;q<that.data.task.length;q++){
+            if (that.data.task[q].type == 4){
+              for (var n = 0; n < that.data.task[q].task_detail.length; n++) {
+                // for (var k = 0; k < that.data.task[i].task_detail[n].cs.length; k++) {
+                var cs = n + 1
+                if (cs < that.data.task[q].task_detail.length) {
+                  console.log(n, cs + "1")
+                  if (that.data.task[q].task_detail[n].classdate.indexOf(that.data.task[q].task_detail[cs].classdate) != -1) {
+                    console.log(n, cs + "2")
+                    that.data.task[q].task_detail.splice(cs, 1)
+                    n = n - 1
+                  }
+                }
+
+                // }
+
+
+              }
+            }
+            
+          }
+          
+          
+          that.setData({
+            task: that.data.task
+          })
+          console.log(that.data.task)
           console.log("学生任务已完成获取成功")
         }else{
           that.setData({

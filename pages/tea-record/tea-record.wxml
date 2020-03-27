@@ -12,31 +12,49 @@
   <view class="champ-layout" wx:if="{{totalscore != ''}}">
 
     <view class="flex">
-      <view class="champ-rank" data-rank='{{1}}' bindtap='click_rank'>
+      <view class="champ-rank" data-rank='{{1}}' bindtap='click_rank' wx:if="{{totalscore[1] != null}}">
         <image class="second-img" src="../../images/second.png"></image>
         <image class="runner-up-ava" style="{{click_rank == 1 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="{{totalscore[1].avatar}}"></image>
         <view class="runner-up-name" style="{{click_rank == 1 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[1].realname}}</view>
         <view wx:if="{{aud == 1 }}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].totalscore}}</view>
-        <view wx:elif="{{aud == 2}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].xc_score}}</view>
-        <view wx:else="{{aud == 3}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >{{totalscore[1].sl_score}}</view>
+        <view wx:elif="{{aud == 2}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >
+          <text wx:if="{{totalscore[1].xc_score != null}}">{{totalscore[1].xc_score}}</text>
+          <text wx:if="{{totalscore[1].xc_score == null}}">0</text>
+        </view>
+        <view wx:else="{{aud == 3}}" class="runner-up-record {{click_rank == 1 ? 'active': ''}}" >
+          <text wx:if="{{totalscore[1].sl_score != null}}">{{totalscore[1].sl_score}}</text>
+          <text wx:if="{{totalscore[1].sl_score == null}}">0</text>
+        </view>
       </view>
 
-      <view class="champ-rank" data-rank='{{0}}' bindtap='click_rank'>
+      <view class="champ-rank" data-rank='{{0}}' bindtap='click_rank' wx:if="{{totalscore[0] != null}}">
         <image class="first-img" src="../../images/first.png"></image>
         <image class="champion-ava" style="{{click_rank == 0 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="{{totalscore[0].avatar}}"></image>
         <view class="champion-name" style="{{click_rank == 0 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[0].realname}}</view>
         <view wx:if="{{aud == 1}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">{{totalscore[0].totalscore}}</view>
-        <view wx:elif="{{aud == 2}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">{{totalscore[0].xc_score}}</view>
-        <view wx:else="{{aud == 3}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">{{totalscore[0].sl_score}}</view>
+        <view wx:elif="{{aud == 2}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">
+          <text wx:if="{{totalscore[0].xc_score != null}}">{{totalscore[0].xc_score}}</text>
+          <text wx:if="{{totalscore[0].xc_score == null}}">0</text>
+        </view>
+        <view wx:else="{{aud == 3}}" class="champion-record {{click_rank == 0 ? 'active': ''}}">
+          <text wx:if="{{totalscore[0].sl_score != null}}">{{totalscore[0].sl_score}}</text>
+          <text wx:if="{{totalscore[0].sl_score == null}}">0</text>
+        </view>
       </view>
 
-      <view class="champ-rank" data-rank='{{2}}' bindtap='click_rank'>
+      <view class="champ-rank" data-rank='{{2}}' bindtap='click_rank' wx:if="{{totalscore[2] != null}}">
         <image class="third-img"  src="../../images/third.png"></image>
         <image class="third-ava" style="{{click_rank == 2 ? 'border:3rpx solid rgba(45,193,160,1);' : ''}}" src="{{totalscore[2].avatar}}"></image>
         <view class="third-name" style="{{click_rank == 2 ? 'color:rgba(45,193,160,1);' : ''}}">{{totalscore[2].realname}}</view>
         <view wx:if="{{aud == 1}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].totalscore}}</view>
-        <view wx:if="{{aud == 2}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].xc_score}}</view>
-        <view wx:if="{{aud == 3}}" class="third-record {{click_rank == 2 ? 'active': ''}}">{{totalscore[2].sl_score}}</view>
+        <view wx:if="{{aud == 2}}" class="third-record {{click_rank == 2 ? 'active': ''}}">
+          <text wx:if="{{totalscore[2].xc_score != null}}">{{totalscore[2].xc_score}}</text>
+          <text wx:if="{{totalscore[2].xc_score == null}}">0</text>
+        </view>
+        <view wx:if="{{aud == 3}}" class="third-record {{click_rank == 2 ? 'active': ''}}">
+          <text wx:if="{{totalscore[2].sl_score != null}}">{{totalscore[2].sl_score}}</text>
+          <text wx:if="{{totalscore[2].sl_score == null}}">0</text>
+        </view>
       </view>
     </view>
 
@@ -45,7 +63,7 @@
       <view class="record-detail-heng"></view>
       <view wx:if="{{aud == 2}}">
 
-        <view class="flex">
+        <view class="flex" wx:if="{{click_detail.xc_scoreinfo != null}}">
           <view class="kemu">科目</view>
           <view class="bingo">答对题目</view>
           <view class="bingo">分值</view>
@@ -96,7 +114,7 @@
 
       <view wx:if="{{aud == 3}}">
 
-      <view class="flex">
+      <view class="flex" wx:if="{{click_detail.sl_scoreinfo != null}}">
         <view class="s-kemu">科目</view>
         <view class="s-bingo">分值</view>
       </view>
@@ -126,8 +144,14 @@
         <image class="rank-ava" src="{{item.avatar}}"></image>
         <view class="rank-name">{{item.realname}}</view>
         <view wx:if="{{aud == 1}}" class="rank-record">{{item.totalscore}}</view>
-        <view wx:elif="{{aud == 2}}" class="rank-record">{{item.xc_score}}</view>
-        <view wx:else="{{aud == 3}}" class="rank-record">{{item.sl_score}}</view>
+        <view wx:elif="{{aud == 2}}" class="rank-record">
+          <text wx:if="{{item.xc_score == null}}">0</text>
+          <text wx:if="{{item.xc_score != null}}">{{item.xc_score}}</text>
+        </view>
+        <view wx:else="{{aud == 3}}" class="rank-record">
+          <text wx:if="{{item.sl_score == null}}">0</text>
+          <text wx:if="{{item.sl_score != null}}">{{item.sl_score}}</text>
+        </view>
         <image wx:if="{{item.fold}}" data-xb='{{index}}' class="rank-xl" src="../../images/xsj.png" bindtap='fold'></image>
         <image wx:else="" data-xb='{{index}}' class="rank-xl" src="../../images/ssj.png" bindtap='fold'></image>
       </view>
@@ -136,7 +160,7 @@
       <view wx:if="{{!item.fold}}">
         <view wx:if="{{aud == 2}}">
 
-          <view class="flex">
+          <view class="flex" wx:if="{{item.xc_scoreinfo != null}}">
             <view class="kemu">科目</view>
             <view class="bingo">答对题目</view>
             <view class="bingo">分值</view>
@@ -187,7 +211,7 @@
 
         <view wx:if="{{aud == 3}}">
 
-          <view class="flex">
+          <view class="flex" wx:if="{{item.sl_scoreinfo != null}}">
             <view class="s-kemu">科目</view>
             <view class="s-bingo">分值</view>
           </view>

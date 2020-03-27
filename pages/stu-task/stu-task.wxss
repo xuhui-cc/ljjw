@@ -196,9 +196,15 @@ page{
 .flex{
   display: flex;
 }
+.cs_for{
+  width: 650rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
 .flex_wrap{
   display: flex;
   flex-wrap: wrap;
+  
 }
 .ques-ori{
   margin-left: 31rpx;

@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    page :1,
+    ispage : false
   },
 
   /**
@@ -93,68 +94,175 @@ Page({
    */
   onPullDownRefresh: function () {
     let that = this
-    if(that.data.role == 4){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "page": 1
-      }
-      console.log(params)
-      app.ljjw.jwGetMorningReadMore(params).then(d => {
-        // console.log(d)
-        if (d.data.status == 1) {
-          // console.log(d.data.data)
-          that.setData({
-            morningRead: d.data.data
-          })
-
-          for (var i = 0; i < that.data.morningRead.length; i++) {
-            var cs = 'morningRead[' + i + '].pics'
-            that.setData({
-              [cs]: that.data.morningRead[i].pics.split(",")
-            })
-          }
-          that.setData({
-            csmorningRead: that.data.morningRead
-          })
-          console.log(that.data.morningRead)
-          console.log("学生每日晨读获取成功")
+    if(!that.data.ispage){
+      if (that.data.role == 4) {
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "page": 1
         }
-
-
-      })
-    }else if(that.data.role <= 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "page": 1,
-        "class_id":that.data.class_id
-      }
-      console.log(params)
-      app.ljjw.jwTeacherMorningReadMore(params).then(d => {
-        // console.log(d)
-        if (d.data.status == 1) {
-          // console.log(d.data.data)
-          that.setData({
-            morningRead: d.data.data
-          })
-
-          for (var i = 0; i < that.data.morningRead.length; i++) {
-            var cs = 'morningRead[' + i + '].pics'
+        console.log(params)
+        app.ljjw.jwGetMorningReadMore(params).then(d => {
+          // console.log(d)
+          if (d.data.status == 1) {
+            // console.log(d.data.data)
             that.setData({
-              [cs]: that.data.morningRead[i].pics.split(",")
+              morningRead: d.data.data
             })
+            that.setData({
+              ispage:true
+            })
+
+            for (var i = 0; i < that.data.morningRead.length; i++) {
+              var cs = 'morningRead[' + i + '].pics'
+              that.setData({
+                [cs]: that.data.morningRead[i].pics.split(",")
+              })
+            }
+            that.setData({
+              csmorningRead: that.data.morningRead
+            })
+            console.log(that.data.morningRead)
+            console.log("学生每日晨读获取成功")
           }
-          that.setData({
-            csmorningRead: that.data.morningRead
-          })
-          console.log(that.data.morningRead)
-          console.log("老师每日晨读获取成功")
+
+
+        })
+      } else if (that.data.role <= 2) {
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "page": 1,
+          "class_id": that.data.class_id
         }
+        console.log(params)
+        app.ljjw.jwTeacherMorningReadMore(params).then(d => {
+          // console.log(d)
+          if (d.data.status == 1) {
+            // console.log(d.data.data)
+            that.setData({
+              morningRead: d.data.data
+            })
+            that.setData({
+              ispage: true
+            })
+
+            for (var i = 0; i < that.data.morningRead.length; i++) {
+              var cs = 'morningRead[' + i + '].pics'
+              that.setData({
+                [cs]: that.data.morningRead[i].pics.split(",")
+              })
+            }
+            that.setData({
+              csmorningRead: that.data.morningRead
+            })
+            console.log(that.data.morningRead)
+            console.log("老师每日晨读获取成功")
+          }
 
 
-      })
+        })
+      }
     }
+    else{
+      if (that.data.page == 1) {
+        wx.showToast({
+          title: '已经是第一页咯~',
+          icon: "none",
+          duration: 2000
+        })
+      } else {
+        if (that.data.role == 4) {
+          var params = {
+            "token": wx.getStorageSync("token"),
+            "uid": wx.getStorageSync("uid"),
+            "page": that.data.page - 1
+          }
+          console.log(params)
+          app.ljjw.jwGetMorningReadMore(params).then(d => {
+            // console.log(d)
+            if (d.data.status == 1) {
+              if (d.data.data != '') {
+                that.setData({
+                  morningRead: d.data.data
+                })
+                that.setData({
+                  page: that.data.page - 1
+                })
+
+                for (var i = 0; i < that.data.morningRead.length; i++) {
+                  var cs = 'morningRead[' + i + '].pics'
+                  that.setData({
+                    [cs]: that.data.morningRead[i].pics.split(",")
+                  })
+                }
+                that.setData({
+                  csmorningRead: that.data.morningRead
+                })
+                console.log(that.data.morningRead)
+              } else {
+                wx.showToast({
+                  title: '到头咯~',
+                  icon: "none",
+                  duration: 2000
+                })
+              }
+              // console.log(d.data.data)
+
+              console.log("学生每日晨读获取成功")
+            }
+
+
+          })
+        } else if (that.data.role <= 2) {
+          var params = {
+            "token": wx.getStorageSync("token"),
+            "uid": wx.getStorageSync("uid"),
+            "page": that.data.page - 1,
+            "class_id": that.data.class_id
+          }
+          console.log(params)
+          app.ljjw.jwTeacherMorningReadMore(params).then(d => {
+            // console.log(d)
+            if (d.data.status == 1) {
+              if (d.data.data != "") {
+                that.setData({
+                  morningRead: d.data.data
+                })
+                that.setData({
+                  page: page - 1
+                })
+
+                for (var i = 0; i < that.data.morningRead.length; i++) {
+                  var cs = 'morningRead[' + i + '].pics'
+                  that.setData({
+                    [cs]: that.data.morningRead[i].pics.split(",")
+                  })
+                }
+                that.setData({
+                  csmorningRead: that.data.morningRead
+                })
+                console.log(that.data.morningRead)
+              }
+              else {
+                wx.showToast({
+                  title: '到头咯~',
+                  icon: "none",
+                  duration: 2000
+                })
+              }
+              // console.log(d.data.data)
+
+              console.log("老师每日晨读获取成功")
+            }
+
+
+          })
+        }
+      }
+      
+    }
+    
     
 
     wx.stopPullDownRefresh()//结束刷新
@@ -168,63 +276,89 @@ Page({
     // 显示加载图标
     wx.showLoading({
       title: '玩命加载中',
+      duration:2000
     })
     if(that.data.role == 4){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "page": 2
+        "page": that.data.page +1
       }
       console.log(params)
       app.ljjw.jwGetMorningReadMore(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-          that.setData({
-            morningRead: d.data.data
-          })
-
-          for (var i = 0; i < that.data.morningRead.length; i++) {
-            var cs = 'morningRead[' + i + '].pics'
+          if(d.data.data != ''){
             that.setData({
-              [cs]: that.data.morningRead[i].pics.split(",")
+              morningRead: d.data.data
+            })
+            that.setData({
+              page: that.data.page + 1
+            })
+
+            for (var i = 0; i < that.data.morningRead.length; i++) {
+              var cs = 'morningRead[' + i + '].pics'
+              that.setData({
+                [cs]: that.data.morningRead[i].pics.split(",")
+              })
+            }
+            that.setData({
+              csmorningRead: that.data.morningRead
+            })
+            console.log(that.data.morningRead)
+          }else{
+            console.log(d.data.data +"d.data.data")
+            wx.showToast({
+              title: '没有更多晨读咯~',
+              icon: "none",
+              duration: 2000
             })
           }
-          that.setData({
-            csmorningRead: that.data.morningRead
-          })
-          console.log(that.data.morningRead)
+          console.log(d.data.data + "d.data.data")
           console.log("学生每日晨读获取成功")
         }
 
         // 隐藏加载框
-        wx.hideLoading();
+        // wx.hideLoading();
       })
-    }else if(that.data.role == 1){
+    }else if(that.data.role  <= 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "page": 2,
+        "page": that.data.page +1,
         "class_id": that.data.class_id
       }
       console.log(params)
       app.ljjw.jwTeacherMorningReadMore(params).then(d => {
         // console.log(d)
         if (d.data.status == 1) {
-          // console.log(d.data.data)
-          that.setData({
-            morningRead: d.data.data
-          })
-
-          for (var i = 0; i < that.data.morningRead.length; i++) {
-            var cs = 'morningRead[' + i + '].pics'
+          if(d.data.data != ""){
+            // console.log(d.data.data)
             that.setData({
-              [cs]: that.data.morningRead[i].pics.split(",")
+              morningRead: d.data.data
+            })
+            that.setData({
+              page: page + 1
+            })
+
+            for (var i = 0; i < that.data.morningRead.length; i++) {
+              var cs = 'morningRead[' + i + '].pics'
+              that.setData({
+                [cs]: that.data.morningRead[i].pics.split(",")
+              })
+            }
+            that.setData({
+              csmorningRead: that.data.morningRead
+            })
+            console.log(that.data.morningRead)
+          }else{
+            wx.showToast({
+              title: '没有更多晨读咯~',
+              icon: "none",
+              duration: 2000
             })
           }
-          that.setData({
-            csmorningRead: that.data.morningRead
-          })
-          console.log(that.data.morningRead)
+          
           console.log("老师每日晨读获取成功")
           wx.hideLoading();
         }

@@ -70,32 +70,25 @@ Page({
     app.ljjw.jwTeacherScoreSubPage(params).then(d => {
       console.log(d)
       if (d.data.status == 1) {
-        // console.log(d.data.data)
+        
         if (that.data.aud == 2){
           console.log(d.data.data.length)
-
-          // that.setData({
-          //   total:d.data.data,
-          //   totalcs: d.data.data
-          // })
-          // console.log(that.data.total + 'total111')
-          // console.log(that.data.totalcs + 'totalcs')
-          
-          for(var i=0;i<d.data.data.length;i++){
-            if (d.data.data[i].xc_score == null){
-              that.setData({
-                totalscore: '',
-                scorelist: '',
-              })
-            }else{
-              // console.log(d.data.data + "222d.data.data")
-              that.setData({
-                totalscore: d.data.data,
-                scorelist: that.data.totalscore.splice(3),
-              })
-            }
-          }
-          if(that.data.totalscore != ''){
+          var length = d.data.data.length
+          var arr = d.data.data
+          var hh = 0
+          arr.forEach(function (value, index, array) {
+            if(array[index].xc_score == null){
+              hh += 1
+            }    //结果为true
+            
+          });
+          console.log(hh +"hh")
+          if (hh == length){
+            that.setData({
+                  totalscore: '',
+                  scorelist: '',
+                })
+          }else{
             var params = {
               "token": wx.getStorageSync("token"),
               "uid": wx.getStorageSync("uid"),
@@ -112,47 +105,114 @@ Page({
                   scorelist: d.data.data.splice(3),
                 })
 
-                
+
               }
 
 
             })
           }
-          // console.log(that.data.totalcs + 'totalcs')
-          // console.log(d.data.data + "data")
-          // console.log(that.data.totalscore + "total")
-          // console.log(d.data.data + "2")
+         console.log("老师获取行测")
           
         } 
         else if(that.data.aud == 3){
-          for (var i = 0; i < d.data.data.length; i++) {
-            if (d.data.data[i].sl_score == null) {
+          console.log(d.data.data.length)
+          var length = d.data.data.length
+          var arr = d.data.data
+          var hh = 0
+          arr.forEach(function (value, index, array) {
+            if (array[index].sl_score == null) {
+              hh += 1
+            }    //结果为true
+
+          });
+          console.log(hh + "hh")
+          if(hh == length){
               that.setData({
                 totalscore: '',
                 scorelist: '',
               })
-            }
-            else {
-              that.setData({
-                totalscore: d.data.data,
-                scorelist: that.data.totalscore.splice(3),
+          }else{
+                var params = {
+                "token": wx.getStorageSync("token"),
+                "uid": wx.getStorageSync("uid"),
+                "mid": that.data.mid,                   //that.data.mid,
+                "type": that.data.aud    //type=1总分type=2行测 type=3 申论
+              }
+              console.log(params)
+              app.ljjw.jwTeacherScoreSubPage(params).then(d => {
+                console.log(d)
+                if (d.data.status == 1) {
+                  console.log(d.data.data)
+                  that.setData({
+                    totalscore: d.data.data,
+                    scorelist: d.data.data.splice(3),
+                  })
+
+
+                }
+
+
               })
-            }
           }
+          // for (var i = 0; i < d.data.data.length; i++) {
+          //   if (d.data.data[i].sl_score == null) {
+          //     that.setData({
+          //       totalscore: '',
+          //       scorelist: '',
+          //     })
+          //   }
+          //   else {
+          //     var params = {
+          //       "token": wx.getStorageSync("token"),
+          //       "uid": wx.getStorageSync("uid"),
+          //       "mid": that.data.mid,                   //that.data.mid,
+          //       "type": that.data.aud    //type=1总分type=2行测 type=3 申论
+          //     }
+          //     console.log(params)
+          //     app.ljjw.jwTeacherScoreSubPage(params).then(d => {
+          //       console.log(d)
+          //       if (d.data.status == 1) {
+          //         console.log(d.data.data)
+          //         that.setData({
+          //           totalscore: d.data.data,
+          //           scorelist: d.data.data.splice(3),
+          //         })
+
+
+          //       }
+
+
+          //     })
+          //   }
+          // }
+          console.log("老师获取申论")
         } 
         else if(that.data.aud == 1){
-          console.log(d.data.data + "111d.data.data")
-          that.setData({
-            totalscore: d.data.data,
-            scorelist: that.data.totalscore.splice(3),
+          var params = {
+            "token": wx.getStorageSync("token"),
+            "uid": wx.getStorageSync("uid"),
+            "mid": that.data.mid,                   //that.data.mid,
+            "type": that.data.aud    //type=1总分type=2行测 type=3 申论
+          }
+          console.log(params)
+          app.ljjw.jwTeacherScoreSubPage(params).then(d => {
+            console.log(d)
+            if (d.data.status == 1) {
+              console.log(d.data.data)
+              that.setData({
+                totalscore: d.data.data,
+                scorelist: d.data.data.splice(3),
+              })
+
+
+            }
+
+
           })
         }
         console.log(that.data.totalscore)
         console.log(that.data.scorelist)
         
-        // that.setData({
-        //   click_detail: that.data.totalscore[that.data.click_rank]
-        // })
         
         for (var i = 0; i < that.data.scorelist.length; i++) {
           var cs = "scorelist[" + i + "].fold"
@@ -204,7 +264,7 @@ Page({
         //   })
         // }
         
-        console.log("老师成绩详情页获取成功")
+        console.log("老师总分获取成功")
       }
 
 

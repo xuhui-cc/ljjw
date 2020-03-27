@@ -280,6 +280,7 @@ page{
   margin-top: 19rpx;
   width:66rpx;
   height:66rpx;
+  border-radius: 50%;
 }
 .rank-name{
   margin-left: 22rpx;

@@ -56,14 +56,15 @@ page{
   opacity:1;
 }
 .rec-date{
-  margin-left: 37rpx;
+  margin-left: 22rpx;
   margin-top: 31rpx;
-  width:135rpx;
+  width:150rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
   font-weight:400;
   line-height:33rpx;
+  text-align: right;
   color:rgba(180,180,180,1);
   opacity:1;
 }

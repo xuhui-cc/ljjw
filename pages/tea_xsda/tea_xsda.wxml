@@ -124,18 +124,20 @@
         <view wx:if="{{!isfold}}">
           <view class="flex">
             <view>
-              <view class="sl-cj">{{item.sl_score}}</view>
+              <view class="sl-cj" wx:if="{{item.sl_score != null}}">{{item.sl_score}}</view>
+              <view class="sl-cj" wx:if="{{item.sl_score == null}}">0</view>
               <view class="km-sl">申论</view>
             </view>
             <view>
-              <view class="xc-cj">{{item.xc_score}}</view>
+              <view class="xc-cj" wx:if="{{item.xc_score != null}}">{{item.xc_score}}</view>
+              <view class="xc-cj" wx:if="{{item.xc_score == null}}">0</view>
               <view class="km-xc">行测</view>
             </view>
           </view>
           <view class="rec-heng"></view>
 
           <!-- 申论 -->
-          <view class="flex">
+          <view class="flex" wx:if="{{item.sl_scoreinfo != null}}">
             <view class="km-title">题表</view>
             <view class="rec_sl">分值</view>
           </view>
@@ -150,7 +152,7 @@
           <!-- 申论结束 -->
 
           <!-- 行测 -->
-          <view class="flex">
+          <view class="flex" wx:if="{{item.xc_scoreinfo != null}}">
             <view class="km-title">科目</view>
             <view class="ans">答对题目</view>
             <view class="rec">分值</view>
