@@ -73,6 +73,37 @@ Page({
 
           if (that.data.mydata.files){
             for (var i = 0; i < that.data.mydata.files.length; i++) {
+              if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1){
+                var form = "mydata.files[" + i + "].form"
+                that.setData({
+                  [form]: "doc"
+                })
+              } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1){
+                var form = "mydata.files[" + i + "].form"
+                that.setData({
+                  [form]: "pdf"
+                })
+              } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
+                var form = "mydata.files[" + i + "].form"
+                that.setData({
+                  [form]: "ppt"
+                })
+              }else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
+                var form = "mydata.files[" + i + "].form"
+                that.setData({
+                  [form]: "jpg"
+                })
+              } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
+                var form = "mydata.files[" + i + "].form"
+                that.setData({
+                  [form]: "png"
+                })
+              }else {
+                var form = "mydata.files[" + i + "].form"
+                that.setData({
+                  [form]: null
+                })
+              }
 
               var d = that.data.mydata.files[i].createtime.substr(10, 15)
 

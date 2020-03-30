@@ -239,6 +239,7 @@ Page({
 
   cs:function(){
     let that = this
+    if (that.data.stu_classlist){
     for (var i = 0; i < that.data.stu_classlist.length; i++) {
       var cs = "stu_classlist[" + i + "].class_num"
       var css = "stu_classlist[" + i + "].start"
@@ -261,6 +262,7 @@ Page({
       }
     }
     that.class_color()
+    }
   },
 
   dot: function () {
