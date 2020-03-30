@@ -48,6 +48,37 @@ Page({
         })
         if (that.data.files) {
           for (var i = 0; i < that.data.files.length; i++) {
+            if (that.data.files[i].fileurl.indexOf(".doc") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "doc"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".pdf") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "pdf"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".ppt") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "ppt"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".jpg") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "jpg"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".png") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "png"
+              })
+            } else {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: null
+              })
+            }
 
             var d = that.data.files[i].createtime.substr(10, 15)
 
@@ -76,11 +107,35 @@ Page({
     })
   },
 
+  previewImage: function () {
+    let that = this
+    // var file_xb = e.currentTarget.dataset.file_xb
+    console.log("cs")
+    var image = []
+
+    image.push(that.data.files[that.data.file_xb].fileurl)
+    // var imgs = that.data.mydata.files[file_xb].fileurl
+    wx.previewImage({
+      current: image[0],
+      urls: image
+    })
+
+  },
+
   open_file:function(e){
     let that = this
     var file_xb = e.currentTarget.dataset.file_xb
     console.log(file_xb)
     console.log(that.data.files[file_xb].fileurl)
+    that.setData({
+      file_xb: file_xb
+    })
+    console.log(file_xb)
+    // console.log(that.data.mydata.files[file_xb].fileurl)
+    if (that.data.files[file_xb].form.indexOf("png") != -1 || that.data.files[file_xb].form.indexOf("jpg") != -1) {
+      that.previewImage()
+      console.log("图")
+    } else {
     wx.downloadFile({
       url: that.data.files[file_xb].fileurl, //仅为示例，并非真实的资源
       success(res) {
@@ -109,6 +164,7 @@ Page({
       
 
     })
+    }
   },
 
   tea_class_picker: function (e) {

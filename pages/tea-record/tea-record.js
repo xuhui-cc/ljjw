@@ -325,6 +325,7 @@ Page({
       that.setData({
         click_detail: that.data.totalscore[that.data.click_rank]
       })
+      console.log(that.data.click_detail)
     }else{
       that.setData({
         click_detail: '',

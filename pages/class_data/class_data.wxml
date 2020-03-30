@@ -30,7 +30,11 @@
         <view class="data-heng"></view>
 
         <view class="flex" bindtap="open_file" data-file_xb="{{index}}">
-          <image class="pdf" src="../../images/pdf.png"></image>
+          <image class="pdf" wx:if="{{item.form == 'pdf'}}" src="../../images/pdf.png"></image>
+          <image class="pdf" wx:if="{{item.form == 'doc'}}" src="../../images/doc.png"></image>
+          <image class="pdf" wx:if="{{item.form == 'ppt'}}" src="../../images/ppt.png"></image>
+          <image class="pdf" wx:if="{{item.form == 'png'}}" src="../../images/png.png"></image>
+          <image class="pdf" wx:if="{{item.form == 'jpg'}}" src="../../images/jpg.png" ></image>
           <view>
             <view class="data-name">{{item.title}}</view>
             <view class="data-intro">{{item.intro}}</view>

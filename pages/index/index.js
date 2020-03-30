@@ -106,6 +106,7 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
+          console.log(that.data.dayCourse)
           for(var i=0;i<that.data.dayCourse.length;i++){
             var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
@@ -635,6 +636,7 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
+          console.log(that.data.dayCourse)
           for (var i = 0; i < that.data.dayCourse.length; i++) {
             var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
@@ -1192,6 +1194,7 @@ Page({
                 that.setData({
                   dayCourse: d.data.data
                 })
+                console.log(that.data.dayCourse)
                 for (var i = 0; i < that.data.dayCourse.length; i++) {
                   var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
                   var end = that.data.dayCourse[i].riqi + " " + end1
@@ -1442,6 +1445,7 @@ Page({
                 that.setData({
                   dayCourse: d.data.data
                 })
+                console.log(that.data.dayCourse)
                 for (var i = 0; i < that.data.dayCourse.length; i++) {
                   var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
                   var end = that.data.dayCourse[i].riqi + " " + end1
@@ -1735,6 +1739,7 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
+          console.log(that.data.dayCourse)
           for (var i = 0; i < that.data.dayCourse.length; i++) {
             var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1

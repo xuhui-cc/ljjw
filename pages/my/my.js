@@ -184,13 +184,34 @@ Page({
     })
   },
 
+  previewImage: function () {
+    let that = this
+    // var file_xb = e.currentTarget.dataset.file_xb
+    console.log("cs")
+    var image = []
+    
+    image.push(that.data.mydata.files[that.data.file_xb].fileurl)
+    // var imgs = that.data.mydata.files[file_xb].fileurl
+    wx.previewImage({
+      current: image[0],
+      urls: image
+    })
+
+  },
 
   // 打开文件
   open_file: function (e) {
     let that = this
     var file_xb = e.currentTarget.dataset.file_xb
+    that.setData({
+      file_xb:file_xb
+    })
     console.log(file_xb)
-    console.log(that.data.mydata.files[file_xb].fileurl)
+    // console.log(that.data.mydata.files[file_xb].fileurl)
+    if (that.data.mydata.files[file_xb].form.indexOf("png") != -1 || that.data.mydata.files[file_xb].form.indexOf("jpg") != -1){
+      that.previewImage()
+      console.log("图")
+    }else{
     wx.downloadFile({
       url: that.data.mydata.files[file_xb].fileurl, //仅为示例，并非真实的资源
       success(res) {
@@ -219,6 +240,7 @@ Page({
 
 
     })
+    }
   },
 
   // 学生查看基本信息
