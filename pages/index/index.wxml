@@ -18,8 +18,8 @@
   <view class="nabigation_bar">
    <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
    <view class="red_layout" wx:if="{{role ==2 || role == 3}}">
-    <text class="red_text">10</text>
-    <image class="red_dot" src="../../images/tip.png"></image>
+    <text wx:if="{{red_num > 0}}" class="red_text">{{red_num}}</text>
+    <image wx:if="{{red_num > 0}}" class="red_dot" src="../../images/tip.png"></image>
     
    </view>
    
@@ -71,7 +71,8 @@
               <view class="calendar-month-week" wx:else>
                   <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
                     <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    <text wx:else class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                    <text wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
                     <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
                     <view wx:if="{{item[2]}}" class="dot" ></view>
                     <view wx:else="" class="dot1" ></view>
@@ -145,7 +146,8 @@
               <view class="calendar-month-week" wx:else>
                   <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
                     <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    <text wx:else class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                    <text wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
                     <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
                     <view wx:if="{{item[2] == 1}}" class="dot" ></view>
                     <view wx:if="{{item[2] == 2}}" class="dot2" ></view>

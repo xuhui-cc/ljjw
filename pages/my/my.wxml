@@ -92,7 +92,7 @@
           </view>
           
         </view>
-
+ 
         <view class="data-heng"></view>
 
         <view class="flex" data-file_xb="{{index}}" bindtap="open_file">

@@ -165,7 +165,7 @@ Page({
         }
       })
     }
-    else if(that.data.role <= 3){
+    else if(that.data.role <= 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -204,9 +204,51 @@ Page({
           // console.log(that.data.tea_dayCourse)
         }
       })
+      if(that.data.role == 2){
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "type": 1
+        }
+        console.log(params)
+        app.ljjw.jwGetAskforleaveCount(params).then(d => {
+          // console.log(d.data.status)
+          if (d.data.status == 1) {
+            console.log("教务红点")
+            console.log(d.data.data)
+            that.setData({
+              red_num: d.data.data
+            })
+            console.log(that.data.red_num +"red_num")
+           
+            
+
+          }
+        })
+      }
 
       
     }else if(that.data.role == 3){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 2
+      }
+      console.log(params)
+      app.ljjw.jwGetAskforleaveCount(params).then(d => {
+        // console.log(d.data.status)
+        if (d.data.status == 1) {
+          console.log("教务红点")
+          console.log(d.data.data)
+          that.setData({
+            red_num: d.data.data
+          })
+          console.log(that.data.red_num + "red_num")
+
+
+
+        }
+      })
       if (that.data.type == 1){
         var params = {
           "token": wx.getStorageSync("token"),
@@ -951,6 +993,27 @@ Page({
             duration: 2000
           })
 
+          var params = {
+            "token": wx.getStorageSync("token"),
+            "uid": wx.getStorageSync("uid"),
+            "type": 2
+          }
+          console.log(params)
+          app.ljjw.jwGetAskforleaveCount(params).then(d => {
+            // console.log(d.data.status)
+            if (d.data.status == 1) {
+              console.log("教务红点")
+              console.log(d.data.data)
+              that.setData({
+                red_num: d.data.data
+              })
+              console.log(that.data.red_num + "red_num")
+
+
+
+            }
+          })
+
           that.admin_askfor()
         } 
         console.log("我是管理员请假通过")
@@ -970,6 +1033,27 @@ Page({
           wx.showToast({
             title: '操作成功',
             duration: 2000
+          })
+
+          var params = {
+            "token": wx.getStorageSync("token"),
+            "uid": wx.getStorageSync("uid"),
+            "type": 1
+          }
+          console.log(params)
+          app.ljjw.jwGetAskforleaveCount(params).then(d => {
+            // console.log(d.data.status)
+            if (d.data.status == 1) {
+              console.log("教务红点")
+              console.log(d.data.data)
+              that.setData({
+                red_num: d.data.data
+              })
+              console.log(that.data.red_num + "red_num")
+
+
+
+            }
           })
           
           that.jw_askfor()
@@ -1033,6 +1117,27 @@ Page({
             duration: 2000
           })
 
+          var params = {
+            "token": wx.getStorageSync("token"),
+            "uid": wx.getStorageSync("uid"),
+            "type": 2
+          }
+          console.log(params)
+          app.ljjw.jwGetAskforleaveCount(params).then(d => {
+            // console.log(d.data.status)
+            if (d.data.status == 1) {
+              console.log("教务红点")
+              console.log(d.data.data)
+              that.setData({
+                red_num: d.data.data
+              })
+              console.log(that.data.red_num + "red_num")
+
+
+
+            }
+          })
+
           that.admin_askfor()
           console.log("我是管理员请假驳回成功")
         }
@@ -1057,6 +1162,26 @@ Page({
            title: '驳回成功',
            duration:1500
          })
+          var params = {
+            "token": wx.getStorageSync("token"),
+            "uid": wx.getStorageSync("uid"),
+            "type": 1
+          }
+          console.log(params)
+          app.ljjw.jwGetAskforleaveCount(params).then(d => {
+            // console.log(d.data.status)
+            if (d.data.status == 1) {
+              console.log("教务红点")
+              console.log(d.data.data)
+              that.setData({
+                red_num: d.data.data
+              })
+              console.log(that.data.red_num + "red_num")
+
+
+
+            }
+          })
          that.jw_askfor()
           console.log("我是教务请假驳回成功")
         }
