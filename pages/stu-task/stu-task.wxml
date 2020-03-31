@@ -13,9 +13,9 @@
   
 
   <!-- 待完成 -->
-  <view wx:if="{{finish == 0}}">
+  <view wx:if="{{finish == 0}}" class="cs_layout">
     <view wx:for="{{task}}" wx:key="index" wx:for-index="task_index">
-
+    
       <!-- type==1 普通式 -->
       <view wx:if="{{item.type == 1}}">
         <view class="ques-layout">
@@ -200,7 +200,7 @@
   </view>
 
   <!-- 已完成 -->
-  <view wx:if="{{finish == 1}}">
+  <view wx:if="{{finish == 1}}" class="cs_layout">
 
    
     <view wx:for="{{task}}" wx:key="index" wx:for-index="task_index">

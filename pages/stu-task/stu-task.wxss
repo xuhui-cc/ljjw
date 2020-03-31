@@ -187,11 +187,15 @@ page{
   left: 35rpx; 
 }
 .ques-layout{
-  margin-top: 100rpx;
+  /* margin-top: 50rpx; */
   width:750rpx;
-  padding-bottom: 72rpx;
+  padding-bottom: 40rpx;
+  margin-bottom: 20rpx;
   background:rgba(255,255,255,1);
   opacity:1;
+}
+.cs_layout{
+  margin-top: 100rpx;
 }
 .flex{
   display: flex;

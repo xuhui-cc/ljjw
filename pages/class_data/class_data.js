@@ -196,6 +196,59 @@ Page({
         that.setData({
           mydata: d.data.data
         })
+        for (var i = 0; i < that.data.mydata.length; i++) {
+          if (that.data.mydata[i].fileurl.indexOf(".doc") != -1) {
+            var form = "mydata[" + i + "].form"
+            that.setData({
+              [form]: "doc"
+            })
+          } else if (that.data.mydata[i].fileurl.indexOf(".pdf") != -1) {
+            var form = "mydata[" + i + "].form"
+            that.setData({
+              [form]: "pdf"
+            })
+          } else if (that.data.mydata[i].fileurl.indexOf(".ppt") != -1) {
+            var form = "mydata[" + i + "].form"
+            that.setData({
+              [form]: "ppt"
+            })
+          } else if (that.data.mydata[i].fileurl.indexOf(".jpg") != -1) {
+            var form = "mydata[" + i + "].form"
+            that.setData({
+              [form]: "jpg"
+            })
+          } else if (that.data.mydata[i].fileurl.indexOf(".png") != -1) {
+            var form = "mydata[" + i + "].form"
+            that.setData({
+              [form]: "png"
+            })
+          } else {
+            var form = "mydata[" + i + "].form"
+            that.setData({
+              [form]: null
+            })
+          }
+          var d = that.data.mydata[i].col_time.substr(10, 15)
+
+          if (that.data.mydata[i].col_time.indexOf(that.data.today) != -1) {
+            var col_time = "今天" + d
+            console.log(col_time)
+            var cs = "mydata[" + i + "].col_time"
+            that.setData({
+              [cs]: col_time
+            })
+          }
+          if (that.data.mydata[i].col_time.indexOf(that.data.yestday) != -1) {
+            var col_time = "昨天" + d
+            console.log(col_time)
+            var cs = "mydata[" + i + "].col_time"
+            that.setData({
+              [cs]: col_time
+            })
+          }
+
+        }
+
         console.log("我的收藏搜索接口获取成功")
       } else {
         wx.showToast({

@@ -10,7 +10,7 @@
   <view class="flex">
     <view class="rearch-bg">
       <image class="rea-img" src="../../images/search_w.png"></image>
-      <input class="rea-cont" placeholder="请输入资料名称" bindinput='search'></input>
+      <input class="rea-cont" placeholder="请输入搜索内容名称" bindinput='search'></input>
     </view>
     <view class="cancel">取消</view>
   

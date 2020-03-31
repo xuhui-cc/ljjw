@@ -17,6 +17,12 @@
 
   <view class="nabigation_bar">
    <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
+   <view class="red_layout" wx:if="{{role ==2 || role == 3}}">
+    <text class="red_text">10</text>
+    <image class="red_dot" src="../../images/tip.png"></image>
+    
+   </view>
+   
    <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
    <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
   </view>

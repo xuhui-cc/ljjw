@@ -15,7 +15,7 @@ page{
   /* margin-left: 341rpx; */
   margin-top: 108rpx;
   width:530rpx;
-  height:48rpx;
+  /* height:48rpx; */
   font-size:34rpx;
   font-family:PingFang SC;
   font-weight:bold;
@@ -62,7 +62,9 @@ page{
   display: flex;
 }
 .flex_warp{
+  /* margin-top: 20rpx; */
   margin-left: 106rpx;
+  padding-bottom: 30rpx;
   display: flex;
   flex-wrap: wrap;
   width: 510rpx;
@@ -83,7 +85,7 @@ page{
   margin-left: 30rpx;
   margin-top: 18rpx;
   width:690rpx;
-  height:316rpx;
+  /* height:316rpx; */
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:14rpx;
@@ -100,8 +102,8 @@ page{
 .head{
   margin-left: 13rpx;
   margin-top: 24rpx;
-  /* width:270px; */
-  height:42rpx;
+  width:270px;
+  /* height:42rpx; */
   font-size:30rpx;
   font-family:PingFang SC;
   font-weight:bold;

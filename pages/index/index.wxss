@@ -18,6 +18,30 @@ page{
   opacity:1;
   z-index: 10;
 }
+.red_layout{
+  position: absolute;
+  margin-top: 100rpx;
+  margin-left: 115rpx;
+}
+.red_dot{
+  
+  width:35rpx;
+  height:25rpx;
+}
+.red_text{
+  margin-top: 8rpx;
+  margin-left: 2rpx;
+  position: absolute;
+  width:26rpx;
+  height:30rpx;
+  font-size:20rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:30rpx;
+  text-align: center;
+  color:rgba(255,255,255,1);
+  opacity:1;
+}
 .course_null{
   margin-top: 239rpx;
   margin-left: 219rpx;
@@ -1208,7 +1232,7 @@ page{
   margin-left: 16rpx;
   margin-top: 10rpx;
   
-  width:182rpx;
+  width:350rpx;
   height:37rpx;
   font-size:26rpx;
   font-family:PingFang SC;

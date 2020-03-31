@@ -146,6 +146,19 @@ Page({
     var file_xb = e.currentTarget.dataset.file_xb
     console.log(file_xb)
     console.log(that.data.mydata[file_xb].fileurl)
+    if (that.data.mydata[file_xb].fileurl.indexOf("png") != -1 || that.data.mydata[file_xb].fileurl.indexOf("jpg") != -1) {
+      var image = []
+
+      image.push(that.data.mydata[file_xb].fileurl)
+
+      // var imgs = that.data.mydata.files[file_xb].fileurl
+      wx.previewImage({
+        current: image[0],
+        urls: image
+      })
+      console.log("图")
+    } else {
+    
     wx.downloadFile({
       url: that.data.mydata[file_xb].fileurl, //仅为示例，并非真实的资源
       success(res) {
@@ -174,6 +187,7 @@ Page({
 
 
     })
+    }
   },
 
   /**
