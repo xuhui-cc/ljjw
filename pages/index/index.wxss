@@ -55,7 +55,7 @@ page{
   height:1624rpx;
   background:rgba(0,0,0,1);
   opacity:0.54;
-  z-index: 200;
+  z-index: 250;
 }
 .reject-layout{
   position: absolute;
@@ -198,7 +198,7 @@ page{
 .year{
   margin-left: 30rpx;
   margin-top: 17rpx;
-  width:108rpx;
+  width:120rpx;
   height:45rpx;
   font-size:32rpx;
   font-family:PingFang SC;
@@ -378,6 +378,14 @@ page{
   position: absolute;
   width:690rpx;
   height:157rpx;
+  background:#FFFFFF;
+  opacity:0.64;
+  border-radius:14rpx;
+}
+.mask1{
+  position: absolute;
+  width:690rpx;
+  height:223rpx;
   background:#FFFFFF;
   opacity:0.64;
   border-radius:14rpx;
@@ -1539,4 +1547,15 @@ page{
   margin-top: 599rpx;
   width:294rpx;
   height:329rpx;
+}
+.lea_null{
+  margin-left: 246rpx;
+  /* margin-top: 800rpx; */
+  width: 283rpx;
+  height: 350rpx;
+}
+.lea_lay_layout{
+  position: absolute;
+  margin-top: 600rpx;
+  margin-bottom: 700rpx;
 }

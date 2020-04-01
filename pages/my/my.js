@@ -70,6 +70,11 @@ Page({
             stu_class: d.data.data.classes
             
           })
+          if (that.data.mydata.status_text.indexOf("请完成您的基础信息") != -1){
+            wx.setStorageSync("stu_sta", false)
+          }else{
+            wx.setStorageSync("stu_sta", true)
+          }
 
           if (that.data.mydata.files){
             for (var i = 0; i < that.data.mydata.files.length; i++) {

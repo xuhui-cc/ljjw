@@ -31,6 +31,13 @@
   </view> -->
 
   <view wx:if="{{login && stu_info}}">
+    <view wx:if="{{!stu_class && !tea_class}}">
+      <image class='task-null' src='../../images/null.png'></image>
+    </view>
+    
+    <view wx:else="">
+    
+
     <view wx:if="{{role <= 2}}">
       <view wx:if="{{add}}">
         <image class="add-kuang" src="../../images/kuang.png"></image>
@@ -91,6 +98,8 @@
 
     <view wx:if="{{role == 3}}">
       <image class='task-null' src='../../images/null.png'></image>
+    </view>
+
   </view>
     
   

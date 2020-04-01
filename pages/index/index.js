@@ -30,6 +30,7 @@ Page({
   
   onLoad: function () {
     let that = this;
+    console.log(-1%2 , "取余")
     var role = wx.getStorageSync("role")
     
     if (!role) {
@@ -37,16 +38,25 @@ Page({
         role: -1,
         login: flase,
         uid: wx.getStorageSync("uid"),
-        userInfo : wx.getStorageSync("userInfo")
+        userInfo : wx.getStorageSync("userInfo"),
+        // stu_sta: wx.getStorageSync("stu_sta")
       })
     } else {
       that.setData({
         role: role,
         login: true,
         uid: wx.getStorageSync("uid"),
-        userInfo: wx.getStorageSync("userInfo")
+        userInfo: wx.getStorageSync("userInfo"),
+        
+        
       })
+      if(that.data.role == 4){
+        that.setData({
+          stu_sta: wx.getStorageSync("stu_sta")
+        })
+      }
     }
+    console.log(that.data.stu_sta + "that.data.stu_sta")
     console.log("onload")
     //获取当前年份和月份
     let nowTime = new Date();
@@ -106,17 +116,28 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
-          console.log(that.data.dayCourse)
+          // console.log(that.data.dayCourse)
           for(var i=0;i<that.data.dayCourse.length;i++){
             var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
-            // console.log(end + "=============end")
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 +"=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
             var aa = Date.parse(end)
-            // console.log(aa +"++++++==========aa")
+            var bb = Date.parse(iphone_cs)
+            console.log(bb +"++++++==========bb")
             
             var timestamp = Date.parse(new Date());
-            // console.log(timestamp + "now")
-            if (aa < timestamp){
+            console.log(aa  +"=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp){
               var comp = "dayCourse[" + i + "].comp"
               that.setData({
                 [comp]: false
@@ -131,6 +152,7 @@ Page({
             
           }
           console.log(that.data.dayCourse)
+          console.log("that.data.dayCourse ")
         }
       })
 
@@ -181,6 +203,42 @@ Page({
             tea_dayCourse: d.data.data.course_list,
             tea_courselist: d.data.data.day_list
           })
+
+          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+            var aa = Date.parse(end)
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
+
+            var timestamp = Date.parse(new Date());
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
+
           console.log(that.data.tea_dayCourse)
           for(var i=0;i<that.data.tea_courselist.length;i++){
             var newarray = [{
@@ -282,6 +340,7 @@ Page({
 
   cs:function(){
     let that = this
+    console.log(that.data.stu_classlist)
     if (that.data.stu_classlist){
     for (var i = 0; i < that.data.stu_classlist.length; i++) {
       var cs = "stu_classlist[" + i + "].class_num"
@@ -461,8 +520,12 @@ Page({
               [cs]: that.data.class_cs[q][1]
             })
 
-          } else {
-            // console.log("本周无课")
+          } else if (!that.data.nowWeekData[w][3]) {
+            var cs = "nowWeekData[" + w + "][3]"
+
+            that.setData({
+              [cs]: -1
+            })
           }
         }
       
@@ -477,15 +540,16 @@ Page({
           for (var e = 0; e < that.data.weekData[w].length; e++) {
             if (that.data.weekData[w][e][1] == "true") {
               if (that.data.class_cs[q][0] == that.data.weekData[w][e][0]) {
-                console.log(that.data.weekData[w][e][0])
+                console.log(that.data.weekData[w][e][0]  + "===================cs")
                 var cs = "weekData[" + w + "][" + e + "][3]"
-
                 that.setData({
                   [cs]: that.data.class_cs[q][1]
                 })
-
-              } else {
-                // console.log(that.data.weekData[w][e][0] + "无课")
+              } else if (!that.data.weekData[w][e][3]){
+                var cs = "weekData[" + w + "][" + e + "][3]"
+                that.setData({
+                  [cs]: -1
+                })
               }
             }
 
@@ -498,6 +562,9 @@ Page({
       
 
     }
+    that.setData({
+      weekData: that.data.weekData
+    })
   },
 
   
@@ -682,13 +749,24 @@ Page({
           for (var i = 0; i < that.data.dayCourse.length; i++) {
             var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
-            // console.log(end + "=============end")
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
             var aa = Date.parse(end)
-            // console.log(aa +"++++++==========aa")
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
 
             var timestamp = Date.parse(new Date());
-            // console.log(timestamp + "now")
-            if (aa < timestamp) {
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
               var comp = "dayCourse[" + i + "].comp"
               that.setData({
                 [comp]: false
@@ -703,6 +781,7 @@ Page({
 
           }
           console.log(that.data.dayCourse)
+          console.log("that.data.dayCourse ")
         }
       })
       var params = {
@@ -760,6 +839,44 @@ Page({
             tea_dayCourse: d.data.data.course_list,
             tea_courselist: d.data.data.day_list
           })
+
+          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+            var aa = Date.parse(end)
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
+
+            var timestamp = Date.parse(new Date());
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
+
+          console.log(that.data.tea_dayCourse)
+
           for (var i = 0; i < that.data.tea_courselist.length; i++) {
             var newarray = [{
               ym: that.data.tea_courselist[i].riqi.substr(0, 7),
@@ -1248,6 +1365,44 @@ Page({
             tea_dayCourse: d.data.data.course_list,
             tea_courselist: d.data.data.day_list
           })
+
+          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+            var aa = Date.parse(end)
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
+
+            var timestamp = Date.parse(new Date());
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
+
+          console.log(that.data.tea_dayCourse)
+
           for (var i = 0; i < that.data.tea_courselist.length; i++) {
             var newarray = [{
               ym: that.data.tea_courselist[i].riqi.substr(0, 7),
@@ -1323,13 +1478,24 @@ Page({
                 for (var i = 0; i < that.data.dayCourse.length; i++) {
                   var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
                   var end = that.data.dayCourse[i].riqi + " " + end1
-                  // console.log(end + "=============end")
+                  console.log(end + "=============end")
+                  var iphone1 = end.substr(0, 4)
+                  var iphone2 = end.substr(5, 2)
+                  var iphone3 = end.substr(8, 2)
+                  var iphone4 = end.substr(11, 5)
+                  console.log(iphone1 + "=============iphone1")
+                  console.log(iphone2 + "=============iphone2")
+                  console.log(iphone3 + "=============iphone3")
+                  console.log(iphone4 + "=============iphone4")
+                  var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
                   var aa = Date.parse(end)
-                  // console.log(aa +"++++++==========aa")
+                  var bb = Date.parse(iphone_cs)
+                  console.log(bb + "++++++==========bb")
 
                   var timestamp = Date.parse(new Date());
-                  // console.log(timestamp + "now")
-                  if (aa < timestamp) {
+                  console.log(aa + "=================aa")
+                  console.log(timestamp + "=======================now")
+                  if (bb < timestamp) {
                     var comp = "dayCourse[" + i + "].comp"
                     that.setData({
                       [comp]: false
@@ -1344,6 +1510,7 @@ Page({
 
                 }
                 console.log(that.data.dayCourse)
+                console.log("that.data.dayCourse ")
               }
             })
             that.setData({
@@ -1351,6 +1518,7 @@ Page({
             })
           }
           else {
+            console.log("222")
             wx.showToast({
               title: '上个月还没有安排哦~',
               icon: "none",
@@ -1459,27 +1627,13 @@ Page({
     if (that.data.showMonth == 12) {
       showYear = that.data.showYear + 1
       showMonth = 1
-      // that.setData({
-      //   showYear: that.data.showYear + 1,
-      //   showMonth: 1
-      // })
-      // that.getMonthData(that.data.showYear, that.data.showMonth);
+      
     } else {
       showYear = that.data.showYear
       showMonth = that.data.showMonth + 1
-      // that.setData({
-      //   showYear: that.data.showYear,
-      //   showMonth: that.data.showMonth + 1
-      // })
-      // var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth)
-      // that.setData({
-      //   show_month: showMonth
-      // })
+     
       showym = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth)
-      // that.setData({
-      //   showym: showym
-      // })
-      // that.getMonthData(that.data.showYear, that.data.showMonth);
+      
       showlast = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
     }
     if (that.data.role <= 3) {
@@ -1499,6 +1653,44 @@ Page({
             tea_dayCourse: d.data.data.course_list,
             tea_courselist: d.data.data.day_list
           })
+
+          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+            var aa = Date.parse(end)
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
+
+            var timestamp = Date.parse(new Date());
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
+
+          console.log(that.data.tea_dayCourse)
+
           for (var i = 0; i < that.data.tea_courselist.length; i++) {
             var newarray = [{
               ym: that.data.tea_courselist[i].riqi.substr(0, 7),
@@ -1524,95 +1716,210 @@ Page({
 
     }
     else if (that.data.role == 4 && that.data.type == 2) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "month": showym
-      }
-      console.log(params)
-      app.ljjw.jwGetMonthCourse(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d)
-          if (d.data.data.info != '') {
-            that.setData({
-              showYear: showYear,
-              showMonth: showMonth,
-              showlast: showlast,
-              showym: showym
-            })
-            that.getMonthData(that.data.showYear, that.data.showMonth);
-            that.setData({
-              stu_courselist: d.data.data.info,
-              stu_classlist: d.data.data.period_info
-            })
-            that.cs()
-            for (var i = 0; i < that.data.stu_courselist.length; i++) {
-              var newarray = [{
-                ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                d: that.data.stu_courselist[i].riqi.substr(8, 2)
-              }];
-              that.setData({
-                'dot_riqi': that.data.dot_riqi.concat(newarray)
-              });
-
-            }
-            console.log(that.data.dot_riqi)
-            // 日历点点
-            that.dot()
-            var params = {
-              "token": wx.getStorageSync("token"),
-              "uid": wx.getStorageSync("uid"),
-              "riqi": showlast
-            }
-            console.log(params)
-            app.ljjw.jwGetDayCourse(params).then(d => {
-              if (d.data.status == 1) {
-                that.setData({
-                  dayCourse: d.data.data
-                })
-                console.log(that.data.dayCourse)
-                for (var i = 0; i < that.data.dayCourse.length; i++) {
-                  var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
-                  var end = that.data.dayCourse[i].riqi + " " + end1
-                  // console.log(end + "=============end")
-                  var aa = Date.parse(end)
-                  // console.log(aa +"++++++==========aa")
-
-                  var timestamp = Date.parse(new Date());
-                  // console.log(timestamp + "now")
-                  if (aa < timestamp) {
-                    var comp = "dayCourse[" + i + "].comp"
-                    that.setData({
-                      [comp]: false
-                    })
-                  }
-                  else {
-                    var comp = "dayCourse[" + i + "].comp"
-                    that.setData({
-                      [comp]: true
-                    })
-                  }
-
-                }
-                console.log(that.data.dayCourse)
-              }
-            })
-            that.setData({
-              calendarfold: false
-            })
-          }
-          else {
-            wx.showToast({
-              title: '下个月还没有安排哦~',
-              icon: "none",
-              duration: 1500
-            })
-          }
-
-
-
+      console.log(showym, that.data.nowmonth,"hhhhh")
+      if (showym.indexOf(that.data.nowmonth) != -1){
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "month": showym
         }
-      })
+        console.log(params)
+        app.ljjw.jwGetMonthCourse(params).then(d => {
+          if (d.data.status == 1) {
+            console.log(d)
+            
+              that.setData({
+                showYear: showYear,
+                showMonth: showMonth,
+                showlast: showlast,
+                showym: showym
+              })
+              that.getMonthData(that.data.showYear, that.data.showMonth);
+              that.setData({
+                stu_courselist: d.data.data.info,
+                stu_classlist: d.data.data.period_info
+              })
+              console.log(that.data.stu_classlist + "[1]")
+              that.cs()
+              console.log("[cs,2]")
+              for (var i = 0; i < that.data.stu_courselist.length; i++) {
+                var newarray = [{
+                  ym: that.data.stu_courselist[i].riqi.substr(0, 7),
+                  d: that.data.stu_courselist[i].riqi.substr(8, 2)
+                }];
+                that.setData({
+                  'dot_riqi': that.data.dot_riqi.concat(newarray)
+                });
+
+              }
+              console.log("[3]")
+              console.log(that.data.dot_riqi)
+              // 日历点点
+              that.dot()
+              var params = {
+                "token": wx.getStorageSync("token"),
+                "uid": wx.getStorageSync("uid"),
+                "riqi": showlast
+              }
+              console.log(params)
+              app.ljjw.jwGetDayCourse(params).then(d => {
+                if (d.data.status == 1) {
+                  that.setData({
+                    dayCourse: d.data.data
+                  })
+                  console.log(that.data.dayCourse)
+                  for (var i = 0; i < that.data.dayCourse.length; i++) {
+                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+                    var end = that.data.dayCourse[i].riqi + " " + end1
+                    console.log(end + "=============end")
+                    var iphone1 = end.substr(0, 4)
+                    var iphone2 = end.substr(5, 2)
+                    var iphone3 = end.substr(8, 2)
+                    var iphone4 = end.substr(11, 5)
+                    console.log(iphone1 + "=============iphone1")
+                    console.log(iphone2 + "=============iphone2")
+                    console.log(iphone3 + "=============iphone3")
+                    console.log(iphone4 + "=============iphone4")
+                    var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+                    var aa = Date.parse(end)
+                    var bb = Date.parse(iphone_cs)
+                    console.log(bb + "++++++==========bb")
+
+                    var timestamp = Date.parse(new Date());
+                    console.log(aa + "=================aa")
+                    console.log(timestamp + "=======================now")
+                    if (bb < timestamp) {
+                      var comp = "dayCourse[" + i + "].comp"
+                      that.setData({
+                        [comp]: false
+                      })
+                    }
+                    else {
+                      var comp = "dayCourse[" + i + "].comp"
+                      that.setData({
+                        [comp]: true
+                      })
+                    }
+
+                  }
+                  console.log(that.data.dayCourse)
+                  console.log("that.data.dayCourse ")
+                }
+              })
+              that.setData({
+                calendarfold: false
+              })
+
+          }
+        })
+      }else{
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "month": showym
+        }
+        console.log(params)
+        app.ljjw.jwGetMonthCourse(params).then(d => {
+          if (d.data.status == 1) {
+            console.log(d)
+            if (d.data.data.info != '') {
+              that.setData({
+                showYear: showYear,
+                showMonth: showMonth,
+                showlast: showlast,
+                showym: showym
+              })
+              that.getMonthData(that.data.showYear, that.data.showMonth);
+              that.setData({
+                stu_courselist: d.data.data.info,
+                stu_classlist: d.data.data.period_info
+              })
+              that.cs()
+              for (var i = 0; i < that.data.stu_courselist.length; i++) {
+                var newarray = [{
+                  ym: that.data.stu_courselist[i].riqi.substr(0, 7),
+                  d: that.data.stu_courselist[i].riqi.substr(8, 2)
+                }];
+                that.setData({
+                  'dot_riqi': that.data.dot_riqi.concat(newarray)
+                });
+
+              }
+              console.log(that.data.dot_riqi)
+              // 日历点点
+              that.dot()
+              var params = {
+                "token": wx.getStorageSync("token"),
+                "uid": wx.getStorageSync("uid"),
+                "riqi": showlast
+              }
+              console.log(params)
+              app.ljjw.jwGetDayCourse(params).then(d => {
+                if (d.data.status == 1) {
+                  that.setData({
+                    dayCourse: d.data.data
+                  })
+                  console.log(that.data.dayCourse)
+                  for (var i = 0; i < that.data.dayCourse.length; i++) {
+                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+                    var end = that.data.dayCourse[i].riqi + " " + end1
+                    console.log(end + "=============end")
+                    var iphone1 = end.substr(0, 4)
+                    var iphone2 = end.substr(5, 2)
+                    var iphone3 = end.substr(8, 2)
+                    var iphone4 = end.substr(11, 5)
+                    console.log(iphone1 + "=============iphone1")
+                    console.log(iphone2 + "=============iphone2")
+                    console.log(iphone3 + "=============iphone3")
+                    console.log(iphone4 + "=============iphone4")
+                    var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+                    var aa = Date.parse(end)
+                    var bb = Date.parse(iphone_cs)
+                    console.log(bb + "++++++==========bb")
+
+                    var timestamp = Date.parse(new Date());
+                    console.log(aa + "=================aa")
+                    console.log(timestamp + "=======================now")
+                    if (bb < timestamp) {
+                      var comp = "dayCourse[" + i + "].comp"
+                      that.setData({
+                        [comp]: false
+                      })
+                    }
+                    else {
+                      var comp = "dayCourse[" + i + "].comp"
+                      that.setData({
+                        [comp]: true
+                      })
+                    }
+
+                  }
+                  console.log(that.data.dayCourse)
+                  console.log("that.data.dayCourse ")
+                }
+              })
+              that.setData({
+                calendarfold: false
+              })
+            }
+            else {
+              console.log("下月2")
+              wx.showToast({
+                
+                title: '下个月还没有安排哦~',
+                icon: "none",
+                duration: 1500
+              })
+            }
+
+
+
+          }
+        })
+      }
+      
+      
+      
     }
     else if (that.data.role == 4 && that.data.type == 3) {
       var params = {
@@ -1624,7 +1931,7 @@ Page({
       app.ljjw.jwGetMonthCheckon(params).then(d => {
         if (d.data.status == 1) {
           console.log(d)
-          if (d.data.data != '') {
+          if (d.data.data) {
             if (d.data.data.info != '') {
               that.setData({
                 showYear: showYear,
@@ -1868,13 +2175,24 @@ Page({
           for (var i = 0; i < that.data.dayCourse.length; i++) {
             var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
-            // console.log(end + "=============end")
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
             var aa = Date.parse(end)
-            // console.log(aa +"++++++==========aa")
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
 
             var timestamp = Date.parse(new Date());
-            // console.log(timestamp + "now")
-            if (aa < timestamp) {
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
               var comp = "dayCourse[" + i + "].comp"
               that.setData({
                 [comp]: false
@@ -1889,6 +2207,7 @@ Page({
 
           }
           console.log(that.data.dayCourse)
+          console.log("that.data.dayCourse ")
         }
 
       })
@@ -1929,6 +2248,42 @@ Page({
           that.setData({
             tea_dayCourse: d.data.data.course_list
           })
+          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+            var aa = Date.parse(end)
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
+
+            var timestamp = Date.parse(new Date());
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
+
+          console.log(that.data.tea_dayCourse)
           console.log(that.data.tea_dayCourse)
         }
       })
@@ -1989,6 +2344,42 @@ Page({
           that.setData({
             tea_dayCourse: d.data.data.course_list
           })
+          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            console.log(end + "=============end")
+            var iphone1 = end.substr(0, 4)
+            var iphone2 = end.substr(5, 2)
+            var iphone3 = end.substr(8, 2)
+            var iphone4 = end.substr(11, 5)
+            console.log(iphone1 + "=============iphone1")
+            console.log(iphone2 + "=============iphone2")
+            console.log(iphone3 + "=============iphone3")
+            console.log(iphone4 + "=============iphone4")
+            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+            var aa = Date.parse(end)
+            var bb = Date.parse(iphone_cs)
+            console.log(bb + "++++++==========bb")
+
+            var timestamp = Date.parse(new Date());
+            console.log(aa + "=================aa")
+            console.log(timestamp + "=======================now")
+            if (bb < timestamp) {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: false
+              })
+            }
+            else {
+              var comp = "tea_dayCourse[" + i + "].comp"
+              that.setData({
+                [comp]: true
+              })
+            }
+
+          }
+
+          console.log(that.data.tea_dayCourse)
           console.log(that.data.tea_dayCourse)
         }
       })

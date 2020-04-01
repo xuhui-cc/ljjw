@@ -56,9 +56,14 @@
               <!-- 完整的当月数据 -->
               <view class="calendar-month" wx:if="{{!calendarfold}}">
                 <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    <view wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                  <view catchtap="{{item[1] == 'true'? 'clickDay' : ''}}" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" >{{item[0]}}</view>
+                    <view wx:elif="{{item[1] == 'true'}}">
+                      <!-- <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
+                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view> -->
+                      <view class="day">{{item[0]}}</view>
+                    
+                    </view>
                     <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
                   
                     <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
@@ -69,9 +74,13 @@
               </view>
               <!-- 本周数据 -->
               <view class="calendar-month-week" wx:else>
-                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    <text wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                  <view catchtap="{{item[1] == 'true'? 'clickDay' : ''}}" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" >{{item[0]}}</view>
+                    <view wx:elif="{{item[1] == 'true'}}">
+                      <!-- <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
+                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view> -->
+                      <view class="day">{{item[0]}}</view>
+                    </view>
                     <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
                     <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
                     <view wx:if="{{item[2]}}" class="dot" ></view>
@@ -132,7 +141,11 @@
                 <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
                   <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
                     <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    <view wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <view wx:elif="{{item[1] == 'true'}}">
+                      <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
+                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    
+                    </view>
                     <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
                   
                     <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
@@ -146,7 +159,10 @@
               <view class="calendar-month-week" wx:else>
                   <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
                     <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    <text wx:elif="{{item[1] == 'true'}}" class="day" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</text>
+                    <view wx:elif="{{item[1] == 'true'}}">
+                      <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
+                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    </view>
                     <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
                     <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
                     <view wx:if="{{item[2] == 1}}" class="dot" ></view>
@@ -196,14 +212,23 @@
 
       <!-- 请假页 -->
       <view wx:if="{{type == 1}}">
+        
+        
 
+
+        
         <view class="aud_cs">
           <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
           <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
         </view>
 
         <view wx:if="{{aud == 0}}">
-          <view class="leave-layout2">
+
+          <view wx:if="{{!leave}}" class="lea_lay_layout">
+            <image class='lea_null' src='../../images/course_null.png'></image>
+          </view>
+
+          <view class="leave-layout2" wx:else="">
             <view wx:for="{{leave}}" wx:key="index">
               <view class="leave">
                 <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
@@ -226,7 +251,7 @@
           </view>
 
           <!-- 新建 -->
-          <view class="add-btn" bindtap="stu_add_leave">
+          <view wx:if="{{stu_sta == 'true'}}" class="add-btn" bindtap="stu_add_leave">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
@@ -235,7 +260,12 @@
         <!-- aud==0 结束 -->
 
         <view wx:if="{{aud == 1}}">
-          <view class="leave-layout2">
+
+          <view wx:if="{{!leave}}" class="lea_lay_layout">
+            <image class='lea_null' src='../../images/course_null.png'></image>
+          </view>
+
+          <view class="leave-layout2" wx:else="">
             <view wx:for="{{leave}}" wx:key="index" wx:for-key="item_index">
               <view class="auded-leave">
                 <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
@@ -301,12 +331,14 @@
           </view>
 
           <!-- 新建 -->
-          <view class="add-btn" bindtap="stu_add_leave">
+          <view wx:if="{{stu_sta == 'true'}}" class="add-btn" bindtap="stu_add_leave">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
         
         </view>
+
+        
          
             
         
@@ -384,11 +416,13 @@
       <view wx:if="{{type == 2}}" class="cs_layout">
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
+            <view  class="mask1" wx:if="{{!item.comp}}"></view>
             <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
               <view class="t-call" wx:if="{{item.cancheckon == 1}}">去点名</view>
               <image class="t-call-img" src="../../images/gjt.png"></image>
             </view>
             <view class="t-info">
+              
               <image class="t-ava" src="{{item.avatar}}"></image>
               <view class="t-name">老师：{{item.teachername}}</view>
               <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>

@@ -143,6 +143,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
+      "class_id": that.data.stu_class[that.data.stu_class_index].class_id
     }
     console.log(params)
     app.ljjw.jwGetStudentTaskMain(params).then(d => {
@@ -166,7 +167,9 @@ Page({
         })
         console.log(that.data.stu_class)
         console.log(that.data.csmorningRead)
-        console.log("学生任务首页获取成功")
+        console.log("学生任务首页换班获取成功")
+      }else{
+        console.log(d.data.msg)
       }
 
 
@@ -188,9 +191,36 @@ Page({
   },
 
   tea_class_picker: function (e) {
+    let that = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       tea_class_index: e.detail.value
+    })
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "class_id": that.data.tea_class[that.data.tea_class_index].id
+    }
+    console.log(params)
+    app.ljjw.jwTeacherTasksMainPage(params).then(d => {
+
+      if (d.data.status == 1) {
+        that.setData({
+          message: d.data.data.messages,
+          morning: d.data.data.morning_read,
+          tea_class: d.data.data.classes
+        })
+        that.data.morning.pics = that.data.morning.pics.split(",")
+
+
+
+        that.setData({
+          csmorningRead: that.data.morning,
+          // new_message: that.data.message
+        })
+      }
+
+      console.log("我是老师任务onLoad")
     })
   },
 
