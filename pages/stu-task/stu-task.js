@@ -20,6 +20,10 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+    var class_id = options.class_id
+    that.setData({
+      class_id : class_id
+    })
     that.un_task()
   },
 
@@ -62,6 +66,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
+      "class_id":that.data.class_id
     }
     console.log(params)
     app.ljjw.jwStudentTaskNotFinished(params).then(d => {
@@ -280,7 +285,7 @@ Page({
       })
     }else{
       that.setData({
-        type3_content: '请填写'
+        type3_content: ''
       })
     }
     
@@ -776,6 +781,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
+        "class_id":that.data.class_id
       }
       console.log(params)
       app.ljjw.jwStudentTaskFinished(params).then(d => {

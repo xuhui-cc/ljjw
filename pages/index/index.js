@@ -1321,31 +1321,16 @@ Page({
       showYear = that.data.showYear - 1
       console.log(showYear)
       showMonth = 12
-      // that.setData({
-      //   showYear: that.data.showYear - 1,
-      //   showMonth: 12
-      // })
-      // that.getMonthData(that.data.showYear, that.data.showMonth);
+      
     }else{
       
       showYear = that.data.showYear
       console.log(showYear)
       showMonth = that.data.showMonth - 1
     }
-      // that.setData({
-      //   showYear: that.data.showYear ,
-      //   showMonth: that.data.showMonth - 1
-      // })
-      // var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth)
-      // that.setData({
-      //   show_month: showMonth
-      // })
-      
+
       showym = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth)
-    //   that.setData({
-    //     showym: showym
-    //   })
-    //   that.getMonthData(that.data.showYear, that.data.showMonth);
+
       showlast = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
     
     if(that.data.role <= 3){
@@ -1365,6 +1350,91 @@ Page({
             tea_dayCourse: d.data.data.course_list,
             tea_courselist: d.data.data.day_list
           })
+          if(that.data.tea_courselist == ''){
+            wx.showToast({
+              title: '上个月还没有安排哦~',
+              icon: "none",
+              duration: 12000
+            })
+            var params = {
+              "token": wx.getStorageSync("token"),
+              "uid": wx.getStorageSync("uid"),
+              "riqi": that.data.nowDate
+            }
+            console.log(params)
+            app.ljjw.jwGetCheckOnList(params).then(d => {
+              // console.log(d.data.status)
+              if (d.data.status == 1) {
+                console.log("或教务")
+                console.log(d.data.data)
+                that.setData({
+                  tea_dayCourse: d.data.data.course_list,
+                  tea_courselist: d.data.data.day_list
+                })
+                
+                for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+                  var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+                  var end = that.data.tea_dayCourse[i].riqi + " " + end1
+                  console.log(end + "=============end")
+                  var iphone1 = end.substr(0, 4)
+                  var iphone2 = end.substr(5, 2)
+                  var iphone3 = end.substr(8, 2)
+                  var iphone4 = end.substr(11, 5)
+                  console.log(iphone1 + "=============iphone1")
+                  console.log(iphone2 + "=============iphone2")
+                  console.log(iphone3 + "=============iphone3")
+                  console.log(iphone4 + "=============iphone4")
+                  var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+                  var aa = Date.parse(end)
+                  var bb = Date.parse(iphone_cs)
+                  console.log(bb + "++++++==========bb")
+
+                  var timestamp = Date.parse(new Date());
+                  console.log(aa + "=================aa")
+                  console.log(timestamp + "=======================now")
+                  if (bb < timestamp) {
+                    var comp = "tea_dayCourse[" + i + "].comp"
+                    that.setData({
+                      [comp]: false
+                    })
+                  }
+                  else {
+                    var comp = "tea_dayCourse[" + i + "].comp"
+                    that.setData({
+                      [comp]: true
+                    })
+                  }
+
+                }
+
+                console.log(that.data.tea_dayCourse)
+
+                for (var i = 0; i < that.data.tea_courselist.length; i++) {
+                  var newarray = [{
+                    ym: that.data.tea_courselist[i].riqi.substr(0, 7),
+                    d: that.data.tea_courselist[i].riqi.substr(8, 2)
+                  }];
+                  that.setData({
+                    'dot_riqi': that.data.dot_riqi.concat(newarray)
+                  });
+
+                }
+                console.log(that.data.dot_riqi)
+
+                // 日历点点
+                that.dot()
+
+
+
+
+
+                // console.log(that.data.tea_dayCourse)
+              }
+            })
+
+          }else{
+
+         
 
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
             var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
@@ -1423,6 +1493,7 @@ Page({
 
 
           // console.log(that.data.tea_dayCourse)
+        }
         }
       })
 
@@ -2171,7 +2242,7 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
-          console.log(that.data.dayCourse)
+          // console.log(that.data.dayCourse)
           for (var i = 0; i < that.data.dayCourse.length; i++) {
             var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
@@ -2535,7 +2606,7 @@ Page({
 
 
   onShow() {
-  
+    let that = this
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       console.log('index_onshow')
@@ -2547,7 +2618,51 @@ Page({
       console.log('未执行')
     }
 
-    let that = this
+    if(that.data.role == 2){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1  //type=1 教务
+      }
+      console.log(params)
+      app.ljjw.jwGetAskforleaveCount(params).then(d => {
+        // console.log(d.data.status)
+        if (d.data.status == 1) {
+          console.log("教务红点")
+          console.log(d.data.data)
+          that.setData({
+            red_num: d.data.data
+          })
+          console.log(that.data.red_num + "red_num")
+
+
+
+        }
+      })
+    } else if (that.data.role == 3){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 2   //type=2 管理员
+      }
+      console.log(params)
+      app.ljjw.jwGetAskforleaveCount(params).then(d => {
+        // console.log(d.data.status)
+        if (d.data.status == 1) {
+          console.log("管理员红点")
+          console.log(d.data.data)
+          that.setData({
+            red_num: d.data.data
+          })
+          console.log(that.data.red_num + "red_num")
+
+
+
+        }
+      })
+    }
+
+    
     if (that.data.type == 1){
       var params = {
         "token": wx.getStorageSync("token"),

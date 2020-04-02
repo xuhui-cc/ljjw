@@ -7,10 +7,10 @@
     <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" >
       <image wx:if="{{tea_class}}" class="bar-img" src="../../images/wxsj.png"></image>
     </picker>
-    <picker mode='selector' wx:if="{{stu_class}}" bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
-      <view class="bar-class">{{stu_class[stu_class_index].name}}</view>
+    <picker mode='selector' wx:if="{{stu_class}}" bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
+      <view class="bar-class">{{stu_class[stu_class_index].classname}}</view>
     </picker>
-    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
+    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
       <image wx:if="{{stu_class}}" class="bar-img" src="../../images/wxsj.png"></image>
     </picker>
   </view>

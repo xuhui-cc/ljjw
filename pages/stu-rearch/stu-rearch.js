@@ -39,6 +39,19 @@ Page({
     })
   },
 
+  previewImg: function (e) {
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    // var dxb = e.currentTarget.dataset.dxb
+    // console.log(dxb)
+    var imgs = that.data.csmorningRead[0].pics
+    wx.previewImage({
+      current: that.data.csmorningRead[0].pics[xb],
+      urls: imgs
+    })
+
+  },
+
   search: function (e) {
     let that = this
     console.log(e.detail.value)

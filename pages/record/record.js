@@ -169,6 +169,45 @@ Page({
     else {
       console.log('未执行')
     }
+    if (that.data.role == 4) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwGetStudentScore(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          console.log(d.data.data)
+          that.setData({
+            stu_score: d.data.data.list,
+            stu_class: d.data.data.classes
+          })
+          console.log("学生成绩获取成功")
+        }
+
+
+      })
+    } else if (that.data.role <= 2) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+      }
+      console.log(params)
+      app.ljjw.jwTeacherScoreMainPage(params).then(d => {
+        console.log(d)
+        if (d.data.status == 1) {
+          console.log(d.data.data)
+          that.setData({
+            tea_class: d.data.data.classes,
+            tea_mock_list: d.data.data.mock_list
+          })
+          console.log("老师成绩首页获取成功")
+        }
+
+
+      })
+    }
   },
 
   /**

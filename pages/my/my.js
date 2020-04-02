@@ -70,6 +70,7 @@ Page({
             stu_class: d.data.data.classes
             
           })
+          console.log(that.data.mydata)
           if (that.data.mydata.status_text.indexOf("请完成您的基础信息") != -1){
             wx.setStorageSync("stu_sta", false)
           }else{
@@ -169,10 +170,12 @@ Page({
     that.setData({
       stu_class_index: e.detail.value
     })
+    console.log(that.data.stu_class)
+    console.log(that.data.stu_class[that.data.stu_class_index].id)
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "class_id": that.data.stu_class[that.data.stu_class_index].id
+      "class_id": that.data.stu_class[that.data.stu_class_index].class_id
     }
     console.log(params)
     app.ljjw.jwGetStudentMainPage(params).then(d => {
@@ -182,6 +185,62 @@ Page({
           
 
         })
+        if (that.data.mydata.files) {
+          for (var i = 0; i < that.data.mydata.files.length; i++) {
+            if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "doc"
+              })
+            } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "pdf"
+              })
+            } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "ppt"
+              })
+            } else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "jpg"
+              })
+            } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "png"
+              })
+            } else {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: null
+              })
+            }
+
+            var d = that.data.mydata.files[i].createtime.substr(10, 15)
+
+            if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
+              var createtime = "今天" + d
+              console.log(createtime)
+              var cs = "mydata.files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+            if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
+              var createtime = "昨天" + d
+              console.log(createtime)
+              var cs = "mydata.files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+
+          }
+        }
+        console.log(that.data.mydata)
         console.log("学生（班级切换）——我的主页接口获取成功")
       }
 
@@ -302,6 +361,7 @@ Page({
     var file_xb = e.currentTarget.dataset.file_xb
     console.log(file_xb)
     console.log(that.data.mydata.files[file_xb].id)
+    console.log(that.data.mydata.files[file_xb].colid   +"是否收藏id")
     if (that.data.mydata.files[file_xb].colid == null){
       type = 1
     }
@@ -318,6 +378,7 @@ Page({
     }
     console.log(params)
     app.ljjw.jwStudentAddCollection(params).then(d => {
+      console.log(d.data.status +"d.data.status")
       if (d.data.status == 1) {
         console.log(d.data.msg)
         that.onLoad();
@@ -349,6 +410,7 @@ Page({
     else {
       console.log('未执行')
     }
+    
   },
 
   /**

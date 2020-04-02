@@ -67,17 +67,19 @@
       <view class="my-collect">班级资料</view>
       <image class="search-img" src="../../images/search.png" bindtap="to_stu_rea"></image>
       <view class="search" bindtap="to_stu_rea">搜索</view>
-      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}" range-key="{{'name'}}">
-        <view class="class-name">{{stu_class[stu_class_index].name}}</view>
+      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}" range-key="{{'classname'}}">
+        <view class="class-name">{{stu_class[stu_class_index].classname}}</view>
       </picker>
-      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}" range-key="{{'name'}}">
+      <picker bindchange="stu_class_picker" value="{{stu_class_index}}" range="{{stu_class}}" range-key="{{'classname'}}">
         <image class="class-xl" src="../../images/xsj.png"></image>
       </picker>
     </view>
 
     <image wx:if="{{mydata.files == ''}}" class="file_null" src="../../images/file_null.png"></image>
 
-    <view wx:for="{{mydata.files}}" wx:key="index">
+    <view class="clo_layout">
+
+    <view wx:for="{{mydata.files}}" wx:key="index" >
       <view class="data-layout">
         <view class="flex">
           <view class="data-tea">来自：{{item.createuser}}老师</view>
@@ -108,6 +110,8 @@
         </view>
 
       </view>
+    </view>
+    
     </view>
 
   </view>

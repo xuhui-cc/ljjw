@@ -24,7 +24,7 @@
     <view class="flex">
       <image class="byyx-img" src="../../images/banji.png"></image>
       <view class="byyx">班级</view>
-      <view class="byyx-cont">{{mydata.classes[0].name}}</view>
+      <view class="byyx-cont">{{mydata.classes[0].classname}}</view>
     </view>
     <view class="flex">
       <image class="byyx-img" src="../../images/zxsj.png"></image>

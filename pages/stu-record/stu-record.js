@@ -237,6 +237,15 @@ Page({
           }
           }
         }
+
+        if (that.data.score != '') {
+          that.setData({
+            position:Math.abs(that.data.score.position_change),
+            score_change: Math.abs(that.data.score.score_change)
+          })
+          console.log(that.data.position +"=================position")
+          console.log(that.data.score_change + "=================score_change")
+        }
         
         
         if(that.data.score != ''){

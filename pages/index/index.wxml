@@ -140,7 +140,7 @@
               <view class="calendar-month" wx:if="{{!calendarfold}}">
                 <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
                   <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" >{{item[0]}}</view>
                     <view wx:elif="{{item[1] == 'true'}}">
                       <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
                       <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
@@ -158,7 +158,7 @@
               <!-- 本周数据 -->
               <view class="calendar-month-week" wx:else>
                   <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
+                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" >{{item[0]}}</view>
                     <view wx:elif="{{item[1] == 'true'}}">
                       <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
                       <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
@@ -251,7 +251,7 @@
           </view>
 
           <!-- 新建 -->
-          <view wx:if="{{stu_sta == 'true'}}" class="add-btn" bindtap="stu_add_leave">
+          <view  class="add-btn" bindtap="stu_add_leave">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
@@ -331,7 +331,7 @@
           </view>
 
           <!-- 新建 -->
-          <view wx:if="{{stu_sta == 'true'}}" class="add-btn" bindtap="stu_add_leave">
+          <view  class="add-btn" bindtap="stu_add_leave">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
@@ -415,11 +415,12 @@
       <!-- 老师点名 -->
       <view wx:if="{{type == 2}}" class="cs_layout">
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
+          <view  class="mask1" wx:if="{{!item.comp}}"></view>
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
-            <view  class="mask1" wx:if="{{!item.comp}}"></view>
+            
             <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
               <view class="t-call" wx:if="{{item.cancheckon == 1}}">去点名</view>
-              <image class="t-call-img" src="../../images/gjt.png"></image>
+              <image class="t-call-img" wx:if="{{item.cancheckon == 1}}" src="../../images/gjt.png"></image>
             </view>
             <view class="t-info">
               

@@ -39,13 +39,13 @@
           <view class="up-down-title">总分：</view>
           <view wx:if="{{score.score_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
           <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
-          <view class="up-down-num">{{score.score_change}}分</view>
+          <view class="up-down-num">{{score_change}}分</view>
         </view>
         <view class="stu-rec-flex" wx:if="{{score.is_first != 1}}">
           <view class="up-down-title">排名：</view>
           <view wx:if="{{score.position_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
           <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
-          <view class="up-down-num">{{score.position_change}}个排名</view>
+          <view class="up-down-num">{{position}}个排名</view>
         </view>
       </view>
         
@@ -97,13 +97,13 @@
           <view class="up-down-title">总分：</view>
           <view wx:if="{{score.score_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
           <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
-          <view class="up-down-num">{{score.score_change}}分</view>
+          <view class="up-down-num">{{score_change}}分</view>
         </view>
         <view class="stu-rec-flex" wx:if="{{score.is_first != 1}}">
           <view class="up-down-title">排名：</view>
           <view wx:if="{{score.position_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
           <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
-          <view class="up-down-num">{{score.position_change}}个排名</view>
+          <view class="up-down-num">{{position}}个排名</view>
         </view>
       </view>
         
@@ -181,13 +181,13 @@
           <view class="up-down-title">总分：</view>
           <view wx:if="{{score.score_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
           <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
-          <view class="up-down-num">{{score.score_change}}分</view>
+          <view class="up-down-num">{{score_change}}分</view>
         </view>
         <view class="stu-rec-flex" wx:if="{{score.is_first != 1}}">
           <view class="up-down-title">排名：</view>
           <view wx:if="{{score.position_change > 0}}" class="up-down-cont">对比上次模考成绩，你进步了</view>
           <view wx:else="{{}}" class="up-down-cont">对比上次模考成绩，你退步了</view>
-          <view class="up-down-num">{{score.position_change}}个排名</view>
+          <view class="up-down-num">{{position}}个排名</view>
         </view>
       </view>
         

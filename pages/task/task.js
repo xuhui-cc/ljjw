@@ -237,11 +237,11 @@ Page({
     console.log("to_stu_task")
     if(that.data.role == 4){
       wx.navigateTo({
-        url: '../../pages/stu-task/stu-task',
+        url: '../../pages/stu-task/stu-task?class_id=' + that.data.stu_class[that.data.stu_class_index].class_id,
       })
     } else if (that.data.role <= 2){
       wx.navigateTo({
-        url: '../../pages/tea-task/tea-task',
+        url: '../../pages/tea-task/tea-task?class_id=' + that.data.tea_class[that.data.tea_class_index].id,
       })
     }
     
@@ -301,6 +301,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    let that = this
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       console.log('task_onshow')
@@ -311,7 +312,12 @@ Page({
     else {
       console.log('未执行')
     }
+    that.setData({
+      stu_class_index:0,
+      tea_class_index:0
+    })
     this.onLoad()
+    console.log("执行onshow")
   },
 
   /**

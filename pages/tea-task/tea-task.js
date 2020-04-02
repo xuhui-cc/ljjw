@@ -20,9 +20,13 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+    that.setData({
+      class_id:options.class_id
+    })
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
+      "class_id":that.data.class_id
     }
     console.log(params)
     app.ljjw.jwTeacherTasks(params).then(d => {

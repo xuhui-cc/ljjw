@@ -64,7 +64,7 @@
       </view>
       <view class="flex_warp">
         <view wx:for="{{csmorningRead[0].pics}}" wx:key="img_index" >
-          <image class='read-img' src='{{item}}'></image>
+          <image class='read-img'  data-xb='{{index}}' bindtap='previewImg' src='{{item}}'></image>
         </view>
       </view>
     </view>

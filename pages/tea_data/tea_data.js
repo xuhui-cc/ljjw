@@ -185,6 +185,61 @@ Page({
         that.setData({
           files: d.data.data.files
         })
+        if (that.data.files) {
+          for (var i = 0; i < that.data.files.length; i++) {
+            if (that.data.files[i].fileurl.indexOf(".doc") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "doc"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".pdf") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "pdf"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".ppt") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "ppt"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".jpg") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "jpg"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".png") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "png"
+              })
+            } else {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: null
+              })
+            }
+
+            var d = that.data.files[i].createtime.substr(10, 15)
+
+            if (that.data.files[i].createtime.indexOf(that.data.today) != -1) {
+              var createtime = "今天" + d
+              console.log(createtime)
+              var cs = "files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+            if (that.data.files[i].createtime.indexOf(that.data.yestday) != -1) {
+              var createtime = "昨天" + d
+              console.log(createtime)
+              var cs = "files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+
+          }
+        }
         console.log("老师更换班级资料获取成功")
       }
       // console.log("我是老师的班级资料")
@@ -212,6 +267,61 @@ Page({
         that.setData({
           files: d.data.data.files
         })
+        if (that.data.files) {
+          for (var i = 0; i < that.data.files.length; i++) {
+            if (that.data.files[i].fileurl.indexOf(".doc") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "doc"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".pdf") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "pdf"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".ppt") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "ppt"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".jpg") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "jpg"
+              })
+            } else if (that.data.files[i].fileurl.indexOf(".png") != -1) {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: "png"
+              })
+            } else {
+              var form = "files[" + i + "].form"
+              that.setData({
+                [form]: null
+              })
+            }
+
+            var d = that.data.files[i].createtime.substr(10, 15)
+
+            if (that.data.files[i].createtime.indexOf(that.data.today) != -1) {
+              var createtime = "今天" + d
+              console.log(createtime)
+              var cs = "files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+            if (that.data.files[i].createtime.indexOf(that.data.yestday) != -1) {
+              var createtime = "昨天" + d
+              console.log(createtime)
+              var cs = "files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+
+          }
+        }
         console.log("老师搜索班级资料获取成功")
       }
       // console.log("我是老师的班级资料")

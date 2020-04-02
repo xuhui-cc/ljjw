@@ -36,6 +36,7 @@ Page({
         that.setData({
           mydata: d.data.data
         })
+        console.log(that.data.mydata)
         var cs = "mydata.graduate_time"
         that.setData({
           [cs]: that.timestampToTime(that.data.mydata.graduate_time)
