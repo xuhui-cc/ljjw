@@ -99,6 +99,7 @@ Page({
         var params = {
           "token": wx.getStorageSync("token"),
           "uid": wx.getStorageSync("uid"),
+          "class_id": that.data.class_id,
           "page": 1
         }
         console.log(params)
@@ -176,6 +177,7 @@ Page({
           var params = {
             "token": wx.getStorageSync("token"),
             "uid": wx.getStorageSync("uid"),
+            "class_id": that.data.class_id,
             "page": that.data.page - 1
           }
           console.log(params)
@@ -282,6 +284,7 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
+        "class_id": that.data.class_id,
         "page": that.data.page +1
       }
       console.log(params)

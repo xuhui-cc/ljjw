@@ -270,7 +270,7 @@ Page({
     if(that.data.role == 4){
 
       wx.navigateTo({
-        url: '../../pages/stu_mornread/stu_mornread?class_id=' + that.data.stu_class[that.data.stu_class_index].id,
+        url: '../../pages/stu_mornread/stu_mornread?class_id=' + that.data.stu_class[that.data.stu_class_index].class_id,
       })
     }else if(that.data.role <= 2){
       wx.navigateTo({
