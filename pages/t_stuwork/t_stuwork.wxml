@@ -112,7 +112,7 @@
         <view class="mask-head">
           <image class="mask-cir" src="../../images/gc.png"></image>
           <view class="pro-start">发起</view>
-          <view class="start-time">2019-12-22 15:23:12</view>
+          <view class="start-time">{{askforleave_info.createtime}}</view>
         </view>
         <image class="pro-img" src="../../images/route.png"></image>
         <view class="mask-head" wx:if="{{askforleave_info.verify_list[0] != ''}}">

@@ -9,41 +9,41 @@
 
   <view class="layout">
     <view class="flex">
-      <image class="ava" src="{{student_info[0].avatar}}"></image>
-      <view class="name">{{student_info[0].realname}}</view>
-      <image wx:if="{{student_info[0].isfee == 1}}" class="jf" src="../../images/jf.png"></image>
+      <image class="ava" src="{{student_info.avatar}}"></image>
+      <view class="name">{{student_info.realname}}</view>
+      <image wx:if="{{student_info.isfee == 1}}" class="jf" src="../../images/jf.png"></image>
       <image wx:else="" class="jf" src="../../images/wjf.png"></image>
     </view>
     <view class="heng"></view>
     <view class="flex">
       <image class="byyx-img" src="../../images/byyx.png"></image>
       <view class="byyx">毕业院校</view>
-      <view class="byyx-cont">{{student_info[0].graduate_school}}</view>
+      <view class="byyx-cont">{{student_info.graduate_school}}</view>
     </view>
     <view class="flex">
       <image class="byyx-img" src="../../images/bysj.png"></image>
       <view class="byyx">毕业时间</view>
-      <view class="byyx-cont">{{student_info[0].graduate_time}}</view>
+      <view class="byyx-cont">{{student_info.graduate_time}}</view>
     </view>
     <view class="flex">
       <image class="byyx-img" src="../../images/zhuanye.png"></image>
       <view class="byyx">专业</view>
-      <view class="byyx-cont">{{student_info[0].subject}}</view>
+      <view class="byyx-cont">{{student_info.subject}}</view>
     </view>
     <view class="flex">
       <image class="byyx-img" src="../../images/banji.png"></image>
       <view class="byyx">班级</view>
-      <view class="byyx-cont">{{student_info[0].classname}}</view>
+      <view class="byyx-cont">{{student_info.classname}}</view>
     </view>
     <view class="flex">
       <image class="byyx-img" src="../../images/zxsj.png"></image>
       <view class="byyx">在校时间</view>
-      <view class="byyx-cont">{{student_info[0].study_time}}</view>
+      <view class="byyx-cont">{{student_info.study_time}}</view>
     </view>
     <view class="flex">
       <image class="byyx-img" src="../../images/scls.png"></image>
       <view class="byyx">市场老师</view>
-      <view class="byyx-cont">{{student_info[0].market_teacher}}</view>
+      <view class="byyx-cont">{{student_info.market_teacher}}</view>
     </view>
   
   

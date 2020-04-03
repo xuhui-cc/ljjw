@@ -30,12 +30,14 @@
         <view wx:if="{{item.fold}}">
           <!-- 选项式 -->
           <view wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
-            <view class='ques-cont'>{{item.title}}</view>
-            <view class="ans-layout">
-              <view class="ques-cont">A.{{task_detail.options.lists.a}}</view>
-              <view class="ques-cont">B.{{task_detail.options.lists.b}}</view>
-              <view class="ques-cont">C.{{task_detail.options.lists.c}}</view>
-              <view class="ques-cont">D.{{task_detail.options.lists.d}}</view>
+            <view wx:for="{{task_detail.options}}" wx:for-item="options" wx:for-key="options_index" wx:key="{{options_index}}">
+              <view class='ques-cont'>{{item.title}}</view>
+              <view class="ans-layout">
+                <view class="ques-cont">A.{{options.lists.a}}</view>
+                <view class="ques-cont">B.{{options.lists.b}}</view>
+                <view class="ques-cont">C.{{options.lists.c}}</view>
+                <view class="ques-cont">D.{{options.lists.d}}</view>
+              </view>
             </view>
           </view>
           <!-- 选项式 -->

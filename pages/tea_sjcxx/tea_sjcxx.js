@@ -32,9 +32,9 @@ Page({
         that.setData({
           student_info: d.data.data
         })
-        var cs = 'student_info[0].graduate_time'
+        var cs = 'student_info.graduate_time'
         that.setData({
-          [cs]: that.timestampToTime(that.data.student_info[0].graduate_time)
+          [cs]: that.timestampToTime(that.data.student_info.graduate_time)
         })
     
         console.log("学生基础信息获取成功")

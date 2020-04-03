@@ -609,7 +609,7 @@ page{
   position: absolute;
   margin-left: 56rpx;
   margin-top: 65rpx;
-  width:168rpx;
+  /* width:200rpx; */
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;

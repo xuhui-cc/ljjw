@@ -110,7 +110,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "class_id":that.data.stu_class[that.data.stu_class_index].id
+      "class_id": that.data.stu_class[that.data.stu_class_index].class_id
     }
     console.log(params)
     app.ljjw.jwGetStudentScore(params).then(d => {
@@ -169,10 +169,14 @@ Page({
     else {
       console.log('未执行')
     }
+    that.setData({
+      stu_class_index:0
+    })
     if (that.data.role == 4) {
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
+        // "class_id": that.data.stu_class[that.data.stu_class_index].class_id
       }
       console.log(params)
       app.ljjw.jwGetStudentScore(params).then(d => {

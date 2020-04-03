@@ -2,7 +2,7 @@ const app = getApp()
 Component({
   data: {
     color: "#7A7E83",
-    selectedColor: "#3cc51f",
+    selectedColor: "#2DC1A0",
     list: [{
         pagePath: "/pages/index/index",
         iconPath: "/images/unselectCourse.png",

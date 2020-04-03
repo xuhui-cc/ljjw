@@ -189,7 +189,7 @@ page{
 
 .add-kuang{
   position: absolute;
-  margin-top: 170rpx;
+  margin-top: -20rpx;
   
   width:302rpx;
   height:203rpx;
@@ -197,7 +197,7 @@ page{
 .add_read{
   position: absolute;
   margin-left: 42rpx;
-  margin-top: 241rpx;
+  margin-top: 51rpx;
   width:22rpx;
   height:27rpx;
   z-index: 200;
@@ -205,7 +205,7 @@ page{
 .add-read-tltle{
   position: absolute;
   margin-left: 80rpx;
-  margin-top: 236rpx;
+  margin-top: 46rpx;
   width:168rpx;
   height:40rpx;
   font-size:28rpx;
@@ -219,7 +219,7 @@ page{
 .add_message{
   position: absolute;
   margin-left: 42rpx;
-  margin-top: 303rpx;
+  margin-top: 113rpx;
   width:26rpx;
   height:29rpx;
   z-index: 200;
@@ -227,7 +227,7 @@ page{
 .add-message-tltle{
   position: absolute;
   margin-left: 80rpx;
-  margin-top: 300rpx;
+  margin-top: 110rpx;
   width:168rpx;
   height:40rpx;
   font-size:28rpx;

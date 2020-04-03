@@ -116,12 +116,12 @@
         </view>
         <view class="flex">
           <view class="bj-name">{{item.classname}}</view>
-          <image wx:if="{{isfold}}" class="xl-img" src="../../images/xsj.png" bindtap='score_fold'></image>
-          <image wx:else="" class="xl-img" src="../../images/ssj.png" bindtap='score_fold'></image>
+          <image wx:if="{{!item.isfold}}" class="xl-img" data-xb="{{index}}" src="../../images/xsj.png" bindtap='score_fold'></image>
+          <image wx:else="" class="xl-img" data-xb="{{index}}" src="../../images/ssj.png" bindtap='score_fold'></image>
         </view>
 
         <!-- 下拉展开 -->
-        <view wx:if="{{!isfold}}">
+        <view wx:if="{{item.isfold}}">
           <view class="flex">
             <view>
               <view class="sl-cj" wx:if="{{item.sl_score != null}}">{{item.sl_score}}</view>
@@ -137,21 +137,24 @@
           <view class="rec-heng"></view>
 
           <!-- 申论 -->
-          <view class="flex" wx:if="{{item.sl_scoreinfo != null}}">
-            <view class="km-title">题表</view>
-            <view class="rec_sl">分值</view>
-          </view>
-          <view class="rec-cont">
-            <view wx:for="{{item.sl_scoreinfo}}" wx:key="sl_scoreinfo_index" wx:for-item="sl_scoreinfo">
-              <view class="flex">
-                <view class="km_sl">第{{index+ 1}}题</view>
-                <view class="rec-num_sl">{{sl_scoreinfo}}</view>
+          <view wx:if="{{item.sl_score != null}}">
+            <view class="flex" wx:if="{{item.sl_scoreinfo != null}}">
+              <view class="km-title">题表</view>
+              <view class="rec_sl">分值</view>
+            </view>
+            <view class="rec-cont">
+              <view wx:for="{{item.sl_scoreinfo}}" wx:key="sl_scoreinfo_index" wx:for-item="sl_scoreinfo">
+                <view class="flex">
+                  <view class="km_sl">第{{index+ 1}}题</view>
+                  <view class="rec-num_sl">{{sl_scoreinfo}}</view>
+                </view>
               </view>
             </view>
           </view>
           <!-- 申论结束 -->
 
           <!-- 行测 -->
+          <view wx:if="{{item.xc_score != null}}">
           <view class="flex" wx:if="{{item.xc_scoreinfo != null}}">
             <view class="km-title">科目</view>
             <view class="ans">答对题目</view>
@@ -172,6 +175,7 @@
                 </view>
               </view>
             </view>
+          </view>
           </view>
           <!-- 行测结束 -->
           

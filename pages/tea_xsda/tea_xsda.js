@@ -41,6 +41,13 @@ Page({
           that.setData({
             student_score: d.data.data
           })
+          for (var i = 0; i < that.data.student_score.length;i++){
+            console.log("家插入")
+            var cs = "student_score[" + i + "].isfold"
+            that.setData({
+              [cs] : false
+            })
+          }
           
 
           console.log("学生档案——成绩获取成功")
@@ -113,10 +120,13 @@ Page({
     })
   },
 
-  score_fold:function(){
+  score_fold:function(e){
     let that = this
+    var xb = e.currentTarget.dataset.xb
+    console.log(xb)
+    var cs = "student_score[" + xb + "].isfold"
     that.setData({
-      isfold:!that.data.isfold
+      [cs]: !that.data.student_score[xb].isfold
     })
   },
 
@@ -194,17 +204,13 @@ Page({
           that.setData({
             student_score: d.data.data
           })
-          // console.log(that.data.student_score[0].mock_date.substr(0, 19))
-          // for (var i = 0; i < that.data.student_score.length; i++) {
-          //   for (var j = 0; j < that.data.student_score[i].xc_scoreinfo.length; j++) {
-          //     var ccs = "student_score[" + i + "].xc_scoreinfo[" + j + "].cateDate[2]"
-          //     // console.log(that.data.student_score[i].xc_scoreinfo[j].cateDate[2].toFixed(1))
-          //     that.setData({
-          //       [ccs]: that.data.student_score[i].xc_scoreinfo[j].cateDate[2].toFixed(1)
-          //     })
-
-          //   }
-          // }
+          for (var i = 0; i < that.data.student_score.length; i++) {
+            console.log("家插入")
+            var cs = "student_score[" + i + "].isfold"
+            that.setData({
+              [cs]: false
+            })
+          }
 
           console.log("学生档案——成绩获取成功")
         }

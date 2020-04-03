@@ -734,6 +734,7 @@ Page({
           title: '确认成功',
           duration:1500
         })
+        that.un_task()
         console.log("考勤确认成功")
       }
 
