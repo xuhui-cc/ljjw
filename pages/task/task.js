@@ -47,8 +47,11 @@ Page({
             stu_class:d.data.data.classes,
             newtaskcount: d.data.data.newtaskcount
           })
-          if (that.data.morning.pics != ''){
-            that.data.morning.pics = that.data.morning.pics.split(",")
+          if (that.data.morning != ''){
+            if (that.data.morning.pics != ''){
+              that.data.morning.pics = that.data.morning.pics.split(",")
+            }
+            
           }else{
             console.log("morning.pics空")
           }
@@ -89,7 +92,14 @@ Page({
             morning: d.data.data.morning_read,
             tea_class: d.data.data.classes
           })
-          that.data.morning.pics = that.data.morning.pics.split(",")
+          if (that.data.morning != '') {
+            if (that.data.morning.pics != '') {
+              that.data.morning.pics = that.data.morning.pics.split(",")
+            }
+
+          } else {
+            console.log("morning.pics空")
+          }
           
           
 
@@ -116,7 +126,14 @@ Page({
             morning: d.data.data.morning_read,
             tea_class: d.data.data.classes
           })
-          that.data.morning.pics = that.data.morning.pics.split(",")
+          if (that.data.morning != '') {
+            if (that.data.morning.pics != '') {
+              that.data.morning.pics = that.data.morning.pics.split(",")
+            }
+
+          } else {
+            console.log("morning.pics空")
+          }
 
 
 

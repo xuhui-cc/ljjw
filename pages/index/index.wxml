@@ -147,8 +147,10 @@
                     
                     </view>
                     <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
-                  
-                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                    <!-- <view> -->
+                      <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
+                    <!-- </view> -->
+                    
                     <view wx:if="{{item[2] == 1}}" class="dot" ></view>
                     <view wx:if="{{item[2] == 2}}" class="dot2" ></view>
                     <view wx:if="{{item[2] == 0}}" class="dot1" ></view>

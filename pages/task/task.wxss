@@ -114,6 +114,15 @@ page{
   opacity:1;
   border-radius:14rpx;
 }
+.task-layout1{
+  margin-left: 30rpx;
+  margin-top: 196rpx;
+  width:690rpx;
+  height:196rpx;
+  background:rgba(255,255,255,1);
+  opacity:1;
+  border-radius:14rpx;
+}
 .tip{
   position: absolute;
   margin-left: 111rpx;
@@ -237,4 +246,7 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
   z-index: 200;
+}
+.cs_jj{
+  margin-bottom: 200rpx;
 }

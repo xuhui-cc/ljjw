@@ -170,7 +170,8 @@ Page({
       console.log('未执行')
     }
     that.setData({
-      stu_class_index:0
+      stu_class_index:0,
+      tea_class_index: 0
     })
     if (that.data.role == 4) {
       var params = {

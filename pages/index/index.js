@@ -1354,7 +1354,7 @@ Page({
             wx.showToast({
               title: '上个月还没有安排哦~',
               icon: "none",
-              duration: 12000
+              duration: 1200
             })
             var params = {
               "token": wx.getStorageSync("token"),
@@ -2002,7 +2002,7 @@ Page({
       app.ljjw.jwGetMonthCheckon(params).then(d => {
         if (d.data.status == 1) {
           console.log(d)
-          if (d.data.data) {
+          if (d.data.data != '') {
             if (d.data.data.info != '') {
               that.setData({
                 showYear: showYear,
@@ -2067,6 +2067,7 @@ Page({
           }
 
           else {
+            console.log("学生考勤下个月为空")
             wx.showToast({
               title: '下个月还没有安排哦~',
               icon: "none",

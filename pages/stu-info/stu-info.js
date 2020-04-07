@@ -67,7 +67,7 @@ Page({
           console.log(d.data.data)
           for(var i=0;i<that.data.stu_class.length;i++){
             // console.log(d.data.data.classes[0].id)
-            if (d.data.data.classes[0].id == that.data.stu_class[i].id){
+            if (d.data.data.classes[0].class_id == that.data.stu_class[i].id){
               that.setData({
                 stu_class_index: i
               })

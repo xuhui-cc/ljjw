@@ -26,9 +26,7 @@
     <image class='task-null' src='../../images/null.png'></image>
   </view>
 
-  <!-- <view wx:if="{{!classes}}">
-    <image class='task-null' src='../../images/null.png'></image>
-  </view> -->
+  
 
   <view wx:if="{{login && stu_info}}">
     <view wx:if="{{!stu_class && !tea_class}}">
@@ -55,8 +53,8 @@
     </view>
 
     <view wx:if="{{role != 3}}">
-      <view class="read-layout" >
-        <view class="flex" bindtap='to_stu_mornread'>
+      <view class="read-layout" wx:if="{{csmorningRead != ''}}">
+        <view class="flex" bindtap='to_stu_mornread' >
           <view class="shu"></view>
           <view class="head">每日晨读</view>
           <view class="more">更多</view>
@@ -69,7 +67,7 @@
         </view>
       </view>
 
-      <view class="task-layout" bindtap="to_stu_task">
+      <view class="{{csmorningRead != '' ? 'task-layout' : 'task-layout1'}}" bindtap="to_stu_task">
         <view class="flex">
           <view class="shu"></view>
           <view class="head">任务</view>
@@ -82,16 +80,21 @@
         <view wx:else="" class="task-cont">学员们提交的任务动态都在这里呦~</view>
       </view>
 
-      <view wx:for="{{message}}" wx:key="index" wx:for-index="xb">
-        <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
-          <view class="flex">
-            <view class="shu"></view>
-            <view class="head">消息通知</view>
-            <view class="message-date">{{item.createtime}}</view>
+      <view class="cs_jj">
+        <view wx:for="{{message}}" wx:key="index" wx:for-index="xb" >
+          <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
+            <view class="flex">
+              <view class="shu"></view>
+              <view class="head">消息通知</view>
+              <view class="message-date">{{item.createtime}}</view>
+            </view>
+          <view class="message-cont">{{item.content}}</view>
           </view>
-        <view class="message-cont">{{item.content}}</view>
         </view>
       </view>
+
+
+
 
     </view>
 
