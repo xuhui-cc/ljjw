@@ -170,7 +170,7 @@ Page({
         wx.showToast({
           title: '已经是第一页咯~',
           icon: "none",
-          duration: 2000
+          duration: 3000
         })
       } else {
         if (that.data.role == 4) {
@@ -206,7 +206,7 @@ Page({
                 wx.showToast({
                   title: '到头咯~',
                   icon: "none",
-                  duration: 2000
+                  duration: 3000
                 })
               }
               // console.log(d.data.data)
@@ -250,7 +250,7 @@ Page({
                 wx.showToast({
                   title: '到头咯~',
                   icon: "none",
-                  duration: 2000
+                  duration: 3000
                 })
               }
               // console.log(d.data.data)
@@ -314,7 +314,7 @@ Page({
             wx.showToast({
               title: '没有更多晨读咯~',
               icon: "none",
-              duration: 2000
+              duration: 3000
             })
           }
           console.log(d.data.data + "d.data.data")
@@ -358,7 +358,7 @@ Page({
             wx.showToast({
               title: '没有更多晨读咯~',
               icon: "none",
-              duration: 2000
+              duration: 3000
             })
           }
           

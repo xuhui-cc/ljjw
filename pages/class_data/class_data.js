@@ -192,6 +192,7 @@ Page({
     }
     console.log(params)
     app.ljjw.jwGetMyCollection(params).then(d => {
+      console.log(d.data)
       if (d.data.status == 1) {
         that.setData({
           mydata: d.data.data
