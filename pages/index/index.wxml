@@ -41,9 +41,13 @@
           <!-- 年月显示切换 -->
             <view class="date-layout">
               <text class="year">2020年</text>
-              <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
+                <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              </view>
               <text class="month">{{showMonth}}月</text>
-              <image class="next-month" src="../../images/next.png" bindtap="next"></image>
+              <view style="width: 50rpx;height: 60rpx;margin-top: 10rpx;margin-left: 10rpx;">
+                <image class="next-month" src="../../images/next_sj.png" bindtap="next"></image>
+              </view>
             </view>
             <view class="heng1"></view>
             <!-- 课表日历 -->
@@ -124,9 +128,13 @@
           <!-- 年月显示切换 -->
             <view class="date-layout">
               <text class="year">2020年</text>
-              <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
+                <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              </view>
               <text class="month">{{showMonth}}月</text>
-              <image class="next-month" src="../../images/next.png" bindtap="next"></image>
+              <view style="width: 50rpx;height: 60rpx;margin-top: 10rpx;margin-left: 10rpx;">
+                <image class="next-month" src="../../images/next_sj.png" bindtap="next"></image>
+              </view>
             </view>
             <view class="heng1"></view>
             <!-- 课表日历 -->
@@ -368,9 +376,13 @@
           <!-- 年月显示切换 -->
             <view class="date-layout">
               <text class="year">2020年</text>
-              <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
+                <image class="last-month" src="../../images/last.png" bindtap="last"></image>
+              </view>
               <text class="month">{{showMonth}}月</text>
-              <image class="next-month" src="../../images/next.png" bindtap="next"></image>
+              <view style="width: 50rpx;height: 60rpx;margin-top: 10rpx;margin-left: 10rpx;">
+                <image class="next-month" src="../../images/next_sj.png" bindtap="next"></image>
+              </view>
             </view>
             <view class="heng1"></view>
             <!-- 课表日历 -->

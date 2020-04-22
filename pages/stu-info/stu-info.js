@@ -132,7 +132,7 @@ Page({
 
         var token = wx.getStorageSync('token');
         wx.uploadFile({
-          url: 'https://szgk.cn/api.php?',
+          url: 'http://cs.szgk.cn/api.php?',
           filePath: tempFilePaths[0],
           name: 'file',
           
@@ -145,6 +145,7 @@ Page({
             'content-type': 'multipart/form-data'
           },
           success(r) {
+            console.log(r)
             let d = JSON.parse(r.data);
             console.log(d.data)
             if(d.status == 1){

@@ -1435,7 +1435,13 @@ Page({
           }else{
 
          
-
+            that.setData({
+              showYear: showYear,
+              showMonth: showMonth,
+              showlast: showlast,
+              showym: showym
+            })
+            that.getMonthData(that.data.showYear, that.data.showMonth);
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
             var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
@@ -1724,66 +1730,89 @@ Page({
             tea_dayCourse: d.data.data.course_list,
             tea_courselist: d.data.data.day_list
           })
-
-          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.tea_dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-
-          console.log(that.data.tea_dayCourse)
-
-          for (var i = 0; i < that.data.tea_courselist.length; i++) {
-            var newarray = [{
-              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
-              d: that.data.tea_courselist[i].riqi.substr(8, 2)
-            }];
+          if (that.data.tea_courselist != ''){
             that.setData({
-              'dot_riqi': that.data.dot_riqi.concat(newarray)
-            });
+              showYear: showYear,
+              showMonth: showMonth,
+              showlast: showlast,
+              showym: showym,
+              clickDay: that.data.nowDay
+            })
+            that.getMonthData(that.data.showYear, that.data.showMonth);
+            that.setData({
+              calendarfold: false
+            })
+            // that.getMonthData(showYear, showMonth);
+            for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+              var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+              var end = that.data.tea_dayCourse[i].riqi + " " + end1
+              console.log(end + "=============end")
+              var iphone1 = end.substr(0, 4)
+              var iphone2 = end.substr(5, 2)
+              var iphone3 = end.substr(8, 2)
+              var iphone4 = end.substr(11, 5)
+              console.log(iphone1 + "=============iphone1")
+              console.log(iphone2 + "=============iphone2")
+              console.log(iphone3 + "=============iphone3")
+              console.log(iphone4 + "=============iphone4")
+              var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+              var aa = Date.parse(end)
+              var bb = Date.parse(iphone_cs)
+              console.log(bb + "++++++==========bb")
 
-          }
-          console.log(that.data.dot_riqi)
+              var timestamp = Date.parse(new Date());
+              console.log(aa + "=================aa")
+              console.log(timestamp + "=======================now")
+              if (bb < timestamp) {
+                var comp = "tea_dayCourse[" + i + "].comp"
+                that.setData({
+                  [comp]: false
+                })
+              }
+              else {
+                var comp = "tea_dayCourse[" + i + "].comp"
+                that.setData({
+                  [comp]: true
+                })
+              }
 
-          // 日历点点
-          that.dot()
+            }
+
+            console.log(that.data.tea_dayCourse)
+
+            for (var i = 0; i < that.data.tea_courselist.length; i++) {
+              var newarray = [{
+                ym: that.data.tea_courselist[i].riqi.substr(0, 7),
+                d: that.data.tea_courselist[i].riqi.substr(8, 2)
+              }];
+              that.setData({
+                'dot_riqi': that.data.dot_riqi.concat(newarray)
+              });
+
+            }
+            console.log(that.data.dot_riqi)
+
+            // 日历点点
+            that.dot()
+            
 
 
 
 
 
           // console.log(that.data.tea_dayCourse)
+          }else{
+            wx.showToast({
+              title: '下个月还没有安排哦~',
+              icon:"none",
+              duration:2000
+            })
+          }
+          
+          
         }
       })
+      
 
     }
     else if (that.data.role == 4 && that.data.type == 2) {

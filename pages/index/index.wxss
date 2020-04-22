@@ -180,8 +180,8 @@ page{
   margin-top: 177rpx;
 }
 .last-month{
-  margin-left: 452rpx;
-  margin-top: 30rpx;
+  margin-left: 20rpx;
+  margin-top: 20rpx;
   width: 18.71rpx;
   height: 18.71rpx;
 }
@@ -190,10 +190,10 @@ page{
   margin-top: 17rpx;
 }
 .next-month{
-  margin-left: 10rpx;
-  margin-top: 30rpx;
-  width: 18.71rpx;
-  height: 18.71rpx;
+  
+  margin-top: 20rpx;
+  width: 20rpx;
+  height: 20rpx;
 }
 .year{
   margin-left: 30rpx;
@@ -216,18 +216,19 @@ page{
   opacity:1;
 }
 .xl{
-  
+  margin-left: 30rpx;
   margin-top: 3rpx;
  
   width:22.63rpx;
   height:22.63rpx;
 }
 .xl_layout{
-  margin-left: 697rpx;
+  margin-left: 640rpx;
   
   margin-bottom: 22rpx;
-  width:44rpx;
-  height:44rpx;
+  width:80rpx;
+  height:60rpx;
+  /* background: rgb(190, 34, 34); */
 }
 .calendar-header{
   display: flex;
