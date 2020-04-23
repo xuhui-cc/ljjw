@@ -13,7 +13,7 @@ page{
 .my-head{
   /* margin-left: 341rpx; */
   margin-top: 108rpx;
-  width:530rpx;
+  width:460rpx;
   height:48rpx;
   font-size:34rpx;
   font-family:PingFang SC;
@@ -24,16 +24,17 @@ page{
   opacity:1;
 }
 .back-img{
-  margin-top: 118rpx;
+  margin-top: 25rpx;
   width: 27rpx;
   height: 27rpx;
 }
 .backimg_layout{
   margin-left: 30rpx;
-  
-  margin-right: 57rpx;
-  width: 50rpx;
-  height: 50rpx;
+  margin-top: 95rpx;
+  /* margin-right: 25rpx; */
+  width: 100rpx;
+  height: 80rpx;
+  /* background: rgba(39,39,39,1); */
 }
 ec-canvas {
   

@@ -39,6 +39,7 @@ Page({
         login: flase,
         uid: wx.getStorageSync("uid"),
         userInfo : wx.getStorageSync("userInfo"),
+        
         // stu_sta: wx.getStorageSync("stu_sta")
       })
     } else {
@@ -47,6 +48,7 @@ Page({
         login: true,
         uid: wx.getStorageSync("uid"),
         userInfo: wx.getStorageSync("userInfo"),
+        
         
         
       })
@@ -118,7 +120,7 @@ Page({
           })
           // console.log(that.data.dayCourse)
           for(var i=0;i<that.data.dayCourse.length;i++){
-            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+            var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -194,6 +196,11 @@ Page({
         "riqi": nowDate
       }
       console.log(params)
+      that.setData({
+        class_ids: wx.getStorageSync("class_ids"),
+      })
+      console.log(that.data.class_ids)
+      console.log("that.data.class_ids")
       app.ljjw.jwGetCheckOnList(params).then(d => {
         // console.log(d.data.status)
         if (d.data.status == 1) {
@@ -205,8 +212,20 @@ Page({
           })
 
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            //关联班级点名判断
+            for(var rc=0;rc<that.data.class_ids.length;rc++){
+              if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]){
+                var csrc = "tea_dayCourse[" + i + "].rc"
+                that.setData({
+                  [csrc] :true
+                })
+              }
+            }
+            console.log(that.data.tea_dayCourse)
+            console.log("that.data.tea_dayCourse.rc")
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            console.log(end1 + "=======================end1")
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
             var iphone2 = end.substr(5, 2)
@@ -747,7 +766,7 @@ Page({
           })
           console.log(that.data.dayCourse)
           for (var i = 0; i < that.data.dayCourse.length; i++) {
-            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+            var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -830,6 +849,11 @@ Page({
         "riqi": riqi
       }
       console.log(params)
+      that.setData({
+        class_ids: wx.getStorageSync("class_ids"),
+      })
+      console.log(that.data.class_ids)
+      console.log("that.data.class_ids")
       app.ljjw.jwGetCheckOnList(params).then(d => {
         // console.log(d.data.status)
         if (d.data.status == 1) {
@@ -841,7 +865,18 @@ Page({
           })
 
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            //关联班级点名判断
+            for (var rc = 0; rc < that.data.class_ids.length; rc++) {
+              if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
+                var csrc = "tea_dayCourse[" + i + "].rc"
+                that.setData({
+                  [csrc]: true
+                })
+              }
+            }
+            console.log(that.data.tea_dayCourse)
+            console.log("that.data.tea_dayCourse.rc")
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -1341,6 +1376,11 @@ Page({
         "riqi": showlast
       }
       console.log(params)
+      that.setData({
+        class_ids: wx.getStorageSync("class_ids"),
+      })
+      console.log(that.data.class_ids)
+      console.log("that.data.class_ids")
       app.ljjw.jwGetCheckOnList(params).then(d => {
         // console.log(d.data.status)
         if (d.data.status == 1) {
@@ -1362,6 +1402,11 @@ Page({
               "riqi": that.data.nowDate
             }
             console.log(params)
+            that.setData({
+              class_ids: wx.getStorageSync("class_ids"),
+            })
+            console.log(that.data.class_ids)
+            console.log("that.data.class_ids")
             app.ljjw.jwGetCheckOnList(params).then(d => {
               // console.log(d.data.status)
               if (d.data.status == 1) {
@@ -1373,7 +1418,19 @@ Page({
                 })
                 
                 for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-                  var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+                  //关联班级点名判断
+                  for (var rc = 0; rc < that.data.class_ids.length; rc++) {
+                    if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
+                      var csrc = "tea_dayCourse[" + i + "].rc"
+                      that.setData({
+                        [csrc]: true
+                      })
+                    }
+                  }
+                  console.log(that.data.tea_dayCourse)
+                  console.log("that.data.tea_dayCourse.rc")
+
+                  var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
                   var end = that.data.tea_dayCourse[i].riqi + " " + end1
                   console.log(end + "=============end")
                   var iphone1 = end.substr(0, 4)
@@ -1443,7 +1500,7 @@ Page({
             })
             that.getMonthData(that.data.showYear, that.data.showMonth);
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -1553,7 +1610,7 @@ Page({
                 })
                 console.log(that.data.dayCourse)
                 for (var i = 0; i < that.data.dayCourse.length; i++) {
-                  var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+                  var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
                   var end = that.data.dayCourse[i].riqi + " " + end1
                   console.log(end + "=============end")
                   var iphone1 = end.substr(0, 4)
@@ -1721,8 +1778,13 @@ Page({
         "riqi": showlast
       }
       console.log(params)
+      that.setData({
+        class_ids: wx.getStorageSync("class_ids"),
+      })
+      console.log(that.data.class_ids)
+      console.log("that.data.class_ids")
       app.ljjw.jwGetCheckOnList(params).then(d => {
-        // console.log(d.data.status)
+        console.log(d.data)
         if (d.data.status == 1) {
           console.log("或教务")
           console.log(d.data.data)
@@ -1744,7 +1806,19 @@ Page({
             })
             // that.getMonthData(showYear, showMonth);
             for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-              var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+              //关联班级点名判断
+              for (var rc = 0; rc < that.data.class_ids.length; rc++) {
+                if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
+                  var csrc = "tea_dayCourse[" + i + "].rc"
+                  that.setData({
+                    [csrc]: true
+                  })
+                }
+              }
+              console.log(that.data.tea_dayCourse)
+              console.log("that.data.tea_dayCourse.rc")
+
+              var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
               var end = that.data.tea_dayCourse[i].riqi + " " + end1
               console.log(end + "=============end")
               var iphone1 = end.substr(0, 4)
@@ -1869,7 +1943,7 @@ Page({
                   })
                   console.log(that.data.dayCourse)
                   for (var i = 0; i < that.data.dayCourse.length; i++) {
-                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+                    var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
                     var end = that.data.dayCourse[i].riqi + " " + end1
                     console.log(end + "=============end")
                     var iphone1 = end.substr(0, 4)
@@ -1961,7 +2035,7 @@ Page({
                   })
                   console.log(that.data.dayCourse)
                   for (var i = 0; i < that.data.dayCourse.length; i++) {
-                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+                    var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
                     var end = that.data.dayCourse[i].riqi + " " + end1
                     console.log(end + "=============end")
                     var iphone1 = end.substr(0, 4)
@@ -2274,7 +2348,7 @@ Page({
           })
           // console.log(that.data.dayCourse)
           for (var i = 0; i < that.data.dayCourse.length; i++) {
-            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
+            var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -2343,6 +2417,11 @@ Page({
         "riqi": clickDate
       }
       console.log(params)
+      that.setData({
+        class_ids: wx.getStorageSync("class_ids"),
+      })
+      console.log(that.data.class_ids)
+      console.log("that.data.class_ids")
       app.ljjw.jwGetCheckOnList(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
@@ -2350,7 +2429,18 @@ Page({
             tea_dayCourse: d.data.data.course_list
           })
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            //关联班级点名判断
+            for (var rc = 0; rc < that.data.class_ids.length; rc++) {
+              if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
+                var csrc = "tea_dayCourse[" + i + "].rc"
+                that.setData({
+                  [csrc]: true
+                })
+              }
+            }
+            console.log(that.data.tea_dayCourse)
+            console.log("that.data.tea_dayCourse.rc")
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -2439,6 +2529,11 @@ Page({
         "riqi": clickDate
       }
       console.log(params)
+      that.setData({
+        class_ids: wx.getStorageSync("class_ids"),
+      })
+      console.log(that.data.class_ids)
+      console.log("that.data.class_ids")
       app.ljjw.jwGetCheckOnList(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
@@ -2446,7 +2541,7 @@ Page({
             tea_dayCourse: d.data.data.course_list
           })
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)

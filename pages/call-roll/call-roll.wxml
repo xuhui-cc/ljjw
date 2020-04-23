@@ -27,6 +27,8 @@
     <view class="t-info">
       <image class="t-avatar" src="{{tea_info.avatar}}"></image>
       <text class="t-name">{{tea_info.teachername}}</text>
+      <!-- <text class="t-name">哈哈哈-哈哈哈哈哈</text> -->
+      
     </view>
     <view class="t-cour-shu"></view>
     <view class="cour-info">

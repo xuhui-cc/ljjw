@@ -39,7 +39,7 @@
 }
 .read-cont{
   margin-left: 30rpx;
-  margin-top: 213rpx;
+  margin-top: 20rpx;
   width:690rpx;
   height: 300rpx;
   font-size:30rpx;

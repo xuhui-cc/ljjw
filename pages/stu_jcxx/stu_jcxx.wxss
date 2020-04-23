@@ -63,9 +63,9 @@ page{
   opacity:1;
 }
 .byyx-cont{
-  margin-left: 162rpx;
+  margin-left: 112rpx;
   margin-top: 58rpx;
-  width:350rpx;
+  width:400rpx;
   height:40rpx;
   font-size:28rpx;
   font-family:PingFang SC;

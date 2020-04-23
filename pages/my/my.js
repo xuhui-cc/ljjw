@@ -381,7 +381,78 @@ Page({
       console.log(d.data.status +"d.data.status")
       if (d.data.status == 1) {
         console.log(d.data.msg)
-        that.onLoad();
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "class_id": that.data.stu_class[that.data.stu_class_index].class_id
+        }
+        console.log(params)
+        app.ljjw.jwGetStudentMainPage(params).then(d => {
+          if (d.data.status == 1) {
+            that.setData({
+              mydata: d.data.data,
+            })
+            if (that.data.mydata.files) {
+              for (var i = 0; i < that.data.mydata.files.length; i++) {
+                if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1) {
+                  var form = "mydata.files[" + i + "].form"
+                  that.setData({
+                    [form]: "doc"
+                  })
+                } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1) {
+                  var form = "mydata.files[" + i + "].form"
+                  that.setData({
+                    [form]: "pdf"
+                  })
+                } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
+                  var form = "mydata.files[" + i + "].form"
+                  that.setData({
+                    [form]: "ppt"
+                  })
+                } else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
+                  var form = "mydata.files[" + i + "].form"
+                  that.setData({
+                    [form]: "jpg"
+                  })
+                } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
+                  var form = "mydata.files[" + i + "].form"
+                  that.setData({
+                    [form]: "png"
+                  })
+                } else {
+                  var form = "mydata.files[" + i + "].form"
+                  that.setData({
+                    [form]: null
+                  })
+                }
+
+                var d = that.data.mydata.files[i].createtime.substr(10, 15)
+
+                if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
+                  var createtime = "今天" + d
+                  console.log(createtime)
+                  var cs = "mydata.files[" + i + "].createtime"
+                  that.setData({
+                    [cs]: createtime
+                  })
+                }
+                if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
+                  var createtime = "昨天" + d
+                  console.log(createtime)
+                  var cs = "mydata.files[" + i + "].createtime"
+                  that.setData({
+                    [cs]: createtime
+                  })
+                }
+
+              }
+            }
+            console.log(that.data.mydata)
+            console.log("学生（班级切换）——我的主页接口获取成功")
+          }
+
+
+        })
         console.log("收藏与取消收藏接口获取成功")
       }
 
@@ -476,10 +547,18 @@ Page({
                 if (d.data.status == 0) {
                   console.log(d.data)
                   var role = d.data.role.split(",")
+                  if(role)
+                    if (d.data.class_ids != null){
+                      var class_ids = d.data.class_ids.split(",")
+                      wx.setStorageSync('class_ids', class_ids);
+                      console.log(d.data.class_ids)
+                    }
+                  
                   if(role.length == 2){
                     role[0] = role[1]
                   }
                   console.log("登录成功")
+
                   wx.setStorageSync('token', d.data.token);
                   wx.setStorageSync('uid', d.data.uid);
                   wx.setStorageSync('userInfo', d.data.userInfo)

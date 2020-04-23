@@ -432,7 +432,7 @@
           <view  class="mask1" wx:if="{{!item.comp}}"></view>
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
             
-            <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
+            <view wx:if="{{item.rc == true}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
               <view class="t-call" wx:if="{{item.cancheckon == 1}}">去点名</view>
               <image class="t-call-img" wx:if="{{item.cancheckon == 1}}" src="../../images/gjt.png"></image>
             </view>

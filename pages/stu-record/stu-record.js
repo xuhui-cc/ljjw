@@ -39,7 +39,7 @@ function setOption(chart, xdata, ydata) {
         formatter: function (params) {
           var newParamsName = "";// 最终拼接成的字符串
           var paramsNameNumber = params.length;// 实际标签的个数
-          var provideNumber = 3;// 每行能显示的字的个数
+          var provideNumber = 2;// 每行能显示的字的个数
           var rowNumber = Math.ceil(paramsNameNumber / provideNumber);
           /**
                                    * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签

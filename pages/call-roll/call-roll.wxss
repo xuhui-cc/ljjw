@@ -19,21 +19,22 @@ page{
   font-family:PingFang SC;
   font-weight:bold;
   line-height:48rpx;
-  text-align: center;
+  text-align: left;
   color:rgba(255,255,255,1);
   opacity:1;
 }
 .back-img{
-  margin-top: 118rpx;
+  margin-top: 25rpx;
   width: 27rpx;
   height: 27rpx;
 }
 .backimg_layout{
   margin-left: 30rpx;
-  
-  margin-right: 57rpx;
-  width: 50rpx;
-  height: 50rpx;
+  margin-top: 95rpx;
+  /* margin-right: 25rpx; */
+  width: 100rpx;
+  height: 80rpx;
+  /* background: rgba(39,39,39,1); */
 }
 .mask{
   position: absolute;
@@ -94,11 +95,11 @@ page{
 .t-info{
   display: flex;
   flex-direction: column;
-  width:165rpx;
+  /* width:200rpx; */
   height:190rpx;
 }
 .t-avatar{
-  margin-left: 55rpx;
+  margin-left: 90rpx;
   margin-top: 36rpx;
   width: 66rpx;
   height: 66rpx;
@@ -107,7 +108,7 @@ page{
 .t-name{
   margin-left: 46rpx;
   margin-top: 11rpx;
-  width:84rpx;
+  width:160rpx;
   height:40rpx;
   font-size:28rpx;
   font-family:PingFang SC;

@@ -11,16 +11,17 @@ page{
   z-index: 100;
 }
 .back-img{
-  margin-top: 118rpx;
+  margin-top: 25rpx;
   width: 27rpx;
   height: 27rpx;
 }
 .backimg_layout{
   margin-left: 30rpx;
-  
-  margin-right: 57rpx;
-  width: 50rpx;
-  height: 50rpx;
+  margin-top: 95rpx;
+  /* margin-right: 25rpx; */
+  width: 100rpx;
+  height: 80rpx;
+  /* background: rgba(39,39,39,1); */
 }
 .bar-class{
   margin-left: 30rpx;
@@ -31,7 +32,7 @@ page{
   font-family:PingFang SC;
   font-weight:bold;
   line-height:48rpx;
-  text-align: center;
+  text-align: left;
   color:rgba(255,255,255,1);
   opacity:1;
 }
