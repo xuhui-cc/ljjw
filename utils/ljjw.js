@@ -152,7 +152,7 @@ function jwTeacherClassSignIn(params) {
 
 //老师点名学生状态更改
 function jwSaveStudentSignIn(params) {
-  return fetch.ljjwfetch(URI, 'jwSaveStudentSignIn', params)
+  return fetch.ljjwfetchpost(URI, 'jwSaveStudentSignIn', params)
 }
 
 //老师查看学生基础信息

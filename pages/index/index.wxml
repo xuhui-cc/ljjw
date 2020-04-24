@@ -430,7 +430,32 @@
       <view wx:if="{{type == 2}}" class="cs_layout">
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
           <view  class="mask1" wx:if="{{!item.comp}}"></view>
-          <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
+          <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}" wx:if="{{role == 1}}">
+            
+            <view wx:if="{{item.teacher_id == uid}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
+              <view class="t-call" wx:if="{{item.cancheckon == 1}}">去点名</view>
+              <image class="t-call-img" wx:if="{{item.cancheckon == 1}}" src="../../images/gjt.png"></image>
+            </view>
+            <view class="t-info">
+              
+              <image class="t-ava" src="{{item.avatar}}"></image>
+              <view class="t-name">{{item.teachername}}</view>
+              <view class="t-class" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">{{item.classname}}</view>
+            </view>
+            <view class="t-cour-heng"></view>
+            <view class="t-info">
+              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
+              <view class="t-cour-time">{{item.classtime}}</view>
+              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
+              <view class="t-cour-time">{{item.classroom}}</view>
+            </view>
+            <view class="t-info">
+              <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
+              <view class="t-cour-name">{{item.title}}</view>
+            </view>
+          </view>
+
+          <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}" wx:if="{{role == 2}}">
             
             <view wx:if="{{item.rc == true}}" class="t-call-lay" data-tea_index='{{index}}' bindtap="to_call_roll">
               <view class="t-call" wx:if="{{item.cancheckon == 1}}">去点名</view>

@@ -120,7 +120,7 @@ Page({
           })
           // console.log(that.data.dayCourse)
           for(var i=0;i<that.data.dayCourse.length;i++){
-            var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -223,7 +223,7 @@ Page({
             }
             console.log(that.data.tea_dayCourse)
             console.log("that.data.tea_dayCourse.rc")
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end1 + "=======================end1")
             console.log(end + "=============end")
@@ -766,7 +766,7 @@ Page({
           })
           console.log(that.data.dayCourse)
           for (var i = 0; i < that.data.dayCourse.length; i++) {
-            var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -876,7 +876,7 @@ Page({
             }
             console.log(that.data.tea_dayCourse)
             console.log("that.data.tea_dayCourse.rc")
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -1430,7 +1430,7 @@ Page({
                   console.log(that.data.tea_dayCourse)
                   console.log("that.data.tea_dayCourse.rc")
 
-                  var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
+                  var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
                   var end = that.data.tea_dayCourse[i].riqi + " " + end1
                   console.log(end + "=============end")
                   var iphone1 = end.substr(0, 4)
@@ -1500,7 +1500,7 @@ Page({
             })
             that.getMonthData(that.data.showYear, that.data.showMonth);
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -1610,7 +1610,7 @@ Page({
                 })
                 console.log(that.data.dayCourse)
                 for (var i = 0; i < that.data.dayCourse.length; i++) {
-                  var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
+                  var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
                   var end = that.data.dayCourse[i].riqi + " " + end1
                   console.log(end + "=============end")
                   var iphone1 = end.substr(0, 4)
@@ -1818,7 +1818,7 @@ Page({
               console.log(that.data.tea_dayCourse)
               console.log("that.data.tea_dayCourse.rc")
 
-              var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
+              var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
               var end = that.data.tea_dayCourse[i].riqi + " " + end1
               console.log(end + "=============end")
               var iphone1 = end.substr(0, 4)
@@ -1943,7 +1943,7 @@ Page({
                   })
                   console.log(that.data.dayCourse)
                   for (var i = 0; i < that.data.dayCourse.length; i++) {
-                    var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
+                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
                     var end = that.data.dayCourse[i].riqi + " " + end1
                     console.log(end + "=============end")
                     var iphone1 = end.substr(0, 4)
@@ -2035,7 +2035,7 @@ Page({
                   })
                   console.log(that.data.dayCourse)
                   for (var i = 0; i < that.data.dayCourse.length; i++) {
-                    var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
+                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
                     var end = that.data.dayCourse[i].riqi + " " + end1
                     console.log(end + "=============end")
                     var iphone1 = end.substr(0, 4)
@@ -2348,7 +2348,7 @@ Page({
           })
           // console.log(that.data.dayCourse)
           for (var i = 0; i < that.data.dayCourse.length; i++) {
-            var end1 = that.data.dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
             var end = that.data.dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -2440,7 +2440,7 @@ Page({
             }
             console.log(that.data.tea_dayCourse)
             console.log("that.data.tea_dayCourse.rc")
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)
@@ -2541,7 +2541,7 @@ Page({
             tea_dayCourse: d.data.data.course_list
           })
           for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(6, 5)
+            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
             var end = that.data.tea_dayCourse[i].riqi + " " + end1
             console.log(end + "=============end")
             var iphone1 = end.substr(0, 4)

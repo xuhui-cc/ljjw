@@ -111,10 +111,11 @@ Page({
   },
   submit:function(){
     let that = this
+    var submit = JSON.stringify(that.data.submit)
     var params = {
       "token": wx.getStorageSync("token"),
       "sid": that.data.sid,
-      "data": that.data.submit
+      "data": submit
     }
     console.log(params)
     app.ljjw.jwSaveStudentSignIn(params).then(d => {
@@ -131,6 +132,7 @@ Page({
         
       }
       else {
+        console.log(d.data.msg)
         wx.showToast({
           title: '提交失败',
           icon:"none",
@@ -209,24 +211,32 @@ Page({
         'submit': this.data.submit.concat(newarray)
       });
     }
+    var submit = JSON.stringify(that.data.submit)
     var params = {
       "token": wx.getStorageSync("token"),
       "sid": that.data.sid,
-      "data": that.data.submit
+      "data": submit
     }
+    
     console.log(params)
     app.ljjw.jwSaveStudentSignIn(params).then(d => {
       console.log(d)
+      console.log("请求执行")
       if (d.data.status == 1) {
         wx.showToast({
           title: '提交成功',
           duration:1500
         })
-        wx.navigateBack({
-          delta: 1  // 返回上一级页面。
-        })
+        
         console.log("点名返回键,保存成功")
 
+      }
+      else{
+        wx.showToast({
+          title: d.data.msg,
+          icon:"none",
+          duration:2000
+        })
       }
     })
   },
