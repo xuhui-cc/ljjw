@@ -329,6 +329,9 @@ Page({
     console.log(params)
     app.ljjw.jwSaveAskforleave(params).then(d => {
       if (d.data.status == 1) {
+        that.setData({
+          submit_yes: false
+        })
         wx.showToast({
           title: '提交成功',
           duration: 2000

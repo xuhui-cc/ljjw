@@ -1140,6 +1140,10 @@ Page({
       app.ljjw.jwAdminAskforleaveVerify(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
+          var cscs = "admin_unaud_leave[" + ask_xb + "].submit"
+          that.setData({
+            [cscs]: true
+          })
           wx.showToast({
             title: '操作成功',
             duration: 2000
@@ -1154,7 +1158,7 @@ Page({
           app.ljjw.jwGetAskforleaveCount(params).then(d => {
             // console.log(d.data.status)
             if (d.data.status == 1) {
-              console.log("教务红点")
+              console.log("管理员红点")
               console.log(d.data.data)
               that.setData({
                 red_num: d.data.data
@@ -1181,7 +1185,10 @@ Page({
       app.ljjw.jwJiaowuAskforleaveVerify(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-
+          var cscs = "hm_unaud_leave[" + ask_xb + "].submit"
+          that.setData({
+            [cscs]:true
+          })
           wx.showToast({
             title: '操作成功',
             duration: 2000
@@ -2635,6 +2642,12 @@ Page({
           that.setData({
             hm_unaud_leave: d.data.data
           })
+          for(var i=0;i<that.data.hm_unaud_leave.length;i++){
+            var cs = "hm_unaud_leave[" + i + "].submit"
+            that.setData({
+              [cs]:false
+            })
+          }
           console.log(that.data.hm_unaud_leave)
         } else {
           that.setData({
@@ -2690,6 +2703,13 @@ Page({
           that.setData({
             admin_unaud_leave: d.data.data
           })
+          for (var i = 0; i < that.data.admin_unaud_leave.length; i++) {
+            var cs = "admin_unaud_leave[" + i + "].submit"
+            that.setData({
+              [cs]: false
+            })
+          }
+         
           console.log(that.data.admin_unaud_leave)
         } else {
           that.setData({

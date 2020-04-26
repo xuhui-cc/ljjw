@@ -194,8 +194,10 @@ page{
 }
 .submit{
   left: 30rpx;
-  bottom: 150rpx;
-  position: fixed;
+  margin-left: 30rpx;
+  margin-top: 100rpx;
+  /* bottom: 150rpx; */
+  /* position: fixed; */
   width:690rpx;
   height:90rpx;
   font-family:PingFang SC;

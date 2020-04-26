@@ -1505,9 +1505,14 @@ page{
 .hm-route{
   padding-bottom: 80rpx;
 }
-.hm-aud-unfold{
+.fold_margin{
   margin-left: 440rpx;
   margin-top: 27rpx;
+  width:40rpx;
+  height:40rpx;
+}
+.hm-aud-unfold{
+  
   width:18rpx;
   height:18rpx;
 

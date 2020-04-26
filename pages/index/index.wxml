@@ -579,7 +579,8 @@
                   <view class="hm-pro-date">{{item.createtime}}</view>
                 </view>
                 <view class="hm-flex">
-                  <view class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_pass">通过</view>
+                  <view wx:if="{{!item.submit}}" class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_pass">通过</view>
+                  <view class="hm-un-rejest" wx:if="{{item.submit}}">通过</view>
                   <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
                 </view>
 
@@ -618,8 +619,11 @@
                     <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
                   </view>
                   
-                  <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="aud_fold"></image>
+                  <view class="fold_margin">
+                    <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="aud_fold"></image>
                   <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="aud_fold"></image>
+                  </view>
+                  
                   
                 </view>
                 <view wx:if="{{item.fold}}">
@@ -739,7 +743,8 @@
                   <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
                 </view>
               <view class="hm-flex">
-                <view class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}" bindtap="hm_pass">通过</view>
+                <view wx:if="{{!item.submit}}" class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}" bindtap="hm_pass">通过</view>
+                 <view wx:if="{{!item.submit}}" class="hm-un-rejest">通过</view>
                 <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
               </view>
             </view>
@@ -770,10 +775,14 @@
                 <view class="hm-flex-fold">
                   
                   <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-aud-tip" style="color:rgba(70,191,106,1);">审核通过</view>
-                  <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
-                  
-                  <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="admin_aud_fold"></image>
+                  <view wx:elif="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
+                  <view wx:else="" class="hm-aud-tip"></view>
+
+                  <view class="fold_margin">
+                    <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="admin_aud_fold"></image>
                   <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="admin_aud_fold"></image>
+                  </view>
+                  
                 </view>
                 <view wx:if="{{item.fold}}">
                 <view class="hm-un-heng"></view>
