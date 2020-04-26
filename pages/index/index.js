@@ -1130,6 +1130,11 @@ Page({
     var ask_xb = e.currentTarget.dataset.ask_xb
     console.log(lea_role, ask_xb)
     if (lea_role == 3){
+
+      var cscs = "admin_unaud_leave[" + ask_xb + "].submit"
+      that.setData({
+        [cscs]: true
+      })
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -1137,13 +1142,12 @@ Page({
         "ask_id":that.data.admin_unaud_leave[ask_xb].id
       }
       console.log(params)
+
+      
       app.ljjw.jwAdminAskforleaveVerify(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-          var cscs = "admin_unaud_leave[" + ask_xb + "].submit"
-          that.setData({
-            [cscs]: true
-          })
+          
           wx.showToast({
             title: '操作成功',
             duration: 2000
@@ -1171,10 +1175,19 @@ Page({
           })
 
           that.admin_askfor()
-        } 
+        }else{
+          var cscs = "admin_unaud_leave[" + ask_xb + "].submit"
+          that.setData({
+            [cscs]: false
+          })
+        }
         console.log("我是管理员请假通过")
       })
     } else if (lea_role == 2){
+      var cscs = "hm_unaud_leave[" + ask_xb + "].submit"
+      that.setData({
+        [cscs]: true
+      })
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -1182,13 +1195,11 @@ Page({
         "ask_id": that.data.hm_unaud_leave[ask_xb].id
       }
       console.log(params)
+      
       app.ljjw.jwJiaowuAskforleaveVerify(params).then(d => {
         console.log(d)
         if (d.data.status == 1) {
-          var cscs = "hm_unaud_leave[" + ask_xb + "].submit"
-          that.setData({
-            [cscs]:true
-          })
+          
           wx.showToast({
             title: '操作成功',
             duration: 2000
@@ -1218,6 +1229,11 @@ Page({
           that.jw_askfor()
           
 
+        }else{
+          var cscs = "hm_unaud_leave[" + ask_xb + "].submit"
+          that.setData({
+            [cscs]: false
+          })
         }
         console.log("我是教务请假通过")
       })

@@ -9,6 +9,8 @@
       <image class="lea-time-sel" src="../../images/next.png"></image>
     </view>
   </picker>
+
+  <text class="lea_tip">*支持多天请假，更换上方请假时间即可。</text>
   
   <!-- 选择日期的课表 -->
   <view wx:for="{{dayCourse}}" wx:for-index="xb">
@@ -71,6 +73,14 @@
   
   
   <!-- 请假事由最大kuang -->
+  </view>
+
+  <view class="promise_layout">
+    <image wx:if="{{!promise}}" class="promise_img" src="../../images/no_promise.png" bindtap="promise"></image>
+    <image wx:if="{{promise}}" class="promise_img" src="../../images/promised.png" bindtap="promise"></image>
+    <text class="promise_cont" style="{{promise?'color:rgba(39,39,39,1);':''}}">我承诺：本人在请假期间自觉遵守法律法规和社会公德，在请假期间，发生一切意外或恶性事件责任由本人承担。
+</text>
+  
   </view>
 
   <view class="submit" wx:if="{{submit_yes}}" bindtap='lea_submit' style="background:rgba(45,193,160,1);">提交</view>

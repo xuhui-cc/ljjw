@@ -15,7 +15,8 @@ Page({
     sel_id1: [],
     qwq:[],
     lea_for:'',
-    submit_yes:false
+    submit_yes:false,
+    promise:false,
   },
 
   /**
@@ -32,6 +33,39 @@ Page({
     that.setData({
       cur_date: cur_date
     })
+  },
+
+  //承诺
+  promise:function(){
+    let that = this
+    that.setData({
+      promise: !that.data.promise
+    })
+    if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
+      for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
+        if (that.data.lea_date_arr1[i].hh != '') {
+          if (that.data.promise) {
+            that.setData({
+              submit_yes: true
+            })
+          }else{
+            that.setData({
+              submit_yes: false
+            })
+          }
+
+        } else {
+          that.setData({
+            submit_yes: false
+          })
+        }
+
+      }
+    } else {
+      that.setData({
+        submit_yes: false
+      })
+    }
   },
 
   //请假时间选择器
@@ -134,9 +168,16 @@ Page({
     if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
       for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
         if (that.data.lea_date_arr1[i].hh != '') {
-          that.setData({
-            submit_yes: true
-          })
+          if (that.data.promise){
+            that.setData({
+              submit_yes: true
+            })
+          } else {
+            that.setData({
+              submit_yes: false
+            })
+          }
+          
         } else {
           that.setData({
             submit_yes: false
@@ -237,9 +278,15 @@ Page({
     if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
       for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
         if (that.data.lea_date_arr1[i].hh != '') {
-          that.setData({
-            submit_yes: true
-          })
+          if (that.data.promise) {
+            that.setData({
+              submit_yes: true
+            })
+          } else {
+            that.setData({
+              submit_yes: false
+            })
+          }
         } else {
           that.setData({
             submit_yes: false
@@ -266,9 +313,15 @@ Page({
     if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
       for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
         if (that.data.lea_date_arr1[i].hh != '') {
-          that.setData({
-            submit_yes: true
-          })
+          if (that.data.promise) {
+            that.setData({
+              submit_yes: true
+            })
+          } else {
+            that.setData({
+              submit_yes: false
+            })
+          }
         } else {
           that.setData({
             submit_yes: false
@@ -337,13 +390,20 @@ Page({
           duration: 2000
         })
         console.log("请假提交成功")
+        wx.navigateBack({
+          delta: 1  // 返回上一级页面。
+        })
+      }else{
+        wx.showToast({
+          title: d.data.msg,
+          icon:"none",
+          duration: 2000
+        })
       }
       
     })
     
-    wx.navigateBack({
-      delta: 1  // 返回上一级页面。
-    })
+    
   },
 
   /**

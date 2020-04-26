@@ -195,7 +195,7 @@ page{
 .submit{
   left: 30rpx;
   margin-left: 30rpx;
-  margin-top: 100rpx;
+  margin-top: 70rpx;
   /* bottom: 150rpx; */
   /* position: fixed; */
   width:690rpx;
@@ -208,4 +208,36 @@ page{
   background:rgba(222,222,222,1);
   opacity:1;
   border-radius:49rpx;
+}
+.lea_tip{
+  margin-left: 29rpx;
+  margin-top: 20rpx;
+  width:444rpx;
+  height:33rpx;
+  font-size:24rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:33rpx;
+  color:rgba(241,68,68,1);
+  opacity:1;
+}
+.promise_img{
+  margin-left: 17rpx;
+  margin-top: 20rpx;
+  width:51rpx;
+  height:51rpx;
+}
+.promise_layout{
+  display: flex;
+}
+.promise_cont{
+  margin-top: 24rpx;
+  width:656rpx;
+  height:104rpx;
+  font-size:23rpx;
+  font-family:PingFang SC;
+  font-weight:400;
+  line-height:39rpx;
+  color:rgba(180,180,180,1);
+  opacity:1;
 }

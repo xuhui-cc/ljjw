@@ -1087,27 +1087,31 @@ page{
   opacity:1;
 }
 .hm-aud-pro-time{
-  margin-left: 175rpx;
+  margin-left: 155rpx;
   margin-top: 30rpx;
-  width:244rpx;
+  width:260rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
   font-weight:400;
   line-height:33rpx;
+  text-align: right;
   color:rgba(180,180,180,1);
+  /* background: rgb(204, 109, 109); */
   opacity:1;
 }
 .admin-aud-pro-time{
-  margin-left: 225rpx;
+  margin-left: 205rpx;
   margin-top: 30rpx;
-  width:244rpx;
+  width:260rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
   font-weight:400;
   line-height:33rpx;
+  text-align: right;
   color:rgba(180,180,180,1);
+  /* background: rgb(204, 109, 109); */
   opacity:1;
 }
 .hm-aud-pro{
@@ -1506,13 +1510,14 @@ page{
   padding-bottom: 80rpx;
 }
 .fold_margin{
-  margin-left: 440rpx;
-  margin-top: 27rpx;
-  width:40rpx;
-  height:40rpx;
+  margin-left: 400rpx;
+  margin-top: 7rpx;
+  width:80rpx;
+  height:60rpx;
+  background: rgb(168, 59, 59);
 }
 .hm-aud-unfold{
-  
+  margin-left: 35rpx;
   width:18rpx;
   height:18rpx;
 

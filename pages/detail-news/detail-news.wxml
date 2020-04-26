@@ -13,8 +13,8 @@
     <rich-text nodes="{{content}}"></rich-text>
   </view>
   <view class='flex_warp'>
-    <view wx:for="{{pics}}" wx:key="index">
-      <image class='img' src='{{item}}'></image>
+    <view wx:for="{{pics}}" wx:key="index" data-xb="{{index}}">
+      <image class='img' src='{{item}}' bindtap='previewImg' data-xb="{{index}}"></image>
     </view> 
     
   </view>

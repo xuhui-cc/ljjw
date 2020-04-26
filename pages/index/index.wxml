@@ -616,12 +616,13 @@
                   </view>
                   <view wx:if="{{item.verify_list.length == 2}}">
                     <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-aud-tip" style="color:rgba(70,191,106,1);">审核通过</view>
-                    <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
+                    <view wx:elif="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
+                    <view wx:else="" class="hm-aud-tip"></view>
                   </view>
                   
-                  <view class="fold_margin">
-                    <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="aud_fold"></image>
-                  <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="aud_fold"></image>
+                  <view class="fold_margin" data-aud_xb="{{index}}" bindtap="aud_fold">
+                    <image wx:if="{{!item.fold}}"  class="hm-aud-unfold" src="../../images/xsj.png" ></image>
+                  <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" ></image>
                   </view>
                   
                   
@@ -744,7 +745,7 @@
                 </view>
               <view class="hm-flex">
                 <view wx:if="{{!item.submit}}" class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}" bindtap="hm_pass">通过</view>
-                 <view wx:if="{{!item.submit}}" class="hm-un-rejest">通过</view>
+                 <view wx:if="{{item.submit}}" class="hm-un-rejest">通过</view>
                 <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
               </view>
             </view>
@@ -778,9 +779,9 @@
                   <view wx:elif="{{sitem.verify_list[1].verify_status == 2}}" class="hm-aud-tip" style="color:rgba(241,68,68,1);">审核驳回</view>
                   <view wx:else="" class="hm-aud-tip"></view>
 
-                  <view class="fold_margin">
-                    <image wx:if="{{!item.fold}}" data-aud_xb="{{index}}" class="hm-aud-unfold" src="../../images/xsj.png" bindtap="admin_aud_fold"></image>
-                  <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" data-aud_xb="{{index}}" bindtap="admin_aud_fold"></image>
+                  <view class="fold_margin" data-aud_xb="{{index}}" bindtap="admin_aud_fold">
+                    <image wx:if="{{!item.fold}}"  class="hm-aud-unfold" src="../../images/xsj.png" ></image>
+                  <image wx:else="" class="hm-aud-unfold" src="../../images/ssj.png" ></image>
                   </view>
                   
                 </view>

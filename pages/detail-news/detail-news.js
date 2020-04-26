@@ -26,6 +26,20 @@ Page({
 
   },
 
+  previewImg: function (e) {
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    
+    
+    console.log(xb)
+    var imgs = that.data.pics
+    wx.previewImage({
+      current: that.data.pics[xb],
+      urls: imgs
+    })
+
+  },
+
   back: function () {
     wx.navigateBack({
       delta: 1  // 返回上一级页面。
