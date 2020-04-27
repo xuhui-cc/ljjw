@@ -1514,7 +1514,7 @@ page{
   margin-top: 7rpx;
   width:80rpx;
   height:60rpx;
-  background: rgb(168, 59, 59);
+  /* background: rgb(168, 59, 59); */
 }
 .hm-aud-unfold{
   margin-left: 35rpx;
