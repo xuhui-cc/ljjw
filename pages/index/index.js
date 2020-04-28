@@ -36,7 +36,7 @@ Page({
     if (!role) {
       that.setData({
         role: -1,
-        login: flase,
+        login: false,
         uid: wx.getStorageSync("uid"),
         userInfo : wx.getStorageSync("userInfo"),
         

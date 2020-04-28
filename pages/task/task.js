@@ -23,7 +23,7 @@ Page({
     if (!role) {
       that.setData({
         role: -1,
-        login:flase
+        login:false
       })
       
     } else {
