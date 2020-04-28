@@ -37,7 +37,7 @@ page{
   /* background: rgba(39,39,39,1); */
 }
 .mask-layout{
-  position: absolute;
+  position: fixed;
   display: block;
   width:750rpx;
   height:1624rpx;
@@ -46,7 +46,7 @@ page{
   z-index: 200;
 }
 .reject-layout{
-  position: absolute;
+  position: fixed;
   margin-top: 300rpx;
   margin-left: 86rpx;
   width:578rpx;

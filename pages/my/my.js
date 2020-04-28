@@ -67,10 +67,17 @@ Page({
         if(d.data.status == 1){
           that.setData({
             mydata: d.data.data,
-            stu_class: d.data.data.classes
+            // stu_class: d.data.data.classes
             
           })
-          console.log(that.data.mydata)
+          if (that.data.mydata.status_text.indexOf("请完成您的基础信息") == -1){
+            that.setData({
+              // mydata: d.data.data,
+              stu_class: d.data.data.classes
+
+            })
+          }
+          console.log(that.data.mydata,"mydata")
           if (that.data.mydata.status_text.indexOf("请完成您的基础信息") != -1){
             wx.setStorageSync("stu_sta", false)
           }else{
@@ -133,7 +140,7 @@ Page({
             }
           }
           
-          console.log(that.data.mydata.files)
+          // console.log(that.data.mydata.files)
           console.log("学生——我的主页接口获取成功")
         }
         

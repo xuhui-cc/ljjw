@@ -25,10 +25,11 @@
       <view class="state-layout">
         <view wx:if="{{mydata.realname != null}}" class="my-name">{{mydata.realname}}</view>
         <view wx:else="" class="my-name">{{userInfo.name}}</view>
-        <view class="flex" bindtap="to_stu_info" data-type="{{0}}">
+        <view  class="flex" >
           <image wx:if="{{mydata.status_text == '在校'}}" class="school" src="../../images/inschool.png"></image>
           <image wx:if="{{mydata.status_text == '离校'}}" class="school" src="../../images/outschool.png"></image>
-          <view class="my-state">{{mydata.status_text}}</view>
+          <view wx:if="{{mydata.status_text == '在校' || mydata.status_text == '离校' || mydata.status_text == '基础信息审核中'}}" class="my-state">{{mydata.status_text}}</view>
+          <view wx:else="{{mydata.status_text == '请完成您的基础信息'}}" bindtap="to_stu_info" data-type="{{0}}" class="my-state">{{mydata.status_text}}</view>
           <image wx:if="{{mydata.status_text == '请完成您的基础信息'}}" class="to-add" src="../../images/next.png" ></image>
         </view>
       </view>

@@ -14,6 +14,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    setTimeout(() => {
+      wx.startPullDownRefresh()//通过方法调用刷新
+    }, 1000)
     let that = this
     var class_id = options.class_id
     that.setData({
@@ -70,9 +73,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    setTimeout(() => {
-      wx.startPullDownRefresh()//通过方法调用刷新
-    }, 1000)
+    // setTimeout(() => {
+    //   wx.startPullDownRefresh()//通过方法调用刷新
+    // }, 1000)
   },
 
   /**

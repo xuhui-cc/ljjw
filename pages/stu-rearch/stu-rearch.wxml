@@ -10,9 +10,10 @@
   <view class="flex">
     <view class="rearch-bg">
       <image class="rea-img" src="../../images/search_w.png"></image>
-      <input class="rea-cont" placeholder="请输入搜索内容名称" bindinput='search'></input>
+      <input class="rea-cont" placeholder="请输入搜索内容名称" bindinput='search' value="{{input_title}}"></input>
+      <image class="rdel-img" src="../../images/rea_del.png" bindtap="rea_del"></image>
     </view>
-    <view class="cancel">取消</view>
+    <view class="cancel" bindtap="search_button">搜索</view>
   
   
   </view>
@@ -56,18 +57,22 @@
       </view>
     </view> -->
 
-
-    <view class="read-layout" wx:if="{{csmorningRead}}">
-      <view class="flex">
-        <view class="shu"></view>
-        <view class="head">{{csmorningRead[0].title}}</view>
-      </view>
-      <view class="flex_warp">
-        <view wx:for="{{csmorningRead[0].pics}}" wx:key="img_index" >
-          <image class='read-img'  data-xb='{{index}}' bindtap='previewImg' src='{{item}}'></image>
+    <view wx:for="{{csmorningRead}}" wx:key="index" wx:for-index="xb" wx:for-item="item" wx:if="{{csmorningRead}}">
+      <view class="read-layout" >
+        <view class="flex">
+          <view class="shu"></view>
+          <view class="head">{{item.title}}</view>
+        </view>
+        <view class="flex_warp">
+          <view wx:for="{{item.pics}}" wx:key="img_index" wx:for-item="pitem">
+            <image class='read_img' data-dxb='{{xb}}' data-xb='{{index}}' bindtap='previewImg' src='{{pitem}}'></image>
+          </view>
+          
         </view>
       </view>
     </view>
+
+    <image wx:if="{{csmorningRead == ''}}" class="null_img" src="../../images/rearch_null.png"></image>
 
 
   </view>

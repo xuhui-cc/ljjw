@@ -461,7 +461,7 @@ page{
   /* width: 690rpx;
   margin-left: 30rpx; */
   margin-top: 300rpx;
-  margin-bottom: 250rpx;
+  padding-bottom: 250rpx;
 }
 .leave{
   margin-left: 30rpx;

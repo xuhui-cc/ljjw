@@ -2343,7 +2343,8 @@ Page({
   //点击某一天,课表
   clickDay(e) {
     let that = this
-    
+    // var dxb = e.currentTarget.dataset.weekIndex
+    // console.log(dxb,"dxb")
     if (e.currentTarget.dataset.day === -1) return;
     that.setData({
       showDay: e.currentTarget.dataset.day,

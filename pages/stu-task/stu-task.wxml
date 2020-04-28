@@ -28,7 +28,7 @@
           <view>
             <view class="task1_head">{{item.subject}}</view>
             <view class="task1_title">{{item.title}}</view>
-            <view class="img_layout">
+            <view class="img_layout" wx:if="{{item.attach != ''}}">
               <image class='big_img' src='../../images/big.png'></image>
               <image class="task1_img" src="{{item.attach}}"></image>
             </view>

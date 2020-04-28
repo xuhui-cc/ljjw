@@ -132,8 +132,8 @@ Page({
 
         var token = wx.getStorageSync('token');
         wx.uploadFile({
-          url: 'http://cs.szgk.cn/api.php?',
-          // url: 'https://szgk.cn/api.php?',
+          // url: 'http://cs.szgk.cn/api.php?',
+          url: 'https://szgk.cn/api.php?',
           filePath: tempFilePaths[0],
           name: 'file',
           

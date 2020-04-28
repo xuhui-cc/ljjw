@@ -39,32 +39,55 @@ Page({
     })
   },
 
+  // previewImg: function (e) {
+  //   let that = this
+  //   var xb = e.currentTarget.dataset.xb
+  //   // var dxb = e.currentTarget.dataset.dxb
+  //   // console.log(dxb)
+  //   var imgs = that.data.csmorningRead[0].pics
+  //   wx.previewImage({
+  //     current: that.data.csmorningRead[0].pics[xb],
+  //     urls: imgs
+  //   })
+
+  // },
+
   previewImg: function (e) {
     let that = this
     var xb = e.currentTarget.dataset.xb
-    // var dxb = e.currentTarget.dataset.dxb
-    // console.log(dxb)
-    var imgs = that.data.csmorningRead[0].pics
+    var dxb = e.currentTarget.dataset.dxb
+    console.log(dxb)
+    var imgs = that.data.csmorningRead[dxb].pics
     wx.previewImage({
-      current: that.data.csmorningRead[0].pics[xb],
+      current: that.data.csmorningRead[dxb].pics[xb],
       urls: imgs
     })
 
   },
 
-  search: function (e) {
+  search_button:function(e){
     let that = this
-    console.log(e.detail.value)
-    that.setData({
-      input_title: e.detail.value
-    })
     if (that.data.input_title == ''){
+      wx.showToast({
+        title: '请输入搜索内容',
+        icon:"none",
+        duration:2000
+      })
+    }else{
+      that.search_fun()
+    }
+    
+  },
+
+  search_fun:function(){
+    let that = this
+    if (that.data.input_title == '') {
       that.setData({
         csmorningRead: ''
       })
     }
 
-    if (that.data.type == 1 && that.data.input_title != '' && that.data.role == 4){
+    if (that.data.type == 1 && that.data.input_title != '' && that.data.role == 4) {
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -88,9 +111,9 @@ Page({
           that.setData({
             csmorningRead: that.data.morningRead
           })
-          
+
           console.log(that.data.csmorningRead)
-          
+
         }
 
 
@@ -140,7 +163,7 @@ Page({
             mydata: d.data.data
           })
           console.log("资料接口获取成功")
-        }else{
+        } else {
           that.setData({
             mydata: ""
           })
@@ -150,8 +173,25 @@ Page({
       })
 
     }
+  },
+
+  search: function (e) {
+    let that = this
+    console.log(e.detail.value)
+    that.setData({
+      input_title: e.detail.value
+    })
+    that.search_fun()
 
 
+  },
+
+  rea_del:function(){
+    let that = this
+    that.setData({
+      input_title:'',
+
+    })
   },
 
   open_file: function (e) {
