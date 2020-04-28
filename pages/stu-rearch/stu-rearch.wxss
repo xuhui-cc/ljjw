@@ -72,6 +72,12 @@
   width:29rpx;
   height:30rpx;
 }
+.rdel-img{
+  margin-left: 31rpx;
+  margin-top: 11rpx;
+  width:52rpx;
+  height:52rpx;
+}
 .rea-cont{
   margin-left: 19rpx;
   margin-top: 15rpx;
@@ -87,7 +93,7 @@
 }
 .cancel{
   margin-left: 35rpx;
-  margin-top: 222rpx;
+  margin-top: 219rpx;
   width:60rpx;
   height:42rpx;
   font-size:30rpx;
@@ -210,7 +216,7 @@
   margin-left: 13rpx;
   margin-top: 24rpx;
   
-  height:42rpx;
+  /* height:42rpx; */
   font-size:30rpx;
   font-family:PingFang SC;
   font-weight:bold;
@@ -236,15 +242,29 @@
   width:18rpx;
   height:18rpx;
 }
-.read-img{
+/* .read-img{
   margin-left: 21rpx;
   margin-top: 29rpx;
   margin-right: 9rpx;
   width:140rpx;
   height:192rpx;
+} */
+.read_img{
+  margin-right: 30rpx;
+  margin-top: 29rpx;
+  width: 140rpx;
+  height: 192rpx;
 }
-.flex_warp{
+/* .flex_warp{
   margin-left: 80rpx;
+  display: flex;
+  flex-wrap: wrap;
+  width: 510rpx;
+} */
+.flex_warp{
+  /* margin-top: 20rpx; */
+  margin-left: 106rpx;
+  padding-bottom: 30rpx;
   display: flex;
   flex-wrap: wrap;
   width: 510rpx;

@@ -261,9 +261,13 @@ Page({
             title: '新建成功',
             duration:1500
           })
+          // that.setData({
+          //   input_condition:''
+          // })
         }
         that.setData({
-          add_mask: false
+          add_mask: false,
+          input_condition: ''
         })
         var params = {
           "token": wx.getStorageSync("token"),
@@ -321,7 +325,8 @@ Page({
           })
         }
         that.setData({
-          add_mask:false
+          add_mask: false,
+          input_condition: ''
         })
         var params = {
           "token": wx.getStorageSync("token"),
