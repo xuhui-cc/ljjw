@@ -1,6 +1,6 @@
-// const URI = 'http://cs.szgk.cn/api.php'    //测试接口
+const URI = 'http://cs.szgk.cn/api.php'    //测试接口
 
-const URI = 'https://www.szgk.cn/api.php'    //正式接口
+// const URI = 'https://www.szgk.cn/api.php'    //正式接口
 
 
 const fetch = require('./fetch')
