@@ -54,5 +54,5 @@ Component({
         selected: data.index
       })
     }
-  }
+  },
 })
