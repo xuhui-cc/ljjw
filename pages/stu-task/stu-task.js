@@ -489,7 +489,7 @@ Page({
     if (that.data.task[task_index].type == 1){
       var newarray = [{
         memo: that.data.task[task_index].submit_content,
-        pics: '',
+        pics: that.data.task[task_index].task_detail.imgs.join(",") ,
         attach: ''
       }];
 
@@ -970,7 +970,7 @@ Page({
                     var imgs = []
                     that.setData({
                   
-                      [css]: imgs,
+                      [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
 
                     })
 
@@ -1021,11 +1021,20 @@ Page({
             else if (that.data.task[i].type == 1) {
 
               var imgs = []
-              var css = "task[" + i + "].task_detail.imgs"
-              that.setData({
-                [css]: imgs
-              })
-              console.log("==========================================imgs")
+              if (that.data.task[i].attach != ''){
+                var css = "task[" + i + "].task_detail.imgs"
+                that.setData({
+                  [css]: that.data.task[i].attach.split(",")
+                })
+                console.log("==========================================imgs")
+              }else{
+                var css = "task[" + i + "].task_detail.imgs"
+                that.setData({
+                  [css]: imgs
+                })
+                console.log("==========================================imgs")
+              }
+              
 
             }
             else if (that.data.task[i].type == 4) {
@@ -1154,27 +1163,37 @@ Page({
                   
                   for(var q=0;q<that.data.task.length;q++){
                     if(q == task_index){
-                      for (var w = 0; w < that.data.task[q].task_detail.length;w++){
-                        if(w == task_detail_index){
-                          for (var n = 0; n < that.data.task[q].task_detail[w].options.length;n++){
-                            if (n == options_index){
-                              if (that.data.task[q].type == 3) {
-                                var css = "task[" + q + "].task_detail[" + w + "].fieldlist[" + n + "].imgs"
-                                that.setData({
-                                  [css]: that.data.imgs
-                                })
-                              } else {
-                                var css = "task[" + q + "].task_detail[" + w + "].options[" + n + "].imgs"
-                                that.setData({
-                                  [css]: that.data.imgs
-                                })
+                      if (that.data.task[q].type == 1){
+                        var css = "task[" + q + "].task_detail.imgs"
+                        that.setData({
+                          [css]: that.data.imgs
+                        })
+                      }else{
+                        for (var w = 0; w < that.data.task[q].task_detail.length; w++) {
+                          if (w == task_detail_index) {
+                            if (that.data.task[q].type == 3) {
+                              for (var n = 0; n < that.data.task[q].task_detail[w].fieldlist.length; n++) {
+                                if (n == options_index) {
+                                  var css = "task[" + q + "].task_detail[" + w + "].fieldlist[" + n + "].imgs"
+                                  that.setData({
+                                    [css]: that.data.imgs
+                                  })
+                                }
+                              }
+                            } else if (that.data.task[q].type == 2) {
+                              for (var n = 0; n < that.data.task[q].task_detail[w].options.length; n++) {
+                                if (n == options_index) {
+                                  var css = "task[" + q + "].task_detail[" + w + "].options[" + n + "].imgs"
+                                  that.setData({
+                                    [css]: that.data.imgs
+                                  })
+                                }
                               }
                             }
                           }
-                         
-                          
                         }
                       }
+                      
                     }
                   }
 
