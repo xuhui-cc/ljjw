@@ -116,7 +116,7 @@
     </view>
 
   </view>
-  <!-- 学生 -->
+  <!-- 非学生 -->
 
   <view wx:else="{{role > 0 && role < 4}}">
 

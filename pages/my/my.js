@@ -557,17 +557,15 @@ Page({
         "iv": iv,
         "encryptedData": encryptedData
       }
-      console.log(params)
+      
       app.ljjw.xcxjwlogin(params).then(d => {
-        
+        console.log(d)
         if (d.data.status == 0) {
-          console.log(d.data)
           var role = d.data.role.split(",")
           if(role)
             if (d.data.class_ids != null){
               var class_ids = d.data.class_ids.split(",")
               wx.setStorageSync('class_ids', class_ids);
-              console.log(d.data.class_ids)
             }
           
           if(role.length == 2){

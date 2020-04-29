@@ -7,21 +7,46 @@ page{
   background:rgba(255,255,255,1);
   opacity:1;
 }
-.flex{
+
+.baseInfo {
+  height: 203rpx;
   display: flex;
+  align-items: center;
 }
+
+#baseInfoExceptAvatar {
+  height: 90rpx;
+  margin-left: 30rpx;
+  justify-content: space-between;
+}
+
+#nameGender {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  margin-top: 3.5rpx;
+}
+
+#gender {
+  width: 18.11rpx;
+  height: 20.37rpx;
+  margin-left: 7rpx;
+}
+
+#phone {
+  color: #8f8f8f;
+  font-size: 28rpx;
+}
+
 .ava{
   margin-left: 50rpx;
-  margin-top: 44rpx;
   width:115rpx;
   height:115rpx;
   border-radius: 50%;
 }
 
 .name{
-  margin-left: 30rpx;
-  margin-top: 79rpx;
-  width:128rpx;
+  max-width:128rpx;
   height:45rpx;
   font-size:32rpx;
   font-family:PingFang SC;
@@ -30,6 +55,7 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
+
 .jf{
   position: absolute;
   margin-left: 570rpx;
@@ -38,12 +64,54 @@ page{
   height:203rpx;
 }
 .heng{
-  margin-top: 44rpx;
-  width:750rpx;
-  height:0rpx;
-  border:1rpx solid rgba(238,238,238,1);
-  opacity:1;
+  height:0.5rpx;
+  background: #eee;
 }
+
+#eduInfo {
+  padding-top: 12.5rpx;
+  padding-bottom: 24.5rpx;
+  background-color: white;
+}
+
+.flex{
+  display: flex;
+  height: 95rpx;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eduInfo_sub {
+  display: flex;
+  margin-left: 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eduItem_icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-left: 41rpx;
+}
+
+.eduItem_name {
+  margin-left: 22rpx;
+  color: #272727;
+  font-size: 30rpx;
+  max-width: 150rpx;
+}
+
+.eduItem_value {
+  /* margin-left: 10rpx; */
+  margin-right: 39rpx;
+  /* text-align: right; */
+  /* align-items: flex-end; */
+  color: #1a1a1a;
+  font-size: 28rpx;
+}
+
 .byyx-img{
   margin-left: 42rpx;
   margin-top: 63rpx;
