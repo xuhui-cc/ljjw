@@ -36,12 +36,18 @@ Page({
     if (!role) {
       that.setData({
         role: -1,
-        login: flase,
+        login: false,
         uid: wx.getStorageSync("uid"),
         userInfo : wx.getStorageSync("userInfo"),
-        
         // stu_sta: wx.getStorageSync("stu_sta")
+      }),
+      wx.switchTab({
+        url: '/pages/my/my',
       })
+      // that.getTabBar().setData({
+      //   selected: 3
+      // })
+      
     } else {
       that.setData({
         role: role,
