@@ -487,6 +487,9 @@ Page({
     var task_index = e.currentTarget.dataset.task_index
     console.log(task_index + "task_index")
     if (that.data.task[task_index].type == 1){
+      that.setData({
+        submit_arr:[]
+      })
       var newarray = [{
         memo: that.data.task[task_index].submit_content,
         pics: that.data.task[task_index].task_detail.imgs.join(",") ,
@@ -803,7 +806,7 @@ Page({
               })
             }
           
-            if (that.data.task[i].type == 2) {
+            if (that.data.task[i].type == 2) {                      //选项式已完成
               for (var n = 0; n < that.data.task[i].title.length; n++) {
                 var title = "task[" + i + "].task_detail[" + n + "].title"
                 that.setData({
@@ -910,7 +913,7 @@ Page({
                 }
 
               }
-            } else if (that.data.task[i].type == 3) {
+            } else if (that.data.task[i].type == 3) {                                           //字段式已完成
               for (var n = 0; n < that.data.task[i].title.length; n++) {
                 var title = "task[" + i + "].task_detail[" + n + "].title"
                 that.setData({
@@ -949,35 +952,48 @@ Page({
                 })
 
                 for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
+
                   var arr = []
 
-                  // for (let n in that.data.task[i].task_detail[j].fieldlist[k].lists) {
+                  for (let n in that.data.task[i].task_detail[j].fieldlist[k].lists) {
 
-                  //   arr.push(that.data.task[i].task_detail[j].fieldlist[k].lists[n]);
-                  //   console.log(arr)
-                  //   var imgs = []
-                  //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
-                  //   var cs = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].list"
-
-                  //   that.setData({
-                  //     [cs]: arr,
-                  //     [css]: imgs,
-
-                  //   })
-                  // }
+                    arr.push(that.data.task[i].task_detail[j].fieldlist[k].lists[n]);
+                    console.log(arr)
+                    // var imgs = []
                     var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
-                    
-                    var imgs = []
+                    var cs = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].list"
+
                     that.setData({
-                  
-                      [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
+                      [cs]: arr,
+                      [css]: [],
 
                     })
-
+                  }
                   if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
-                    that.data.task[i].task_detail[j].fieldlist[k].imgs.push(that.data.task[i].task_detail[j].finished_info.attach[k])
+                    var qqq = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+                    that.setData({
+                      [qqq]: that.data.task[i].task_detail[j].finished_info.attach[k].split(",")
+                    })
+
+
                     console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
                   }
+                  // var arr = []
+
+                 
+                  //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+                    
+                  //   var imgs = []
+                  //   // that.setData({
+                  
+                  //   //   [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
+
+                  //   // })
+
+                  // if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
+                  //   that.data.task[i].task_detail[j].fieldlist[k].imgs.push(that.data.task[i].task_detail[j].finished_info.attach[k])
+                  //   console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
+                  // }
                   for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
 
                     var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].item"
@@ -1018,13 +1034,13 @@ Page({
               }
 
             }
-            else if (that.data.task[i].type == 1) {
+            else if (that.data.task[i].type == 1) {   //普通式已完成处理
 
               var imgs = []
               if (that.data.task[i].attach != ''){
                 var css = "task[" + i + "].task_detail.imgs"
                 that.setData({
-                  [css]: that.data.task[i].attach.split(",")
+                  [css]: that.data.task[i].task_detail.finished_info.pics.split(",")
                 })
                 console.log("==========================================imgs")
               }else{
@@ -1037,7 +1053,7 @@ Page({
               
 
             }
-            else if (that.data.task[i].type == 4) {
+            else if (that.data.task[i].type == 4) {      //确认考勤已完成处理
               for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
                 // var cs = "leave[" + i + "].ask_info[" + j + "].pin"
                 var _cs = "task[" + i + "].task_detail[" + j + "].cs"
@@ -1136,11 +1152,8 @@ Page({
           let tempFilePaths = res.tempFilePaths;
           console.log(tempFilePaths)
           let imgs = [];
-
           for (let i = 0; i < tempFilePaths.length; i++) {
-
             var token = wx.getStorageSync('token');
-
             wx.uploadFile({
               url: 'http://cs.szgk.cn/api.php?',
               // url: 'https://szgk.cn/api.php?',
@@ -1156,7 +1169,6 @@ Page({
                 console.log(hhh)
                 if (hhh.status == 1) {
                   that.data.img.unshift(hhh.data)
-
                   that.setData({
                     imgs: that.data.img
                   })
@@ -1164,28 +1176,47 @@ Page({
                   for(var q=0;q<that.data.task.length;q++){
                     if(q == task_index){
                       if (that.data.task[q].type == 1){
-                        var css = "task[" + q + "].task_detail.imgs"
-                        that.setData({
-                          [css]: that.data.imgs
-                        })
+                        
+                          that.data.task[q].task_detail.imgs.push(that.data.imgs)
+                        
+                          var css = "task[" + q + "].task_detail.imgs"
+                          that.setData({
+                            [css]: that.data.task[q].task_detail.imgs
+                          })
+                          that.setData({
+                            imgs: [],
+
+                          })
+                        // }
+                        
                       }else{
                         for (var w = 0; w < that.data.task[q].task_detail.length; w++) {
                           if (w == task_detail_index) {
                             if (that.data.task[q].type == 3) {
                               for (var n = 0; n < that.data.task[q].task_detail[w].fieldlist.length; n++) {
                                 if (n == options_index) {
+                                  that.data.task[q].task_detail[w].fieldlist[n].imgs.push(that.data.imgs)
                                   var css = "task[" + q + "].task_detail[" + w + "].fieldlist[" + n + "].imgs"
                                   that.setData({
-                                    [css]: that.data.imgs
+                                    [css]: that.data.task[q].task_detail[w].fieldlist[n].imgs
+                                  })
+                                  that.setData({
+                                    imgs:[],
+                                    
                                   })
                                 }
                               }
                             } else if (that.data.task[q].type == 2) {
                               for (var n = 0; n < that.data.task[q].task_detail[w].options.length; n++) {
                                 if (n == options_index) {
+                                  that.data.task[q].task_detail[w].options[n].imgs.push(that.data.imgs)
                                   var css = "task[" + q + "].task_detail[" + w + "].options[" + n + "].imgs"
                                   that.setData({
-                                    [css]: that.data.imgs
+                                    [css]: that.data.task[q].task_detail[w].options[n].imgs
+                                  })
+                                  that.setData({
+                                    imgs: [],
+                                    
                                   })
                                 }
                               }
@@ -1196,6 +1227,7 @@ Page({
                       
                     }
                   }
+                 
 
                   console.log(that.data.img)
 
@@ -1209,12 +1241,15 @@ Page({
                   console.log(hhh.status)
                 }
 
-
+                
 
 
               }
+              
             })
-
+            that.setData({
+              img: []
+            })
           }
 
         }
@@ -1223,7 +1258,7 @@ Page({
 
   },
 
-  del_img: function (e) {
+  del_img: function (e) {   //选项字段删除图片
     let that = this
     var xb = e.currentTarget.dataset.xb
     console.log(xb  +"xb")
@@ -1233,38 +1268,34 @@ Page({
     console.log(task_detail_index + "task_detail_index")
     var options_index = e.currentTarget.dataset.options_index
     console.log(options_index + "options_index")
-    that.data.imgs.splice(xb, 1);
-    that.setData({
-      imgs: that.data.imgs
-    })
-    // for (var q = 0; q < that.data.task.length; q++) {
-    //   if (q == task_index) {
-    //     for (var w = 0; w < that.data.task[q].task_detail.length; w++) {
-    //       if (w == task_detail_index) {
-    //         var css = "task[" + q + "].task_detail[" + w + "].fieldlist.imgs"
-    //         that.setData({
-    //           [css]: that.data.imgs
-    //         })
-    //       }
-    //     }
-    //   }
-    // }
+    // that.data.imgs.splice(xb, 1);
+    // that.setData({
+    //   imgs: that.data.imgs
+    // })
+    
 
     for (var q = 0; q < that.data.task.length; q++) {
       if (q == task_index) {
         for (var w = 0; w < that.data.task[q].task_detail.length; w++) {
           if (w == task_detail_index) {
-            for (var n = 0; n < that.data.task[q].task_detail[w].options.length; n++) {
-              if (n == options_index) {
-                if (that.data.task[q].type == 3) {
+            if (that.data.task[q].type == 3) {
+              for (var n = 0; n < that.data.task[q].task_detail[w].fieldlist.length; n++) {
+                if (n == options_index) {
+                  that.data.task[q].task_detail[w].fieldlist[n].imgs.splice(xb, 1);
+                  console.log("我是测试")
                   var css = "task[" + q + "].task_detail[" + w + "].fieldlist[" + n + "].imgs"
                   that.setData({
-                    [css]: that.data.imgs
+                    [css]: that.data.task[q].task_detail[w].fieldlist[n].imgs
                   })
-                } else {
+                }
+              }
+            } else if (that.data.task[q].type == 2) {
+              for (var n = 0; n < that.data.task[q].task_detail[w].options.length; n++) {
+                if (n == options_index) {
+                  that.data.task[q].task_detail[w].options[n].imgs.splice(xb, 1);
                   var css = "task[" + q + "].task_detail[" + w + "].options[" + n + "].imgs"
                   that.setData({
-                    [css]: that.data.imgs
+                    [css]: that.data.task[q].task_detail[w].options[n].imgs
                   })
                 }
               }
@@ -1276,6 +1307,34 @@ Page({
       }
     }
     
+  },
+  del_img1: function (e) {   //普通删除图片
+    let that = this
+    var xb = e.currentTarget.dataset.xb
+    console.log(xb + "xb")
+    var task_index = e.currentTarget.dataset.task_index
+    console.log(task_index + "task_index")
+    
+    that.data.imgs.splice(xb, 1);
+    that.setData({
+      imgs: that.data.imgs
+    })
+    
+
+
+    for (var q = 0; q < that.data.task.length; q++) {
+      if (q == task_index) {
+                  var css = "task[" + q + "].task_detail.imgs"
+                  that.setData({
+                    [css]: that.data.imgs
+                  })
+                } 
+      }
+      that.setData({
+        task:that.data.task
+      })
+    
+
   },
 
   /**
