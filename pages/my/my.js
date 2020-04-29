@@ -29,6 +29,17 @@ Page({
 
   onLoad: function (options) {
     let that = this
+
+    wx.checkSession({
+      fail () {
+        wx.login({
+          complete: (res) => {
+            app.updateWxLoginCode(res.code)
+          },
+        })
+      }
+    })
+
     let nowTime = new Date();
     
     var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
@@ -532,74 +543,63 @@ Page({
   //获取微信绑定手机号登录
   getPhoneNumber: function (e) {
     var that = this
-    wx.login({
-      success: res => {
 
-        if (e.detail.errMsg == "getPhoneNumber:ok") {
-          wx.showLoading({
-            title: '登录中...',
-          })
-          wx.login({
-            success(res) {
-              console.log("cccs.code" + res.code)
+    if (e.detail.errMsg == "getPhoneNumber:ok") {
+      wx.showLoading({
+        title: '登录中...',
+      })
 
-              let iv = encodeURIComponent(e.detail.iv);
-              let encryptedData = encodeURIComponent(e.detail.encryptedData);
-              let code = res.code
-              var params = {
-                "code": code,
-                "iv": iv,
-                "encryptedData": encryptedData
-              }
-              console.log(params)
-              app.ljjw.xcxjwlogin(params).then(d => {
-                
-                if (d.data.status == 0) {
-                  console.log(d.data)
-                  var role = d.data.role.split(",")
-                  if(role)
-                    if (d.data.class_ids != null){
-                      var class_ids = d.data.class_ids.split(",")
-                      wx.setStorageSync('class_ids', class_ids);
-                      console.log(d.data.class_ids)
-                    }
-                  
-                  if(role.length == 2){
-                    role[0] = role[1]
-                  }
-                  console.log("登录成功")
-
-                  wx.setStorageSync('token', d.data.token);
-                  wx.setStorageSync('uid', d.data.uid);
-                  wx.setStorageSync('userInfo', d.data.userInfo)
-                  wx.setStorageSync('role', role[0])
-                  
-                  if(role[0] != 4){
-                    wx.setStorageSync('subject', d.data.cate_info)
-                    // wx.setStorageSync('subject_name', d.data.cate_info.name)
-                    console.log(d.data.cate_info)
-                  }
-                  
-                  
-                  
-                  that.onLoad()
-
-
-                } else {
-                  wx.showToast({
-                    title: "登陆失败",
-                    icon: 'none',
-                    duration: 1000
-                  })
-                  console.log(d.data.msg)
-                }
-              })
-              wx.hideLoading()
-            }
-          })
-        }
+      let iv = encodeURIComponent(e.detail.iv);
+      let encryptedData = encodeURIComponent(e.detail.encryptedData);
+      let code = app.getWxLoginCode()
+      var params = {
+        "code": code,
+        "iv": iv,
+        "encryptedData": encryptedData
       }
-    })
+      
+      app.ljjw.xcxjwlogin(params).then(d => {
+        console.log(d)
+        if (d.data.status == 0) {
+          var role = d.data.role.split(",")
+          if(role)
+            if (d.data.class_ids != null){
+              var class_ids = d.data.class_ids.split(",")
+              wx.setStorageSync('class_ids', class_ids);
+            }
+          
+          if(role.length == 2){
+            role[0] = role[1]
+          }
+          console.log("登录成功")
+
+          wx.setStorageSync('token', d.data.token);
+          wx.setStorageSync('uid', d.data.uid);
+          wx.setStorageSync('userInfo', d.data.userInfo)
+          wx.setStorageSync('role', role[0])
+          
+          if(role[0] != 4){
+            wx.setStorageSync('subject', d.data.cate_info)
+            // wx.setStorageSync('subject_name', d.data.cate_info.name)
+            console.log(d.data.cate_info)
+          }
+          
+          
+          
+          that.onLoad()
+
+
+        } else {
+          wx.showToast({
+            title: "登陆失败",
+            icon: 'none',
+            duration: 1000
+          })
+          console.log(d.data.msg)
+        }
+      })
+      wx.hideLoading()
+    }
   },
 
 })

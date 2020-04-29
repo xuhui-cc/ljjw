@@ -8,12 +8,13 @@ App({
   onLaunch: function () {
     // 展示本地存储能力
 
-    
+    let that = this
     // 登录
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
+        that.globalData.wxLoginCode = res.code
+      },
     })
     // 获取用户信息
     wx.getSetting({
@@ -37,6 +38,15 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    wxLoginCode: null,
+  },
+
+  // 微信登录code
+  getWxLoginCode () {
+    return this.globalData.wxLoginCode
+  },
+  updateWxLoginCode (code) {
+    this.globalData.wxLoginCode = code
   }
 })
