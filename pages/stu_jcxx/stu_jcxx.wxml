@@ -13,7 +13,7 @@
       </view>
     </view>
     <view class="heng"></view>
-
+    <!-- 教育信息 -->
     <view id="eduInfo">
       <view class="flex" wx:for="{{mydata.eduList}}" wx:key="identifier">
         <view class="eduInfo_sub">
@@ -22,49 +22,8 @@
         </view>
         <view class="eduItem_value">{{item.value}}</view>
       </view>
-      <!-- 毕业院校 -->
-      <!-- <view class="flex">
-        <image class="byyx-img" src="../../images/byyx.png"></image>
-        <view class="byyx">毕业院校</view>
-        <view class="byyx-cont">{{mydata.graduate_school}}</view>
-      </view> -->
-      <!-- <view class="flex">
-        <image class="byyx-img" src="../../images/bysj.png"></image>
-        <view class="byyx">毕业时间</view>
-        <view class="byyx-cont">{{mydata.graduate_time}}</view>
-      </view>
-      <view class="flex">
-        <image class="byyx-img" src="../../images/zhuanye.png"></image>
-        <view class="byyx">专业</view>
-        <view class="byyx-cont">{{mydata.subject}}</view>
-      </view>
-      <view class="flex">
-        <image class="byyx-img" src="../../images/banji.png"></image>
-        <view class="byyx">班级</view>
-        <view class="byyx-cont">{{mydata.classes[0].classname}}</view>
-      </view>
-      <view class="flex">
-        <image class="byyx-img" src="../../images/zxsj.png"></image>
-        <view class="byyx">在校时间</view>
-        <view class="byyx-cont">{{mydata.study_time}}</view>
-      </view>
-      <view class="flex">
-        <image class="byyx-img" src="../../images/scls.png"></image>
-        <view class="byyx">市场老师</view>
-        <view class="byyx-cont">{{mydata.market_teacher}}</view>
-      </view> -->
     </view>
-    
-  
-  
-  
-  
+
   </view>
 
-
-
-
-
-
-<!-- container -->
 </view>

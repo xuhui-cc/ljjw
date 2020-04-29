@@ -26,9 +26,9 @@
     "pages/graduation_school/graduation_school"
   ],
 "tabBar": {
-  "custom": true,
-  "color": "#7A7E83",
-  "selectedColor": "#3cc51f",
+  "custom": false,
+  "color": "#b4b4b4",
+  "selectedColor": "#2dc1a0",
   "borderStyle": "black",
   "backgroundColor": "#ffffff",
   "list": [

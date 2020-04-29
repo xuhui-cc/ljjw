@@ -104,10 +104,7 @@ page{
 }
 
 .eduItem_value {
-  /* margin-left: 10rpx; */
   margin-right: 39rpx;
-  /* text-align: right; */
-  /* align-items: flex-end; */
   color: #1a1a1a;
   font-size: 28rpx;
 }
