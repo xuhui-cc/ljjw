@@ -7,7 +7,7 @@
       <view id="baseInfoExceptAvatar">
         <view id="nameGender">
           <view class="name">{{mydata.realname}}</view>
-          <image id="gender" src="{{mydata.sex == 1 ? '../../images/male.png' : '../../images/woman.png'}}"></image>
+          <image id="gender" src="{{mydata.sex == 1 ? '../../images/male.png' : '../../images/woman.png'}}" mode="aspectFit"></image>
         </view>
         <text id="phone">{{mydata.phone}}</text>
       </view>

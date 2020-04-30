@@ -12,7 +12,25 @@ function ljjwfetch(api, path, params) {
       data: Object.assign({}, params),
       header: { 'Content-Type': 'json' },
       success: resolve,
-      fail: reject
+      fail: reject,
+      complete (res) {
+        if (res.errMsg == "request:ok"){
+          // status为-9，token过期
+          if (res.data.status && res.data.status == -9) {
+            wx.showToast({
+              title: '登录过期',
+              icon: 'none'
+            })
+            wx.clearStorage({
+              complete: (res) => {
+                wx.switchTab({
+                  url: '/pages/my/my',
+                })
+              },
+            })
+          }
+        }
+      }
     })
   })
 }
@@ -26,7 +44,25 @@ function ljjwfetchpost(api, path, params) {
       method: 'POST',
       header: { 'content-type': 'application/x-www-form-urlencoded' },
       success: resolve,
-      fail: reject
+      fail: reject,
+      complete (res) {
+        if (res.errMsg == "request:ok"){
+          // status为-9，token过期
+          if (res.data.status && res.data.status == -9) {
+            wx.showToast({
+              title: '登录过期',
+              icon: 'none'
+            })
+            wx.clearStorage({
+              complete: (res) => {
+                wx.switchTab({
+                  url: '/pages/my/my',
+                })
+              },
+            })
+          }
+        }
+      }
     })
   })
 }
