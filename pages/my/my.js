@@ -30,16 +30,6 @@ Page({
   onLoad: function (options) {
     let that = this
 
-    wx.checkSession({
-      fail () {
-        wx.login({
-          complete: (res) => {
-            app.updateWxLoginCode(res.code)
-          },
-        })
-      }
-    })
-
     let nowTime = new Date();
     
     var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
@@ -492,6 +482,21 @@ Page({
    */
   onShow: function () {
     this.onLoad()
+
+    // wx.checkSession({
+    //   fail () {
+    //     console.log("sessionKey过期")
+        wx.login({
+          complete: (res) => {
+            app.updateWxLoginCode(res.code)
+          },
+        })
+    //   },
+    //   success () {
+    //     console.log("sessionKey未过期")
+    //   }
+    // })
+
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       console.log('my_onshow')
@@ -591,10 +596,11 @@ Page({
 
         } else {
           wx.showToast({
-            title: "登陆失败",
+            title: "登录失败",
             icon: 'none',
             duration: 1000
           })
+          
           console.log(d.data.msg)
         }
       })

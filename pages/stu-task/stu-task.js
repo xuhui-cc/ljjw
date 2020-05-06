@@ -3,6 +3,15 @@ const app = getApp()
 Page({
 
   /**
+   * 分页数据
+  */
+  pageData: {
+    perpage: 5,
+    page: 1,
+    canLoadNextPage: true,
+  },
+
+  /**
    * 页面的初始数据
    */
   data: {
@@ -24,6 +33,7 @@ Page({
     that.setData({
       class_id : class_id
     })
+    this.pageData.page = 1
     that.un_task()
   },
 
@@ -61,164 +71,111 @@ Page({
     })
   },
 
-  un_task:function(){
+  un_task:function(cb){
     let that = this
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "class_id":that.data.class_id
+      "class_id":that.data.class_id,
+      "page": that.pageData.page,
+      "limit": that.pageData.perpage,
     }
     console.log(params)
     app.ljjw.jwStudentTaskNotFinished(params).then(d => {
-      
-      if (d.data.status == 1) {
-        console.log(d.data.data)
-        that.setData({
-          task: d.data.data,
-          task1: d.data.data
-        })
+      let status = d.data.status
 
-        for (var i = 0; i < that.data.task.length; i++) {
-          console.log(i)
-          var cs = "task[" + i + "].submit"
-          that.setData({
-            [cs]: false
-          })
+      if (status == 1) {
+        let newData = d.data.data
+        let newData1 = d.data.data
+        for (var i = 0; i < newData.length; i++) {
+          var item = newData[i]
+          item.submit = false
 
-        }
-
-        for (var i = 0; i < that.data.task.length; i++) {
-          if (that.data.task[i].title) {
-            var title = "task[" + i + "].title"
-            console.log(i + "i")
-            that.setData({
-              [title]: that.data.task[i].title.split(",")
-            })
-
+          if (item.title) {
+            item.title = item.title.split(",")
           }
-          if (that.data.task[i].type == 2) {
-            for (var n = 0; n < that.data.task[i].title.length; n++) {
-              var title = "task[" + i + "].task_detail[" + n + "].title"
-              that.setData({
-                [title]: that.data.task[i].title[n],
-              })
+
+          if (item.type == 2) {
+            for (var n = 0; n < item.title.length; n++) {
+              var taskDetail = item.task_detail[n]
+              taskDetail.title = item.title[n]
             }
 
-            for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-             
-              if (that.data.task[i].task_detail[j].child_title != null) {
-                var title1 = "task[" + i + "].task_detail[" + j + "].child_title"
-                console.log(j + "j")
-                that.setData({
-                  [title1]: that.data.task[i].task_detail[j].child_title.split(",")
-                })
+            for (var j = 0; j < item.task_detail.length; j++) {
+              var taskDetail = item.task_detail[j]
+              if (taskDetail.child_title != null) {
+                taskDetail.child_title = taskDetail.child_title.split(",")
 
-                for (var n = 0; n < that.data.task[i].task_detail[j].child_title.length; n++) {
-                  var title = "task[" + i + "].task_detail[" + j + "].options[" + n + "].title"
-                  that.setData({
-                    [title]: that.data.task[i].task_detail[j].child_title[n],
-                  })
+                for (var n = 0; n < taskDetail.child_title.length; n++) {
+                  taskDetail.options[n].title = taskDetail.child_title[n]
                 }
 
               }
-              for(var k=0;k<that.data.task[i].task_detail[j].options.length;k++){
+              for(var k=0;k<taskDetail.options.length;k++){
+                var option = taskDetail.options[k]
                 var arr = []
 
-                for (let n in that.data.task[i].task_detail[j].options[k].lists) {
+                for (let n in option.lists) {
 
-                  arr.push(that.data.task[i].task_detail[j].options[k].lists[n]);
-                  console.log(arr)
+                  arr.push(option.lists[n]);
+                  // console.log(arr)
                   var imgs = []
-                  var css = "task[" + i + "].task_detail[" + j + "].options["+ k +"].imgs"
-                  var cs = "task[" + i + "].task_detail[" + j + "].options[" + k +"].list"
-                  
-                  that.setData({
-                    [cs]: arr,
-                    [css]: imgs,
-                    
-                  })
+                  option.list = arr
+                  option.imgs = imgs
                 }
 
-                for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
-                  
-                  var css = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].item"
-                  var csss = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].option"
-                  var cssss = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
-                  console.log(that.data)
-                  that.setData({
-                    
-                    [css]: that.data.task[i].task_detail[j].options[k].list[n],
-                    [csss]: String.fromCharCode(65 + n),
-                    [cssss]: false
-                  })
-
+                for (var n = 0; n < option.list.length; n++) {
+                  var list_item = option.list[n]
+                  var new_list_item = {}
+                  new_list_item.item = list_item
+                  new_list_item.option = String.fromCharCode(65 + n)
+                  new_list_item.select = false
+                  option.list[n] = new_list_item
                 }
 
               }
 
             }
-          } else if (that.data.task[i].type == 3) {
-            for (var n = 0; n < that.data.task[i].title.length; n++) {
-              var title = "task[" + i + "].task_detail[" + n + "].title"
-              that.setData({
-                [title]: that.data.task[i].title[n],
-              })
+          } else if (item.type == 3) {
+            for (var n = 0; n < item.title.length; n++) {
+              item.task_detail[n].title = item.title[n]
             }
-            for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-              for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length;k++){
+            for (var j = 0; j < item.task_detail.length; j++) {
+              var taskDetail = item.task_detail[j]
+              for (var k = 0; k < taskDetail.fieldlist.length;k++){
+                var fileListItem = taskDetail.fieldlist[k]
                 var imgs = []
-                var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
-                
+                fileListItem.imgs = imgs
 
-                that.setData({
-                  
-                  [css]: imgs
-                })
-
-                for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
-                  var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].item"
-                  var csss = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
-
-                
-                  that.setData({
-                    [css]: that.data.task[i].task_detail[j].fieldlist[k].lists[n],
-                    [csss]: '',
-
-                  })
-
+                for (var n = 0; n < fileListItem.lists.length; n++) {
+                  var fileListItem_listItem = fileListItem.lists[n]
+                  var new_fileListItem_listItem = {}
+                  new_fileListItem_listItem.item = fileListItem_listItem
+                  new_fileListItem_listItem.content = ''
+                  fileListItem.lists[n] = new_fileListItem_listItem
                 }
 
               }
 
             }
 
-          }
-          else if (that.data.task[i].type == 1) {
+          } else if (item.type == 1) {
            
             var imgs = []
-            var css = "task[" + i + "].task_detail.imgs"
-            that.setData({
-              [css]: imgs
-            })
-            console.log("==========================================imgs")
-            
-          }
-          else if (that.data.task[i].type == 4){
-            for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-              // var cs = "leave[" + i + "].ask_info[" + j + "].pin"
-              var _cs = "task[" + i + "].task_detail[" + j + "].cs"
-              // var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
-              that.setData({
-                // [cs]: hh,
-                [_cs]: []
-              })
-              var date = that.data.task[i].task_detail[j].classdate
+            item.task_detail = {}
+            item.task_detail.imgs = imgs
+            // console.log("==========================================imgs")
+          } else if (item.type == 4){
+            for (var j = 0; j < item.task_detail.length; j++) {
+              var taskDetail = item.task_detail[j]
+              taskDetail.cs = []
+              var classdate = taskDetail.classdate
 
-              for (var k = 0; k < that.data.task1[i].task_detail.length; k++) {
+              for (var k = 0; k < newData1[i].task_detail.length; k++) {
                 // if (that.data.leave[i].add_arr[k].date == '')
 
-                if (date == that.data.task1[i].task_detail[k].classdate) {
-                  that.data.task[i].task_detail[j].cs.push([that.data.task1[i].task_detail[k].classtime, that.data.task1[i].task_detail[k].check_status])
+                if (classdate == newData1[i].task_detail[k].classdate) {
+                  taskDetail.cs.push([newData1[i].task_detail[k].classtime, newData1[i].task_detail[k].check_status])
                 }
                 else {
 
@@ -228,12 +185,13 @@ Page({
             }
 
             
-                for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
+                for (var j = 0; j < item.task_detail.length; j++) {
+                  var taskDetail = item.task_detail[j]
                   // for (var k = 0; k < that.data.task[i].task_detail[j].cs.length; k++) {
                   var cs = j+1
-                  if (cs < that.data.task[i].task_detail.length){
-                    if (that.data.task[i].task_detail[j].classdate == that.data.task[i].task_detail[cs].classdate) {
-                      that.data.task[i].task_detail.splice(cs, 1)
+                  if (cs < item.task_detail.length){
+                    if (taskDetail.classdate == item.task_detail[cs].classdate) {
+                      item.task_detail.splice(cs, 1)
                       j = j-1
                     }
                   }
@@ -245,25 +203,283 @@ Page({
 
             
           }
-
-          that.setData({
-            task : that.data.task
-          })
-
-
         }
-        
+        var data = newData
+        var data1 = newData1
+        if (that.pageData.page != 1) {
+          data = that.data.task.concat(newData)
+          data1 = that.data.task1.concat(newData1)
+        }
+        if (newData.length < that.pageData.perpage) {
+          that.pageData.canLoadNextPage = false
+        } else {
+          that.pageData.canLoadNextPage = true
+        }
+        // console.log(d.data.data)
+        that.setData({
+          task: data,
+          task1: data1
+        })
+        typeof cb == "function" && cb(true, "加载成功")
         console.log("学生任务列表获取成功")
       }
       else{
         that.setData({
           task: ''
         })
+        typeof cb == "function" && cb(false, d.msg ? d.msg: "加载失败")
+        that.pageData.canLoadNextPage = false
       }
-
-
+      wx.stopPullDownRefresh({
+        complete: (res) => {},
+      })
+      
     })
   },
+
+  /**
+   *  已完成任务加载
+  */
+  finish_task: function(cb) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "class_id":that.data.class_id,
+      "page": that.pageData.page,
+      "limit": that.pageData.perpage,
+    }
+    console.log(params)
+    app.ljjw.jwStudentTaskFinished(params).then(d => {
+      console.log(d)
+      let status = d.data.status
+
+      if (status == 1) {
+        var newData = d.data.data
+        var newData1 = d.data.data
+
+        // console.log(d.data.data + "d.data.data")
+        for (var i = 0; i < newData.length; i++) {
+          var item = newData[i]
+          if (item.title) {
+            item.title = item.title.split(",")
+          }
+        
+          if (item.type == 2) {                      //选项式已完成
+            for (var n = 0; n < item.title.length; n++) {
+              item.task_detail[n].title = item.title[n]
+            }
+
+            for (var j = 0; j < item.task_detail.length; j++) {
+              var taskDetail = item.task_detail[j]
+              if (taskDetail.child_title != null) {
+                taskDetail.child_title = taskDetail.child_title.split(",")
+
+                for (var n = 0; n < taskDetail.child_title.length; n++) {
+                  taskDetail.options[n].title = taskDetail.child_title[n]
+                }
+              }
+
+              taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
+              taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
+              taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
+
+              for (var k = 0; k < taskDetail.options.length; k++) {
+                var arr = []
+                var option = taskDetail.options[k]
+                for (let n in option.lists) {
+
+                  arr.push(option.lists[n]);
+                  console.log(arr)
+                  // var imgs = []
+                  option.imgs = []
+                  option.list = arr
+                }
+                if (taskDetail.finished_info.attach[k] != ""){
+                  option.imgs = taskDetail.finished_info.attach[k].split(",")
+                  console.log(option.imgs)
+                }
+                
+                for (var n = 0; n < option.list.length; n++) {
+                  var optionListItem = option.list[n]
+                  var newOptionListItem = {}
+                  newOptionListItem.item = optionListItem
+                  newOptionListItem.option = String.fromCharCode(65 + n)
+                  newOptionListItem.select = false
+                  option.list[n] = newOptionListItem
+
+                  for (var m = 0; m < taskDetail.finished_info.answers.length;m++){
+                    let answer = taskDetail.finished_info.answers[m]
+                    if (newOptionListItem.option == answer){
+                      newOptionListItem.select = true
+                    }
+                  }
+
+                  for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
+                    if(k == m){
+                      option.memo = taskDetail.finished_info.memo[m]
+                    }
+                  }
+                }
+              }
+            }
+          } else if (item.type == 3) {                                           //字段式已完成
+            for (var n = 0; n < item.title.length; n++) {
+              item.task_detail[n].title = item.title[n]
+            }
+
+            for (var j = 0; j < item.task_detail.length; j++) {
+              var taskDetail = item.task_detail[j]
+              if (taskDetail.child_title != null) {
+                taskDetail.child_title = taskDetail.child_title.split(",")
+
+                for (var n = 0; n < taskDetail.child_title.length; n++) {
+                  taskDetail.fieldlist[n].title = taskDetail.child_title[n]
+                }
+
+              }
+
+              taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
+              taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
+              taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
+
+              for (var k = 0; k < taskDetail.fieldlist.length; k++) {
+
+                var arr = []
+                var fileListItem = taskDetail.fieldlist[k]
+                for (let n in fileListItem.lists) {
+
+                  arr.push(fileListItem.lists[n]);
+                  // console.log(arr)
+                  // var imgs = []
+                  fileListItem.list = arr
+                  fileListItem.imgs = []
+                }
+                if (taskDetail.finished_info.attach[k] != "") {
+                  fileListItem.imgs = taskDetail.finished_info.attach[k].split(",")
+                  console.log(fileListItem.imgs)
+                }
+                // var arr = []
+
+               
+                //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+                  
+                //   var imgs = []
+                //   // that.setData({
+                
+                //   //   [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
+
+                //   // })
+
+                // if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
+                //   that.data.task[i].task_detail[j].fieldlist[k].imgs.push(that.data.task[i].task_detail[j].finished_info.attach[k])
+                //   console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
+                // }
+                for (var n = 0; n < fileListItem.lists.length; n++) {
+                  var fileListItemListItem = fileListItem.lists[n]
+                  var newListItem = {}
+                  newListItem.item = fileListItemListItem
+                  newListItem.content = ''
+                  fileListItem.lists[n] = newListItem
+
+                  for (var m = 0; m < taskDetail.finished_info.answers.length; m++) {
+                    if (n == m) {
+                      newListItem.content = taskDetail.finished_info.answers[m]
+                    }
+                  }
+
+                  for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
+                    if (k == m) {
+                      newListItem.memo = taskDetail.finished_info.memo[m]
+                    }
+                  }
+                }
+              }
+            }
+          } else if (item.type == 1) {   //普通式已完成处理
+
+            var imgs = []
+            item.task_detail = {}
+            if (item.attach != ''){
+              item.task_detail.imgs = item.task_detail.finished_info.pics.split(",")
+              console.log("==========================================imgs")
+            }else{
+              item.task_detail.imgs = imgs
+              console.log("==========================================imgs")
+            }
+          } else if (item.type == 4) {      //确认考勤已完成处理
+            for (var j = 0; j < item.task_detail.length; j++) {
+              var taskDetail = item.task_detail[j]
+              taskDetail.cs = []
+              var classdate = taskDetail.classdate
+
+              for (var k = 0; k < newData1.task_detail.length; k++) {
+                // if (that.data.leave[i].add_arr[k].date == '')
+
+                if (classdate == newData1.task_detail[k].classdate) {
+                  taskDetail.cs.push([newData1.task_detail[k].classtime, newData1.task_detail[k].check_status])
+                }
+                else {
+                }
+              }
+            }
+          }
+        }
+
+        for(var q=0;q<newData.length;q++){
+          var item = newData[q]
+          if (item.type == 4){
+            for (var n = 0; n < item.task_detail.length; n++) {
+              var taskDetail = item.task_detail[n]
+              // for (var k = 0; k < that.data.task[i].task_detail[n].cs.length; k++) {
+              var cs = n + 1
+              if (cs < item.task_detail.length) {
+                console.log(n, cs + "1")
+                if (taskDetail.classdate.indexOf(item.task_detail[cs].classdate) != -1) {
+                  console.log(n, cs + "2")
+                  item.task_detail.splice(cs, 1)
+                  n = n - 1
+                }
+              }
+            }
+          }
+        }
+
+        if (newData.length < that.pageData.perpage) {
+          that.pageData.canLoadNextPage = false
+        } else {
+          that.pageData.canLoadNextPage = true
+        }
+
+        var data = []
+        var data1 = []
+        if (that.pageData.page == 1) {
+          data = newData
+          data1 = newData1
+        } else {
+          data = that.data.task.concat(newData)
+          data1 = that.data.task1.concat(newData1)
+        }
+        that.setData({
+          task: data,
+          task1: data1
+        })
+
+        typeof cb == "function" && cb(true, "加载成功")
+        console.log("学生任务已完成获取成功")
+      }else{
+        that.setData({
+          task : ''
+        })
+        typeof cb == "function" && cb(false, d.msg ? d.msg : "加载失败")
+      }
+
+      wx.stopPullDownRefresh({
+        complete: (res) => {},
+      })
+    })
+  },
+
 
   type3_content:function(e){
     let that = this;
@@ -521,6 +737,7 @@ Page({
             type1_content:'',
             type3_content: ''
           })
+          that.pageData.page = 1
           that.un_task()  //刷新任务待完成列表
           console.log("任务提交成功")
         }
@@ -611,6 +828,7 @@ Page({
             type1_content: '',
             type3_content: ''
           })
+          that.pageData.page = 1
           that.un_task()  //刷新任务待完成列表
           console.log("任务提交成功")
         }
@@ -690,6 +908,7 @@ Page({
             type3_content: '',
             type2_ans:[]
           })
+          that.pageData.page = 1
           that.un_task()  //刷新任务待完成列表
           console.log("任务提交成功")
         }
@@ -737,6 +956,7 @@ Page({
           title: '确认成功',
           duration:1500
         })
+        that.pageData.page = 1
         that.un_task()
         console.log("考勤确认成功")
       }
@@ -765,6 +985,7 @@ Page({
           title: '驳回成功',
           duration:2000
         })
+        that.pageData.page = 1
         that.un_task()
         console.log("驳回成功")
       }
@@ -780,354 +1001,13 @@ Page({
       finish: finish
     })
     if(finish == 0){
+      // 待完成
+      that.pageData.page = 1
       that.un_task()
     }else{
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "class_id":that.data.class_id
-      }
-      console.log(params)
-      app.ljjw.jwStudentTaskFinished(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          console.log(d.data.data + "d.data.data")
-          that.setData({
-            task: d.data.data,
-            task1: d.data.data
-          })
-
-          for (var i = 0; i < that.data.task.length; i++) {
-            if (that.data.task[i].title) {
-              var title = "task[" + i + "].title"
-              console.log(i + "i")
-              that.setData({
-                [title]: that.data.task[i].title.split(",")
-              })
-            }
-          
-            if (that.data.task[i].type == 2) {                      //选项式已完成
-              for (var n = 0; n < that.data.task[i].title.length; n++) {
-                var title = "task[" + i + "].task_detail[" + n + "].title"
-                that.setData({
-                  [title]: that.data.task[i].title[n],
-                })
-              }
-
-              for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-
-                if (that.data.task[i].task_detail[j].child_title != null) {
-                  var title1 = "task[" + i + "].task_detail[" + j + "].child_title"
-                  console.log(j + "j")
-                  that.setData({
-                    [title1]: that.data.task[i].task_detail[j].child_title.split(",")
-                  })
-
-                  for (var n = 0; n < that.data.task[i].task_detail[j].child_title.length; n++) {
-                    var title = "task[" + i + "].task_detail[" + j + "].options[" + n + "].title"
-                    that.setData({
-                      [title]: that.data.task[i].task_detail[j].child_title[n],
-                    })
-                  }
-
-                }
-
-                var answers = "task[" + i + "].task_detail[" + j + "].finished_info.answers"
-                var memo = "task[" + i + "].task_detail[" + j + "].finished_info.memo"
-                var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
-                // var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
-                // console.log(j + "j")
-                that.setData({
-                  [answers]: that.data.task[i].task_detail[j].finished_info.answers.split(","),
-                  [memo]: that.data.task[i].task_detail[j].finished_info.memo.split("|"),
-                  [attach]: that.data.task[i].task_detail[j].finished_info.attach.split("|"),
-                  // [attach]: that.data.task[i].task_detail[j].finished_info.attach.split(",")
-                })
-
-                for (var k = 0; k < that.data.task[i].task_detail[j].options.length; k++) {
-                  var arr = []
-
-                  for (let n in that.data.task[i].task_detail[j].options[k].lists) {
-
-                    arr.push(that.data.task[i].task_detail[j].options[k].lists[n]);
-                    console.log(arr)
-                    // var imgs = []
-                    var css = "task[" + i + "].task_detail[" + j + "].options[" + k + "].imgs"
-                    var cs = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list"
-
-                    that.setData({
-                      [cs]: arr,
-                      [css]: [],
-
-                    })
-                  }
-                  if (that.data.task[i].task_detail[j].finished_info.attach[k] != ""){
-                    var qqq = "task[" + i + "].task_detail[" + j + "].options[" + k + "].imgs"
-                    that.setData({
-                      [qqq]: that.data.task[i].task_detail[j].finished_info.attach[k].split(",")
-                    })
-                    
-                    
-                    console.log(that.data.task[i].task_detail[j].options[k].imgs)
-                  }
-                  
-
-
-                  for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
-
-                    var css = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].item"
-                    var csss = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].option"
-                    var cssss = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
-                    console.log(that.data)
-                    that.setData({
-
-                      [css]: that.data.task[i].task_detail[j].options[k].list[n],
-                      [csss]: String.fromCharCode(65 + n),
-                      [cssss]: false
-                    })
-
-                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.answers.length;m++){
-                      if (that.data.task[i].task_detail[j].options[k].list[n].option == that.data.task[i].task_detail[j].finished_info.answers[m]){
-                        var select = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
-                        that.setData({
-                          [select]: true
-                        })
-                      }
-                    }
-
-                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.memo.length; m++) {
-                      if(k == m){
-                        var select = "task[" + i + "].task_detail[" + j + "].options[" + k + "].memo"
-                        that.setData({
-                          [select]: that.data.task[i].task_detail[j].finished_info.memo[m]
-                        })
-                      }
-                    }
-                    
-                    
-                    
-
-                  }
-
-
-                }
-
-              }
-            } else if (that.data.task[i].type == 3) {                                           //字段式已完成
-              for (var n = 0; n < that.data.task[i].title.length; n++) {
-                var title = "task[" + i + "].task_detail[" + n + "].title"
-                that.setData({
-                  [title]: that.data.task[i].title[n],
-                })
-              }
-
-              for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-
-                if (that.data.task[i].task_detail[j].child_title != null) {
-                  var title1 = "task[" + i + "].task_detail[" + j + "].child_title"
-                  console.log(j + "j")
-                  that.setData({
-                    [title1]: that.data.task[i].task_detail[j].child_title.split(",")
-                  })
-
-                  for (var n = 0; n < that.data.task[i].task_detail[j].child_title.length; n++) {
-                    var title = "task[" + i + "].task_detail[" + j + "].fieldlist[" + n + "].title"
-                    that.setData({
-                      [title]: that.data.task[i].task_detail[j].child_title[n],
-                    })
-                  }
-
-                }
-
-                var answers = "task[" + i + "].task_detail[" + j + "].finished_info.answers"
-                var memo = "task[" + i + "].task_detail[" + j + "].finished_info.memo"
-                var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
-                // var attach = "task[" + i + "].task_detail[" + j + "].finished_info.attach"
-                // console.log(j + "j")
-                that.setData({
-                  [answers]: that.data.task[i].task_detail[j].finished_info.answers.split(","),
-                  [memo]: that.data.task[i].task_detail[j].finished_info.memo.split("|"),
-                  [attach]: that.data.task[i].task_detail[j].finished_info.attach.split("|"),
-                  // [attach]: that.data.task[i].task_detail[j].finished_info.attach.split(",")
-                })
-
-                for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
-
-                  var arr = []
-
-                  for (let n in that.data.task[i].task_detail[j].fieldlist[k].lists) {
-
-                    arr.push(that.data.task[i].task_detail[j].fieldlist[k].lists[n]);
-                    console.log(arr)
-                    // var imgs = []
-                    var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
-                    var cs = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].list"
-
-                    that.setData({
-                      [cs]: arr,
-                      [css]: [],
-
-                    })
-                  }
-                  if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
-                    var qqq = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
-                    that.setData({
-                      [qqq]: that.data.task[i].task_detail[j].finished_info.attach[k].split(",")
-                    })
-
-
-                    console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
-                  }
-                  // var arr = []
-
-                 
-                  //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
-                    
-                  //   var imgs = []
-                  //   // that.setData({
-                  
-                  //   //   [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
-
-                  //   // })
-
-                  // if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
-                  //   that.data.task[i].task_detail[j].fieldlist[k].imgs.push(that.data.task[i].task_detail[j].finished_info.attach[k])
-                  //   console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
-                  // }
-                  for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
-
-                    var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].item"
-                    var csss = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
-                    
-                    console.log(that.data)
-                    that.setData({
-
-                      [css]: that.data.task[i].task_detail[j].fieldlist[k].lists[n],
-                      [csss]: ''
-                      
-                    })
-
-                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.answers.length; m++) {
-                      if (n == m) {
-                        var select = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
-                        that.setData({
-                          [select]: that.data.task[i].task_detail[j].finished_info.answers[m]
-                        })
-                      }
-                    }
-
-                    for (var m = 0; m < that.data.task[i].task_detail[j].finished_info.memo.length; m++) {
-                      if (k == m) {
-                        var select = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].memo"
-                        that.setData({
-                          [select]: that.data.task[i].task_detail[j].finished_info.memo[m]
-                        })
-                      }
-                    }
-
-
-                  }
-
-
-                }
-
-              }
-
-            }
-            else if (that.data.task[i].type == 1) {   //普通式已完成处理
-
-              var imgs = []
-              if (that.data.task[i].attach != ''){
-                var css = "task[" + i + "].task_detail.imgs"
-                that.setData({
-                  [css]: that.data.task[i].task_detail.finished_info.pics.split(",")
-                })
-                console.log("==========================================imgs")
-              }else{
-                var css = "task[" + i + "].task_detail.imgs"
-                that.setData({
-                  [css]: imgs
-                })
-                console.log("==========================================imgs")
-              }
-              
-
-            }
-            else if (that.data.task[i].type == 4) {      //确认考勤已完成处理
-              for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-                // var cs = "leave[" + i + "].ask_info[" + j + "].pin"
-                var _cs = "task[" + i + "].task_detail[" + j + "].cs"
-                // var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
-                that.setData({
-                  // [cs]: hh,
-                  [_cs]: []
-                })
-                var date = that.data.task[i].task_detail[j].classdate
-
-                for (var k = 0; k < that.data.task1[i].task_detail.length; k++) {
-                  // if (that.data.leave[i].add_arr[k].date == '')
-
-                  if (date == that.data.task1[i].task_detail[k].classdate) {
-                    that.data.task[i].task_detail[j].cs.push([that.data.task1[i].task_detail[k].classtime, that.data.task1[i].task_detail[k].check_status])
-                  }
-                  else {
-
-
-                  }
-                }
-              }
-
-              that.setData({
-                task:that.data.task
-              })
-              console.log(that.data.task)
-              console.log("cs")
-
-
-              
-
-
-            }
-            
-
-          }
-
-          for(var q=0;q<that.data.task.length;q++){
-            if (that.data.task[q].type == 4){
-              for (var n = 0; n < that.data.task[q].task_detail.length; n++) {
-                // for (var k = 0; k < that.data.task[i].task_detail[n].cs.length; k++) {
-                var cs = n + 1
-                if (cs < that.data.task[q].task_detail.length) {
-                  console.log(n, cs + "1")
-                  if (that.data.task[q].task_detail[n].classdate.indexOf(that.data.task[q].task_detail[cs].classdate) != -1) {
-                    console.log(n, cs + "2")
-                    that.data.task[q].task_detail.splice(cs, 1)
-                    n = n - 1
-                  }
-                }
-
-                // }
-
-
-              }
-            }
-            
-          }
-          
-          
-          that.setData({
-            task: that.data.task
-          })
-          console.log(that.data.task)
-          console.log("学生任务已完成获取成功")
-        }else{
-          that.setData({
-            task : ''
-          })
-        }
-
-
-      })
+      // 已完成
+      that.pageData.page = 1
+      that.finish_task()
     }
   },
 
@@ -1369,14 +1249,48 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.pageData.page = 1
+    if (this.data.finish == 0) {
+      // 待完成
+      this.un_task()
+    } else {
+      // 已完成
+      this.finish_task()
+    }
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    var that = this
+    if (this.pageData.canLoadNextPage) {
+      let oldPage = this.pageData.page
+      this.pageData.page = oldPage + 1
+      if (this.data.finish == 0) {
+        // 待完成
+        this.un_task(function (success, msg) {
+          if (!success) {
+            that.pageData.page = oldPage
+            wx.showToast({
+              title: msg,
+              icon: 'none'
+            })
+          }
+        })
+      } else {
+        // 已完成
+        this.finish_task(function(success, msg) {
+          if (!success) {
+            that.pageData.page = oldPage
+            wx.showToast({
+              title: msg,
+              icon: 'none'
+            })
+          }
+        })
+      }
+    }
   },
 
   /**

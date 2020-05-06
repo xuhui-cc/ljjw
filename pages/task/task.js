@@ -2,6 +2,12 @@
 const app = getApp()
 Page({
 
+  pageData: {
+    perpage: 10,
+    page: 1,
+    canLoadNextPage: true,
+  },
+
   /**
    * 页面的初始数据
    */
@@ -11,186 +17,18 @@ Page({
     stu_class: [],
     stu_class_index: 0,
     tea_class_index: 0,
-    stu_info:true
+    stu_info:true,
+    showNoData: false, // 是否展示无数据页面
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this
-    var role = wx.getStorageSync("role")
-    if (!role) {
-      that.setData({
-        role: -1,
-        login:false
-      })
-      
-    } else {
-      that.setData({
-        role: role,
-        login:true
-      })
-    }
-    if(that.data.role == 4){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentTaskMain(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d.data.data)
-          that.setData({
-            message: d.data.data.messages,
-            morning: d.data.data.morning_read,
-            stu_class:d.data.data.classes,
-            newtaskcount: d.data.data.newtaskcount
-          })
-          if (that.data.morning != ''){
-            if (that.data.morning.pics != ''){
-              that.data.morning.pics = that.data.morning.pics.split(",")
-            }
-            
-          }else{
-            console.log("morning.pics空")
-          }
-          
-          
 
-          that.setData({
-            csmorningRead: that.data.morning,
-            // new_message:that.data.message
-          })
-          console.log(that.data.stu_class)
-          console.log(that.data.csmorningRead)
-          console.log("学生任务首页获取成功")
-        } else if(d.data.status == -1){
-          that.setData({
-            stu_info:false
-          })
-          wx.showToast({
-            title: '请先完善个人信息',
-            icon:"none",
-            duration: 2500,
-          })
-        }
-
-
-      })
-    }else if(that.data.role == 1){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-      }
-      console.log(params)
-      app.ljjw.jwTeacherTasksMainPage(params).then(d => {
-
-        if (d.data.status == 1) {
-          that.setData({
-            message: d.data.data.messages,
-            morning: d.data.data.morning_read,
-            tea_class: d.data.data.classes
-          })
-          if (that.data.morning != '') {
-            if (that.data.morning.pics != '') {
-              that.data.morning.pics = that.data.morning.pics.split(",")
-            }
-
-          } else {
-            console.log("morning.pics空")
-          }
-          
-          
-
-          that.setData({
-            csmorningRead: that.data.morning,
-            // new_message: that.data.message
-          })
-        }
-
-        console.log("我是老师任务onLoad")
-      })
-      
-    }else if(that.data.role == 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-      }
-      console.log(params)
-      app.ljjw.jwTeacherTasksMainPage(params).then(d => {
-
-        if (d.data.status == 1) {
-          that.setData({
-            message: d.data.data.messages,
-            morning: d.data.data.morning_read,
-            tea_class: d.data.data.classes
-          })
-          if (that.data.morning != '') {
-            if (that.data.morning.pics != '') {
-              that.data.morning.pics = that.data.morning.pics.split(",")
-            }
-
-          } else {
-            console.log("morning.pics空")
-          }
-
-
-
-          that.setData({
-            csmorningRead: that.data.morning,
-            // new_message: that.data.message
-          })
-        }
-
-        
-        console.log("我是教务任务onLoad")
-      })
-    }else if(that.data.role == 3){
-      console.log("我是管理员任务onLoad")
-    }
-  },
-
-  stu_class_picker: function (e) {
-    let that = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    that.setData({
-      stu_class_index: e.detail.value
-    })
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "class_id": that.data.stu_class[that.data.stu_class_index].class_id
-    }
-    console.log(params)
-    app.ljjw.jwGetStudentTaskMain(params).then(d => {
-      if (d.data.status == 1) {
-        console.log(d.data.data)
-        that.setData({
-          message: d.data.data.messages,
-          morning: d.data.data.morning_read,
-          stu_class: d.data.data.classes,
-          newtaskcount: d.data.data.newtaskcount
-        })
-        if (that.data.morning.pics != '') {
-          that.data.morning.pics = that.data.morning.pics.split(",")
-        } else {
-          console.log("morning.pics空")
-        }
-
-        that.setData({
-          csmorningRead: that.data.morning,
-       
-        })
-        console.log(that.data.stu_class)
-        console.log(that.data.csmorningRead)
-        console.log("学生任务首页换班获取成功")
-      }else{
-        console.log(d.data.msg)
-      }
-
-
-    })
+    // 设置导航栏尺寸
+    this.setUpNaviSize()
+    
   },
 
   // 图片预览
@@ -207,39 +45,7 @@ Page({
 
   },
 
-  tea_class_picker: function (e) {
-    let that = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
-      tea_class_index: e.detail.value
-    })
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "class_id": that.data.tea_class[that.data.tea_class_index].id
-    }
-    console.log(params)
-    app.ljjw.jwTeacherTasksMainPage(params).then(d => {
 
-      if (d.data.status == 1) {
-        that.setData({
-          message: d.data.data.messages,
-          morning: d.data.data.morning_read,
-          tea_class: d.data.data.classes
-        })
-        that.data.morning.pics = that.data.morning.pics.split(",")
-
-
-
-        that.setData({
-          csmorningRead: that.data.morning,
-          // new_message: that.data.message
-        })
-      }
-
-      console.log("我是老师任务onLoad")
-    })
-  },
 
   add_layout:function(){
     let that = this
@@ -311,7 +117,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
@@ -319,21 +125,20 @@ Page({
    */
   onShow: function () {
     let that = this
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      console.log('task_onshow')
-      this.getTabBar().setData({
-        selected: 2
-      })
-    }
-    else {
-      console.log('未执行')
-    }
-    that.setData({
-      stu_class_index:0,
-      tea_class_index:0
+
+    // 判断登录状态
+    this.setUpLogInStatus()
+    
+    // 刷新数据
+    this.pageData.page = 1
+    this.reloadData(this.pageData.page, function(success, msg){
+      if(!success) {
+        wx.showToast({
+          title: msg,
+          icon: 'none',
+        })
+      }
     })
-    this.onLoad()
     console.log("执行onshow")
   },
 
@@ -355,14 +160,38 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let that = this
+    let oldPage = this.pageData.page
+    this.pageData.Page = 1
+    this.reloadData(this.pageData.page, function(success, msg){
+      if(!success) {
+        wx.showToast({
+          title: msg,
+          icon: 'none',
+        })
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (this.pageData.canLoadNextPage) {
+      let that = this
+      let oldPage = this.pageData.page
+      this.pageData.page = oldPage + 1
+      this.reloadData(this.pageData.page, function(success, msg){
+        if(!success) {
+          wx.showToast({
+            title: msg,
+            icon: 'none',
+          })
+          that.pageData.page = oldPage
+        }
+      })
+    }
   },
 
   /**
@@ -370,5 +199,231 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+
+  /**
+   * 设置tabbar
+  */
+  setUpTabbar: function() {
+    let that = this
+    if (typeof this.getTabBar === 'function' &&
+      this.getTabBar()) {
+      console.log('task_onshow')
+      this.getTabBar().setData({
+        selected: 2
+      })
+    }
+    else {
+      console.log('未执行')
+    }
+  },
+
+  /**
+   * 设置自定义导航栏尺寸
+  */
+  setUpNaviSize: function () {
+    var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let naviBarHeight = menuButtonRect.bottom+10
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top
+    })
+  },
+
+  /**
+   * 判断登录状态
+  */
+  setUpLogInStatus: function () {
+    var role = wx.getStorageSync("role")
+    if (!role) {
+      this.setData({
+        role: -1,
+        login:false,
+        showNoData: true
+      })
+      
+    } else {
+      this.setData({
+        role: role*1,
+        login:true,
+        showNoData: role == 3 ? true : false,
+      })
+    }
+  },
+
+  /**
+   * 刷新数据
+  */
+  reloadData: function (page, cb) {
+    let that = this
+    switch (that.data.role) 
+    {
+      case 1:
+        // 老师
+      case 2: 
+        // 教务
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "page": page,
+          "limit": that.pageData.perpage,
+        }
+        if (that.data.tea_class && that.data.tea_class.length > that.data.tea_class_index) {
+          params.class_id = that.data.tea_class[that.data.tea_class_index].id
+        }
+        console.log(params)
+        app.ljjw.jwTeacherTasksMainPage(params).then(d => {
+          wx.stopPullDownRefresh({
+            complete: (res) => {},
+          })
+          let status = d.data.status
+          var pageData = d.data.data
+          if (status == 1) {
+            if (pageData.morning_read != '' && pageData.morning_read.pics != '') {
+              pageData.morning_read.pics = pageData.morning_read.pics.split(",")
+            }
+            var newMessages = pageData.messages
+            if (newMessages.length < that.pageData.perpage) {
+              that.pageData.canLoadNextPage = false
+            } else {
+              that.pageData.canLoadNextPage = true
+            }
+            if (page > 1) {
+              newMessages = that.data.messages.concat(newMessages)
+            }
+            var showNoData = false
+            if (newMessages.length == 0) {
+              showNoData = true
+            }
+            if (!(pageData.classes && pageData.classes.length != 0)) {
+              showNoData = true
+            }
+            that.setData({
+              message: newMessages,
+              csmorningRead: pageData.morning_read,
+              tea_class: pageData.classes,
+              showNoData: showNoData,
+            })
+            typeof cb == "function" && cb(true, "加载成功")
+          } else {
+            that.pageData.canLoadNextPage = false
+            typeof cb == "function" && cb(false, msg)
+          }
+        })
+        break
+      
+      case 3: 
+        // 管理员
+        console.log("我是管理员任务onLoad")
+        break
+      
+      case 4: 
+        // 学生
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "page": page,
+          "limit": that.pageData.perpage,
+        }
+        if (that.data.stu_class && that.data.stu_class.length > that.data.stu_class_index) {
+          params.class_id = that.data.stu_class[that.data.stu_class_index].class_id
+        }
+        console.log(params)
+        app.ljjw.jwGetStudentTaskMain(params).then(d => {
+          wx.stopPullDownRefresh({
+            complete: (res) => {},
+          })
+          let status = d.data.status
+          var pageData = d.data.data
+          let msg = d.data.msg
+          if (status == 1) {
+            if (pageData.morning_read != '' && pageData.morning_read.pics != ''){
+              pageData.morning_read.pics = pageData.morning_read.pics.split(",")
+            }
+            var newMessages = pageData.messages
+            // 判断是否可以上啦加载
+            if (newMessages.length < that.pageData.perpage) {
+              that.pageData.canLoadNextPage = false
+            } else {
+              that.pageData.canLoadNextPage = true
+            }
+            // 分页数据处理
+            if (page > 1) {
+              newMessages = that.data.messages.concat(newMessages)
+            }
+            // 判断是否加载空页面
+            var showNoData = false
+            if (newMessages.length == 0) {
+              showNoData = true
+            }
+            if (!(pageData.classes && pageData.classes.length != 0)) {
+              showNoData = true
+            }
+            // 更改数据 刷新界面
+            that.setData({
+              message: newMessages,
+              stu_class:pageData.classes,
+              newtaskcount: pageData.newtaskcount,
+              csmorningRead: pageData.morning_read,
+              showNoData: showNoData,
+            })
+            typeof cb == "function" && cb(true, "加载成功")
+          } else if(status == -1){
+            that.setData({
+              stu_info:false,
+              showNoData: false,
+            })
+            that.pageData.canLoadNextPage = false
+            typeof cb == "function" && cb(false, "请先完善个人信息")
+          } else {
+            that.pageData.canLoadNextPage = false
+            typeof cb == "function" && cb(false, msg)
+          }
+        })
+        break
+    }
+  },
+
+  /**
+   * 学生班级选定事件
+  */
+  stu_class_picker: function (e) {
+    let that = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    that.setData({
+      stu_class_index: e.detail.value
+    })
+    this.pageData.page = 1
+    that.reloadData(this.pageData.page, function(success,msg){
+      if(!success) {
+        wx.showToast({
+          title: msg,
+          icon: 'none',
+        })
+      }
+    })
+  },
+
+  /**
+   * 老师/教务班级选定事件
+  */
+  tea_class_picker: function (e) {
+    let that = this
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      tea_class_index: e.detail.value
+    })
+    this.pageData.page = 1
+    this.reloadData(this.pageData.page, function(success, msg){
+      if(!success) {
+        wx.showToast({
+          title: msg,
+          icon: 'none',
+        })
+      }
+    })
+  },
+
 })

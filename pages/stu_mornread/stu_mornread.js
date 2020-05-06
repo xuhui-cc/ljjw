@@ -3,20 +3,28 @@ const app = getApp()
 Page({
 
   /**
+   * 分页数据
+  */
+  pageData: {
+    page: 1,
+    perpage: 10,
+    canLoadNextPage: true
+  },
+
+  /**
    * 页面的初始数据
    */
   data: {
     page :1,
-    ispage : false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    setTimeout(() => {
-      wx.startPullDownRefresh()//通过方法调用刷新
-    }, 1000)
+    // 设置导航栏尺寸
+    this.setUpNaviSize()
+
     let that = this
     var class_id = options.class_id
     that.setData({
@@ -32,6 +40,16 @@ Page({
         role: role
       })
     }
+
+    // 加载数据
+    this.loadData(function(success, msg){
+      if(!success) {
+        wx.showToast({
+          title: msg,
+          icon: 'none'
+        })
+      }
+    })
   },
 
   back: function () {
@@ -96,283 +114,46 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    // 加载第一页
+    let oldPage = this.pageData.page
+    this.pageData.page = 1
     let that = this
-    if(!that.data.ispage){
-      if (that.data.role == 4) {
-        var params = {
-          "token": wx.getStorageSync("token"),
-          "uid": wx.getStorageSync("uid"),
-          "class_id": that.data.class_id,
-          "page": 1
-        }
-        console.log(params)
-        app.ljjw.jwGetMorningReadMore(params).then(d => {
-          // console.log(d)
-          if (d.data.status == 1) {
-            // console.log(d.data.data)
-            that.setData({
-              morningRead: d.data.data
+    this.loadData(function(success, msg){
+      wx.stopPullDownRefresh({
+        complete: (res) => {
+          if(!success){
+            wx.showToast({
+              title: msg,
+              icon: 'none'
             })
-            that.setData({
-              ispage:true
-            })
-
-            for (var i = 0; i < that.data.morningRead.length; i++) {
-              var cs = 'morningRead[' + i + '].pics'
-              that.setData({
-                [cs]: that.data.morningRead[i].pics.split(",")
-              })
-            }
-            that.setData({
-              csmorningRead: that.data.morningRead
-            })
-            console.log(that.data.morningRead)
-            console.log("学生每日晨读获取成功")
+          } else {
+            that.pageData.page = oldPage
           }
-
-
-        })
-      } else if (that.data.role <= 2) {
-        var params = {
-          "token": wx.getStorageSync("token"),
-          "uid": wx.getStorageSync("uid"),
-          "page": 1,
-          "class_id": that.data.class_id
-        }
-        console.log(params)
-        app.ljjw.jwTeacherMorningReadMore(params).then(d => {
-          // console.log(d)
-          if (d.data.status == 1) {
-            // console.log(d.data.data)
-            that.setData({
-              morningRead: d.data.data
-            })
-            that.setData({
-              ispage: true
-            })
-
-            for (var i = 0; i < that.data.morningRead.length; i++) {
-              var cs = 'morningRead[' + i + '].pics'
-              that.setData({
-                [cs]: that.data.morningRead[i].pics.split(",")
-              })
-            }
-            that.setData({
-              csmorningRead: that.data.morningRead
-            })
-            console.log(that.data.morningRead)
-            console.log("老师每日晨读获取成功")
-          }
-
-
-        })
-      }
-    }
-    else{
-      if (that.data.page == 1) {
-        wx.showToast({
-          title: '已经是第一页咯~',
-          icon: "none",
-          duration: 3000
-        })
-      } else {
-        if (that.data.role == 4) {
-          var params = {
-            "token": wx.getStorageSync("token"),
-            "uid": wx.getStorageSync("uid"),
-            "class_id": that.data.class_id,
-            "page": that.data.page - 1
-          }
-          console.log(params)
-          app.ljjw.jwGetMorningReadMore(params).then(d => {
-            // console.log(d)
-            if (d.data.status == 1) {
-              if (d.data.data != '') {
-                that.setData({
-                  morningRead: d.data.data
-                })
-                that.setData({
-                  page: that.data.page - 1
-                })
-
-                for (var i = 0; i < that.data.morningRead.length; i++) {
-                  var cs = 'morningRead[' + i + '].pics'
-                  that.setData({
-                    [cs]: that.data.morningRead[i].pics.split(",")
-                  })
-                }
-                that.setData({
-                  csmorningRead: that.data.morningRead
-                })
-                console.log(that.data.morningRead)
-              } else {
-                wx.showToast({
-                  title: '到头咯~',
-                  icon: "none",
-                  duration: 3000
-                })
-              }
-              // console.log(d.data.data)
-
-              console.log("学生每日晨读获取成功")
-            }
-
-
-          })
-        } else if (that.data.role <= 2) {
-          var params = {
-            "token": wx.getStorageSync("token"),
-            "uid": wx.getStorageSync("uid"),
-            "page": that.data.page - 1,
-            "class_id": that.data.class_id
-          }
-          console.log(params)
-          app.ljjw.jwTeacherMorningReadMore(params).then(d => {
-            // console.log(d)
-            if (d.data.status == 1) {
-              if (d.data.data != "") {
-                that.setData({
-                  morningRead: d.data.data
-                })
-                that.setData({
-                  page: page - 1
-                })
-
-                for (var i = 0; i < that.data.morningRead.length; i++) {
-                  var cs = 'morningRead[' + i + '].pics'
-                  that.setData({
-                    [cs]: that.data.morningRead[i].pics.split(",")
-                  })
-                }
-                that.setData({
-                  csmorningRead: that.data.morningRead
-                })
-                console.log(that.data.morningRead)
-              }
-              else {
-                wx.showToast({
-                  title: '到头咯~',
-                  icon: "none",
-                  duration: 3000
-                })
-              }
-              // console.log(d.data.data)
-
-              console.log("老师每日晨读获取成功")
-            }
-
-
-          })
-        }
-      }
-      
-    }
-    
-    
-
-    wx.stopPullDownRefresh()//结束刷新
+        },
+      })
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    let that = this
-    // 显示加载图标
-    wx.showLoading({
-      title: '玩命加载中',
-      duration:2000
-    })
-    if(that.data.role == 4){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "class_id": that.data.class_id,
-        "page": that.data.page +1
-      }
-      console.log(params)
-      app.ljjw.jwGetMorningReadMore(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          if(d.data.data != ''){
-            that.setData({
-              morningRead: d.data.data
-            })
-            that.setData({
-              page: that.data.page + 1
-            })
-
-            for (var i = 0; i < that.data.morningRead.length; i++) {
-              var cs = 'morningRead[' + i + '].pics'
-              that.setData({
-                [cs]: that.data.morningRead[i].pics.split(",")
-              })
-            }
-            that.setData({
-              csmorningRead: that.data.morningRead
-            })
-            console.log(that.data.morningRead)
-          }else{
-            console.log(d.data.data +"d.data.data")
-            wx.showToast({
-              title: '没有更多晨读咯~',
-              icon: "none",
-              duration: 3000
-            })
-          }
-          console.log(d.data.data + "d.data.data")
-          console.log("学生每日晨读获取成功")
+    // 加载下一页
+    if (this.pageData.canLoadNextPage) {
+      let oldPage = this.pageData.page
+      this.pageData.page = oldPage + 1
+      let that = this
+      this.loadData(function(success, msg){
+        if(!success) {
+          wx.showToast({
+            title: msg,
+            icon: 'none'
+          })
+        } else {
+          that.pageData.page = oldPage
         }
-
-        // 隐藏加载框
-        // wx.hideLoading();
-      })
-    }else if(that.data.role  <= 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "page": that.data.page +1,
-        "class_id": that.data.class_id
-      }
-      console.log(params)
-      app.ljjw.jwTeacherMorningReadMore(params).then(d => {
-        // console.log(d)
-        if (d.data.status == 1) {
-          if(d.data.data != ""){
-            // console.log(d.data.data)
-            that.setData({
-              morningRead: d.data.data
-            })
-            that.setData({
-              page: page + 1
-            })
-
-            for (var i = 0; i < that.data.morningRead.length; i++) {
-              var cs = 'morningRead[' + i + '].pics'
-              that.setData({
-                [cs]: that.data.morningRead[i].pics.split(",")
-              })
-            }
-            that.setData({
-              csmorningRead: that.data.morningRead
-            })
-            console.log(that.data.morningRead)
-          }else{
-            wx.showToast({
-              title: '没有更多晨读咯~',
-              icon: "none",
-              duration: 3000
-            })
-          }
-          
-          console.log("老师每日晨读获取成功")
-          wx.hideLoading();
-        }
-
-
       })
     }
-    
   },
 
   /**
@@ -380,5 +161,118 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 设置自定义导航栏尺寸
+  */
+  setUpNaviSize: function () {
+    var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let naviBarHeight = menuButtonRect.bottom+10
+    let naviBarWidth = wx.getSystemInfoSync().screenWidth
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarWidth: naviBarWidth,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top
+    })
+  },
+
+  /**
+   * 加载每日晨读数据
+  */
+  loadData: function(cb) {
+    let that = this
+    if (that.data.role == 4) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "class_id": that.data.class_id,
+        "page": that.pageData.page,
+        "limit": that.pageData.perpage,
+      }
+      console.log(params)
+      app.ljjw.jwGetMorningReadMore(params).then(d => {
+        // console.log(d)
+        if (d.data.status == 1) {
+          // console.log(d.data.data)
+          // that.setData({
+          //   morningRead: d.data.data
+          // })
+
+          var data = d.data.data
+
+          // 图片地址处理
+          for (var i = 0; i < data.length; i++) {
+            var item = data[i]
+            item.pics = item.pics.split(",")
+          }
+
+          // 分页数据处理
+          var newData = []
+          if (that.pageData.page == 1) {
+            newData = data
+          } else {
+            newData = that.data.csmorningRead.concat(data)
+          }
+
+          // 是否可以加载下一页
+          if (data.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
+
+          // 更新界面数据
+          that.setData({
+            csmorningRead: newData
+          })
+          console.log("学生每日晨读获取成功")
+          typeof cb == "function" && cb(true, "加载成功")
+        } else {
+          typeof cb == "function" && cb(false, d.msg ? d.msg : "加载失败")
+        }
+      })
+    } else if (that.data.role <= 2) {
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "page": that.pageData.page,
+        "limit": that.pageData.perpage,
+        "class_id": that.data.class_id
+      }
+      console.log(params)
+      app.ljjw.jwTeacherMorningReadMore(params).then(d => {
+        // console.log(d)
+        if (d.data.status == 1) {
+          // console.log(d.data.data)
+
+          var data = d.data.data
+          for (var i = 0; i < data.length; i++) {
+            var item = data[i]
+            item.pics = data.pics.split(",")
+          }
+
+          // 分页数据处理
+          var newData = []
+          if (that.pageData.page == 1) {
+            newData = data
+          } else {
+            newData = that.data.csmorningRead.concat(data)
+          }
+
+          // 是否可以加载下一页
+          if (data.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
+          that.setData({
+            csmorningRead: newData
+          })
+          console.log("老师每日晨读获取成功")
+        }
+      })
+    }
   }
 })

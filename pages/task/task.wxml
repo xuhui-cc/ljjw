@@ -1,42 +1,34 @@
 <view class="container">
 
   <!-- 导航栏 -->
-  <view class="nabigation_bar">
-    <image wx:if="{{role <= 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
-    <picker wx:if="{{role == 4}}" mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
-      <view class="bar-class">{{stu_class[stu_class_index].classname}}</view>
-    </picker>
-    <picker wx:else="{{role == 1}}" mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
-      <view class="bar-class">{{tea_class[tea_class_index].name}}</view>
-    </picker>
-    <picker wx:if="{{role == 4}}" mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
-      <image wx:if="{{stu_class}}"  class="bar-img" src="../../images/wxsj.png"></image>
-    </picker>
-    <picker wx:else="{{role == 1}}" mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
-      <image wx:if="{{tea_class}}" class="bar-img" src="../../images/wxsj.png"></image>
-    </picker>
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
+    <view class="navibar_selecteSub" style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px;">
+      <image wx:if="{{role <= 2}}" class="add" src="../../images/add.png" bindtap="add_layout"></image>
+      <picker wx:if="{{role == 4}}" mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
+          <view class="bar-class">
+            {{stu_class[stu_class_index].classname}}
+            <image wx:if="{{stu_class}}"  class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
+          </view>
+      </picker>
+      <picker wx:else="{{role == 1}}" mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
+        <view class="bar-class">
+          {{tea_class[tea_class_index].name}}
+          <image wx:if="{{tea_class}}" class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
+        </view>
+      </picker>
+    </view>
   </view>
   <!-- 导航栏结束 -->
 
-  <view wx:if="{{!login}}">
+  <!-- 加载空页面 -->
+  <view wx:if="{{showNoData}}">
     <image class='task-null' src='../../images/null.png'></image>
   </view>
 
-  <view wx:if="{{!stu_info}}">
-    <image class='task-null' src='../../images/null.png'></image>
-  </view>
-
-  
-
-  <view wx:if="{{login && stu_info}}">
-    <view wx:if="{{!stu_class && !tea_class}}">
-      <image class='task-null' src='../../images/null.png'></image>
-    </view>
-    
-    <view wx:else="">
-    
-
-    <view wx:if="{{role <= 2}}">
+  <!-- 加载数据 -->
+  <view wx:else class="showContent" style="margin-top:{{naviBarHeight}}px;">
+    <!-- 老师或教务显示 -->
+    <block wx:if="{{role <= 2}}">
       <view wx:if="{{add}}">
         <image class="add-kuang" src="../../images/kuang.png"></image>
         <view data-addtype='{{1}}' bindtap="to_add_read">
@@ -47,12 +39,10 @@
           <image class="add_message" src="../../images/add_message.png"></image>
           <view class="add-message-tltle">创建消息通知</view>
         </view>
-        
       </view>
+    </block>
 
-    </view>
-
-    <view wx:if="{{role != 3}}">
+    <block wx:if="{{role != 3}}">
       <view class="read-layout" wx:if="{{csmorningRead != ''}}">
         <view class="flex" bindtap='to_stu_mornread' >
           <view class="shu"></view>
@@ -81,7 +71,7 @@
       </view>
 
       <view class="cs_jj">
-        <view wx:for="{{message}}" wx:key="index" wx:for-index="xb" >
+        <view wx:for="{{message}}" wx:key="id" wx:for-index="xb" >
           <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
             <view class="flex">
               <view class="shu"></view>
@@ -92,20 +82,7 @@
           </view>
         </view>
       </view>
-
-
-
-
-    </view>
-
-
-    <view wx:if="{{role == 3}}">
-      <image class='task-null' src='../../images/null.png'></image>
-    </view>
-
-  </view>
-    
-  
+    </block>
   </view>
 
 

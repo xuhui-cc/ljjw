@@ -1,19 +1,22 @@
 <view class="container">
 
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px;width:{{naviBarWidth}}px">
+    <view class="navi_content" style="height:{{naviBarSelectSub_Height}}px;width:{{naviBarWidth}}px;margin-top:{{naviBarSelectSub_Top}}px">
+      <view class="backimg_layout" bindtap="back">
+        <image class='back-img' src='../../images/back_img.png' mode='aspectFit'></image>
+      </view>
+      <text class="my-head">每日晨读</text> 
+      <view class="navi_hideView"></view>
     </view>
-    <text class="my-head">每日晨读</text> 
   </view>
 
 
-  <view class='search_layout' bindtap='to_stu_rearch'>
+  <view class='search_layout' bindtap='to_stu_rearch' style="margin-top:{{naviBarHeight}}px">
     <image class='sea_img' src='../../images/search.png'></image>
     <view class='sea_title'>搜索</view>
   </view>
 
-  <view>
+  <view style="margin-top:{{naviBarHeight}}px">
     <view class='layout' wx:for="{{csmorningRead}}" wx:key="index" wx:for-index="xb" wx:for-item="item">
       <view class='sub_date'>{{item.pubdate}}</view>
       <view class='read_layout'>
