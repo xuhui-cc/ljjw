@@ -29,6 +29,10 @@ Page({
   //事件处理函数
   
   onLoad: function () {
+
+    // 设置导航栏尺寸
+    this.setUpNaviSize()
+
     let that = this;
     console.log(-1%2 , "取余")
     var role = wx.getStorageSync("role")
@@ -340,6 +344,7 @@ Page({
         }
         console.log(params)
         app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
+          console.log("--------------------请假列表--------------")
           console.log(d)
           if (d.data.status == 1) {
             // that.setData({
@@ -698,66 +703,7 @@ Page({
     }
     else if (that.data.role == 4 && type == 1){
       //学生请假
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 0 
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentAskforleave(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            leave:d.data.data,
-            wscs: d.data.data
-          })
-          for(var i=0;i<that.data.leave.length;i++){
-            var fold = "leave[" + i + "].fold"
-            that.setData({
-              [fold]: true
-            })
-            for(var j=0;j<that.data.leave[i].ask_info.length;j++){
-              var cs = "leave["+ i + "].ask_info[" + j + "].pin"
-              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
-              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
-              that.setData({
-                [cs]:hh,
-                [_cs]:[]
-              })
-              var date = that.data.leave[i].ask_info[j].date
-              
-              for (var k = 0; k < that.data.wscs[i].ask_info.length;k++){
-                // if (that.data.leave[i].add_arr[k].date == '')
-                
-                if (date == that.data.wscs[i].ask_info[k].date){
-                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
-                }
-                else{
-                  
-                  
-                }
-              }
-            }
-          }
-
-          for(var i=0;i<that.data.leave.length;i++){
-            for(var j=0;j<that.data.leave[i].ask_info.length;j++){
-              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
-                if (that.data.leave[i].ask_info[j].cs[k] == null){
-                  that.data.leave[i].ask_info.splice(j,1)
-                }
-              }
-            }
-          }
-
-          that.setData({
-            leave:that.data.leave
-          })
-          
-
-        } else if (d.data.status == -1) {
-          console.log(d.data.msg)
-        }
-      })
+      that.studentGetLeaveList(0)
     } else if (that.data.role == 4 && type == 2){
       var params = {
         "token": wx.getStorageSync("token"),
@@ -842,7 +788,7 @@ Page({
     }
     else if (that.data.role == 3 && type == 1) {
       that.admin_askfor()
-      
+      console.log("-------------管理员加载数据---------------")
     }
     else if (that.data.role == 2 && type == 1) {
       that.jw_askfor()
@@ -948,129 +894,11 @@ Page({
     })
     if (aud == 0 && that.data.role == 4){
       //学生请假未审核
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 0
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentAskforleave(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            leave: d.data.data,
-            wscs: d.data.data
-          })
-          for (var i = 0; i < that.data.leave.length; i++) {
-            var fold = "leave[" + i + "].fold"
-            that.setData({
-              [fold]: true
-            })
-            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
-              var cs = "leave[" + i + "].ask_info[" + j + "].pin"
-              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
-              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
-              that.setData({
-                [cs]: hh,
-                [_cs]: []
-              })
-              var date = that.data.leave[i].ask_info[j].date
-
-              for (var k = 0; k < that.data.wscs[i].ask_info.length; k++) {
-                // if (that.data.leave[i].add_arr[k].date == '')
-
-                if (date == that.data.wscs[i].ask_info[k].date) {
-                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
-                }
-                else {
-
-
-                }
-              }
-            }
-          }
-
-          for (var i = 0; i < that.data.leave.length; i++) {
-            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
-              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
-                if (that.data.leave[i].ask_info[j].cs[k] == null) {
-                  that.data.leave[i].ask_info.splice(j, 1)
-                }
-              }
-            }
-          }
-
-          that.setData({
-            leave: that.data.leave
-          })
-
-
-        } else if (d.data.status == -1) {
-          console.log(d.data.msg)
-        }
-      })
+      that.studentGetLeaveList(0)
     }
     else if (aud == 1 && that.data.role == 4){
       //学生请假已审核
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 1
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentAskforleave(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            leave: d.data.data,
-            wscs: d.data.data
-          })
-          for (var i = 0; i < that.data.leave.length; i++) {
-            var fold = "leave[" + i + "].fold"
-            that.setData({
-              [fold]:true
-            })
-            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
-              var cs = "leave[" + i + "].ask_info[" + j + "].pin"
-              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
-              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
-              that.setData({
-                [cs]: hh,
-                [_cs]: []
-              })
-              var date = that.data.leave[i].ask_info[j].date
-
-              for (var k = 0; k < that.data.wscs[i].ask_info.length; k++) {
-                // if (that.data.leave[i].add_arr[k].date == '')
-
-                if (date == that.data.wscs[i].ask_info[k].date) {
-                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
-                }
-                else {
-
-
-                }
-              }
-            }
-          }
-
-          for (var i = 0; i < that.data.leave.length; i++) {
-            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
-              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
-                if (that.data.leave[i].ask_info[j].cs[k] == null) {
-                  that.data.leave[i].ask_info.splice(j, 1)
-                }
-              }
-            }
-          }
-
-          that.setData({
-            leave: that.data.leave
-          })
-
-
-        } else if (d.data.status == -1) {
-          console.log(d.data.msg)
-        }
-      })
+      that.studentGetLeaveList(1)
     } else if (aud == 0 && that.data.role == 3){
       that.admin_askfor()
 
@@ -2720,6 +2548,7 @@ Page({
       }
       console.log(params)
       app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
+        console.log("--------------------请假列表--------------")
         console.log(d)
         if (d.data.status == 1) {
 
@@ -2749,6 +2578,7 @@ Page({
       }
       console.log(params)
       app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
+        console.log("--------------------请假列表--------------")
         console.log(d)
         if (d.data.status == 1) {
           that.setData({
@@ -2893,6 +2723,86 @@ Page({
         }
       })
     }
+  },
+
+  /**
+   * 设置自定义导航栏尺寸
+  */
+  setUpNaviSize: function () {
+    var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let naviBarHeight = menuButtonRect.bottom+10
+    let naviBarWidth = wx.getSystemInfoSync().screenWidth
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarWidth: naviBarWidth,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top
+    })
+  },
+    
+  /**
+   * 学生获取请假列表
+   * type: 0-待审核、1-已审核
+  */
+  studentGetLeaveList: function (type) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "type": type
+    }
+    console.log(params)
+    app.ljjw.jwGetStudentAskforleave(params).then(d => {
+
+      if (d.data.status == 1) {
+        var newData = d.data.data
+        var newData1 = d.data.data
+        for (var i = 0; i < newData.length; i++) {
+          var item = newData[i]
+          item.fold = true
+
+          for (var j = 0; j < item.ask_info.length; j++) {
+            var askInfo = item.ask_info[j]
+            var hh = askInfo.classtime + " " + askInfo.title
+            askInfo.pin = hh
+            askInfo.cs = []
+            var date = askInfo.date
+
+            for (var k = 0; k < newData1[i].ask_info.length; k++) {
+              // if (that.data.leave[i].add_arr[k].date == '')
+
+              if (date == newData1[i].ask_info[k].date) {
+                askInfo.cs.push(newData1[i].ask_info[k].pin)
+              }
+              else {
+
+
+              }
+            }
+          }
+        }
+
+        for (var i = 0; i < newData.length; i++) {
+          var item = newData[i]
+          for (var j = 0; j < item.ask_info.length; j++) {
+            var askInfo = item.ask_info[j]
+            for (var k = 0; k < askInfo.cs.length; k++) {
+              if (askInfo.cs[k] == null) {
+                item.ask_info.splice(j, 1)
+              }
+            }
+          }
+        }
+        that.setData({
+          leave: newData,
+          wscs: newData1
+        })
+        
+
+
+      } else if (d.data.status == -1) {
+        console.log(d.data.msg)
+      }
+    })
   }
-  
 })

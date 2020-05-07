@@ -14,17 +14,17 @@
   
   </view>
 
-
-  <view class="nabigation_bar">
-   <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
-   <view class="red_layout" wx:if="{{role ==2 || role == 3}}">
-    <text wx:if="{{red_num > 0}}" class="red_text">{{red_num}}</text>
-    <image wx:if="{{red_num > 0}}" class="red_dot" src="../../images/tip.png"></image>
+<!-- style="height:{{naviBarHeight}}px;width:{{naviBarWidth}}px;" -->
+  <view class="nabigation_bar" >
+    <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
+    <view class="red_layout" wx:if="{{role ==2 || role == 3}}">
+      <text wx:if="{{red_num > 0}}" class="red_text">{{red_num}}</text>
+      <image wx:if="{{red_num > 0}}" class="red_dot" src="../../images/tip.png"></image>
+      
+    </view>
     
-   </view>
-   
-   <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
-   <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
+    <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
+    <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
   </view>
 
   <view wx:if="{{!login}}">
@@ -278,19 +278,27 @@
           <view class="leave-layout2" wx:else="">
             <view wx:for="{{leave}}" wx:key="index" wx:for-key="item_index">
               <view class="auded-leave">
+                <!-- 填充单元格 -->
                 <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
+                  <!-- 超时提醒 -->
+                  <view wx:if="{{item.status == 5}}" class="nullifyLeaveReason">
+                    <image class="wrongNotiImage" src = "../../images/wrongNoti.png"></image>
+                    <text class="nullfyLeaveText">因请假课程已下课，该假条禁止操作。</text>
+                  </view>
+                  <!-- 请假时间 & 状态 -->
                   <view class="hm-flex">
                     <text class="lea-time">请假时间：{{ask.date}}</text>
-                    <view wx:if="{{item.verify_list.length == 1}}" >
-                    <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="auded-result">待管理员审核</view>
-                    <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                    <view wx:if="{{item.status==5}}" class="auded-result" style="color:#fbb95e;">假条已作废</view>
+                    <view wx:elif="{{item.verify_list.length == 1}}" >
+                      <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="auded-result">待管理员审核</view>
+                      <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                    </view>
+                    <view wx:elif="{{item.verify_list.length == 2}}">
+                      <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="auded-result" style="color:rgba(70,191,106,1);">审核通过</view>
+                      <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
+                    </view>
                   </view>
-                  <view wx:if="{{item.verify_list.length == 2}}">
-                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="auded-result" style="color:rgba(70,191,106,1);">审核通过</view>
-                    <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
-                  </view>
-                    
-                  </view>
+                  <!-- 请假课程 -->
                   <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
                     <text class="lea-course">请假课程：{{cs}}</text>
                   </view>
