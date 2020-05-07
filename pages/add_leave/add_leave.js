@@ -99,19 +99,56 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
-          var newarray1 = [{
-            date: e.detail.value,
-            hh: []
-          }];
 
+          // var addNewSelectedDay = true
+          // for (var i = 0; i <that.data.lea_date_arr1.length; i++) {
+          //   var selectedDay = that.data.lea_date_arr1[i]
+          //   if (selectedDay.date == e.detail.value) {
+          //     addNewSelectedDay = false
+          //   }
+          // }
 
-          this.setData({
-            'lea_date_arr1': this.data.lea_date_arr1.concat(newarray1)
-          });
+          // if (addNewSelectedDay) {
+          //   var newarray1 = [{
+          //     date: e.detail.value,
+          //     hh: []
+          //   }];
+  
+  
+          //   this.setData({
+          //     'lea_date_arr1': this.data.lea_date_arr1.concat(newarray1)
+          //   });
+          // }
+          
           for (var j = 0; j < that.data.dayCourse.length; j++) {
+            // for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
+
+            //   if (that.data.leave_stu_time == that.data.lea_date_arr1[i].date) {
+            //     for (var qq = 0; qq < that.data.lea_date_arr1[i].hh.length; qq++) {
+            //       if (that.data.lea_date_arr1[i].hh[qq][2] == that.data.dayCourse[index].id) {
+            //         that.data.lea_date_arr1[i].hh.splice(qq, 1)
+            //       }
+            //     }
+  
+  
+  
+            //   }
+  
+            // }
+            var selected = false
+            var course = that.data.dayCourse[j]
+            for(var i = 0; i < that.data.lea_date_arr1.length; i++) {
+              var selectedDay = that.data.lea_date_arr1[i]
+              for (var k = 0; k < selectedDay.hh.length; k++) {
+                if (course.id == selectedDay.hh[k][2]) {
+                  selected = true
+                }
+              }
+            }
+            
             var hhh = "dayCourse[" + j + "].xb"
             that.setData({
-              [hhh]: false
+              [hhh]: selected
             })
           }
           console.log("选择日期的课表接口获取成功")
@@ -152,6 +189,7 @@ Page({
         
       }
     }
+
     that.data.lea_date_arr1[dxb].hh.splice(xb, 1)
     that.setData({
       lea_date_arr1: that.data.lea_date_arr1
@@ -216,14 +254,28 @@ Page({
           [hhh] : !that.data.dayCourse[index].xb
         })
         if (that.data.dayCourse[index].xb){
+          var addNewSelectedDay = true
           for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
 
             if (that.data.leave_stu_time == that.data.lea_date_arr1[i].date) {
               if (that.data.dayCourse[index].xb) {
                 that.data.lea_date_arr1[i].hh.push([that.data.dayCourse[index].classtime, that.data.dayCourse[index].title, that.data.dayCourse[index].id])
+                addNewSelectedDay = false
+                break
               }
             }
 
+          }
+          if (addNewSelectedDay) {
+            var newarray1 = [{
+              date: that.data.leave_stu_time,
+              hh: [[that.data.dayCourse[index].classtime, that.data.dayCourse[index].title, that.data.dayCourse[index].id]]
+            }];
+  
+  
+            this.setData({
+              'lea_date_arr1': this.data.lea_date_arr1.concat(newarray1)
+            });
           }
           
         }
