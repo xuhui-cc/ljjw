@@ -29,7 +29,7 @@
           <image wx:if="{{mydata.status_text == '在校'}}" class="school" src="../../images/inschool.png"></image>
           <image wx:if="{{mydata.status_text == '离校'}}" class="school" src="../../images/outschool.png"></image>
           <view wx:if="{{mydata.status_text == '在校' || mydata.status_text == '离校' || mydata.status_text == '基础信息审核中'}}" class="my-state">{{mydata.status_text}}</view>
-          <view wx:elif="{{mddata.checked == 2}}" class="my-state" style="color:#f14444;">已驳回</view>
+          <view wx:elif="{{mydata.checked == 2}}" class="my-state" style="color:#f14444;">已驳回</view>
           <view wx:else="{{mydata.status_text == '请完成您的基础信息'}}" bindtap="to_stu_info" data-type="{{0}}" class="my-state">{{mydata.status_text}}</view>
           <image wx:if="{{mydata.status_text == '请完成您的基础信息'}}" class="to-add" src="../../images/next.png" ></image>
         </view>

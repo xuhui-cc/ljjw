@@ -21,7 +21,6 @@ Page({
     submit_arr:[],
     type2_ans:[],
     work_reject : false
-    
   },
 
   /**
@@ -71,6 +70,45 @@ Page({
     })
   },
 
+  /**
+   * 待完成任务列表
+   * 返回值：
+   * type：任务类型  1-普通任务  2-选项任务  3-字段任务  4-考勤任务
+   * createuid：发布人uid
+   * createdate：发布时间（10位时间戳）
+   * subject：任务标题
+   * title：标题（多个任务逗号隔开）
+   * has_child_title：选项类任务是否有子标题  0-无   1-有
+   * has_remark：普通任务是否显示学生备注  1-显示
+   * has_pics：普通任务是否显示学生图片上传   1-显示
+   * attach：普通任务附件列表，其他类任务为空
+   * notallow_class：
+   * createtime：创建时间
+   * datetime：搜索日期
+   * pubname：发布人名字
+   * pubtime：发布时间 （0000-00-00 00:00）
+   * task_detail：type为2/3 时返回，子字段如下：
+   *      type=2
+   *           id: 字段id
+   *           tid：任务id
+   *           field_type：1-纯字段  2-字段+备注   3-字段+图片     4-字段+备注+图片
+   *           fieldlist：字段列表，如下
+   *                    count：字段数量
+   *                    lists：字段数组
+   *       type=3
+   *           id: 字段id
+   *           tid：任务id
+   *           child_title：任务子标题（多个子标题逗号隔开）
+   *           options：徐昂想列表，如下
+   *                     cout：选项数量
+   *                     lists：选项
+   *                            a：
+   *                            b：
+   *                            ...
+   *           option_type：选项任务类型：  1-纯选项   2-选项+备注    3-选项+图片    4-选项+备注+图片
+   *           muti_title_id：多个标题对应位置序号（但个标题为空）
+   * 
+  */
   un_task:function(cb){
     let that = this
     var params = {
@@ -95,113 +133,117 @@ Page({
             item.title = item.title.split(",")
           }
 
-          if (item.type == 2) {
-            for (var n = 0; n < item.title.length; n++) {
-              var taskDetail = item.task_detail[n]
-              taskDetail.title = item.title[n]
+          switch (item.type*1) {
+            case 1: {
+              // 普通任务
+              var imgs = []
+              item.task_detail = {}
+              item.task_detail.imgs = imgs
+              break
             }
-
-            for (var j = 0; j < item.task_detail.length; j++) {
-              var taskDetail = item.task_detail[j]
-              if (taskDetail.child_title != null) {
-                taskDetail.child_title = taskDetail.child_title.split(",")
-
-                for (var n = 0; n < taskDetail.child_title.length; n++) {
-                  taskDetail.options[n].title = taskDetail.child_title[n]
-                }
-
+            case 2: {
+              // 选项任务
+              for (var n = 0; n < item.title.length; n++) {
+                var taskDetail = item.task_detail[n]
+                taskDetail.title = item.title[n]
               }
-              for(var k=0;k<taskDetail.options.length;k++){
-                var option = taskDetail.options[k]
-                var arr = []
-
-                for (let n in option.lists) {
-
-                  arr.push(option.lists[n]);
-                  // console.log(arr)
-                  var imgs = []
-                  option.list = arr
-                  option.imgs = imgs
-                }
-
-                for (var n = 0; n < option.list.length; n++) {
-                  var list_item = option.list[n]
-                  var new_list_item = {}
-                  new_list_item.item = list_item
-                  new_list_item.option = String.fromCharCode(65 + n)
-                  new_list_item.select = false
-                  option.list[n] = new_list_item
-                }
-
-              }
-
-            }
-          } else if (item.type == 3) {
-            for (var n = 0; n < item.title.length; n++) {
-              item.task_detail[n].title = item.title[n]
-            }
-            for (var j = 0; j < item.task_detail.length; j++) {
-              var taskDetail = item.task_detail[j]
-              for (var k = 0; k < taskDetail.fieldlist.length;k++){
-                var fileListItem = taskDetail.fieldlist[k]
-                var imgs = []
-                fileListItem.imgs = imgs
-
-                for (var n = 0; n < fileListItem.lists.length; n++) {
-                  var fileListItem_listItem = fileListItem.lists[n]
-                  var new_fileListItem_listItem = {}
-                  new_fileListItem_listItem.item = fileListItem_listItem
-                  new_fileListItem_listItem.content = ''
-                  fileListItem.lists[n] = new_fileListItem_listItem
-                }
-
-              }
-
-            }
-
-          } else if (item.type == 1) {
-           
-            var imgs = []
-            item.task_detail = {}
-            item.task_detail.imgs = imgs
-            // console.log("==========================================imgs")
-          } else if (item.type == 4){
-            for (var j = 0; j < item.task_detail.length; j++) {
-              var taskDetail = item.task_detail[j]
-              taskDetail.cs = []
-              var classdate = taskDetail.classdate
-
-              for (var k = 0; k < newData1[i].task_detail.length; k++) {
-                // if (that.data.leave[i].add_arr[k].date == '')
-
-                if (classdate == newData1[i].task_detail[k].classdate) {
-                  taskDetail.cs.push([newData1[i].task_detail[k].classtime, newData1[i].task_detail[k].check_status])
-                }
-                else {
-
-
-                }
-              }
-            }
-
-            
-                for (var j = 0; j < item.task_detail.length; j++) {
-                  var taskDetail = item.task_detail[j]
-                  // for (var k = 0; k < that.data.task[i].task_detail[j].cs.length; k++) {
-                  var cs = j+1
-                  if (cs < item.task_detail.length){
-                    if (taskDetail.classdate == item.task_detail[cs].classdate) {
-                      item.task_detail.splice(cs, 1)
-                      j = j-1
-                    }
+  
+              for (var j = 0; j < item.task_detail.length; j++) {
+                var taskDetail = item.task_detail[j]
+                if (taskDetail.child_title != null) {
+                  taskDetail.child_title = taskDetail.child_title.split(",")
+  
+                  for (var n = 0; n < taskDetail.child_title.length; n++) {
+                    taskDetail.options[n].title = taskDetail.child_title[n]
                   }
-                  
-                  // }
-               
-              
+  
+                }
+                for(var k=0;k<taskDetail.options.length;k++){
+                  var option = taskDetail.options[k]
+                  var arr = []
+  
+                  for (let n in option.lists) {
+  
+                    arr.push(option.lists[n]);
+                    // console.log(arr)
+                    var imgs = []
+                    option.list = arr
+                    option.imgs = imgs
+                  }
+  
+                  for (var n = 0; n < option.list.length; n++) {
+                    var list_item = option.list[n]
+                    var new_list_item = {}
+                    new_list_item.item = list_item
+                    new_list_item.option = String.fromCharCode(65 + n)
+                    new_list_item.select = false
+                    option.list[n] = new_list_item
+                  }
+  
+                }
+  
+              }
+              break
             }
-
-            
+            case 3: {
+              // 字段任务
+              for (var n = 0; n < item.title.length; n++) {
+                item.task_detail[n].title = item.title[n]
+              }
+              for (var j = 0; j < item.task_detail.length; j++) {
+                var taskDetail = item.task_detail[j]
+                for (var k = 0; k < taskDetail.fieldlist.length;k++){
+                  var fileListItem = taskDetail.fieldlist[k]
+                  var imgs = []
+                  fileListItem.imgs = imgs
+  
+                  for (var n = 0; n < fileListItem.lists.length; n++) {
+                    var fileListItem_listItem = fileListItem.lists[n]
+                    var new_fileListItem_listItem = {}
+                    new_fileListItem_listItem.item = fileListItem_listItem
+                    new_fileListItem_listItem.content = ''
+                    fileListItem.lists[n] = new_fileListItem_listItem
+                  }
+  
+                }
+  
+              }
+              break
+            }
+            case 4: {
+              // 考勤任务
+              for (var j = 0; j < item.task_detail.length; j++) {
+                var taskDetail = item.task_detail[j]
+                taskDetail.cs = []
+                var classdate = taskDetail.classdate
+  
+                for (var k = 0; k < newData1[i].task_detail.length; k++) {
+                  // if (that.data.leave[i].add_arr[k].date == '')
+  
+                  if (classdate == newData1[i].task_detail[k].classdate) {
+                    taskDetail.cs.push([newData1[i].task_detail[k].classtime, newData1[i].task_detail[k].check_status])
+                  }
+                  else {
+  
+  
+                  }
+                }
+              }
+  
+              
+              for (var j = 0; j < item.task_detail.length; j++) {
+                var taskDetail = item.task_detail[j]
+                // for (var k = 0; k < that.data.task[i].task_detail[j].cs.length; k++) {
+                var cs = j+1
+                if (cs < item.task_detail.length){
+                  if (taskDetail.classdate == item.task_detail[cs].classdate) {
+                    item.task_detail.splice(cs, 1)
+                    j = j-1
+                  }
+                }
+              }
+              break
+            }
           }
         }
         var data = newData

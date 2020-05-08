@@ -1576,13 +1576,12 @@ page{
   width:294rpx;
   height:329rpx;
 }
-.lea_null{
-  /* margin-left: 246rpx; */
-  /* margin-top: 800rpx; */
-  /* width: 283rpx;
-  height: 350rpx; */
-
-}
+/* .lea_null{
+  margin-left: 246rpx;
+  margin-top: 800rpx;
+  width: 283rpx;
+  height: 350rpx;
+} */
 .lea_lay_layout{
   position: absolute;
   top:50%;

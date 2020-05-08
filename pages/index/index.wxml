@@ -236,7 +236,7 @@
         <view wx:if="{{aud == 0}}">
 
           <view wx:if="{{!leave}}" class="lea_lay_layout">
-            <image class='lea_null' src='../../images/course_null.png'  mode="aspectFit"></image>
+            <image src='../../images/course_null.png'  mode="aspectFit"></image>
           </view>
 
           <view class="leave-layout2" wx:else="">
@@ -273,7 +273,7 @@
         <view wx:if="{{aud == 1}}">
 
           <view wx:if="{{!leave}}" class="lea_lay_layout">
-            <image class='lea_null' src='../../images/course_null.png' mode="aspectFit"></image>
+            <image src='../../images/course_null.png' mode="aspectFit"></image>
           </view>
 
           <view class="leave-layout2" wx:else="">

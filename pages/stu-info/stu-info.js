@@ -90,6 +90,8 @@ Page({
 
 
           })
+
+          that.chargeCanSubmit()
           console.log("我的主页接口获取成功")
         }
 
@@ -594,5 +596,33 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+
+  chargeCanSubmit: function(){
+    let that = this
+    var issubmit = false
+    if (that.data.input_name != undefined ){
+                
+      if (that.data.sex_index != 0){
+        if (that.data.input_school.indexOf("请选择") == -1){
+          if (that.data.graduation_time != 0){
+            if (that.data.input_major != undefined){
+              if (that.data.input_email != undefined){
+                if (that.data.stu_class_index != -1){
+                  issubmit = true
+                  
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    that.setData({
+      issubmit:issubmit
+    })
+    console.log(that.data.issubmit)
   }
 })
