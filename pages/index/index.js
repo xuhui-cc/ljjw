@@ -32,567 +32,184 @@ Page({
 
     // 设置导航栏尺寸
     this.setUpNaviSize()
-
-    let that = this;
-    console.log(-1%2 , "取余")
-    var role = wx.getStorageSync("role")
     
-    if (!role) {
-      that.setData({
-        role: -1,
-        login: false,
-        uid: wx.getStorageSync("uid"),
-        userInfo : wx.getStorageSync("userInfo"),
-        // stu_sta: wx.getStorageSync("stu_sta")
-      }),
-      wx.switchTab({
-        url: '/pages/my/my',
-      })
-      // that.getTabBar().setData({
-      //   selected: 3
-      // })
-      
-    } else {
-      that.setData({
-        role: role,
-        login: true,
-        uid: wx.getStorageSync("uid"),
-        userInfo: wx.getStorageSync("userInfo"),
-        
-        
-        
-      })
-      if(that.data.role == 4){
-        that.setData({
-          stu_sta: wx.getStorageSync("stu_sta")
-        })
-      }
-    }
-    console.log(that.data.stu_sta + "that.data.stu_sta")
-    console.log("onload")
-    //获取当前年份和月份
-    let nowTime = new Date();
-    let nowYear = nowTime.getFullYear();
-    let nowMonth = nowTime.getMonth();
-    let nowDay = nowTime.getDate();
-    that.getMonthData(nowYear, nowMonth + 1);
-    that.setData({
-      showYear: nowYear,
-      showMonth: nowMonth + 1,
-      showDay: nowDay,
-      nowYear,
-      nowMonth: nowMonth + 1,
-      nowDay,
-      clickYear: nowYear,
-      clickMonth: nowMonth + 1,
-      clickDay: nowDay,
-      // show_month: nowMonth + 1
-    })
-    var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) 
-    var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
-    var nowmonth = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth)
-    that.setData({
-      nowDate: nowDate,
-      nowmonth: nowmonth,
-      showym: showym
-    })
-
-    for (var i = 0; i < that.data.nowWeekData.length;i++){
-      var cs = "nowWeekData[" + i + "][2]"
-      var css = "nowWeekData[" + i + "][3]"
-      that.setData({
-        [cs]:false,
-        [css]: 0
-      })
-    }
-    for (var i = 0; i < that.data.weekData.length; i++) {
-      for (var j = 0; j < that.data.weekData[i].length;j++){
-        var cs = "weekData[" + i + "][" + j + "][2]"
-        var css = "weekData[" + i + "][" + j + "][3]"
-        that.setData({
-          [cs]: false,
-          [css]: 0
-        })
-      }
-    }
-
-    if(that.data.role == 4){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": nowDate
-      }
-      console.log(params)
-      app.ljjw.jwGetDayCourse(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            dayCourse: d.data.data
-          })
-          // console.log(that.data.dayCourse)
-          for(var i=0;i<that.data.dayCourse.length;i++){
-            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 +"=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb +"++++++==========bb")
-            
-            var timestamp = Date.parse(new Date());
-            console.log(aa  +"=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp){
-              var comp = "dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else{
-              var comp = "dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-            
-          }
-          console.log(that.data.dayCourse)
-          console.log("that.data.dayCourse ")
-        }
-      })
-
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "month": nowmonth
-      }
-      console.log(params)
-      app.ljjw.jwGetMonthCourse(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d)
-          that.setData({
-            stu_courselist: d.data.data.info,
-            stu_classlist: d.data.data.period_info
-          })
-          that.cs()
-          for (var i = 0; i < that.data.stu_courselist.length; i++) {
-            var newarray = [{
-              ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-              d: that.data.stu_courselist[i].riqi.substr(8, 2)
-            }];
-            that.setData({
-              'dot_riqi': that.data.dot_riqi.concat(newarray)
-            });
-
-          }
-          console.log(that.data.dot_riqi)
-
-          // 日历点点
-          that.dot()
-        }
-      })
-    }
-    else if(that.data.role <= 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": nowDate
-      }
-      console.log(params)
-      that.setData({
-        class_ids: wx.getStorageSync("class_ids"),
-      })
-      console.log(that.data.class_ids)
-      console.log("that.data.class_ids")
-      app.ljjw.jwGetCheckOnList(params).then(d => {
-        // console.log(d.data.status)
-        if (d.data.status == 1) {
-          console.log("或教务")
-          console.log(d.data.data)
-          that.setData({
-            tea_dayCourse: d.data.data.course_list,
-            tea_courselist: d.data.data.day_list
-          })
-
-          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            //关联班级点名判断
-            for(var rc=0;rc<that.data.class_ids.length;rc++){
-              if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]){
-                var csrc = "tea_dayCourse[" + i + "].rc"
-                that.setData({
-                  [csrc] :true
-                })
-              }
-            }
-            console.log(that.data.tea_dayCourse)
-            console.log("that.data.tea_dayCourse.rc")
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.tea_dayCourse[i].riqi + " " + end1
-            console.log(end1 + "=======================end1")
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-
-          console.log(that.data.tea_dayCourse)
-          for(var i=0;i<that.data.tea_courselist.length;i++){
-            var newarray = [{
-              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
-              d: that.data.tea_courselist[i].riqi.substr(8, 2)
-            }];
-            that.setData({
-              'dot_riqi': that.data.dot_riqi.concat(newarray)
-            });
-            
-          }
-          console.log(that.data.dot_riqi)
-
-          // 日历点点
-          that.dot()
-          
-          
-
-
-           
-          // console.log(that.data.tea_dayCourse)
-        }
-      })
-      if(that.data.role == 2){
-        var params = {
-          "token": wx.getStorageSync("token"),
-          "uid": wx.getStorageSync("uid"),
-          "type": 1
-        }
-        console.log(params)
-        app.ljjw.jwGetAskforleaveCount(params).then(d => {
-          // console.log(d.data.status)
-          if (d.data.status == 1) {
-            console.log("教务红点")
-            console.log(d.data.data)
-            that.setData({
-              red_num: d.data.data
-            })
-            console.log(that.data.red_num +"red_num")
-           
-            
-
-          }
-        })
-      }
-
-      
-    }else if(that.data.role == 3){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 2
-      }
-      console.log(params)
-      app.ljjw.jwGetAskforleaveCount(params).then(d => {
-        // console.log(d.data.status)
-        if (d.data.status == 1) {
-          console.log("教务红点")
-          console.log(d.data.data)
-          that.setData({
-            red_num: d.data.data
-          })
-          console.log(that.data.red_num + "red_num")
-
-
-
-        }
-      })
-      if (that.data.type == 1){
-        var params = {
-          "token": wx.getStorageSync("token"),
-          "uid": wx.getStorageSync("uid"),
-          "type": 1
-        }
-        console.log(params)
-        app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
-          console.log("--------------------请假列表--------------")
-          console.log(d)
-          if (d.data.status == 1) {
-            // that.setData({
-            //   dayCourse: d.data.data
-            // })
-            // console.log(that.data.dayCourse)
-          } else {
-            that.setData({
-              admin_auding_lea: false
-            })
-          }
-          console.log("我是管理员请假待审核")
-        })
-        
-      } 
-      
-    }
-
-
-
-
+    
   },
 
   cs:function(){
     let that = this
-    console.log(that.data.stu_classlist)
+    // console.log(that.data.stu_classlist)
     if (that.data.stu_classlist){
-    for (var i = 0; i < that.data.stu_classlist.length; i++) {
-      var cs = "stu_classlist[" + i + "].class_num"
-      var css = "stu_classlist[" + i + "].start"
-      var start = Number(that.data.stu_classlist[i].startriqi.substr(8, 2))
-      var end = that.data.stu_classlist[i].endriqi.substr(8, 2)
-      var class_num = end - start + 1
-      console.log(start, end, class_num)
-      that.setData({
-        [cs]: class_num,
-        [css]: start
-      })
-    }
-    var class_cs = []
-    for (var i = 0; i < that.data.stu_classlist.length;i++){
-      for (var j = that.data.stu_classlist[i].start; j < (that.data.stu_classlist[i].class_num + that.data.stu_classlist[i].start);j++){
-        class_cs.push([j,i+1])
-        that.setData({
-          class_cs: class_cs
-        })
+      var class_cs = []
+      for (var i = 0; i < that.data.stu_classlist.length; i++) {
+        var stu_class = that.data.stu_classlist[i]
+
+        var start = Number(stu_class.startriqi.substr(8, 2))
+        var end = that.data.stu_classlist[i].endriqi.substr(8, 2)
+        var class_num = end - start + 1
+
+        stu_class.class_num = class_num
+        stu_class.start = start
+
+        for (var j = stu_class.start; j < (stu_class.class_num + stu_class.start);j++){
+          class_cs.push([j,i+1])
+        }
       }
-    }
-    that.class_color()
+
+      that.setData({
+        stu_classlist: that.data.stu_classlist,
+        class_cs: class_cs
+      })
+      
+      that.class_color()
     }
   },
 
   dot: function () {
     let that = this
-    // 本周
+    console.log("------------红点日期-------------")
+    console.log(that.data.dot_riqi)
+    console.log("-----------nowWeekData----------")
+    console.log(that.data.nowWeekData)
+    console.log("-------------that.data.showym---------")
+    console.log(that.data.showym)
     for (var q = 0; q < that.data.dot_riqi.length; q++) {
       // console.log(that.data.dot_riqi[q])
-      if (that.data.dot_riqi[q].ym == that.data.showym) {
-        for (var w = 0; w < that.data.nowWeekData.length; w++) {
-          if (that.data.dot_riqi[q].d == that.data.nowWeekData[w][0]) {
-      // //       console.log(that.data.nowWeekData[w][0])
-            var cs = "nowWeekData[" + w + "][2]"
+      var dot_riqi_item = that.data.dot_riqi[q]
+      if (dot_riqi_item.ym == that.data.showym) {
 
-            that.setData({
-              [cs]: true
-            })
-
+        // 本周
+        var nowWeekData = that.data.nowWeekData
+        for (var w = 0; w < nowWeekData.length; w++) {
+          var nowWeekDataItem = nowWeekData[w]
+          if (dot_riqi_item.d == nowWeekDataItem[0]) {
+            // console.log(that.data.nowWeekData[w][0])
+            nowWeekDataItem[2] = true 
           } else {
-            console.log("本周无课")
+            // console.log("本周无课")
           }
         }
-      }
 
-    }
-
-    // 本月
-    for (var q = 0; q < that.data.dot_riqi.length; q++) {
-      console.log(that.data.dot_riqi[q])
-      if (that.data.dot_riqi[q].ym == that.data.showym) {
+        // 本月
         for (var w = 0; w < that.data.weekData.length; w++) {
-          for (var e = 0; e < that.data.weekData[w].length; e++) {
-            if (that.data.weekData[w][e][1] == "true"){
-              if (that.data.dot_riqi[q].d == that.data.weekData[w][e][0]) {
-                console.log(that.data.weekData[w][e][0])
-                var cs = "weekData[" + w + "][" + e + "][2]"
-
-                that.setData({
-                  [cs]: true
-                })
+          var weekDataItem = that.data.weekData[w]
+          for (var e = 0; e < weekDataItem.length; e++) {
+            var weekDataItem_item = weekDataItem[e]
+            if (weekDataItem_item[1] == "true"){
+              if (dot_riqi_item.d == weekDataItem_item[0]) {
+                // console.log(that.data.weekData[w][e][0])
+                weekDataItem_item[2] = true
 
               } else {
-                console.log(that.data.weekData[w][e][0] + "无课")
+                // console.log(weekDataItem_item[0] + "无课")
               }
             }
-            
           }
-            
-            
-          
-
         }
       }
-
     }
+
+    console.log("----------------------------------------------------------------------------------------------")
+    console.log(nowWeekData)
+    that.setData({
+      nowWeekData: that.data.nowWeekData,
+      weekData: that.data.weekData
+    })
   },
 
   dot_work: function () {
     let that = this
-    // 本周
+    
     for (var q = 0; q < that.data.dot_work.length; q++) {
+      
       // console.log(that.data.dot_work[q])
-      if (that.data.dot_work[q].ym == that.data.showym) {
-        for (var w = 0; w < that.data.nowWeekData.length; w++) {
-          if (that.data.dot_work[q].d == that.data.nowWeekData[w][0]) {
-            console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
-            if (that.data.dot_work[q].work != 0 ){
-              var cs = "nowWeekData[" + w + "][2]"
-
-              that.setData({
-                [cs]: 2
-              })
+      var work = that.data.dot_work[q]
+      if (work.ym == that.data.showym) {
+        // 本周
+        var nowWeekData = that.data.nowWeekData
+        for (var w = 0; w < nowWeekData.length; w++) {
+          var nowWeekDataItem = that.data.nowWeekData[w]
+          if (work.d == nowWeekDataItem[0]) {
+            // console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
+            if (work.work != 0 ){
+              nowWeekDataItem[2] = 2
             }else{
-              var cs = "nowWeekData[" + w + "][2]"
-
-              that.setData({
-                [cs]: 1
-              })
+              nowWeekDataItem[2] = 1
             }
-            
-            
-
           } 
-          else if (that.data.nowWeekData[w][2]  <1) {
-            console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
-            var cs = "nowWeekData[" + w + "][2]"
-
-            that.setData({
-              [cs]: 0
-            })
+          else if (nowWeekDataItem[2]  <1) {
+            // console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
+            nowWeekDataItem[2] = 0
           }
         }
-      }
 
-    }
-
-    // 本月
-    for (var q = 0; q < that.data.dot_work.length; q++) {
-      console.log(that.data.dot_work[q])
-      if (that.data.dot_work[q].ym == that.data.showym) {
+        // 本月
         for (var w = 0; w < that.data.weekData.length; w++) {
-          for (var e = 0; e < that.data.weekData[w].length; e++) {
-            if (that.data.weekData[w][e][1] == "true") {
-              if (that.data.dot_work[q].d == that.data.weekData[w][e][0]) {
-                console.log(that.data.weekData[w][e][0])
-                if (that.data.dot_work[q].work == 0){
-                  var cs = "weekData[" + w + "][" + e + "][2]"
-
-                  that.setData({
-                    [cs]: 1
-                  })
+          var weekDataItem = that.data.weekData[w]
+          var nowWeekDataItem = that.data.nowWeekData[w]
+          for (var e = 0; e < weekDataItem.length; e++) {
+            var weekDataItem_item = weekDataItem[e]
+            if (weekDataItem[1] == "true") {
+              if (work.d == weekDataItem_item[0]) {
+                // console.log(that.data.weekData[w][e][0])
+                if (work.work == 0){
+                  weekDataItem_item[2] = 1
                 }else{
-                  var cs = "weekData[" + w + "][" + e + "][2]"
-
-                  that.setData({
-                    [cs]: 2
-                  })
+                  weekDataItem_item[2] = 2
                 }
-                
-
-              } else if (that.data.nowWeekData[w][2] < 1) {
-                console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
-                var cs = "nowWeekData[" + w + "][2]"
-
-                that.setData({
-                  [cs]: 0
-                })
+              } else if (nowWeekDataItem[2] < 1) {
+                // console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
+                nowWeekDataItem[2] = 0
               }
             }
-
           }
-
-
-
-
         }
       }
-
     }
+
+    that.setData({
+      nowWeekData: nowWeekData,
+      weekData: that.data.weekData,
+    })
   },
 
   class_color: function () {
     let that = this
-    // 本周
+    
     for (var q = 0; q < that.data.class_cs.length; q++) {
       // console.log(that.data.class_cs[q])
-     
-        for (var w = 0; w < that.data.nowWeekData.length; w++) {
-          if (that.data.class_cs[q][0] == that.data.nowWeekData[w][0]) {
-            // //       console.log(that.data.nowWeekData[w][0])
-            var cs = "nowWeekData[" + w + "][3]"
+      var class_cs_item = that.data.class_cs[q]
 
-            that.setData({
-              [cs]: that.data.class_cs[q][1]
-            })
+      // 本周
+      for (var w = 0; w < that.data.nowWeekData.length; w++) {
+        var nowWeekDataItem = that.data.nowWeekData[w]
+        if (class_cs_item[0] == nowWeekDataItem[0]) {
+          nowWeekDataItem[3] = class_cs_item[1]
 
-          } else if (!that.data.nowWeekData[w][3]) {
-            var cs = "nowWeekData[" + w + "][3]"
-
-            that.setData({
-              [cs]: -1
-            })
-          }
+        } else if (!nowWeekDataItem[3]) {
+          nowWeekDataItem[3] = -1
         }
-      
+      }
 
-    }
+      // 本月
+      for (var w = 0; w < that.data.weekData.length; w++) {
+        var weekDataItem = that.data.weekData[w]
+        for (var e = 0; e < weekDataItem.length; e++) {
+          var weekDataItem_item = weekDataItem[e]
+          if (weekDataItem_item[1] == "true") {
+            if (class_cs_item[0] == weekDataItem_item[0]) {
+              // console.log(that.data.weekData[w][e][0]  + "===================cs")
+              weekDataItem_item[3] = class_cs_item[1]
 
-    // 本月
-    for (var q = 0; q < that.data.class_cs.length; q++) {
-      
-      
-        for (var w = 0; w < that.data.weekData.length; w++) {
-          for (var e = 0; e < that.data.weekData[w].length; e++) {
-            if (that.data.weekData[w][e][1] == "true") {
-              if (that.data.class_cs[q][0] == that.data.weekData[w][e][0]) {
-                console.log(that.data.weekData[w][e][0]  + "===================cs")
-                var cs = "weekData[" + w + "][" + e + "][3]"
-                that.setData({
-                  [cs]: that.data.class_cs[q][1]
-                })
-              } else if (!that.data.weekData[w][e][3]){
-                var cs = "weekData[" + w + "][" + e + "][3]"
-                that.setData({
-                  [cs]: -1
-                })
-              }
+            } else if (!weekDataItem_item[3]){
+              weekDataItem_item[3] = -1
             }
-
           }
-
-
-
-
         }
-      
-
+      }
     }
     that.setData({
+      nowWeekData: that.data.nowWeekData,
       weekData: that.data.weekData
     })
   },
@@ -603,6 +220,11 @@ Page({
     let that = this
     var type = e.currentTarget.dataset.type
     console.log(type)
+
+    if (type == that.data.type) {
+      return
+    }
+
     that.setData({
       type : type
     })
@@ -612,279 +234,144 @@ Page({
     } else {
       riqi = that.data.nowDate
     }
-    if(that.data.role == 4 && type == 3){
-      for (var i = 0; i < that.data.nowWeekData.length; i++) {
-        var cs = "nowWeekData[" + i + "][2]"
-        var css = "nowWeekData[" + i + "][3]"
-        that.setData({
-          [cs]: false,
-          [css]: 0
-        })
-      }
-      for (var i = 0; i < that.data.weekData.length; i++) {
-        for (var j = 0; j < that.data.weekData[i].length; j++) {
-          var cs = "weekData[" + i + "][" + j + "][2]"
-          var css = "weekData[" + i + "][" + j + "][3]"
-          that.setData({
-            [cs]: false,
-            [css]: 0
-          })
-        }
-      }
-      //学生某月考勤
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "month": that.data.nowmonth
-      }
-      console.log(params)
-      app.ljjw.jwGetMonthCheckon(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d)
-          if (d.data.data.info){
-            that.setData({
-              stu_courselist: d.data.data.info,
-              stu_classlist: d.data.data.period_info
-            })
-          }else{
-            that.setData({
-              stu_courselist: '',
-              stu_classlist: d.data.data.period_info
-            })
-          }
-          
-          that.cs()
-          if (that.data.stu_courselist != ''){
-            for (var i = 0; i < that.data.stu_courselist.length; i++) {
-              var newarray = [{
-                ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                d: Number(that.data.stu_courselist[i].riqi.substr(8, 2)),
-                work: Number(that.data.stu_courselist[i].check_status)
-              }];
-              that.setData({
-                'dot_work': that.data.dot_work.concat(newarray)
-              });
 
-            }
-            console.log(that.data.dot_work)
-
-            // 考勤点点
-            that.dot_work()
-          }
-          
-        } else if (d.data.status == -1){
-          console.log(d.data.msg)
-        }
-      })
-
-      //学生当日考勤
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": riqi
-      }
-      console.log(params)
-      app.ljjw.jwGetDayCheckon(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            dayCheckon: d.data.data
-          })
-          console.log(that.data.dayCheckon)
-        }
-        else if (d.data.status == -1) {
-          that.setData({
-            dayCheckon: ''
-          })
-          console.log(that.data.dayCheckon)
-        }
-
-      })
-
-    }
-    else if (that.data.role == 4 && type == 1){
-      //学生请假
-      that.studentGetLeaveList(0)
-    } else if (that.data.role == 4 && type == 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": riqi
-      }
-      console.log(params)
-      app.ljjw.jwGetDayCourse(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            dayCourse: d.data.data
-          })
-          console.log(that.data.dayCourse)
-          for (var i = 0; i < that.data.dayCourse.length; i++) {
-            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-          console.log(that.data.dayCourse)
-          console.log("that.data.dayCourse ")
-        }
-      })
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "month": that.data.nowmonth
-      }
-      console.log(params)
-      app.ljjw.jwGetMonthCourse(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d)
-          that.setData({
-            stu_courselist: d.data.data.info,
-            stu_classlist: d.data.data.period_info
-          })
-          that.cs()
-          for (var i = 0; i < that.data.stu_courselist.length; i++) {
-            var newarray = [{
-              ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-              d: that.data.stu_courselist[i].riqi.substr(8, 2)
-            }];
-            that.setData({
-              'dot_riqi': that.data.dot_riqi.concat(newarray)
-            });
-
-          }
-          console.log(that.data.dot_riqi)
-
-          // 日历点点
-          that.dot()
-        }
-      })
-    }
-    else if (that.data.role == 3 && type == 1) {
-      that.admin_askfor()
-      console.log("-------------管理员加载数据---------------")
-    }
-    else if (that.data.role == 2 && type == 1) {
-      that.jw_askfor()
-
-    } else if (that.data.role <= 3 && type == 3) {
-      
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": riqi
-      }
-      console.log(params)
-      that.setData({
-        class_ids: wx.getStorageSync("class_ids"),
-      })
-      console.log(that.data.class_ids)
-      console.log("that.data.class_ids")
-      app.ljjw.jwGetCheckOnList(params).then(d => {
-        // console.log(d.data.status)
-        if (d.data.status == 1) {
-          console.log("我是老师或教务")
-          console.log(d.data.data)
-          that.setData({
-            tea_dayCourse: d.data.data.course_list,
-            tea_courselist: d.data.data.day_list
-          })
-
-          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            //关联班级点名判断
-            for (var rc = 0; rc < that.data.class_ids.length; rc++) {
-              if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
-                var csrc = "tea_dayCourse[" + i + "].rc"
-                that.setData({
-                  [csrc]: true
-                })
-              }
-            }
-            console.log(that.data.tea_dayCourse)
-            console.log("that.data.tea_dayCourse.rc")
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.tea_dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-
-          console.log(that.data.tea_dayCourse)
-
-          for (var i = 0; i < that.data.tea_courselist.length; i++) {
-            var newarray = [{
-              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
-              d: that.data.tea_courselist[i].riqi.substr(8, 2)
-            }];
-            that.setData({
-              'dot_riqi': that.data.dot_riqi.concat(newarray)
-            });
-          }
-          console.log(that.data.dot_riqi)
-          console.log(that.data.tea_dayCourse)
-          // 日历点点
-          that.dot()
-        }
-      })
-
-    }
-
+    that.loadData(type, riqi)
+    
   },
 
-  
+  loadData: function(type, riqi){
+    let that = this
+    let role = that.data.role*1
+    console.log("-------------type:"+type+"------------riqi:"+riqi+"---------role:"+role+"-----")
+
+    switch (type*1) {
+      case 1: {
+        // 请假
+        wx.hideTabBar({
+          animation: true,
+        })
+
+        switch (role) {
+          case 1: {
+            // 老师
+            break
+          }
+          case 2: {
+            // 教务
+            that.jw_askfor()
+            break
+          }
+          case 3: {
+            // 管理员
+            that.admin_askfor()
+            break
+          }
+          case 4: {
+            // 学生
+            that.studentGetLeaveList(0)
+            break
+          }
+        }
+        break
+      }
+      case 2: {
+        // 课表
+        wx.showTabBar({
+          animation: true,
+        })
+
+        switch (role) {
+          case 1: {
+            // 老师
+            that.teacherGetCheckOnList(riqi)
+            break
+          }
+          case 2: {
+            // 教务
+            that.teacherGetCheckOnList(riqi)
+            break
+          }
+          case 3: {
+            // 管理员
+            
+            // console.log("-------------管理员加载数据---------------")
+            break
+          }
+          case 4: {
+            // 学生
+
+            // 获取日课程列表
+            that.StudentGetDayCourse(riqi)
+
+            // 学生获取月课程信息
+            that.studentGetMonthCourse(that.data.nowmonth)
+            
+            break
+          }
+        }
+        break
+      }
+        
+      case 3: {
+        // 考勤
+        wx.showTabBar({
+          animation: true,
+        })
+
+        switch (role) {
+          case 1:
+            // 老师
+          case 2: 
+            // 教务
+          case 3: {
+            // 管理员
+            that.teacherGetCheckOnList(riqi)
+            break
+          }
+          case 4: {
+            // 学生
+
+            var nowWeekData = that.data.nowWeekData
+            for (var i = 0; i < nowWeekData.length; i++) {
+              var week = nowWeekData[i]
+              week[2] = false
+              week[3] = 0
+            }
+
+            var weekData = that.data.weekData
+            for (var i = 0; i < weekData.length; i++) {
+              var week = weekData[i]
+              for (var j = 0; j < week.length; j++) {
+                week[j][2] = false
+                week[j][3] = 0
+              }
+            }
+
+            that.setData({
+              nowWeekData: nowWeekData,
+              weekData: weekData
+            })
+            //学生某月考勤
+            that.studentGetMonthCheckon(that.data.nowMonth)
+      
+            //学生当日考勤
+            that.StudentGetDayCheckon(riqi)
+            break
+          }
+        }
+        break
+      }
+    }
+
+    // 小红点数量
+    if (role == 2 || role == 3) {
+      var type = 1
+      if (role == 3) {
+        type = 2
+      }
+      that.AskforleaveCount(type)
+    }
+  },
 
   aud_select : function(e){
     let that = this
@@ -2477,6 +1964,9 @@ Page({
 
   },
 
+  /**
+   * 教务获取请假列表
+  */
   jw_askfor:function(){
     let that = this
     if(that.data.aud == 0){
@@ -2485,21 +1975,20 @@ Page({
         "uid": wx.getStorageSync("uid"),
         "type": 1
       }
-      console.log(params)
+      // console.log(params)
       app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
-        console.log(d)
+        
         if (d.data.status == 1) {
-          console.log(d)
-          that.setData({
-            hm_unaud_leave: d.data.data
-          })
-          for(var i=0;i<that.data.hm_unaud_leave.length;i++){
-            var cs = "hm_unaud_leave[" + i + "].submit"
-            that.setData({
-              [cs]:false
-            })
+          // console.log(d)
+          var hm_unaud_leave = d.data.data
+          
+          for(var i=0;i<hm_unaud_leave.length;i++){
+            hm_unaud_leave[i].submit = false
           }
-          console.log(that.data.hm_unaud_leave)
+          that.setData({
+            hm_unaud_leave: hm_unaud_leave
+          })
+          // console.log(that.data.hm_unaud_leave)
         } else {
           that.setData({
             hm_unaud_leave: ''
@@ -2513,20 +2002,19 @@ Page({
         "uid": wx.getStorageSync("uid"),
         "type": 2
       }
-      console.log(params)
+      // console.log(params)
       app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
-        console.log(d)
+        // console.log(d)
         if (d.data.status == 1) {
-          that.setData({
-            hm_aud_leave: d.data.data
-          })
-          for (var i = 0; i < that.data.hm_aud_leave.length;i++){
-            var cs = "hm_aud_leave[" + i + "].fold"
-            that.setData({
-              [cs] :false
-            })
+          var hm_aud_leave = d.data.data
+          
+          for (var i = 0; i < hm_aud_leave.length;i++){
+            hm_aud_leave[i].fold = false
           }
-          console.log(that.data.hm_aud_leave)
+          that.setData({
+            hm_aud_leave: hm_aud_leave
+          })
+          // console.log(that.data.hm_aud_leave)
         } else {
           that.setData({
             hm_aud_leave: ''
@@ -2538,6 +2026,9 @@ Page({
     
   },
 
+  /**
+   * 管理员获取请假列表
+  */
   admin_askfor: function () {
     let that = this
     if (that.data.aud == 0) {
@@ -2546,23 +2037,19 @@ Page({
         "uid": wx.getStorageSync("uid"),
         "type": 1
       }
-      console.log(params)
+      // console.log(params)
       app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
-        console.log("--------------------请假列表--------------")
-        console.log(d)
+        // console.log(d)
         if (d.data.status == 1) {
-
-          that.setData({
-            admin_unaud_leave: d.data.data
-          })
-          for (var i = 0; i < that.data.admin_unaud_leave.length; i++) {
-            var cs = "admin_unaud_leave[" + i + "].submit"
-            that.setData({
-              [cs]: false
-            })
+          var admin_unaud_leave = d.data.data
+          
+          for (var i = 0; i < admin_unaud_leave.length; i++) {
+            admin_unaud_leave[i].submit = false
           }
-         
-          console.log(that.data.admin_unaud_leave)
+          that.setData({
+            admin_unaud_leave: admin_unaud_leave
+          })
+          // console.log(that.data.admin_unaud_leave)
         } else {
           that.setData({
             admin_unaud_leave: ''
@@ -2576,21 +2063,19 @@ Page({
         "uid": wx.getStorageSync("uid"),
         "type": 2
       }
-      console.log(params)
+      // console.log(params)
       app.ljjw.jwAdminGetAskforleaveList(params).then(d => {
-        console.log("--------------------请假列表--------------")
-        console.log(d)
+        // console.log(d)
         if (d.data.status == 1) {
-          that.setData({
-            admin_aud_leave: d.data.data
-          })
-          for (var i = 0; i < that.data.admin_aud_leave.length; i++) {
-            var cs = "admin_aud_leave[" + i + "].fold"
-            that.setData({
-              [cs]: false
-            })
+          var admin_aud_leave = d.data.data
+          
+          for (var i = 0; i < admin_aud_leave.length; i++) {
+            admin_aud_leave[i].fold = false
           }
-          console.log(that.data.admin_aud_leave)
+          that.setData({
+            admin_aud_leave: admin_aud_leave
+          })
+          // console.log(that.data.admin_aud_leave)
         } else {
           that.setData({
             admin_aud_leave: ''
@@ -2605,124 +2090,22 @@ Page({
 
   onShow() {
     let that = this
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      console.log('index_onshow')
-      this.getTabBar().setData({
-        selected: 0
-      })
-    }
-    else{
-      console.log('未执行')
-    }
+    // if (typeof this.getTabBar === 'function' &&
+    //   this.getTabBar()) {
+    //   console.log('index_onshow')
+    //   this.getTabBar().setData({
+    //     selected: 0
+    //   })
+    // }
+    // else{
+    //   console.log('未执行')
+    // }
 
-    if(that.data.role == 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 1  //type=1 教务
-      }
-      console.log(params)
-      app.ljjw.jwGetAskforleaveCount(params).then(d => {
-        // console.log(d.data.status)
-        if (d.data.status == 1) {
-          console.log("教务红点")
-          console.log(d.data.data)
-          that.setData({
-            red_num: d.data.data
-          })
-          console.log(that.data.red_num + "red_num")
+    // 初始化data数据
+    this.initUserInfoData()
 
-
-
-        }
-      })
-    } else if (that.data.role == 3){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 2   //type=2 管理员
-      }
-      console.log(params)
-      app.ljjw.jwGetAskforleaveCount(params).then(d => {
-        // console.log(d.data.status)
-        if (d.data.status == 1) {
-          console.log("管理员红点")
-          console.log(d.data.data)
-          that.setData({
-            red_num: d.data.data
-          })
-          console.log(that.data.red_num + "red_num")
-
-
-
-        }
-      })
-    }
-
-    
-    if (that.data.type == 1){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 0
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentAskforleave(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            leave: d.data.data,
-            wscs: d.data.data
-          })
-          for (var i = 0; i < that.data.leave.length; i++) {
-            var fold = "leave[" + i + "].fold"
-            that.setData({
-              [fold]: true
-            })
-            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
-              var cs = "leave[" + i + "].ask_info[" + j + "].pin"
-              var _cs = "leave[" + i + "].ask_info[" + j + "].cs"
-              var hh = that.data.leave[i].ask_info[j].classtime + " " + that.data.leave[i].ask_info[j].title
-              that.setData({
-                [cs]: hh,
-                [_cs]: []
-              })
-              var date = that.data.leave[i].ask_info[j].date
-
-              for (var k = 0; k < that.data.wscs[i].ask_info.length; k++) {
-                // if (that.data.leave[i].add_arr[k].date == '')
-
-                if (date == that.data.wscs[i].ask_info[k].date) {
-                  that.data.leave[i].ask_info[j].cs.push(that.data.wscs[i].ask_info[k].pin)
-                }
-                else {
-
-
-                }
-              }
-            }
-          }
-
-          for (var i = 0; i < that.data.leave.length; i++) {
-            for (var j = 0; j < that.data.leave[i].ask_info.length; j++) {
-              for (var k = 0; k < that.data.leave[i].ask_info[j].cs.length; k++) {
-                if (that.data.leave[i].ask_info[j].cs[k] == null) {
-                  that.data.leave[i].ask_info.splice(j, 1)
-                }
-              }
-            }
-          }
-
-          that.setData({
-            leave: that.data.leave
-          })
-
-
-        } else if (d.data.status == -1) {
-          console.log(d.data.msg)
-        }
-      })
-    }
+    // 加载数据
+    that.loadData(that.data.type, that.data.nowDate)
   },
 
   /**
@@ -2730,13 +2113,106 @@ Page({
   */
   setUpNaviSize: function () {
     var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    var systemInfo = wx.getSystemInfoSync()
     let naviBarHeight = menuButtonRect.bottom+10
-    let naviBarWidth = wx.getSystemInfoSync().screenWidth
+    let naviBarWidth = systemInfo.screenWidth
+    let saveBottom = systemInfo.screenHeight-systemInfo.safeArea.bottom
+    console.log(systemInfo)
     this.setData ({
       naviBarHeight: naviBarHeight,
       naviBarWidth: naviBarWidth,
       naviBarSelectSub_Height: menuButtonRect.height,
-      naviBarSelectSub_Top: menuButtonRect.top
+      naviBarSelectSub_Top: menuButtonRect.top,
+      saveBottom: saveBottom
+    })
+  },
+
+  /**
+   * 初始化用户信息数据
+  */
+  initUserInfoData: function() {
+    let that = this;
+    // console.log(-1%2 , "取余")
+    var role = wx.getStorageSync("role")
+    
+    if (!role) {
+      that.setData({
+        role: -1,
+        login: false,
+        uid: wx.getStorageSync("uid"),
+        userInfo : wx.getStorageSync("userInfo"),
+        class_ids: wx.getStorageSync("class_ids")
+        // stu_sta: wx.getStorageSync("stu_sta")
+      }),
+      wx.switchTab({
+        url: '/pages/my/my',
+      })
+      // that.getTabBar().setData({
+      //   selected: 3
+      // })
+      
+    } else {
+      that.setData({
+        role: role*1,
+        login: true,
+        uid: wx.getStorageSync("uid"),
+        userInfo: wx.getStorageSync("userInfo"),
+        class_ids: wx.getStorageSync("class_ids")
+        
+        
+      })
+      if(that.data.role == 4){
+        that.setData({
+          stu_sta: wx.getStorageSync("stu_sta")
+        })
+      }
+    }
+    console.log(that.data.stu_sta + "that.data.stu_sta")
+    console.log("onload")
+    //获取当前年份和月份
+    let nowTime = new Date();
+    let nowYear = nowTime.getFullYear();
+    let nowMonth = nowTime.getMonth();
+    let nowDay = nowTime.getDate();
+    that.getMonthData(nowYear, nowMonth + 1);
+    that.setData({
+      showYear: nowYear,
+      showMonth: nowMonth + 1,
+      showDay: nowDay,
+      nowYear,
+      nowMonth: nowMonth + 1,
+      nowDay,
+      clickYear: nowYear,
+      clickMonth: nowMonth + 1,
+      clickDay: nowDay,
+      // show_month: nowMonth + 1
+    })
+    var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) 
+    var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
+    var nowmonth = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth)
+    that.setData({
+      nowDate: nowDate,
+      nowmonth: nowmonth,
+      showym: showym
+    })
+
+
+    for (var i = 0; i < that.data.nowWeekData.length;i++){
+      var nowWeekDataItem = that.data.nowWeekData[i]
+      nowWeekDataItem[2] = false
+      nowWeekDataItem[3] = 0
+    }
+    for (var i = 0; i < that.data.weekData.length; i++) {
+      var weekDataItem = that.data.weekData[i]
+      for (var j = 0; j < weekDataItem.length;j++){
+        var weekDataItem_item = weekDataItem[j]
+        weekDataItem_item[2] = false
+        weekDataItem_item[3] = 0
+      }
+    }
+    that.setData({
+      weekData: that.data.weekData,
+      nowWeekData: that.data.nowWeekData
     })
   },
     
@@ -2802,6 +2278,293 @@ Page({
 
       } else if (d.data.status == -1) {
         console.log(d.data.msg)
+      }
+    })
+  },
+
+  /**
+   * 学生获取月考勤数据
+  */
+  studentGetMonthCheckon: function(nowMonth) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "month": nowMonth
+    }
+    app.ljjw.jwGetMonthCheckon(params).then(d => {
+      let status = d.data.status
+      if (status == 1) {
+        var data = d.data.data
+        
+        var stu_courselist = ''
+        var stu_classlist = data.period_info
+        if (data.info){
+          stu_courselist = data.info
+        }else{
+          stu_courselist = ''
+        }
+        that.setData({
+          'stu_classlist' : stu_classlist,
+          'stu_courselist': stu_courselist,
+        })
+        that.cs()
+        if (stu_courselist != ''){
+          for (var i = 0; i < stu_courselist.length; i++) {
+            var newarray = [{
+              ym: stu_courselist[i].riqi.substr(0, 7),
+              d: Number(stu_courselist[i].riqi.substr(8, 2)),
+              work: Number(stu_courselist[i].check_status)
+            }];
+            that.setData({
+              'dot_work': that.data.dot_work.concat(newarray)
+            });
+
+          }
+          // console.log(that.data.dot_work)
+
+          // 考勤点点
+          that.dot_work()
+        }
+        
+      } else if (status == -1){
+        console.log(d.data.msg)
+      }
+    })
+  },
+
+  /**
+   * 学生获取日考勤列表
+  */
+  StudentGetDayCheckon: function(riqi) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "riqi": riqi
+    }
+    // console.log(params)
+    app.ljjw.jwGetDayCheckon(params).then(d => {
+      if (d.data.status == 1) {
+        that.setData({
+          dayCheckon: d.data.data
+        })
+        // console.log(that.data.dayCheckon)
+      }
+      else if (d.data.status == -1) {
+        that.setData({
+          dayCheckon: ''
+        })
+        // console.log(that.data.dayCheckon)
+      }
+
+    })
+  },
+
+  /**
+   * 学生获取日课表
+  */
+  StudentGetDayCourse: function(riqi) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "riqi": riqi
+    }
+    // console.log(params)
+    app.ljjw.jwGetDayCourse(params).then(d => {
+      if (d.data.status == 1) {
+
+        var dayCourse = d.data.data
+        
+        // console.log(that.data.dayCourse)
+        for (var i = 0; i < dayCourse.length; i++) {
+          var course = dayCourse[i]
+          var end1 = course.classtime.substr(8, 5)
+          var end = course.riqi + " " + end1
+          console.log(end + "=============end")
+          var iphone1 = end.substr(0, 4)
+          var iphone2 = end.substr(5, 2)
+          var iphone3 = end.substr(8, 2)
+          var iphone4 = end.substr(11, 5)
+          console.log(iphone1 + "=============iphone1")
+          console.log(iphone2 + "=============iphone2")
+          console.log(iphone3 + "=============iphone3")
+          console.log(iphone4 + "=============iphone4")
+          var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+          var aa = Date.parse(end)
+          var bb = Date.parse(iphone_cs)
+          console.log(bb + "++++++==========bb")
+
+          var timestamp = Date.parse(new Date());
+          console.log(aa + "=================aa")
+          console.log(timestamp + "=======================now")
+          if (bb < timestamp) {
+            course.comp = false
+          }
+          else {
+            course.comp = true
+          }
+
+        }
+        that.setData({
+          dayCourse: dayCourse
+        })
+        // console.log(that.data.dayCourse)
+        // console.log("that.data.dayCourse ")
+      }
+    })
+  },
+
+  /**
+   * 学生获取月课程列表
+  */
+  studentGetMonthCourse: function(month) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "month": month
+    }
+    // console.log(params)
+    app.ljjw.jwGetMonthCourse(params).then(d => {
+      if (d.data.status == 1) {
+        // console.log(d)
+        var data = d.data.data
+        that.data.stu_courselist = data.info
+        that.data.stu_classlist = data.period_info
+        that.cs()
+
+        var dot_riqi = that.data.dot_riqi
+        for (var i = 0; i < that.data.stu_courselist.length; i++) {
+          var stu_course = that.data.stu_courselist[i]
+          var newarray = [{
+            ym: stu_course.riqi.substr(0, 7),
+            d: stu_course.riqi.substr(8, 2)
+          }];
+          dot_riqi = dot_riqi.concat(newarray)
+        }
+        that.setData({
+          stu_courselist: that.data.stu_courselist,
+          stu_classlist: that.data.stu_classlist,
+          'dot_riqi': dot_riqi
+        });
+        console.log(that.data.dot_riqi)
+
+        // 日历点点
+        that.dot()
+      }
+    })
+  },
+  
+  /**
+   * 老师/教务/管理员 获取某一天考勤
+  */
+  teacherGetCheckOnList: function(riqi) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "riqi": riqi
+    }
+    console.log(params)
+    that.setData({
+      class_ids: wx.getStorageSync("class_ids"),
+    })
+    console.log(that.data.class_ids)
+    console.log("that.data.class_ids")
+    app.ljjw.jwGetCheckOnList(params).then(d => {
+      // console.log(d.data.status)
+      if (d.data.status == 1) {
+        console.log("或教务")
+        console.log(d.data.data)
+
+        var tea_dayCourse = d.data.data.course_list
+        var tea_courselist = d.data.data.day_list
+
+        for (var i = 0; i < tea_dayCourse.length; i++) {
+          //关联班级点名判断
+          for(var rc=0;rc<that.data.class_ids.length;rc++){
+            if (tea_dayCourse[i].class_id == that.data.class_ids[rc]){
+              tea_dayCourse[i].rc = true
+            }
+          }
+          // console.log(that.data.tea_dayCourse)
+          // console.log("that.data.tea_dayCourse.rc")
+          var end1 = tea_dayCourse[i].classtime.substr(8, 5)
+          var end = tea_dayCourse[i].riqi + " " + end1
+          // console.log(end1 + "=======================end1")
+          // console.log(end + "=============end")
+          var iphone1 = end.substr(0, 4)
+          var iphone2 = end.substr(5, 2)
+          var iphone3 = end.substr(8, 2)
+          var iphone4 = end.substr(11, 5)
+          // console.log(iphone1 + "=============iphone1")
+          // console.log(iphone2 + "=============iphone2")
+          // console.log(iphone3 + "=============iphone3")
+          // console.log(iphone4 + "=============iphone4")
+          var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+          var aa = Date.parse(end)
+          var bb = Date.parse(iphone_cs)
+          // console.log(bb + "++++++==========bb")
+
+          var timestamp = Date.parse(new Date());
+          // console.log(aa + "=================aa")
+          // console.log(timestamp + "=======================now")
+          if (bb < timestamp) {
+            tea_dayCourse.comp = false
+          }
+          else {
+            tea_dayCourse.comp = true
+          }
+
+        }
+
+        
+        console.log(that.data.tea_dayCourse)
+        var newDotRiqi = []
+        for(var i=0;i<tea_courselist.length;i++){
+          var newarray = {
+            ym: tea_courselist[i].riqi.substr(0, 7),
+            d: tea_courselist[i].riqi.substr(8, 2)
+          };
+          newDotRiqi.push(newarray)
+        }
+        console.log(newDotRiqi)
+        that.setData({
+          tea_dayCourse: tea_dayCourse,
+          tea_courselist: tea_courselist,
+          'dot_riqi': that.data.dot_riqi.concat(newDotRiqi)
+        })
+
+        // 日历点点
+        that.dot()
+      }
+    })
+  },
+
+
+  /**
+   * 教务/管理员 获取待审批请假数量（小红点）
+   * type 1-教务， 2-管理员
+  */
+  AskforleaveCount: function(type) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "type": type
+    }
+    console.log(params)
+    app.ljjw.jwGetAskforleaveCount(params).then(d => {
+      // console.log(d.data.status)
+      if (d.data.status == 1) {
+        console.log("教务红点")
+        console.log(d.data.data)
+        that.setData({
+          red_num: d.data.data
+        })
+        console.log(that.data.red_num +"red_num")
       }
     })
   }

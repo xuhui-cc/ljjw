@@ -14,17 +14,18 @@
   
   </view>
 
-<!-- style="height:{{naviBarHeight}}px;width:{{naviBarWidth}}px;" -->
-  <view class="nabigation_bar" >
-    <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
-    <view class="red_layout" wx:if="{{role ==2 || role == 3}}">
-      <text wx:if="{{red_num > 0}}" class="red_text">{{red_num}}</text>
-      <image wx:if="{{red_num > 0}}" class="red_dot" src="../../images/tip.png"></image>
-      
+  <!-- 导航 -->
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px;width:{{naviBarWidth}}px;">
+  <!-- style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px" -->
+    <view class="navibar_content" style="margin-bottom:0;">
+      <text class="{{type == 1 ? 'menu1' : 'menu'}}" data-type="{{1}}" bindtap="menu_select" wx:if="{{role != 1}}">请假</text>
+      <view class="red_layout" wx:if="{{(role ==2 || role == 3) && red_num > 0}}">
+        <text wx:if="{{red_num > 0}}" class="red_text">{{red_num <= 99 ? red_num : "99+"}}</text>
+        <!-- <image wx:if="{{red_num > 0}}" class="red_dot" src="../../images/tip.png"></image> -->
+      </view>
+      <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
+      <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
     </view>
-    
-    <text class="{{type == 2 ? 'menu1' : 'menu'}}" data-type="{{2}}" bindtap="menu_select">课表</text>
-    <text class="{{type == 3 ? 'menu1' : 'menu'}}" data-type="{{3}}" bindtap="menu_select">考勤</text>
   </view>
 
   <view wx:if="{{!login}}">
@@ -39,7 +40,7 @@
         <!-- 课表日历 -->
         <view class="rili" >
           <!-- 年月显示切换 -->
-            <view class="date-layout">
+            <view class="date-layout" style="margin-top:{{naviBarHeight + (10/750 * naviBarWidth)}}px">
               <text class="year">2020年</text>
               <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
                 <image class="last-month" src="../../images/last.png" bindtap="last"></image>
@@ -126,7 +127,7 @@
         <!-- 考勤日历 -->
         <view class="rili" >
           <!-- 年月显示切换 -->
-            <view class="date-layout">
+            <view class="date-layout" style="margin-top:{{naviBarHeight + (10/750 * naviBarWidth)}}px">
               <text class="year">2020年</text>
               <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
                 <image class="last-month" src="../../images/last.png" bindtap="last"></image>
@@ -227,7 +228,7 @@
 
 
         
-        <view class="aud_cs">
+        <view class="aud_cs" style="margin-top:{{naviBarHeight}}px;">
           <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
           <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
         </view>
@@ -235,7 +236,7 @@
         <view wx:if="{{aud == 0}}">
 
           <view wx:if="{{!leave}}" class="lea_lay_layout">
-            <image class='lea_null' src='../../images/course_null.png'></image>
+            <image class='lea_null' src='../../images/course_null.png'  mode="aspectFit"></image>
           </view>
 
           <view class="leave-layout2" wx:else="">
@@ -261,7 +262,7 @@
           </view>
 
           <!-- 新建 -->
-          <view  class="add-btn" bindtap="stu_add_leave">
+          <view  class="add-btn" bindtap="stu_add_leave" style="bottom:{{saveBottom + 20/750*naviBarWidth}}px">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
@@ -272,7 +273,7 @@
         <view wx:if="{{aud == 1}}">
 
           <view wx:if="{{!leave}}" class="lea_lay_layout">
-            <image class='lea_null' src='../../images/course_null.png'></image>
+            <image class='lea_null' src='../../images/course_null.png' mode="aspectFit"></image>
           </view>
 
           <view class="leave-layout2" wx:else="">
@@ -349,7 +350,7 @@
           </view>
 
           <!-- 新建 -->
-          <view  class="add-btn" bindtap="stu_add_leave">
+          <view  class="add-btn" bindtap="stu_add_leave" style="bottom:{{saveBottom + 20/750*naviBarWidth}}px">
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
@@ -382,7 +383,7 @@
         <!-- 课表日历 -->
         <view class="rili">
           <!-- 年月显示切换 -->
-            <view class="date-layout">
+            <view class="date-layout" style="margin-top:{{naviBarHeight + (10/750 * naviBarWidth)}}px">
               <text class="year">2020年</text>
               <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
                 <image class="last-month" src="../../images/last.png" bindtap="last"></image>
@@ -542,7 +543,7 @@
     <view wx:if="{{role == 2}} ">
       <view wx:if="{{type == 1}}">
         
-        <view class="aud_cs">
+        <view class="aud_cs" style="margin-top:{{naviBarHeight}}px;">
           <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
           <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
         </view>
@@ -703,7 +704,7 @@
     <view wx:if="{{role == 3}}">
       <view wx:if="{{type == 1}}">
         
-        <view class="aud_cs">
+        <view class="aud_cs" style="margin-top:{{naviBarHeight}}px;">
           <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
           <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
         </view>

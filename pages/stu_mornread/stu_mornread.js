@@ -191,9 +191,11 @@ Page({
         "page": that.pageData.page,
         "limit": that.pageData.perpage,
       }
+      console.log("jwGetMorningReadMore 参数：")
       console.log(params)
       app.ljjw.jwGetMorningReadMore(params).then(d => {
-        // console.log(d)
+        console.log("返回数据:")
+        console.log(d.data)
         if (d.data.status == 1) {
           // console.log(d.data.data)
           // that.setData({
@@ -227,7 +229,6 @@ Page({
           that.setData({
             csmorningRead: newData
           })
-          console.log("学生每日晨读获取成功")
           typeof cb == "function" && cb(true, "加载成功")
         } else {
           typeof cb == "function" && cb(false, d.msg ? d.msg : "加载失败")
@@ -241,16 +242,18 @@ Page({
         "limit": that.pageData.perpage,
         "class_id": that.data.class_id
       }
+      console.log("jwTeacherMorningReadMore 请求参数：")
       console.log(params)
       app.ljjw.jwTeacherMorningReadMore(params).then(d => {
-        // console.log(d)
+        console.log("返回数据")
+        console.log(d.data)
         if (d.data.status == 1) {
           // console.log(d.data.data)
 
           var data = d.data.data
           for (var i = 0; i < data.length; i++) {
             var item = data[i]
-            item.pics = data.pics.split(",")
+            item.pics = item.pics.split(",")
           }
 
           // 分页数据处理

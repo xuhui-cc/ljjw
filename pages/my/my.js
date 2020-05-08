@@ -497,16 +497,16 @@ Page({
     //   }
     // })
 
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      console.log('my_onshow')
-      this.getTabBar().setData({
-        selected: 3
-      })
-    }
-    else {
-      console.log('未执行')
-    }
+    // if (typeof this.getTabBar === 'function' &&
+    //   this.getTabBar()) {
+    //   console.log('my_onshow')
+    //   this.getTabBar().setData({
+    //     selected: 3
+    //   })
+    // }
+    // else {
+    //   console.log('未执行')
+    // }
     
   },
 
@@ -550,9 +550,6 @@ Page({
     var that = this
 
     if (e.detail.errMsg == "getPhoneNumber:ok") {
-      wx.showLoading({
-        title: '登录中...',
-      })
 
       let iv = encodeURIComponent(e.detail.iv);
       let encryptedData = encodeURIComponent(e.detail.encryptedData);
@@ -604,7 +601,6 @@ Page({
           console.log(d.data.msg)
         }
       })
-      wx.hideLoading()
     }
   },
 

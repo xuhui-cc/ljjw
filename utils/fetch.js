@@ -5,8 +5,17 @@
 *return 返回任务的Promise
 */
 
-function ljjwfetch(api, path, params) {
+function ljjwfetch(api, path, params, info, loadingShow, loadingMsg) {
   return new Promise((resolve, reject) => {
+
+    if(loadingShow) {
+      wx.showLoading({
+        title: loadingMsg?loadingMsg:"加载中",
+      })
+    }
+    console.log(info+" "+path+" 参数：")
+    console.log(params)
+
     wx.request({
       url: `${api}?action=${path}`,
       data: Object.assign({}, params),
@@ -14,7 +23,14 @@ function ljjwfetch(api, path, params) {
       success: resolve,
       fail: reject,
       complete (res) {
+        if (loadingShow) {
+          wx.hideLoading({
+            complete: (res) => {},
+          })
+        }
         if (res.errMsg == "request:ok"){
+          console.log(info+" 返回数据：")
+          console.log(res.data)
           // status为-9，token过期
           if (res.data.status && res.data.status == -9) {
             wx.showToast({
@@ -28,7 +44,22 @@ function ljjwfetch(api, path, params) {
                 })
               },
             })
+          } else if (res.data.status && res.data.status != 1) {
+            if (loadingShow) {
+              wx.showToast({
+                title: res.data.msg ? res.data.msg : "数据有误",
+                icon: "none"
+              })
+            }
           }
+        } else {
+          if (loadingShow) {
+            wx.showToast({
+              title: '加载失败',
+              icon: 'none'
+            })
+          }
+          console.log(info+" 加载失败")
         }
       }
     })
@@ -36,8 +67,17 @@ function ljjwfetch(api, path, params) {
 }
 
 
-function ljjwfetchpost(api, path, params) {
+function ljjwfetchpost(api, path, params, info, loadingShow, loadingMsg) {
   return new Promise((resolve, reject) => {
+
+    if(loadingShow) {
+      wx.showLoading({
+        title: loadingMsg?loadingMsg:"加载中",
+      })
+    }
+    console.log(info+" "+path+" 参数：")
+    console.log(params)
+
     wx.request({
       url: `${api}?action=${path}`,
       data: Object.assign({}, params),
@@ -46,7 +86,14 @@ function ljjwfetchpost(api, path, params) {
       success: resolve,
       fail: reject,
       complete (res) {
+        if (loadingShow) {
+          wx.hideLoading({
+            complete: (res) => {},
+          })
+        }
         if (res.errMsg == "request:ok"){
+          console.log(info+" 返回数据：")
+          console.log(res.data)
           // status为-9，token过期
           if (res.data.status && res.data.status == -9) {
             wx.showToast({
@@ -60,7 +107,22 @@ function ljjwfetchpost(api, path, params) {
                 })
               },
             })
+          } else if (res.data.status && res.data.status != 1) {
+            if (loadingShow) {
+              wx.showToast({
+                title: res.data.msg ? res.data.msg : "数据有误",
+                icon: "none"
+              })
+            }
           }
+        } else {
+          if (loadingShow) {
+            wx.showToast({
+              title: '加载失败',
+              icon: 'none'
+            })
+          }
+          console.log(info+" 加载失败")
         }
       }
     })

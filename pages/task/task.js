@@ -125,10 +125,10 @@ Page({
    */
   onShow: function () {
     let that = this
-
+    console.log("进入任务首页")
     // 判断登录状态
     this.setUpLogInStatus()
-    
+    console.log("角色是"+that.data.role)
     // 刷新数据
     this.pageData.page = 1
     this.reloadData(this.pageData.page, function(success, msg){
@@ -139,7 +139,7 @@ Page({
         })
       }
     })
-    console.log("执行onshow")
+    
   },
 
   /**
@@ -270,14 +270,18 @@ Page({
           "page": page,
           "limit": that.pageData.perpage,
         }
+        
         if (that.data.tea_class && that.data.tea_class.length > that.data.tea_class_index) {
           params.class_id = that.data.tea_class[that.data.tea_class_index].id
         }
+        console.log("jwTeacherTasksMainPage\n请求参数：")
         console.log(params)
         app.ljjw.jwTeacherTasksMainPage(params).then(d => {
           wx.stopPullDownRefresh({
             complete: (res) => {},
           })
+          console.log("请求结果：")
+          console.log(d.data)
           let status = d.data.status
           var pageData = d.data.data
           if (status == 1) {
@@ -294,9 +298,9 @@ Page({
               newMessages = that.data.messages.concat(newMessages)
             }
             var showNoData = false
-            if (newMessages.length == 0) {
-              showNoData = true
-            }
+            // if (newMessages.length == 0) {
+            //   showNoData = true
+            // }
             if (!(pageData.classes && pageData.classes.length != 0)) {
               showNoData = true
             }
