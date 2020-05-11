@@ -44,10 +44,10 @@ Page({
     // 加载数据
     this.loadData(function(success, msg){
       if(!success) {
-        wx.showToast({
-          title: msg,
-          icon: 'none'
-        })
+        // wx.showToast({
+        //   title: msg,
+        //   icon: 'none'
+        // })
       }
     })
   },
@@ -122,11 +122,10 @@ Page({
       wx.stopPullDownRefresh({
         complete: (res) => {
           if(!success){
-            wx.showToast({
-              title: msg,
-              icon: 'none'
-            })
-          } else {
+            // wx.showToast({
+            //   title: msg,
+            //   icon: 'none'
+            // })
             that.pageData.page = oldPage
           }
         },
@@ -145,11 +144,10 @@ Page({
       let that = this
       this.loadData(function(success, msg){
         if(!success) {
-          wx.showToast({
-            title: msg,
-            icon: 'none'
-          })
-        } else {
+          // wx.showToast({
+          //   title: msg,
+          //   icon: 'none'
+          // })
           that.pageData.page = oldPage
         }
       })
@@ -191,11 +189,8 @@ Page({
         "page": that.pageData.page,
         "limit": that.pageData.perpage,
       }
-      console.log("jwGetMorningReadMore 参数：")
-      console.log(params)
+
       app.ljjw.jwGetMorningReadMore(params).then(d => {
-        console.log("返回数据:")
-        console.log(d.data)
         if (d.data.status == 1) {
           // console.log(d.data.data)
           // that.setData({
@@ -231,7 +226,7 @@ Page({
           })
           typeof cb == "function" && cb(true, "加载成功")
         } else {
-          typeof cb == "function" && cb(false, d.msg ? d.msg : "加载失败")
+          typeof cb == "function" && cb(false, d.data.msg ? d.data.msg : "加载失败")
         }
       })
     } else if (that.data.role <= 2) {
@@ -274,6 +269,9 @@ Page({
             csmorningRead: newData
           })
           console.log("老师每日晨读获取成功")
+          typeof cb == "function" && cb(true, "加载成功")
+        } else {
+          typeof cb == "function" && cb(false, d.data.msg ? d.data.msg : "加载失败")
         }
       })
     }

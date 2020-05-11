@@ -277,7 +277,7 @@ Page({
       case 2: {
         // 课表
         wx.showTabBar({
-          animation: true,
+          animation: false,
         })
 
         switch (role) {
@@ -315,7 +315,7 @@ Page({
       case 3: {
         // 考勤
         wx.showTabBar({
-          animation: true,
+          animation: false,
         })
 
         switch (role) {
@@ -2009,7 +2009,54 @@ Page({
           var hm_aud_leave = d.data.data
           
           for (var i = 0; i < hm_aud_leave.length;i++){
-            hm_aud_leave[i].fold = false
+            var leave = hm_aud_leave[i]
+            leave.fold = false
+            var status_text = ''
+            var status_color = ""
+            switch (leave.status*1) {
+              case 0: {
+                // 未审核
+                status_text = "未审核"
+                status_color = "#b4b4b4"
+                break
+              }
+              case 1: {
+                // 教务通过
+                status_text = "待管理员审核"
+                status_color = "#b4b4b4"
+                break
+              }
+              case 2: {
+                // 教务驳回
+                status_text = "审核驳回"
+                status_color = "#f14444"
+                break
+              }
+              case 3: {
+                // 管理员审核通过
+                status_text = "审核通过"
+                status_color = "#46bf6a"
+                break
+              }
+              case 4: {
+                // 管理员驳回
+                status_text = "审核驳回"
+                status_color = "#f14444"
+                break
+              }
+              case 5: {
+                // 假条作废（到期未审核）
+                status_text = "假条已作废"
+                status_color = "#fb895e"
+                break
+              }
+              default: {
+                status_text= "未知状态"
+                status_color = "#b4b4b4"
+              }
+            }
+            leave.status_text = status_text
+            leave.status_color = status_color
           }
           that.setData({
             hm_aud_leave: hm_aud_leave
@@ -2070,7 +2117,54 @@ Page({
           var admin_aud_leave = d.data.data
           
           for (var i = 0; i < admin_aud_leave.length; i++) {
-            admin_aud_leave[i].fold = false
+            var leave = admin_aud_leave[i]
+            leave.fold = false
+            var status_text = ''
+            var status_color = ""
+            switch (leave.status*1) {
+              case 0: {
+                // 未审核
+                status_text = "未审核"
+                status_color = "#b4b4b4"
+                break
+              }
+              case 1: {
+                // 教务通过
+                status_text = "待管理员审核"
+                status_color = "#b4b4b4"
+                break
+              }
+              case 2: {
+                // 教务驳回
+                status_text = "审核驳回"
+                status_color = "#f14444"
+                break
+              }
+              case 3: {
+                // 管理员审核通过
+                status_text = "审核通过"
+                status_color = "#46bf6a"
+                break
+              }
+              case 4: {
+                // 管理员驳回
+                status_text = "审核驳回"
+                status_color = "#f14444"
+                break
+              }
+              case 5: {
+                // 假条作废（到期未审核）
+                status_text = "假条已作废"
+                status_color = "#fb895e"
+                break
+              }
+              default: {
+                status_text= "未知状态"
+                status_color = "#b4b4b4"
+              }
+            }
+            leave.status_text = status_text
+            leave.status_color = status_color
           }
           that.setData({
             admin_aud_leave: admin_aud_leave

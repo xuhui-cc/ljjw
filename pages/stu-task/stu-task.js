@@ -88,14 +88,14 @@ Page({
    * pubname：发布人名字
    * pubtime：发布时间 （0000-00-00 00:00）
    * task_detail：type为2/3 时返回，子字段如下：
-   *      type=2
+   *      type=3
    *           id: 字段id
    *           tid：任务id
    *           field_type：1-纯字段  2-字段+备注   3-字段+图片     4-字段+备注+图片
    *           fieldlist：字段列表，如下
    *                    count：字段数量
    *                    lists：字段数组
-   *       type=3
+   *       type=2
    *           id: 字段id
    *           tid：任务id
    *           child_title：任务子标题（多个子标题逗号隔开）
@@ -139,6 +139,13 @@ Page({
               var imgs = []
               item.task_detail = {}
               item.task_detail.imgs = imgs
+              if (item.attach != '') {
+                item.attach = item.attach.split(',')
+                if (item.attach.length > 3) {
+                  item.attach.splice(3, item.attach.length-3)
+                }
+              }
+              
               break
             }
             case 2: {
@@ -307,163 +314,186 @@ Page({
             item.title = item.title.split(",")
           }
         
-          if (item.type == 2) {                      //选项式已完成
-            for (var n = 0; n < item.title.length; n++) {
-              item.task_detail[n].title = item.title[n]
-            }
+          switch (item.type*1) {
+            case 1: {
+              // 普通任务
+              var imgs = []
+            
+              if (item.task_detail != ''){
+                item.task_detail.imgs = item.task_detail.finished_info.pics.split(",")
+                console.log("==========================================imgs1")
+                console.log(item.task_detail)
+              }else{
+                item.task_detail = {}
+                item.task_detail.imgs = imgs
+                console.log("==========================================imgs2")
+                console.log(item.task_detail)
+              }
 
-            for (var j = 0; j < item.task_detail.length; j++) {
-              var taskDetail = item.task_detail[j]
-              if (taskDetail.child_title != null) {
-                taskDetail.child_title = taskDetail.child_title.split(",")
-
-                for (var n = 0; n < taskDetail.child_title.length; n++) {
-                  taskDetail.options[n].title = taskDetail.child_title[n]
+              if (item.attach != '') {
+                item.attach = item.attach.split(',')
+                if (item.attach.length > 3) {
+                  item.attach.splice(3, item.attach.length-3)
                 }
               }
 
-              taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
-              taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
-              taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
-
-              for (var k = 0; k < taskDetail.options.length; k++) {
-                var arr = []
-                var option = taskDetail.options[k]
-                for (let n in option.lists) {
-
-                  arr.push(option.lists[n]);
-                  console.log(arr)
-                  // var imgs = []
-                  option.imgs = []
-                  option.list = arr
-                }
-                if (taskDetail.finished_info.attach[k] != ""){
-                  option.imgs = taskDetail.finished_info.attach[k].split(",")
-                  console.log(option.imgs)
-                }
-                
-                for (var n = 0; n < option.list.length; n++) {
-                  var optionListItem = option.list[n]
-                  var newOptionListItem = {}
-                  newOptionListItem.item = optionListItem
-                  newOptionListItem.option = String.fromCharCode(65 + n)
-                  newOptionListItem.select = false
-                  option.list[n] = newOptionListItem
-
-                  for (var m = 0; m < taskDetail.finished_info.answers.length;m++){
-                    let answer = taskDetail.finished_info.answers[m]
-                    if (newOptionListItem.option == answer){
-                      newOptionListItem.select = true
-                    }
-                  }
-
-                  for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
-                    if(k == m){
-                      option.memo = taskDetail.finished_info.memo[m]
-                    }
+              break;
+            }
+            case 2: {
+              // 选项任务
+              for (var n = 0; n < item.title.length; n++) {
+                item.task_detail[n].title = item.title[n]
+              }
+  
+              for (var j = 0; j < item.task_detail.length; j++) {
+                var taskDetail = item.task_detail[j]
+                if (taskDetail.child_title != null) {
+                  taskDetail.child_title = taskDetail.child_title.split(",")
+  
+                  for (var n = 0; n < taskDetail.child_title.length; n++) {
+                    taskDetail.options[n].title = taskDetail.child_title[n]
                   }
                 }
-              }
-            }
-          } else if (item.type == 3) {                                           //字段式已完成
-            for (var n = 0; n < item.title.length; n++) {
-              item.task_detail[n].title = item.title[n]
-            }
-
-            for (var j = 0; j < item.task_detail.length; j++) {
-              var taskDetail = item.task_detail[j]
-              if (taskDetail.child_title != null) {
-                taskDetail.child_title = taskDetail.child_title.split(",")
-
-                for (var n = 0; n < taskDetail.child_title.length; n++) {
-                  taskDetail.fieldlist[n].title = taskDetail.child_title[n]
-                }
-
-              }
-
-              taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
-              taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
-              taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
-
-              for (var k = 0; k < taskDetail.fieldlist.length; k++) {
-
-                var arr = []
-                var fileListItem = taskDetail.fieldlist[k]
-                for (let n in fileListItem.lists) {
-
-                  arr.push(fileListItem.lists[n]);
-                  // console.log(arr)
-                  // var imgs = []
-                  fileListItem.list = arr
-                  fileListItem.imgs = []
-                }
-                if (taskDetail.finished_info.attach[k] != "") {
-                  fileListItem.imgs = taskDetail.finished_info.attach[k].split(",")
-                  console.log(fileListItem.imgs)
-                }
-                // var arr = []
-
-               
-                //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+  
+                taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
+                taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
+                taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
+  
+                for (var k = 0; k < taskDetail.options.length; k++) {
+                  var arr = []
+                  var option = taskDetail.options[k]
+                  for (let n in option.lists) {
+  
+                    arr.push(option.lists[n]);
+                    console.log(arr)
+                    // var imgs = []
+                    option.imgs = []
+                    option.list = arr
+                  }
+                  if (taskDetail.finished_info.attach[k] != ""){
+                    option.imgs = taskDetail.finished_info.attach[k].split(",")
+                    console.log(option.imgs)
+                  }
                   
-                //   var imgs = []
-                //   // that.setData({
-                
-                //   //   [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
-
-                //   // })
-
-                // if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
-                //   that.data.task[i].task_detail[j].fieldlist[k].imgs.push(that.data.task[i].task_detail[j].finished_info.attach[k])
-                //   console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
-                // }
-                for (var n = 0; n < fileListItem.lists.length; n++) {
-                  var fileListItemListItem = fileListItem.lists[n]
-                  var newListItem = {}
-                  newListItem.item = fileListItemListItem
-                  newListItem.content = ''
-                  fileListItem.lists[n] = newListItem
-
-                  for (var m = 0; m < taskDetail.finished_info.answers.length; m++) {
-                    if (n == m) {
-                      newListItem.content = taskDetail.finished_info.answers[m]
+                  for (var n = 0; n < option.list.length; n++) {
+                    var optionListItem = option.list[n]
+                    var newOptionListItem = {}
+                    newOptionListItem.item = optionListItem
+                    newOptionListItem.option = String.fromCharCode(65 + n)
+                    newOptionListItem.select = false
+                    option.list[n] = newOptionListItem
+  
+                    for (var m = 0; m < taskDetail.finished_info.answers.length;m++){
+                      let answer = taskDetail.finished_info.answers[m]
+                      if (newOptionListItem.option == answer){
+                        newOptionListItem.select = true
+                      }
                     }
-                  }
-
-                  for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
-                    if (k == m) {
-                      newListItem.memo = taskDetail.finished_info.memo[m]
+  
+                    for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
+                      if(k == m){
+                        option.memo = taskDetail.finished_info.memo[m]
+                      }
                     }
                   }
                 }
               }
+              break
             }
-          } else if (item.type == 1) {   //普通式已完成处理
-
-            var imgs = []
-            item.task_detail = {}
-            if (item.attach != ''){
-              item.task_detail.imgs = item.task_detail.finished_info.pics.split(",")
-              console.log("==========================================imgs")
-            }else{
-              item.task_detail.imgs = imgs
-              console.log("==========================================imgs")
-            }
-          } else if (item.type == 4) {      //确认考勤已完成处理
-            for (var j = 0; j < item.task_detail.length; j++) {
-              var taskDetail = item.task_detail[j]
-              taskDetail.cs = []
-              var classdate = taskDetail.classdate
-
-              for (var k = 0; k < newData1.task_detail.length; k++) {
-                // if (that.data.leave[i].add_arr[k].date == '')
-
-                if (classdate == newData1.task_detail[k].classdate) {
-                  taskDetail.cs.push([newData1.task_detail[k].classtime, newData1.task_detail[k].check_status])
+            case 3: {
+              // 字段任务
+              for (var n = 0; n < item.title.length; n++) {
+                item.task_detail[n].title = item.title[n]
+              }
+  
+              for (var j = 0; j < item.task_detail.length; j++) {
+                var taskDetail = item.task_detail[j]
+                if (taskDetail.child_title != null) {
+                  taskDetail.child_title = taskDetail.child_title.split(",")
+  
+                  for (var n = 0; n < taskDetail.child_title.length; n++) {
+                    taskDetail.fieldlist[n].title = taskDetail.child_title[n]
+                  }
+  
                 }
-                else {
+  
+                taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
+                taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
+                taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
+  
+                for (var k = 0; k < taskDetail.fieldlist.length; k++) {
+  
+                  var arr = []
+                  var fileListItem = taskDetail.fieldlist[k]
+                  for (let n in fileListItem.lists) {
+  
+                    arr.push(fileListItem.lists[n]);
+                    // console.log(arr)
+                    // var imgs = []
+                    fileListItem.list = arr
+                    fileListItem.imgs = []
+                  }
+                  if (taskDetail.finished_info.attach[k] != "") {
+                    fileListItem.imgs = taskDetail.finished_info.attach[k].split(",")
+                    console.log(fileListItem.imgs)
+                  }
+                  // var arr = []
+  
+                 
+                  //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
+                    
+                  //   var imgs = []
+                  //   // that.setData({
+                  
+                  //   //   [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
+  
+                  //   // })
+  
+                  // if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
+                  //   that.data.task[i].task_detail[j].fieldlist[k].imgs.push(that.data.task[i].task_detail[j].finished_info.attach[k])
+                  //   console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
+                  // }
+                  for (var n = 0; n < fileListItem.lists.length; n++) {
+                    var fileListItemListItem = fileListItem.lists[n]
+                    var newListItem = {}
+                    newListItem.item = fileListItemListItem
+                    newListItem.content = ''
+                    fileListItem.lists[n] = newListItem
+  
+                    for (var m = 0; m < taskDetail.finished_info.answers.length; m++) {
+                      if (n == m) {
+                        newListItem.content = taskDetail.finished_info.answers[m]
+                      }
+                    }
+  
+                    for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
+                      if (k == m) {
+                        newListItem.memo = taskDetail.finished_info.memo[m]
+                      }
+                    }
+                  }
                 }
               }
+              break
+            }
+            case 4: {
+              // 考勤任务
+              for (var j = 0; j < item.task_detail.length; j++) {
+                var taskDetail = item.task_detail[j]
+                taskDetail.cs = []
+                var classdate = taskDetail.classdate
+  
+                for (var k = 0; k < newData1.task_detail.length; k++) {
+                  // if (that.data.leave[i].add_arr[k].date == '')
+  
+                  if (classdate == newData1.task_detail[k].classdate) {
+                    taskDetail.cs.push([newData1.task_detail[k].classtime, newData1.task_detail[k].check_status])
+                  }
+                  else {
+                  }
+                }
+              }
+              break
             }
           }
         }
@@ -1073,106 +1103,7 @@ Page({
         success: (res) => {
           let tempFilePaths = res.tempFilePaths;
           console.log(tempFilePaths)
-          let imgs = [];
-          for (let i = 0; i < tempFilePaths.length; i++) {
-            var token = wx.getStorageSync('token');
-            wx.uploadFile({
-              url: 'http://cs.szgk.cn/api.php?',
-              // url: 'https://szgk.cn/api.php?',
-              filePath: tempFilePaths[i],
-              name: 'file',
-              formData: {
-                'file': tempFilePaths[i],
-                "token": token,
-                "action": "jwUploadAvatar", //action=uploads&authhash=445454554
-              },
-              success(r) {
-                let hhh = JSON.parse(r.data);
-                console.log(hhh)
-                if (hhh.status == 1) {
-                  that.data.img.unshift(hhh.data)
-                  that.setData({
-                    imgs: that.data.img
-                  })
-                  
-                  for(var q=0;q<that.data.task.length;q++){
-                    if(q == task_index){
-                      if (that.data.task[q].type == 1){
-                        
-                          that.data.task[q].task_detail.imgs.push(that.data.imgs)
-                        
-                          var css = "task[" + q + "].task_detail.imgs"
-                          that.setData({
-                            [css]: that.data.task[q].task_detail.imgs
-                          })
-                          that.setData({
-                            imgs: [],
-
-                          })
-                        // }
-                        
-                      }else{
-                        for (var w = 0; w < that.data.task[q].task_detail.length; w++) {
-                          if (w == task_detail_index) {
-                            if (that.data.task[q].type == 3) {
-                              for (var n = 0; n < that.data.task[q].task_detail[w].fieldlist.length; n++) {
-                                if (n == options_index) {
-                                  that.data.task[q].task_detail[w].fieldlist[n].imgs.push(that.data.imgs)
-                                  var css = "task[" + q + "].task_detail[" + w + "].fieldlist[" + n + "].imgs"
-                                  that.setData({
-                                    [css]: that.data.task[q].task_detail[w].fieldlist[n].imgs
-                                  })
-                                  that.setData({
-                                    imgs:[],
-                                    
-                                  })
-                                }
-                              }
-                            } else if (that.data.task[q].type == 2) {
-                              for (var n = 0; n < that.data.task[q].task_detail[w].options.length; n++) {
-                                if (n == options_index) {
-                                  that.data.task[q].task_detail[w].options[n].imgs.push(that.data.imgs)
-                                  var css = "task[" + q + "].task_detail[" + w + "].options[" + n + "].imgs"
-                                  that.setData({
-                                    [css]: that.data.task[q].task_detail[w].options[n].imgs
-                                  })
-                                  that.setData({
-                                    imgs: [],
-                                    
-                                  })
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                      
-                    }
-                  }
-                 
-
-                  console.log(that.data.img)
-
-                  // console.log(imgs)
-
-                } else {
-                  // that.setData({
-                  //   img : imgs
-                  // })
-                  console.log('失败')
-                  console.log(hhh.status)
-                }
-
-                
-
-
-              }
-              
-            })
-            that.setData({
-              img: []
-            })
-          }
+          that.pictureCycleUpload(tempFilePaths, 0, task_index, task_detail_index, options_index)
 
         }
       })
@@ -1340,5 +1271,141 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+
+  /**
+   * 查看任务附件大图
+  */
+  previewAttachImage: function(e) {
+    let that = this
+    // console.log(e)
+    let taskIndex = e.currentTarget.dataset.taskindex
+    let type = e.currentTarget.dataset.type
+
+    let task = that.data.task[taskIndex]
+
+    var urls = []
+    var current = ''
+    switch(type*1) {
+      case 1: {
+        // 普通任务 附件 attach
+        let attachIndex = e.currentTarget.dataset.attachindex
+        let attachArray = task.attach
+        urls = attachArray
+        current = attachArray[attachIndex]
+        break
+      }
+      case 2: {
+        // 普通任务 学生上传图片 task_detail.finished_info.pics
+        let imgIndex = e.currentTarget.dataset.imageindex
+        let imgArray = task.task_detail.imgs
+        urls = imgArray
+        current = imgArray[imgIndex]
+        break
+      }
+    }
+    console.log(urls)
+    console.log(current)
+    wx.previewImage({
+      urls: urls,
+      current: current
+    })
+  },
+
+  /**
+   * 多张图片上传
+  */
+  pictureCycleUpload: function(filePathList, uploadIndex, taskIndex, taskDetailIndex, optionsIndex) {
+    let that = this
+    if (filePathList.length <= uploadIndex) {
+      return
+    }
+
+    let filePath = filePathList[uploadIndex]
+    this.uploadImage(filePath, function(success, imageData, errorMsg) {
+      if(success) {
+        var task = that.data.task[taskIndex]
+        switch(task.type*1) {
+          case 1: {
+            // 普通任务
+            task.task_detail.imgs.push(imageData)
+                        
+            var css = "task[" + taskIndex + "].task_detail.imgs"
+            that.setData({
+              [css]: that.data.task[q].task_detail.imgs
+            })
+            break
+          }
+          case 2: {
+            // 选项任务
+            var taskDetail = task.task_detail[taskDetailIndex]
+            var option = taskDetail.options[optionsIndex]
+            option.imgs.push(imageData)
+            var css = "task[" + taskIndex + "].task_detail[" + taskDetailIndex + "].options[" + optionsIndex + "].imgs"
+            that.setData({
+              [css]: option.imgs
+            })
+            break
+          }
+          case 3: {
+            // 字段任务
+            var taskDetail = task.task_detail[taskDetailIndex]
+            var field = taskDetail.fieldlist[optionsIndex]
+            field.imgs.push(imageData)
+            var css = "task[" + taskIndex + "].task_detail[" + taskDetailIndex + "].fieldlist[" + optionsIndex + "].imgs"
+            that.setData({
+              [css]: field.imgs
+            })
+            break
+          }
+        }
+
+        if (uploadIndex < filePathList.length-1) {
+          that.pictureCycleUpload(filePathList, uploadIndex+1, taskIndex, taskDetailIndex, optionsIndex)
+        }
+      }
+    })
+  },
+
+  /**
+   * 上传图片
+  */
+  uploadImage: function(filePath, cb) {
+    let that = this
+    var token = wx.getStorageSync('token');
+    wx.showLoading({
+      title: '上传中',
+    })
+    wx.uploadFile({
+      url: app.ljjw.getUploadFileURI(),
+      filePath: filePath,
+      name: 'file',
+      formData: {
+        'file': filePath,
+        "token": token,
+        "action": "jwUploadAvatar", //action=uploads&authhash=445454554
+      },
+      success(r) {
+        wx.hideLoading({
+          complete: (res) => {
+            let hhh = JSON.parse(r.data);
+            console.log(hhh)
+            if (hhh.status == 1) {
+              typeof cb == "function" && cb(true, hhh.data, "加载成功")
+            } else {
+              typeof cb == "function" && cb(false, null, hhh.msg)
+            }
+          },
+        })
+      },
+      fail(error) {
+        wx.hideLoading({
+          complete: (res) => {
+            typeof cb == "function" && cb(false, null, "上传失败")
+          },
+        })
+      }
+    })
   }
 })

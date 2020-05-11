@@ -1594,3 +1594,59 @@ page{
   align-items: center;
   justify-content: center;
 }
+
+.teacher_leave_finished_sub1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rpx;
+  height: 80rpx;
+}
+
+.teacher_leave_finished_sub2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 12rpx;
+  justify-content: space-between;
+  height: 75rpx;
+}
+
+/* 教务/管理员 请假 已审核 名字 */
+.teacher_leave_finished_name {
+  margin-left: 24rpx;
+  max-width:250rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size:28rpx;
+  color:#272727;
+}
+
+/* 教务/管理员 请假 已审核 状态 */
+.teacher_leave_finied_state {
+  margin-right: 27rpx;
+  font-size: 28rpx;
+}
+
+/* 教务/管理员 请假 已审核 班级 */
+.teacher_leave_finished_class {
+  margin-left: 25rpx;
+  font-size: 28rpx;
+  color: #b4b4b4;
+}
+
+/* 教务/管理员 请假 已审核 请假时间 */
+.teacher_leave_finished_leaveTime {
+  margin-left: 24rpx;
+  font-size: 26rpx;
+  color: #272727;
+  font-weight: bold;
+}
+
+.teacher_leave_finished_arrow {
+  margin-right: 27rpx;
+  width: 17.71rpx;
+  height: 17.71rpx;
+}

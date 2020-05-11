@@ -134,8 +134,7 @@ Page({
 
         var token = wx.getStorageSync('token');
         wx.uploadFile({
-          url: 'http://cs.szgk.cn/api.php?',
-          // url: 'https://szgk.cn/api.php?',
+          url: app.ljjw.getUploadFileURI(),
           filePath: tempFilePaths[0],
           name: 'file',
           
@@ -599,6 +598,9 @@ Page({
   },
 
 
+  /**
+   * 判断是否可以提交
+  */
   chargeCanSubmit: function(){
     let that = this
     var issubmit = false

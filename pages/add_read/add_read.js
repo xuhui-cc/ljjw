@@ -107,8 +107,7 @@ Page({
             var token = wx.getStorageSync('token');
 
             wx.uploadFile({
-              url: 'http://cs.szgk.cn/api.php?',
-              // url: 'https://szgk.cn/api.php?',
+              url: app.ljjw.getUploadFileURI(),
               filePath: tempFilePaths[i],
               name: 'file',
               formData: {
