@@ -450,24 +450,29 @@ page{
 .image_listview_layout {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   /* justify-content: space-between; */
   margin-right: 30rpx;
   margin-left: 30rpx;
-  margin-top: 35rpx;
+  margin-top: 14rpx;
 }
 .img_layout{
   display: flex;
   flex-wrap: wrap;
-  flex-grow: 1;
-  height: 28.8vw;
+  /* flex-grow: 1; */
+  width: 216rpx;
+  height: 216rpx;
+  margin-top: 21rpx;
 }
 .img_layout1{
   display: flex;
   flex-wrap: wrap;
-  flex-grow: 1;
-  height: 28.8vw;
+  /* flex-grow: 1; */
+  height: 216rpx;
+  width: 216rpx;
   margin-left: 21rpx;
   margin-right: 21rpx;
+  margin-top: 21rpx;
 }
 .task1_img{
   /* margin-top: 10rpx;
@@ -523,7 +528,8 @@ page{
 }
 .add_img_layout{
   display: flex;
-  
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .del-img{
   position: absolute;

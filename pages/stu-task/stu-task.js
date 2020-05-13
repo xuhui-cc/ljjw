@@ -138,9 +138,9 @@ Page({
               item.task_detail.imgs = imgs
               if (item.attach != '') {
                 item.attach = item.attach.split(',')
-                if (item.attach.length > 3) {
-                  item.attach.splice(3, item.attach.length-3)
-                }
+                // if (item.attach.length > 3) {
+                //   item.attach.splice(3, item.attach.length-3)
+                // }
               }
               
               break
@@ -879,7 +879,7 @@ Page({
     var options_index = e.currentTarget.dataset.options_index
     console.log(options_index + "options_index")
     
-    let count_img = 3
+    let count_img = 6
 
     var len = 0;
 
@@ -906,11 +906,11 @@ Page({
       }
     }
     
-    if (len < 3) {
-      count_img = 3 - len
+    if (len < 6) {
+      count_img = 6 - len
       console.log(count_img +"count_img")
       wx.chooseImage({
-        count: count_img,
+        count: count_img*1,
         success: (res) => {
           let tempFilePaths = res.tempFilePaths;
           console.log(tempFilePaths)
@@ -1134,7 +1134,7 @@ Page({
     switch (task.type * 1) {
       case 1: {
         // 普通任务
-        if (task.submit_content != '' && (task.task_detail.imgs.length != 0 || task.has_pics != 1)) {
+        if ((task.submit_content && task.submit_content != '') && (task.task_detail.imgs.length != 0 || task.has_pics != 1)) {
           cansubmit = true
         }
         break

@@ -31,12 +31,12 @@
             <view class="task1_title">{{item.title}}</view>
             <!-- attach图片 -->
             <view wx:if="{{item.attach != ''}}" class="image_listview_layout">
-              <view class="{{attach_index==1?'img_layout1':'img_layout'}}" wx:for="{{item.attach}}" wx:key="*this" wx:for-item="attach_item" wx:for-index="attach_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-attachindex="{{attach_index}}" data-type="1">
+              <view class="{{attach_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{item.attach}}" wx:key="*this" wx:for-item="attach_item" wx:for-index="attach_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-attachindex="{{attach_index}}" data-type="1">
                 <image class='big_img' src='../../images/big.png'></image>
                 <image class="task1_img" src="{{attach_item}}" mode="aspectFill"></image>
               </view>
-              <view wx:if="{{item.attach.length < 3}}" class="{{item.attach.length==1?'img_layout1':'img_layout'}}"></view>
-              <view wx:if="{{item.attach.length < 2}}" class="img_layout"></view>
+              <!-- <view wx:if="{{item.attach.length < 3}}" class="{{item.attach.length==1?'img_layout1':'img_layout'}}"></view>
+              <view wx:if="{{item.attach.length < 2}}" class="img_layout"></view> -->
             </view>
             
             <!-- 回答textArea -->
@@ -53,7 +53,7 @@
                   <image class="add_img" src="{{item}}" bindtap="previewAttachImage" mode="aspectFill" data-taskindex="{{task_index}}" data-imageindex="{{image_index}}" data-type="2"></image>
                 </view>
                     
-                <image wx:if="{{item.task_detail.imgs.length < 3 }}"  data-task_index="{{task_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
+                <image wx:if="{{item.task_detail.imgs.length < 6 }}"  data-task_index="{{task_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
               </view>
             </block>
           </view>
@@ -102,7 +102,7 @@
                   <image class="add_img" src="{{item}}" mode="aspectFill" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-optionindex="{{options_index}}" data-imageindex="{{index}}" data-type="3"></image>
                 </view>
                 
-                <image wx:if="{{options.imgs.length < 3 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
+                <image wx:if="{{options.imgs.length < 6 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
               </view>
             </block>
           </block>
@@ -150,7 +150,7 @@
                         <image class="add_img" src="{{item}}" mode="aspectFill" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-fieldlistindex="{{fieldlist_index}}" data-imageindex="{{index}}" data-type="4"></image>
                       </view>
                       
-                      <image wx:if="{{fieldlist.imgs.length < 3 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{fieldlist_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
+                      <image wx:if="{{fieldlist.imgs.length < 6 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{fieldlist_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
                     </view>
                   </block>
                 </view>
@@ -250,12 +250,12 @@
             <view class="task1_title">{{item.title}}</view>
             <!-- attach图片 -->
             <view wx:if="{{item.attach != ''}}" class="image_listview_layout">
-              <view class="{{attach_index==1?'img_layout1':'img_layout'}}" wx:for="{{item.attach}}" wx:key="*this" wx:for-item="attach_item" wx:for-index="attach_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-attachindex="{{attach_index}}" data-type="1">
+              <view class="{{attach_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{item.attach}}" wx:key="*this" wx:for-item="attach_item" wx:for-index="attach_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-attachindex="{{attach_index}}" data-type="1">
                 <image class='big_img' src='../../images/big.png'></image>
                 <image class="task1_img" src="{{attach_item}}" mode="aspectFill"></image>
               </view>
-              <view wx:if="{{item.attach.length < 3}}" class="{{item.attach.length==1?'img_layout1':'img_layout'}}"></view>
-              <view wx:if="{{item.attach.length < 2}}" class="img_layout"></view>
+              <!-- <view wx:if="{{item.attach.length < 3}}" class="{{item.attach.length==1?'img_layout1':'img_layout'}}"></view>
+              <view wx:if="{{item.attach.length < 2}}" class="img_layout"></view> -->
             </view>
             <!-- 回答内容 -->
             <view class="remark-layout-finished">
@@ -263,11 +263,11 @@
             </view>
             <!-- 学生上传图片 -->
             <view wx:if="{{item.task_detail.imgs != ''}}" class="image_listview_layout">
-              <view class="{{img_index==1?'img_layout1':'img_layout'}}" wx:for="{{item.task_detail.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-imageindex="{{img_index}}" data-type="2">
+              <view class="{{img_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{item.task_detail.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-imageindex="{{img_index}}" data-type="2">
                 <image class="task1_img" src="{{imgItem}}" mode="aspectFill"></image>
               </view>
-              <view wx:if="{{item.task_detail.imgs.length < 3}}" class="{{item.task_detail.imgs.length==1?'img_layout1':'img_layout'}}"></view>
-              <view wx:if="{{item.task_detail.imgs.length < 2}}" class="img_layout"></view>
+              <!-- <view wx:if="{{item.task_detail.imgs.length < 3}}" class="{{item.task_detail.imgs.length==1?'img_layout1':'img_layout'}}"></view>
+              <view wx:if="{{item.task_detail.imgs.length < 2}}" class="img_layout"></view> -->
             </view>
           </view>
           <!-- 问题循环 -->
@@ -309,11 +309,11 @@
               </view>
               <!-- 子标题 学生上传图片 -->
               <view wx:if="{{options.imgs != ''}}" class="image_listview_layout">
-                <view class="{{img_index==1?'img_layout1':'img_layout'}}" wx:for="{{options.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-optionindex="{{options_index}}" data-imageindex="{{img_index}}" data-type="3">
+                <view class="{{img_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{options.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-optionindex="{{options_index}}" data-imageindex="{{img_index}}" data-type="3">
                   <image class="task1_img" src="{{imgItem}}" mode="aspectFill"></image>
                 </view>
-                <view wx:if="{{options.imgs.length < 3}}" class="{{options.imgs.length==1?'img_layout1':'img_layout'}}"></view>
-                <view wx:if="{{options.imgs.length < 2}}" class="img_layout"></view>
+                <!-- <view wx:if="{{options.imgs.length < 3}}" class="{{options.imgs.length==1?'img_layout1':'img_layout'}}"></view>
+                <view wx:if="{{options.imgs.length < 2}}" class="img_layout"></view> -->
               </view>
             </block>
           </block>
@@ -351,11 +351,11 @@
                 </view>
                 <!-- 图片 -->
                 <view wx:if="{{fieldlist.imgs != ''}}" class="image_listview_layout">
-                  <view class="{{img_index==1?'img_layout1':'img_layout'}}" wx:for="{{fieldlist.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-fieldlistindex="{{fieldlist_index}}" data-imageindex="{{img_index}}" data-type="4">
+                  <view class="{{img_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{fieldlist.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-fieldlistindex="{{fieldlist_index}}" data-imageindex="{{img_index}}" data-type="4">
                     <image class="task1_img" src="{{imgItem}}" mode="aspectFill"></image>
                   </view>
-                  <view wx:if="{{fieldlist.imgs.length < 3}}" class="{{fieldlist.imgs.length==1?'img_layout1':'img_layout'}}"></view>
-                  <view wx:if="{{fieldlist.imgs.length < 2}}" class="img_layout"></view>
+                  <!-- <view wx:if="{{fieldlist.imgs.length < 3}}" class="{{fieldlist.imgs.length==1?'img_layout1':'img_layout'}}"></view>
+                  <view wx:if="{{fieldlist.imgs.length < 2}}" class="img_layout"></view> -->
                 </view>
               </view>
             </block>

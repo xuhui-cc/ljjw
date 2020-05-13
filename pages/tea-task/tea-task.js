@@ -28,9 +28,9 @@ Page({
       "uid": wx.getStorageSync("uid"),
       "class_id":that.data.class_id
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwTeacherTasks(params).then(d => {
-      console.log(d)
+      // console.log(d)
       if (d.data.status == 1) {
         console.log(d.data.data)
         that.setData({
