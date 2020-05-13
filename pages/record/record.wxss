@@ -10,23 +10,27 @@ page{
   display: flex;
   z-index: 100;
 }
+
+.navibar_selecteSub {
+  max-width: 384;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
 .bar-class{
   margin-left: 30rpx;
-  margin-top: 108rpx;
-  width:340rpx;
-  height:48rpx;
   font-size:34rpx;
   font-family:PingFang SC;
-  font-weight:bold;
-  line-height:48rpx;
+  font-weight:middle;
   color:rgba(255,255,255,1);
   opacity:1;
+  align-items: center;
 }
 .bar-img{
   margin-left: 20rpx;
-  margin-top: 117rpx;
-  width:24rpx;
-  height:24rpx;
+  width:22rpx;
+  height:22rpx;
 }
 .stu-rec{
   margin-top: 176rpx;

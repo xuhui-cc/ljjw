@@ -11,6 +11,9 @@ page{
   opacity:1;
   display: flex;
   z-index: 100;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
 }
 .flex{
   display: flex;
@@ -39,16 +42,17 @@ page{
   height:341rpx;
 }
 .my-head{
-  margin-left: 341rpx;
+  /* margin-left: 341rpx; */
   margin-top: 108rpx;
   width:68rpx;
-  height:48rpx;
+  /* height:48rpx; */
   font-size:34rpx;
-  font-family:PingFang SC;
+  /* font-family:PingFang SC; */
   font-weight:bold;
   line-height:48rpx;
   color:rgba(255,255,255,1);
   opacity:1;
+  text-align: center;
 }
 .my-info{
   margin-top: 176rpx;

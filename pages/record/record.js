@@ -17,60 +17,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let that = this;
-    var role = wx.getStorageSync("role")
-    if (!role) {
-      that.setData({
-        role: -1,
-        login: false
-      })
 
-    } else {
-      that.setData({
-        role: role,
-        login: true
-      })
-    }
-    if(that.data.role == 4){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentScore(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          console.log(d.data.data)
-          that.setData({
-            stu_score: d.data.data.list,
-            stu_class: d.data.data.classes
-          })
-          console.log("学生成绩获取成功")
-        }
-
-
-      })
-    }else if(that.data.role <= 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-      }
-      console.log(params)
-      app.ljjw.jwTeacherScoreMainPage(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          console.log(d.data.data)
-          that.setData({
-            tea_class: d.data.data.classes,
-            tea_mock_list: d.data.data.mock_list
-          })
-          console.log("老师成绩首页获取成功")
-        }
-
-
-      })
-    }
-    
+    // 获取导航栏尺寸
+    this.setUpNaviSize()
     
   },
 
@@ -159,60 +108,22 @@ Page({
    */
   onShow: function () {
     let that = this
-    if (typeof that.getTabBar === 'function' &&
-      that.getTabBar()) {
-      console.log('record_onshow')
-      that.getTabBar().setData({
-        selected: 1
-      })
-    }
-    else {
-      console.log('未执行')
-    }
-    that.setData({
-      stu_class_index:0,
-      tea_class_index: 0
-    })
-    if (that.data.role == 4) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        // "class_id": that.data.stu_class[that.data.stu_class_index].class_id
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentScore(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          console.log(d.data.data)
-          that.setData({
-            stu_score: d.data.data.list,
-            stu_class: d.data.data.classes
-          })
-          console.log("学生成绩获取成功")
-        }
+    // if (typeof that.getTabBar === 'function' &&
+    //   that.getTabBar()) {
+    //   console.log('record_onshow')
+    //   that.getTabBar().setData({
+    //     selected: 1
+    //   })
+    // }
+    // else {
+    //   console.log('未执行')
+    // }
 
+    // 获取登录状态及角色
+    that.setUpLogInStatus()
 
-      })
-    } else if (that.data.role <= 2) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-      }
-      console.log(params)
-      app.ljjw.jwTeacherScoreMainPage(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          console.log(d.data.data)
-          that.setData({
-            tea_class: d.data.data.classes,
-            tea_mock_list: d.data.data.mock_list
-          })
-          console.log("老师成绩首页获取成功")
-        }
-
-
-      })
-    }
+    // 加载数据
+    that.reloadData()
   },
 
   /**
@@ -248,5 +159,100 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 设置自定义导航栏尺寸
+  */
+  setUpNaviSize: function () {
+    var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let naviBarHeight = menuButtonRect.bottom+10
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top
+    })
+  },
+
+  /**
+   * 判断登录状态
+  */
+  setUpLogInStatus: function () {
+    let that = this
+    var role = wx.getStorageSync("role")
+    if (!role) {
+      that.setData({
+        role: -1,
+        login: false
+      })
+
+    } else {
+      that.setData({
+        role: role,
+        login: true
+      })
+    }
+  },
+
+  /**
+   * 加载数据
+  */
+  reloadData: function() {
+    let that = this
+
+    switch(that.data.role * 1) {
+      case 1: 
+        // 老师
+      case 2: {
+        // 教务
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+        }
+        if (that.data.tea_class && that.data.tea_class_index && that.data.tea_class.length > that.data.tea_class_index) {
+          params.class_id = that.data.tea_class[that.data.tea_class_index].id
+        }
+        app.ljjw.jwTeacherScoreMainPage(params).then(d => {
+          // console.log(d)
+          if (d.data.status == 1) {
+            // console.log(d.data.data)
+            that.setData({
+              tea_class: d.data.data.classes,
+              tea_mock_list: d.data.data.mock_list
+            })
+            console.log("老师成绩首页获取成功")
+          }
+        })
+        break
+      }
+      case 3: {
+        // 管理员
+        break
+      }
+      case 4: {
+        // 学生
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+        }
+        if (that.data.stu_class && that.data.stu_class_index && that.data.stu_class.length > that.data.stu_class_index) {
+          params.class_id = that.data.stu_class[that.data.stu_class_index].class_id
+        }
+        // console.log(params)
+        app.ljjw.jwGetStudentScore(params).then(d => {
+          // console.log(d)
+          if (d.data.status == 1) {
+            that.setData({
+              stu_score: d.data.data.list,
+              stu_class: d.data.data.classes
+            })
+            console.log("学生成绩获取成功")
+          }
+  
+  
+        })
+        break
+      }
+    }
   }
 })

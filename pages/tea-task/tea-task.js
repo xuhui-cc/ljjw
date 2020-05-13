@@ -41,10 +41,18 @@ Page({
           var cs2 = "task[" + i + "].notfinished_students"
           var cs3 = "task[" + i + "].fold"
           if (that.data.task[i].type == 1){
-            var cs4 = "task[" + i + "].attach"
-            that.setData({
-              [cs4]: that.data.task[i].attach.split(",")
-            })
+            if (that.data.task[i].attach != '') {
+              var cs4 = "task[" + i + "].attach"
+              that.setData({
+                [cs4]: that.data.task[i].attach.split(",")
+              })
+            } else {
+              var cs4 = "task[" + i + "].attach"
+              that.setData({
+                [cs4]: []
+              })
+            }
+            
           }
           that.setData({
             [cs1]: that.data.task[i].finished_students.join("、"),

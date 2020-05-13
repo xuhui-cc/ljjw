@@ -1,12 +1,12 @@
 <view class="container">
 
-  <view class="nabigation_bar">
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
     
-    <text class="my-head">我的</text> 
+    <text class="my-head" style="margin-top:{{naviBarSelectSub_Top}}px;line-height:{{naviBarSelectSub_Height}}px">我的</text> 
   </view>
 
   <view wx:if="{{role < 0}}">
-    <view class="my-info">
+    <view class="my-info" style="margin-top:{{naviBarHeight}}px">
       <image class="my-ava" src="../../images/avatar_null.png"></image>
 
       <view class="state-layout">
@@ -19,7 +19,7 @@
   <!-- 学生 -->
   <view wx:elif="{{role == 4}}">
 
-    <view class="my-info">
+    <view class="my-info" style="margin-top:{{naviBarHeight}}px">
       <image class="my-ava" src="{{mydata.avatar}}"></image>
 
       <view class="state-layout">
@@ -121,7 +121,7 @@
 
   <view wx:else="{{role > 0 && role < 4}}">
 
-    <view class="my-info">
+    <view class="my-info" style="margin-top:{{naviBarHeight}}px">
       <image class="my-ava" src="{{userInfo.avatar}}"></image>
 
       <view class="state-layout">

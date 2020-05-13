@@ -16,10 +16,6 @@ Page({
    */
   data: {
     finish:0,
-    img: [],
-    imgs: [],
-    submit_arr:[],
-    type2_ans:[],
     work_reject : false
   },
 
@@ -28,6 +24,7 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+
     var class_id = options.class_id
     that.setData({
       class_id : class_id
@@ -173,11 +170,10 @@ Page({
   
                     arr.push(option.lists[n]);
                     // console.log(arr)
-                    var imgs = []
                     option.list = arr
-                    option.imgs = imgs
                   }
-  
+                  option.imgs = []
+
                   for (var n = 0; n < option.list.length; n++) {
                     var list_item = option.list[n]
                     var new_list_item = {}
@@ -321,13 +317,9 @@ Page({
             
               if (item.task_detail != ''){
                 item.task_detail.imgs = item.task_detail.finished_info.pics.split(",")
-                console.log("==========================================imgs1")
-                console.log(item.task_detail)
               }else{
                 item.task_detail = {}
                 item.task_detail.imgs = imgs
-                console.log("==========================================imgs2")
-                console.log(item.task_detail)
               }
 
               if (item.attach != '') {
@@ -408,69 +400,24 @@ Page({
   
               for (var j = 0; j < item.task_detail.length; j++) {
                 var taskDetail = item.task_detail[j]
-                if (taskDetail.child_title != null) {
-                  taskDetail.child_title = taskDetail.child_title.split(",")
   
-                  for (var n = 0; n < taskDetail.child_title.length; n++) {
-                    taskDetail.fieldlist[n].title = taskDetail.child_title[n]
-                  }
-  
-                }
-  
-                taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
-                taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
-                taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
+                let answers = taskDetail.finished_info.answers.split(",")
+                let imgsList = taskDetail.finished_info.attach.split(",")
   
                 for (var k = 0; k < taskDetail.fieldlist.length; k++) {
   
                   var arr = []
                   var fileListItem = taskDetail.fieldlist[k]
-                  for (let n in fileListItem.lists) {
-  
-                    arr.push(fileListItem.lists[n]);
-                    // console.log(arr)
-                    // var imgs = []
-                    fileListItem.list = arr
-                    fileListItem.imgs = []
-                  }
-                  if (taskDetail.finished_info.attach[k] != "") {
-                    fileListItem.imgs = taskDetail.finished_info.attach[k].split(",")
-                    console.log(fileListItem.imgs)
-                  }
-                  // var arr = []
-  
-                 
-                  //   var css = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].imgs"
-                    
-                  //   var imgs = []
-                  //   // that.setData({
-                  
-                  //   //   [css]: that.data.task[i].task_detail[j].finished_info.attach[k].split(","),
-  
-                  //   // })
-  
-                  // if (that.data.task[i].task_detail[j].finished_info.attach[k] != "") {
-                  //   that.data.task[i].task_detail[j].fieldlist[k].imgs.push(that.data.task[i].task_detail[j].finished_info.attach[k])
-                  //   console.log(that.data.task[i].task_detail[j].fieldlist[k].imgs)
-                  // }
+
+                  fileListItem.imgs = imgsList
+                  fileListItem.memo = taskDetail.finished_info.memo
+
                   for (var n = 0; n < fileListItem.lists.length; n++) {
                     var fileListItemListItem = fileListItem.lists[n]
                     var newListItem = {}
                     newListItem.item = fileListItemListItem
-                    newListItem.content = ''
+                    newListItem.content = answers[n]
                     fileListItem.lists[n] = newListItem
-  
-                    for (var m = 0; m < taskDetail.finished_info.answers.length; m++) {
-                      if (n == m) {
-                        newListItem.content = taskDetail.finished_info.answers[m]
-                      }
-                    }
-  
-                    for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
-                      if (k == m) {
-                        newListItem.memo = taskDetail.finished_info.memo[m]
-                      }
-                    }
                   }
                 }
               }
@@ -565,86 +512,20 @@ Page({
     console.log(list_index + "list_index")
 
 
-    var type3_content = e.detail.value
-    console.log(type3_content)
-    if (type3_content != ''){
-      that.setData({
-        type3_content: type3_content
-      })
-    }else{
-      that.setData({
-        type3_content: ''
-      })
-    }
-    
+    var content = e.detail.value
+    console.log(content)
 
+    var cs = "task[" + task_index + "].task_detail[" + task_detail_index + "].fieldlist[" + fieldlist_index + "].lists[" + list_index + "].content"
+    that.setData({
+      [cs]: content
+    })
+    that.taskCanSubmit(task_index)
 
-    for(var i=0;i<that.data.task.length;i++){
-      if (i == task_index){
-        for (var j = 0; j < that.data.task[i].task_detail.length;j++){
-          if (j == task_detail_index){
-            for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length;k++){
-              if (k == fieldlist_index){
-                for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length;n++){
-                  if (n == list_index){
-                    var cs = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].lists[" + n + "].content"
-                    that.setData({
-                      [cs]: that.data.type3_content
-                    })
-                  }
-                  
-                }
-              
-              }
-            }
-          }
-        }
-      }
-    }
-
-    for (var i = 0; i < that.data.task.length; i++) {
-      if (i == task_index) {
-        for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-          var cs = "task[" + i + "].task_detail[" + j + "].ans"
-          var css = "task[" + i + "].task_detail[" + j + "].memo"
-          var csss = "task[" + i + "].task_detail[" + j + "].pics"
-          that.setData({
-            [cs]: [],
-            [css]: [],
-            [csss]: []
-          })
-          for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
-
-            for (var n = 0; n < that.data.task[i].task_detail[j].fieldlist[k].lists.length; n++) {
-              if (that.data.task[i].task_detail[j].fieldlist[k].lists[n].content != '') {
-
-                that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].fieldlist[k].lists[n].content)
-
-              }
-              if (that.data.task[i].task_detail[j].fieldlist[k].lists[n].content.indexOf("请填写") >= 0 || that.data.task[i].task_detail[j].fieldlist[k].lists[n].content == ''){
-                var css = "task[" + task_index + "].submit"
-                that.setData({
-                  [css]: false
-                })
-                console.log("cs1")
-              }
-              else{
-                var css = "task[" + task_index + "].submit"
-                that.setData({
-                  [css]: true
-                })
-                // console.log(that.data.task[i].task_detail[j].fieldlist[k].lists[n].content.indexOf("请填写"))
-                console.log("cs2")
-              }
-
-            }
-          }
-
-        }
-      }
-    }
   },
 
+  /**
+   * 选项任务 点击选项
+  */
   select: function (e) {
     let that = this;
     var task_index = e.currentTarget.dataset.task_index
@@ -655,74 +536,29 @@ Page({
     console.log(options_index + "options_index")
     var list_index = e.currentTarget.dataset.list_index
     console.log(list_index + "list_index")
-    for (var i = 0; i < that.data.task.length; i++) {
-      if (i == task_index) {
-        for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-          if (j == task_detail_index) {
-            for (var k = 0; k < that.data.task[i].task_detail[j].options.length; k++) {
-              if (k == options_index) {
-                for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
-                  if (n == list_index) {
-                    var cs = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
-                    that.setData({
-                      [cs]: true
-                    })
-                  } else {
-                    var cs = "task[" + i + "].task_detail[" + j + "].options[" + k + "].list[" + n + "].select"
-                    that.setData({
-                      [cs]: false
-                    })
-                  }
 
-                }
+    var task = that.data.task[task_index]
+    var taskDetail = task.task_detail[task_detail_index]
+    var option = taskDetail.options[options_index]
 
-              }
-            }
-          }
-        }
+    option.selected = true
+    
+    for (var i = 0; i < option.list.length; i++) {
+      var list = option.list[i]
+      var selected = false
+      if (i == list_index) {
+        selected = true
       }
+      list.select = selected
     }
 
-    for (var i = 0; i < that.data.task.length; i++) {
-      if (i == task_index) {
-        for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-          var cs = "task[" + i + "].task_detail[" + j + "].ans"
-          var css = "task[" + i + "].task_detail[" + j + "].memo"
-          var csss = "task[" + i + "].task_detail[" + j + "].pics"
-          that.setData({
-            [cs]: [],
-            [css]: [],
-            [csss]: []
-          })
-          for (var k = 0; k < that.data.task[i].task_detail[j].options.length; k++) {
+    var cs = "task[" + task_index + "].task_detail[" + task_detail_index + "].options[" + options_index + "]"
+    that.setData({
+      [cs]: option
+    })
 
-            for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length; n++) {
-              if (that.data.task[i].task_detail[j].options[k].list[n].select == true) {
-
-                that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].options[k].list[n].option)
-
-              }
-
-            }
-          }
-
-
-          if (that.data.task[i].task_detail[j].ans.length == that.data.task[i].task_detail[j].options.length) {
-            var css = "task[" + task_index + "].submit"
-            that.setData({
-              [css]: true
-            })
-          }
-          else {
-            var css = "task[" + task_index + "].submit"
-            that.setData({
-              [css]: false
-            })
-          }
-
-        }
-      }
-    }
+    // 判断是否可以提交
+    that.taskCanSubmit(task_index)
   },
 
   type1_content:function(e){
@@ -739,34 +575,29 @@ Page({
     console.log(fieldlist_index + "fieldlist_index")
     
 
-    var type1_content = e.detail.value
-    console.log(type1_content)
-    that.setData({
-      type1_content: type1_content
-    })
+    var content = e.detail.value
+    console.log(content)
+    var task = that.data.task[task_index]
     if (task_type == 1){
       var cs = "task[" + task_index + "].submit_content"
+
       that.setData({
-        [cs]: that.data.type1_content
+        [cs]: content,
       })
-      if (that.data.task[task_index].submit_content != ''){
-        var css = "task[" + task_index + "].submit"
-        that.setData({
-          [css]:true
-        })
-      }
+      
     } else if (task_type == 2){
       var cs = "task[" + task_index + "].task_detail[" + task_detail_index + "].options[" + options_index + "].submit_content"
       that.setData({
-        [cs]: that.data.type1_content
+        [cs]: content
       })
+      
     } else if (task_type == 3){
       var cs = "task[" + task_index + "].task_detail[" + task_detail_index + "].fieldlist[" + fieldlist_index + "].submit_content"
       that.setData({
-        [cs]: that.data.type1_content
+        [cs]: content
       })
     }
-    
+    that.taskCanSubmit(task_index)
   },
 
 
@@ -774,222 +605,178 @@ Page({
     let that = this
     var task_index = e.currentTarget.dataset.task_index
     console.log(task_index + "task_index")
-    if (that.data.task[task_index].type == 1){
-      that.setData({
-        submit_arr:[]
-      })
-      var newarray = [{
-        memo: that.data.task[task_index].submit_content,
-        pics: that.data.task[task_index].task_detail.imgs.join(",") ,
-        attach: ''
-      }];
 
-      that.setData({
-        'submit_arr': that.data.submit_arr.concat(newarray)
-      });
-      console.log(that.data.submit_arr)
-
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "tid": that.data.task[task_index].id,
-        "data": that.data.submit_arr
-      }
-      console.log(params)
-      app.ljjw.jwStudentSaveTask(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          wx.showToast({
-            title: '提交成功',
-            duration:1500
-          })
-          that.setData({
-            img:[],
-            imgs:[],
-            type1_content:'',
-            type3_content: ''
-          })
-          that.pageData.page = 1
-          that.un_task()  //刷新任务待完成列表
-          console.log("任务提交成功")
+    let task = that.data.task[task_index]
+    switch (task.type * 1) {
+      case 1: {
+        // 普通任务
+        var submit_arr = [{
+          memo: task.submit_content,
+          pics: task.task_detail.imgs.join(","),
+          attach: ''
+        }];
+  
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "tid": task.id,
+          "data": submit_arr
         }
-
-
-      })
-    }
-    else if(that.data.task[task_index].type == 2){
-      console.log("选项式提交")
-      for(var i=0;i<that.data.task.length;i++){
-        if(i == task_index){
-          for(var j=0;j<that.data.task[i].task_detail.length;j++){
-            var cs = "task[" + i + "].task_detail[" + j + "].ans"
-            var css = "task[" + i + "].task_detail[" + j + "].memo"
-            var csss = "task[" + i + "].task_detail[" + j + "].pics"
-            that.setData({
-              [cs]: [],
-              [css]:[],
-              [csss]:[]
+        // console.log(params)
+        app.ljjw.jwStudentSaveTask(params).then(d => {
+          // console.log(d)
+          if (d.data.status == 1) {
+            wx.showToast({
+              title: '提交成功',
+              duration:1500
             })
-            for(var k=0;k<that.data.task[i].task_detail[j].options.length;k++){
-              
-              for (var n = 0; n < that.data.task[i].task_detail[j].options[k].list.length;n++){
-                if (that.data.task[i].task_detail[j].options[k].list[n].select == true) {
-                  
-                  that.data.task[i].task_detail[j].ans.push(that.data.task[i].task_detail[j].options[k].list[n].option)
+            that.pageData.page = 1
+            that.un_task()  //刷新任务待完成列表
+            console.log("任务提交成功")
+          }
+        })
+        break
+      }
+      case 2: {
+        // 选项任务
+        console.log("选项式提交")
+        var submit_arr = []
+        for(var j=0; j<task.task_detail.length; j++){
+          let taskDetail = task.task_detail[j]
 
-                }
-                
+          var taskDetail_answers = []
+          var taskDetail_memoContent = []
+          var taskDetail_pics = []
+
+          for(var k=0; k<taskDetail.options.length; k++){
+            let option = taskDetail.options[k]
+
+            for (var n = 0; n < option.list.length;n++){
+              let list = option.list[n]
+
+              if (list.select == true) {
+                taskDetail_answers.push(list.option)
               }
-              var hh = "task[" + i + "].task_detail[" + j + "].options[" + k + "].pics"
-              that.setData({
-                [hh]: that.data.task[i].task_detail[j].options[k].imgs.join(",")
-              })
-              
-              that.data.task[i].task_detail[j].memo.push(that.data.task[i].task_detail[j].options[k].submit_content)
-              that.data.task[i].task_detail[j].pics.push(that.data.task[i].task_detail[j].options[k].pics)
-              
             }
-            var memo, pics, attach
             
-            if (that.data.task[i].task_detail[j].memo.join("|") == "|"){
-              memo = ""
-            }
-            else{
-              memo = that.data.task[i].task_detail[j].memo.join("|")
-            }
-
-            if (that.data.task[i].task_detail[j].pics.join("|") == "|") {
-              pics = ""
-            }
-            else {
-              pics = that.data.task[i].task_detail[j].pics.join("|")
-            }
-
-            
-            var newarray = [{
-              info_id: that.data.task[i].task_detail[j].id,
-              answers: that.data.task[i].task_detail[j].ans.join(","),
-              memo: memo,
-              // pics: pics,
-              attach: pics,
-            }];
-            that.setData({
-              'type2_ans': that.data.type2_ans.concat(newarray)
-            });
+            taskDetail_memoContent.push(option.submit_content)
+            let optionImage = option.imgs.join(",")
+            taskDetail_pics.push(optionImage)
             
           }
-        }
-      }
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "tid": that.data.task[task_index].id,
-        "data": that.data.type2_ans
-      }
-      console.log(params)
-      app.ljjw.jwStudentSaveTask(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          wx.showToast({
-            title: '提交成功',
-            duration: 1500
-          })
-          that.setData({
-            img: [],
-            imgs: [],
-            type1_content: '',
-            type3_content: ''
-          })
-          that.pageData.page = 1
-          that.un_task()  //刷新任务待完成列表
-          console.log("任务提交成功")
-        }
-
-
-      })
-      
-     
-    }
-    else if (that.data.task[task_index].type == 3) {
-      console.log("字段式提交")
-      for (var i = 0; i < that.data.task.length; i++) {
-        if (i == task_index) {
-          for (var j = 0; j < that.data.task[i].task_detail.length; j++) {
-            
-            for (var k = 0; k < that.data.task[i].task_detail[j].fieldlist.length; k++) {
-
-              
-              var hh = "task[" + i + "].task_detail[" + j + "].fieldlist[" + k + "].pics"
-              that.setData({
-                [hh]: that.data.task[i].task_detail[j].fieldlist[k].imgs.join(",")
-              })
-
-              that.data.task[i].task_detail[j].memo.push(that.data.task[i].task_detail[j].fieldlist[k].submit_content)
-              that.data.task[i].task_detail[j].pics.push(that.data.task[i].task_detail[j].fieldlist[k].pics)
-
-            }
-            var memo, pics, attach
-
-            if (that.data.task[i].task_detail[j].memo.join("|") == "|") {
-              memo = ""
-            }
-            else {
-              memo = that.data.task[i].task_detail[j].memo.join("|")
-            }
-
-            if (that.data.task[i].task_detail[j].pics.join("|") == "|") {
-              pics = ""
-            }
-            else {
-              pics = that.data.task[i].task_detail[j].pics.join("|")
-            }
-
-
-            var newarray = [{
-              info_id: that.data.task[i].task_detail[j].id,
-              answers: that.data.task[i].task_detail[j].ans.join(","),
-              memo: memo,
-              // pics: pics,
-              attach: pics,
-            }];
-            that.setData({
-              'type2_ans': that.data.type2_ans.concat(newarray)
-            });
-
+          var memo = taskDetail_memoContent.join("|")
+          var pics = taskDetail_pics.join("|")
+          
+          if (memo == "|"){
+            memo = ""
           }
+
+          if (pics == "|") {
+            pics = ""
+          }
+
+          var newdata = {
+            info_id: taskDetail.id,
+            answers: taskDetail_answers.join(","),
+            memo: memo,
+            // pics: pics,
+            attach: pics,
+          }
+          submit_arr.push(newdata)
         }
+        
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "tid": task.id,
+          "data": submit_arr
+        }
+        // console.log(params)
+        app.ljjw.jwStudentSaveTask(params).then(d => {
+          // console.log(d)
+          if (d.data.status == 1) {
+            wx.showToast({
+              title: '提交成功',
+              duration: 1500
+            })
+            that.pageData.page = 1
+            that.un_task()  //刷新任务待完成列表
+            console.log("任务提交成功")
+          }
+        })
+        break
       }
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "tid": that.data.task[task_index].id,
-        "data": that.data.type2_ans
-      }
-      console.log(params)
-      app.ljjw.jwStudentSaveTask(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          wx.showToast({
-            title: '提交成功',
-            duration: 1500
-          })
-          that.setData({
-            img: [],
-            imgs: [],
-            type1_content: '',
-            type3_content: '',
-            type2_ans:[]
-          })
-          that.pageData.page = 1
-          that.un_task()  //刷新任务待完成列表
-          console.log("任务提交成功")
+      case 3: {
+        // 字段任务
+        console.log("字段式提交")
+        var submit_arr = []
+        for (var j = 0; j < task.task_detail.length; j++) {
+          let taskDetail = task.task_detail[j]
+
+          var taskDetail_memoContent = []
+          var taskDetail_pics = []
+          var answerArray = []
+
+          for (var k = 0; k < taskDetail.fieldlist.length; k++) {
+            let field = taskDetail.fieldlist[k]
+            taskDetail_memoContent.push(field.submit_content)
+            taskDetail_pics.push(field.imgs.join(","))
+
+            for (var i = 0; i < field.lists.length; i++) {
+              let list = field.lists[i]
+              var content = list.content
+              var contentArray = content.split(",")
+              var newContent = contentArray.join(" ")
+              answerArray.push(newContent)
+            }
+          }
+          var memo = taskDetail_memoContent.join("|")
+          var pics = taskDetail_pics.join("|")
+
+          if (memo == "|") {
+            memo = ""
+          }
+
+          if (pics == "|") {
+            pics = ""
+          }
+
+          var newData = {
+            info_id: taskDetail.id,
+            answers: answerArray.join(","),
+            memo: memo,
+            // pics: pics,
+            attach: pics,
+          };
+          submit_arr.push(newData)
         }
 
-
-      })
+        var params = {
+          "token": wx.getStorageSync("token"),
+          "uid": wx.getStorageSync("uid"),
+          "tid": task.id,
+          "data": submit_arr
+        }
+        // console.log(params)
+        app.ljjw.jwStudentSaveTask(params).then(d => {
+          // console.log(d)
+          if (d.data.status == 1) {
+            wx.showToast({
+              title: '提交成功',
+              duration: 1500
+            })
+            that.pageData.page = 1
+            that.un_task()  //刷新任务待完成列表
+            console.log("任务提交成功")
+          }
+        })
+        break
+      }
+      case 4: {
+        // 考勤任务
+        break
+      }
     }
-    
-
   },
 
   reject_for:function(e){
@@ -1094,7 +881,31 @@ Page({
     
     let count_img = 3
 
-    let len = that.data.imgs.length;
+    var len = 0;
+
+    let task = that.data.task[task_index]
+    switch (task.type * 1) {
+      case 1: {
+        // 普通任务
+        len = task.task_detail.imgs.length
+        break
+      }
+      case 2: {
+        // 选项任务
+        let taskDetail = task.task_detail[task_detail_index]
+        let option = taskDetail.options[options_index]
+        len = option.imgs.length
+        break
+      }
+      case 3: {
+        // 字段任务
+        let taskDetail = task.task_detail[task_detail_index]
+        let field = taskDetail.fieldlist[options_index]
+        len = field.imgs.length
+        break
+      }
+    }
+    
     if (len < 3) {
       count_img = 3 - len
       console.log(count_img +"count_img")
@@ -1103,6 +914,8 @@ Page({
         success: (res) => {
           let tempFilePaths = res.tempFilePaths;
           console.log(tempFilePaths)
+
+          // 开始上传
           that.pictureCycleUpload(tempFilePaths, 0, task_index, task_detail_index, options_index)
 
         }
@@ -1121,46 +934,35 @@ Page({
     console.log(task_detail_index + "task_detail_index")
     var options_index = e.currentTarget.dataset.options_index
     console.log(options_index + "options_index")
-    // that.data.imgs.splice(xb, 1);
-    // that.setData({
-    //   imgs: that.data.imgs
-    // })
     
+    let task = that.data.task[task_index]
+    let taskDetail = task.task_detail[task_detail_index]
 
-    for (var q = 0; q < that.data.task.length; q++) {
-      if (q == task_index) {
-        for (var w = 0; w < that.data.task[q].task_detail.length; w++) {
-          if (w == task_detail_index) {
-            if (that.data.task[q].type == 3) {
-              for (var n = 0; n < that.data.task[q].task_detail[w].fieldlist.length; n++) {
-                if (n == options_index) {
-                  that.data.task[q].task_detail[w].fieldlist[n].imgs.splice(xb, 1);
-                  console.log("我是测试")
-                  var css = "task[" + q + "].task_detail[" + w + "].fieldlist[" + n + "].imgs"
-                  that.setData({
-                    [css]: that.data.task[q].task_detail[w].fieldlist[n].imgs
-                  })
-                }
-              }
-            } else if (that.data.task[q].type == 2) {
-              for (var n = 0; n < that.data.task[q].task_detail[w].options.length; n++) {
-                if (n == options_index) {
-                  that.data.task[q].task_detail[w].options[n].imgs.splice(xb, 1);
-                  var css = "task[" + q + "].task_detail[" + w + "].options[" + n + "].imgs"
-                  that.setData({
-                    [css]: that.data.task[q].task_detail[w].options[n].imgs
-                  })
-                }
-              }
-            }
-
-
-          }
-        }
+    switch (task.type * 1) {
+      case 2: {
+        // 选项任务
+        var option = taskDetail.options[options_index]
+        option.imgs.splice(xb, 1);
+        var css = "task[" + task_index + "].task_detail[" + task_detail_index + "].options[" + options_index + "].imgs"
+        that.setData({
+          [css]: option.imgs
+        })
+        break
+      }
+      case 3: {
+        // 字段任务
+        var field = taskDetail.fieldlist[options_index]
+        field.imgs.splice(xb, 1);
+        var css = "task[" + task_index + "].task_detail[" + task_detail_index + "].fieldlist[" + options_index + "].imgs"
+        that.setData({
+          [css]: field.imgs
+        })
+        break
       }
     }
-    
+    that.taskCanSubmit(task_index)
   },
+
   del_img1: function (e) {   //普通删除图片
     let that = this
     var xb = e.currentTarget.dataset.xb
@@ -1168,26 +970,15 @@ Page({
     var task_index = e.currentTarget.dataset.task_index
     console.log(task_index + "task_index")
     
-    that.data.imgs.splice(xb, 1);
+    var task = that.data.task[task_index]
+    task.task_detail.imgs.splice(xb, 1);
+    
+    var css = "task[" + task_index + "].task_detail.imgs"
     that.setData({
-      imgs: that.data.imgs
+      [css]: task.task_detail.imgs
     })
-    
 
-
-    for (var q = 0; q < that.data.task.length; q++) {
-      if (q == task_index) {
-                  var css = "task[" + q + "].task_detail.imgs"
-                  that.setData({
-                    [css]: that.data.imgs
-                  })
-                } 
-      }
-      that.setData({
-        task:that.data.task
-      })
-    
-
+    that.taskCanSubmit(task_index)
   },
 
   /**
@@ -1279,7 +1070,7 @@ Page({
   */
   previewAttachImage: function(e) {
     let that = this
-    // console.log(e)
+    console.log(e)
     let taskIndex = e.currentTarget.dataset.taskindex
     let type = e.currentTarget.dataset.type
 
@@ -1304,12 +1095,133 @@ Page({
         current = imgArray[imgIndex]
         break
       }
+      case 3: {
+        // 选项任务 学生上传图片 task_detail[i].finished_info.attach
+        let imgIndex = e.currentTarget.dataset.imageindex
+        let taskDetailIndex = e.currentTarget.dataset.taskdetailindex
+        let optinIndex = e.currentTarget.dataset.optionindex
+        let option = task.task_detail[taskDetailIndex].options[optinIndex]
+        urls = option.imgs
+        current = urls[imgIndex]
+        break
+      }
+      case 4: {
+        // 字段任务 学生上传图片 task_detail[i].finished_info.attach
+        let imgIndex = e.currentTarget.dataset.imageindex
+        let taskDetailIndex = e.currentTarget.dataset.taskdetailindex
+        let fieldlistIndex = e.currentTarget.dataset.fieldlistindex
+        let field = task.task_detail[taskDetailIndex].fieldlist[fieldlistIndex]
+        urls = field.imgs
+        current = urls[imgIndex]
+        break
+      }
     }
     console.log(urls)
     console.log(current)
     wx.previewImage({
       urls: urls,
       current: current
+    })
+  },
+
+  /**
+   * 判断是否可以提交
+  */
+  taskCanSubmit: function(taskIndex) {
+    let that = this
+    let task = that.data.task[taskIndex]
+    var cansubmit = false
+    switch (task.type * 1) {
+      case 1: {
+        // 普通任务
+        if (task.submit_content != '' && (task.task_detail.imgs.length != 0 || task.has_pics != 1)) {
+          cansubmit = true
+        }
+        break
+      }
+      case 2: {
+        // 选项任务
+        cansubmit = true
+        for (var i = 0; i < task.task_detail.length; i++) {
+          let taskDetail = task.task_detail[i]
+          // 是否继续执行循环
+          var next = true
+          for (var j= 0; j < taskDetail.options.length; j++) {
+            let option = taskDetail.options[j]
+            // 判断备注内容是否填写
+            if ((taskDetail.option_type == 2 || taskDetail.option_type == 4) && (!option.submit_content || option.submit_content == '')) {
+              cansubmit = false
+              next = false
+              break
+            }
+            // 判断图片是否选择
+            if ((taskDetail.option_type == 3 || taskDetail.option_type == 4) && option.imgs.length == 0) {
+              cansubmit = false
+              next = false
+              break
+            }
+            // 判断是否选择
+            if (!option.selected) {
+              cansubmit = false
+              next = false
+            }
+          }
+          if (!next) {
+            break
+          }
+        }
+        break
+      }
+      case 3: {
+        // 字段任务
+        cansubmit = true
+        for (var i = 0; i < task.task_detail.length; i++) {
+          let taskDetail = task.task_detail[i]
+          var taskDetailNext = true
+          for (var j = 0; j < taskDetail.fieldlist.length; j++) {
+            let field = taskDetail.fieldlist[j]
+            // 判断备注内容是否填写
+            if ((taskDetail.field_type == 2 || taskDetail.field_type == 4) && (!field.submit_content || field.submit_content == '')) {
+              cansubmit = false
+              taskDetailNext = false
+              break
+            }
+            // 判断图片是否选择
+            if ((taskDetail.field_type == 3 || taskDetail.field_type == 4) && field.imgs.length == 0) {
+              cansubmit = false
+              taskDetailNext = false
+              break
+            }
+            // 判断字段是否填写
+            var fieldNext = true
+            for (var k= 0; k < field.lists.length; k++) {
+              let list = field.lists[k]
+              if (!list.content || field.content == '') {
+                cansubmit = false
+                taskDetailNext = false
+                fieldNext = false
+                break
+              }
+            }
+
+            if (!fieldNext) {
+              break
+            }
+          }
+          if (!taskDetailNext) {
+            break
+          }
+        }
+        break
+      }
+    }
+
+    if (task.submit == cansubmit) {
+      return
+    }
+    var cs = "task[" + taskIndex + "].submit"
+    that.setData({
+      [cs]: cansubmit
     })
   },
 
@@ -1333,7 +1245,7 @@ Page({
                         
             var css = "task[" + taskIndex + "].task_detail.imgs"
             that.setData({
-              [css]: that.data.task[q].task_detail.imgs
+              [css]: task.task_detail.imgs
             })
             break
           }
@@ -1364,6 +1276,8 @@ Page({
         if (uploadIndex < filePathList.length-1) {
           that.pictureCycleUpload(filePathList, uploadIndex+1, taskIndex, taskDetailIndex, optionsIndex)
         }
+
+        that.taskCanSubmit(taskIndex)
       }
     })
   },
@@ -1394,7 +1308,12 @@ Page({
             if (hhh.status == 1) {
               typeof cb == "function" && cb(true, hhh.data, "加载成功")
             } else {
-              typeof cb == "function" && cb(false, null, hhh.msg)
+              let errorMsg = hhh.msg ? hhh.msg : '上传失败'
+              wx.showToast({
+                title: errorMsg,
+                icon: 'none'
+              })
+              typeof cb == "function" && cb(false, null, errorMsg)
             }
           },
         })
@@ -1402,10 +1321,14 @@ Page({
       fail(error) {
         wx.hideLoading({
           complete: (res) => {
+            wx.showToast({
+              title: '上传失败',
+              icon: 'none'
+            })
             typeof cb == "function" && cb(false, null, "上传失败")
           },
         })
       }
     })
-  }
+  },
 })

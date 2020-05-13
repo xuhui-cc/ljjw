@@ -365,9 +365,9 @@ Page({
             if (!(pageData.classes && pageData.classes.length != 0)) {
               showNoData = true
             }
-            if (newMessages.length == 0 && pageData.morning_read.length == 0 && (pageData.newtaskcount == '' || pageData.newtaskcount == 0)) {
-              showNoData = true
-            }
+            // if (newMessages.length == 0 && pageData.morning_read.length == 0 && (pageData.newtaskcount == '' || pageData.newtaskcount == 0)) {
+            //   showNoData = true
+            // }
             // 更改数据 刷新界面
             that.setData({
               message: newMessages,

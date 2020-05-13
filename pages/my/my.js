@@ -28,6 +28,10 @@ Page({
   },
 
   onLoad: function (options) {
+
+    // 获取导航尺寸
+    this.setUpNaviSize()
+
     let that = this
 
     let nowTime = new Date();
@@ -604,4 +608,18 @@ Page({
     }
   },
 
+  /**
+   * 设置自定义导航栏尺寸
+  */
+  setUpNaviSize: function () {
+    var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let naviBarHeight = menuButtonRect.bottom+10
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top
+    })
+  },
+
+  
 })
