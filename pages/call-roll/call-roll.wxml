@@ -1,11 +1,13 @@
 <!-- container -->
 <view class="container">
 
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
+    <view style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px" class="navibar_content">
+      <view class="backimg_layout" bindtap="back">
+        <image class='back-img' src='../../images/back_img.png' ></image>
+      </view>
+      <text class="my-head">{{tea_info.classname}}</text> 
     </view>
-    <text class="my-head">{{tea_info.classname}}</text> 
   </view>
 
   <view class="mask" hidden="true"></view>
@@ -23,7 +25,7 @@
     </view>
   </view> -->
   <!-- 点名课程班级信息 -->
-  <view class="t-cour-info">
+  <view class="t-cour-info" style="margin-top:{{naviBarHeight}}px">
     <view class="t-info">
       <image class="t-avatar" src="{{tea_info.avatar}}"></image>
       <text class="t-name">{{tea_info.teachername}}</text>

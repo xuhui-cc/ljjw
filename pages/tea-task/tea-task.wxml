@@ -29,17 +29,17 @@
         
         <view wx:if="{{item.fold}}">
           <!-- 选项式 -->
-          <view wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
-            <view wx:for="{{task_detail.options}}" wx:for-item="options" wx:for-key="options_index" wx:key="{{options_index}}">
-              <view class='ques-cont'>{{item.title}}</view>
-              <view class="ans-layout">
-                <view class="ques-cont">A.{{options.lists.a}}</view>
-                <view class="ques-cont">B.{{options.lists.b}}</view>
-                <view class="ques-cont">C.{{options.lists.c}}</view>
-                <view class="ques-cont">D.{{options.lists.d}}</view>
+          <block wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+            <view class='selectTask_title'>{{task_detail.title}}</view>
+            <block wx:for="{{task_detail.options}}" wx:for-item="options" wx:for-key="options_index" wx:key="{{options_index}}">
+              <view wx:if="{{options.title && options.title != ''}}" class="selectTask_subtitle">{{options.title}}</view>
+              <view class="optionView">
+                <block wx:for="{{options.list}}" wx:for-index="list_index" wx:for-item="list_item">
+                  <view class="ques-cont">{{list_item.index}}.{{list_item.value}}</view>
+                </block>
               </view>
-            </view>
-          </view>
+            </block>
+          </block>
           <!-- 选项式 -->
 
           <!-- 字段式 -->

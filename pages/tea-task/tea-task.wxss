@@ -95,15 +95,34 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
-.ans-layout{
+.optionView {
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
   width: 700rpx;
-  
-  /* background: rgb(206, 150, 150); */
-  
   margin-top: 25rpx;
+  padding-bottom: 10rpx;
 }
+
+.selectTask_title {
+  margin-top: 35rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  line-height: 40rpx;
+  color: #272727;
+}
+
+.selectTask_subtitle {
+  margin-top: 35rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #272727;
+}
+
 .ques-cont{
   
   margin-left: 30rpx;

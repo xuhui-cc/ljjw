@@ -23,6 +23,9 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+
+    that.setUpNaviSize()
+
     var i = 0
     var sid = options.sid
     that.setData({
@@ -111,17 +114,9 @@ Page({
   },
   submit:function(){
     let that = this
-    var submit = JSON.stringify(that.data.submit)
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "sid": that.data.sid,
-      "data": submit
-    }
-    console.log(params)
-    app.ljjw.jwSaveStudentSignIn(params).then(d => {
-      console.log(d)
-      if (d.data.status == 1) {
-        // that.onShow()
+
+    that.submitData(function(success, msg){
+      if (success) {
         wx.showToast({
           title: '提交成功',
           duration:1500
@@ -129,17 +124,39 @@ Page({
         wx.navigateBack({
           delta: 1  // 返回上一级页面。
         })
-        
-      }
-      else {
-        console.log(d.data.msg)
-        wx.showToast({
-          title: '提交失败',
-          icon:"none",
-          duration: 1500
-        })
       }
     })
+
+    // var submit = JSON.stringify(that.data.submit)
+    // var params = {
+    //   "token": wx.getStorageSync("token"),
+    //   "sid": that.data.sid,
+    //   "data": submit
+    // }
+    // console.log(params)
+    // debugger
+    // app.ljjw.jwSaveStudentSignIn(params).then(d => {
+    //   console.log(d)
+    //   if (d.data.status == 1) {
+    //     // that.onShow()
+    //     wx.showToast({
+    //       title: '提交成功',
+    //       duration:1500
+    //     })
+    //     wx.navigateBack({
+    //       delta: 1  // 返回上一级页面。
+    //     })
+        
+    //   }
+    //   else {
+    //     console.log(d.data.msg)
+    //     wx.showToast({
+    //       title: '提交失败',
+    //       icon:"none",
+    //       duration: 1500
+    //     })
+    //   }
+    // })
   },
 
   
@@ -199,46 +216,57 @@ Page({
    */
   onUnload: function () {
     let that = this
-    console.log("hh")
-    
 
-    for (var i = 0; i < that.data.students_unsigned.length; i++) {
-      var newarray = [{
-        stu_id: that.data.students_unsigned[i].stu_id,
-        status: that.data.students_unsigned[i].status
-      }];
-      this.setData({
-        'submit': this.data.submit.concat(newarray)
-      });
-    }
-    var submit = JSON.stringify(that.data.submit)
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "sid": that.data.sid,
-      "data": submit
-    }
-    
-    console.log(params)
-    app.ljjw.jwSaveStudentSignIn(params).then(d => {
-      console.log(d)
-      console.log("请求执行")
-      if (d.data.status == 1) {
+    that.submitData(function(success, msg){
+      if (success) {
         wx.showToast({
           title: '提交成功',
           duration:1500
         })
         
         console.log("点名返回键,保存成功")
-
-      }
-      else{
-        wx.showToast({
-          title: d.data.msg,
-          icon:"none",
-          duration:2000
-        })
       }
     })
+    // console.log("hh")
+    
+
+    // for (var i = 0; i < that.data.students_unsigned.length; i++) {
+    //   var newarray = [{
+    //     stu_id: that.data.students_unsigned[i].stu_id,
+    //     status: that.data.students_unsigned[i].status
+    //   }];
+    //   this.setData({
+    //     'submit': this.data.submit.concat(newarray)
+    //   });
+    // }
+    // var submit = JSON.stringify(that.data.submit)
+    // var params = {
+    //   "token": wx.getStorageSync("token"),
+    //   "sid": that.data.sid,
+    //   "data": submit
+    // }
+    
+    // console.log(params)
+    // app.ljjw.jwSaveStudentSignIn(params).then(d => {
+    //   console.log(d)
+    //   console.log("请求执行")
+    //   if (d.data.status == 1) {
+    //     wx.showToast({
+    //       title: '提交成功',
+    //       duration:1500
+    //     })
+        
+    //     console.log("点名返回键,保存成功")
+
+    //   }
+    //   else{
+    //     wx.showToast({
+    //       title: d.data.msg,
+    //       icon:"none",
+    //       duration:2000
+    //     })
+    //   }
+    // })
   },
 
   /**
@@ -260,5 +288,57 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 设置自定义导航栏尺寸
+  */
+  setUpNaviSize: function () {
+    var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let naviBarHeight = menuButtonRect.bottom+10
+    let naviBarWidth = wx.getSystemInfoSync().screenWidth
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarWidth: naviBarWidth,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top
+    })
+  },
+
+  /**
+   * 提交数据
+  */
+  submitData: function(cb) {
+    let that = this
+    console.log("hh")
+    
+
+    for (var i = 0; i < that.data.students_unsigned.length; i++) {
+      var newarray = [{
+        stu_id: that.data.students_unsigned[i].stu_id,
+        status: that.data.students_unsigned[i].status
+      }];
+      this.setData({
+        'submit': this.data.submit.concat(newarray)
+      });
+    }
+    var submit = JSON.stringify(that.data.submit)
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "sid": that.data.sid,
+      "data": submit
+    }
+
+    // console.log(params)
+    app.ljjw.jwSaveStudentSignIn(params).then(d => {
+      // console.log(d)
+      // console.log("请求执行")
+      if (d.data.status == 1) {
+        typeof cb == "function" && cb(true, "提交成功")
+      }
+      else{
+        typeof cb == "function" && cb(false, d.data.msg)
+      }
+    })
   }
 })

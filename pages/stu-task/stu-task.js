@@ -150,6 +150,9 @@ Page({
               for (var n = 0; n < item.title.length; n++) {
                 var taskDetail = item.task_detail[n]
                 taskDetail.title = item.title[n]
+                if (item.title.length > 1) {
+                  taskDetail.title = (n+1)+". "+taskDetail.title
+                }
               }
   
               for (var j = 0; j < item.task_detail.length; j++) {
@@ -158,7 +161,11 @@ Page({
                   taskDetail.child_title = taskDetail.child_title.split(",")
   
                   for (var n = 0; n < taskDetail.child_title.length; n++) {
-                    taskDetail.options[n].title = taskDetail.child_title[n]
+                    var subtitle = taskDetail.child_title[n]
+                    if (taskDetail.child_title.length > 1) {
+                      subtitle = "("+(n+1)+") "+subtitle
+                    }
+                    taskDetail.options[n].title = subtitle
                   }
   
                 }

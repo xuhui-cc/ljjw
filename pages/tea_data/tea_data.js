@@ -136,34 +136,57 @@ Page({
       that.previewImage()
       console.log("图")
     } else {
-    wx.downloadFile({
-      url: that.data.files[file_xb].fileurl, //仅为示例，并非真实的资源
-      success(res) {
-        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-        
+      let timestamp = Date.parse(new Date()); 
+      let fileTypeArray = that.data.files[file_xb].fileurl.split(".")
+      let fileType = fileTypeArray[fileTypeArray.length-1]
+      let customFilePath = wx.env.USER_DATA_PATH+"/"+timestamp+"."+fileType
+      console.log('得到自定义路径：')
+      console.log(customFilePath)
+      wx.showLoading({
+        title: '资料打开中...',
+      })
+      wx.downloadFile({
+        url: that.data.files[file_xb].fileurl, //仅为示例，并非真实的资源
+        filePath: customFilePath,
+        success(res) {
+          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
 
-        var filePath = res.tempFilePath
-        console.log(filePath)
-        wx.showLoading({
-          title: '资料打开中...',
-        })
+          var filePath = res.filePath
+          console.log(filePath)
 
-        wx.openDocument({
+          wx.openDocument({
+            showMenu: true,
+            filePath: filePath,
 
-          filePath: filePath,
-
-          success: function (res) {
-
-            console.log('打开文档成功')
-            wx.hideLoading()
-
-          }
-
-        })
-      }
-      
-
-    })
+            success: function (res) {
+              wx.hideLoading({
+                complete: (res) => {},
+              })
+              console.log('打开文档成功')
+            },
+            fail: function(res) {
+              wx.hideLoading({
+                complete: (res) => {
+                  wx.showToast({
+                    title: '文件打开失败',
+                    icon: 'none'
+                  })
+                },
+              })
+            }
+          })
+        },
+        fail: function(res) {
+          wx.hideLoading({
+            complete: (res) => {
+              wx.showToast({
+                title: '文件下载失败',
+                icon: 'none'
+              })
+            },
+          })
+        }
+      })
     }
   },
 

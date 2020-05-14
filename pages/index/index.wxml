@@ -148,7 +148,7 @@
               <!-- 完整的当月数据 -->
               <view class="calendar-month" wx:if="{{!calendarfold}}">
                 <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                  <view catchtap="{{item[1] == 'true'?'clickDay':''}}" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
                     <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" >{{item[0]}}</view>
                     <view wx:elif="{{item[1] == 'true'}}">
                       <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
@@ -408,7 +408,7 @@
               <!-- 完整的当月数据 -->
               <view class="calendar-month" wx:if="{{!calendarfold}}">
                 <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                  <view catchtap="clickDay" data-day="{{item[0]}}"  class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
+                  <view catchtap="{{item[1] == 'true'?'clickDay':''}}" data-day="{{item[0]}}"  class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
                     <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle">{{item[0]}}</view>
                     <view wx:elif="{{item[1] == 'true'}}" class="day">{{item[0]}}</view>
                     <view wx:else="{{item[1] == 'false'}}" class="day1">{{item[0]}}</view>

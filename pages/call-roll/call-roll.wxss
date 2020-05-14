@@ -10,9 +10,15 @@ page{
   display: flex;
   z-index: 100;
 }
+.navibar_content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
 .my-head{
   /* margin-left: 341rpx; */
-  margin-top: 108rpx;
+  /* margin-top: 108rpx; */
   width:530rpx;
   height:48rpx;
   font-size:34rpx;
@@ -24,17 +30,20 @@ page{
   opacity:1;
 }
 .back-img{
-  margin-top: 25rpx;
+  /* margin-top: 25rpx; */
   width: 27rpx;
   height: 27rpx;
+  margin-left: 30rpx;
 }
 .backimg_layout{
-  margin-left: 30rpx;
-  margin-top: 95rpx;
+  /* margin-left: 30rpx; */
+  /* margin-top: 95rpx; */
   /* margin-right: 25rpx; */
-  width: 100rpx;
+  width: 90rpx;
   height: 80rpx;
   /* background: rgba(39,39,39,1); */
+  display: flex;
+  align-items: center;
 }
 .mask{
   position: absolute;

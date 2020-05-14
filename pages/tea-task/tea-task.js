@@ -32,34 +32,82 @@ Page({
     app.ljjw.jwTeacherTasks(params).then(d => {
       // console.log(d)
       if (d.data.status == 1) {
-        console.log(d.data.data)
-        that.setData({
-          task: d.data.data
-        })
-        for(var i=0;i<that.data.task.length;i++){
-          var cs1 = "task[" + i + "].finished_students"
-          var cs2 = "task[" + i + "].notfinished_students"
-          var cs3 = "task[" + i + "].fold"
-          if (that.data.task[i].type == 1){
-            if (that.data.task[i].attach != '') {
-              var cs4 = "task[" + i + "].attach"
-              that.setData({
-                [cs4]: that.data.task[i].attach.split(",")
-              })
+        // console.log(d.data.data)
+
+        var data = d.data.data
+
+        for(var i=0;i<data.length;i++){
+          var task = data[i]
+
+          task.finished_students = task.finished_students.join("、")
+          task.notfinished_students = task.notfinished_students.join("、")
+          task.fold = false
+
+          if (task.type == 1){
+            // 普通任务
+            if (task.attach != '') {
+              task.attach = task.attach.split(",")
             } else {
-              var cs4 = "task[" + i + "].attach"
-              that.setData({
-                [cs4]: []
-              })
+              task.attach = []
             }
             
+          } else if (task.type == 2) {
+            // 选项任务
+
+            var titles = []
+            if (task.title && task.title != '') {
+              titles = task.title.split(",")
+            }
+
+            for (var j= 0; j < task.task_detail.length; j++) {
+              var taskDetail = task.task_detail[j]
+              
+              // 标题
+              if (titles.length > j) {
+                var title = titles[j]
+                if (titles.length > 1) {
+                  title = (j+1)+". "+title
+                }
+                taskDetail.title = title
+              }
+
+              var childTitles = []
+              if (taskDetail.child_title && taskDetail.child_title != '') {
+                childTitles = taskDetail.child_title.split(",")
+              }
+              
+              for (var k = 0; k < taskDetail.options.length; k++) {
+                var option = taskDetail.options[k]
+
+                // 子标题
+                if (childTitles.length > k) {
+                  var subtitle = childTitles[k]
+                  if (childTitles.length > 1) {
+                    subtitle = "("+(k+1)+") "+subtitle
+                  }
+                  option.title = subtitle
+                }
+                
+                // 选项
+                var values = Object.values(option.lists)
+                var list = []
+                for (var w=0; w < values.length; w++) {
+                  var value = {
+                    index: String.fromCharCode(65 + w),
+                    value: values[w]
+                  }
+                  list.push(value)
+                }
+                option.list = list
+              }
+            }
           }
-          that.setData({
-            [cs1]: that.data.task[i].finished_students.join("、"),
-            [cs2]: that.data.task[i].notfinished_students.join("、"),
-            [cs3]:false
-          })
+          
         }
+
+        that.setData({
+          task: data
+        })
         console.log("老师任务获取成功")
       }
 
@@ -84,15 +132,11 @@ Page({
   fold:function(e){
     let that = this
     var xb = e.currentTarget.dataset.xb
-    console.log(xb)
-    for(var i=0;i<that.data.task.length;i++){
-      if(i == xb){
-        var cs = "task[" + i + "].fold"
-        that.setData({
-          [cs]:!that.data.task[i].fold
-        })
-      }
-    }
+    var task = that.data.task[xb]
+    var cs = "task[" + xb + "].fold"
+    that.setData({
+      [cs]:!task.fold
+    })
   },
 
   /**
