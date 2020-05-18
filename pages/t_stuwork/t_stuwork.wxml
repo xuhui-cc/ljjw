@@ -2,16 +2,20 @@
 
 
     <!-- 导航栏 -->
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="go_back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
-    </view>
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px">
+    <view class="navibar_content" style="height:{{naviBarSelectSub_Height}}px; margin-top:{{naviBarSelectSub_Top}}px">
+      <view class="backimg_layout" bindtap="go_back">
+        <image class='back-img' src='../../images/back_img.png' ></image>
+      </view>
       <view class="bar-class">{{classname}}</view>
+    </view>
+    
   </view>
   <!-- 导航栏结束 -->
 
     <view class="mask" wx:if="{{stu_detail}}"></view>
-    <view class="stu_num">班级共{{stu_totle}}人</view>
+    <view class="bottom_button" style="height:{{bottomButton_Height}}px" bindtap="copyInfoButtonClcked">复制信息</view>
+    <view class="stu_num" style="margin-top:{{naviBarHeight}}px">班级共{{stu_totle}}人</view>
     <view class="stu-work-layout">
       <view class="stu-suit" wx:if="{{normal}}">
         <view class="stu-suit-shu"></view>
@@ -58,7 +62,7 @@
         <view class="stu-suit-head">旷课({{cutschool_num}}人)：</view>
       </view>
       <view class="stu-suit" wx:if="{{cutschool}}">
-        <view wx:for="{{cutschool}}" wx:key="cutschool_index">
+        <view wx:for="{{cutschool}}" wx:key="index">
           <view class="stu-info-layout" >
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="stu-name">{{item.realname}}</view>

@@ -10,31 +10,60 @@ page{
   display: flex;
   z-index: 100;
 }
+
+.navibar_content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .back-img{
-  margin-top: 25rpx;
+  /* margin-top: 25rpx; */
   width: 27rpx;
   height: 27rpx;
+  margin-left: 25rpx;
 }
 .backimg_layout{
-  margin-left: 30rpx;
-  margin-top: 95rpx;
+  /* margin-left: 30rpx; */
+  /* margin-top: 95rpx; */
   /* margin-right: 25rpx; */
   width: 100rpx;
   height: 80rpx;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
   /* background: rgba(39,39,39,1); */
 }
 .bar-class{
-  margin-left: 30rpx;
-  margin-top: 108rpx;
-  width:340rpx;
+  /* margin-left: 30rpx; */
+  /* margin-top: 108rpx; */
+  max-width:400rpx;
   height:48rpx;
   font-size:34rpx;
-  font-family:PingFang SC;
+  /* font-family:PingFang SC; */
   font-weight:bold;
   line-height:48rpx;
   text-align: left;
   color:rgba(255,255,255,1);
   opacity:1;
+}
+
+.bottom_button {
+  position: fixed;
+  bottom: 0;
+  height: 80rpx;
+  background:rgba(45,193,160,1);
+  color: white;
+  font-size: 35rpx;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  padding-top: 30rpx;
+}
+
+.bottom_button:active {
+  opacity: 0.6;
 }
 
 .mask{
@@ -48,7 +77,7 @@ page{
 .stu_num{
   margin-top: 176rpx;
   padding-left: 30rpx;
-  width:750rpx;
+  /* width:750rpx; */
   height:76rpx;
   font-size:28rpx;
   font-family:PingFang SC;

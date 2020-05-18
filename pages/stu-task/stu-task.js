@@ -301,9 +301,9 @@ Page({
       "page": that.pageData.page,
       "limit": that.pageData.perpage,
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwStudentTaskFinished(params).then(d => {
-      console.log(d)
+      // console.log(d)
       let status = d.data.status
 
       if (status == 1) {
@@ -369,7 +369,8 @@ Page({
                     option.imgs = []
                     option.list = arr
                   }
-                  if (taskDetail.finished_info.attach[k] != ""){
+                  if (taskDetail.finished_info.attach && taskDetail.finished_info.attach != '' && taskDetail.finished_info.attach.length > k && taskDetail.finished_info.attach[k] != ""){
+
                     option.imgs = taskDetail.finished_info.attach[k].split(",")
                     console.log(option.imgs)
                   }

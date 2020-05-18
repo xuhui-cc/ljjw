@@ -442,6 +442,9 @@ Page({
     
   },
 
+  /**
+   * 教务/管理员 请假申请 审核通过
+  */
   hm_pass:function(e){
     let that = this
     that.setData({
@@ -730,111 +733,112 @@ Page({
         if (d.data.status == 1) {
           console.log("或教务")
           console.log(d.data.data)
-          that.setData({
-            tea_dayCourse: d.data.data.course_list,
-            tea_courselist: d.data.data.day_list
-          })
-          if(that.data.tea_courselist == ''){
+         
+          if(d.data.data.day_list == ''){
             wx.showToast({
               title: '上个月还没有安排哦~',
               icon: "none",
               duration: 1200
             })
-            var params = {
-              "token": wx.getStorageSync("token"),
-              "uid": wx.getStorageSync("uid"),
-              "riqi": that.data.nowDate
-            }
-            console.log(params)
-            that.setData({
-              class_ids: wx.getStorageSync("class_ids"),
-            })
-            console.log(that.data.class_ids)
-            console.log("that.data.class_ids")
-            app.ljjw.jwGetCheckOnList(params).then(d => {
-              // console.log(d.data.status)
-              if (d.data.status == 1) {
-                console.log("或教务")
-                console.log(d.data.data)
-                that.setData({
-                  tea_dayCourse: d.data.data.course_list,
-                  tea_courselist: d.data.data.day_list
-                })
+            // var params = {
+            //   "token": wx.getStorageSync("token"),
+            //   "uid": wx.getStorageSync("uid"),
+            //   "riqi": that.data.nowDate
+            // }
+            // console.log(params)
+            // that.setData({
+            //   class_ids: wx.getStorageSync("class_ids"),
+            // })
+            // console.log(that.data.class_ids)
+            // console.log("that.data.class_ids")
+            // app.ljjw.jwGetCheckOnList(params).then(d => {
+            //   // console.log(d.data.status)
+            //   if (d.data.status == 1) {
+            //     console.log("或教务")
+            //     console.log(d.data.data)
+            //     that.setData({
+            //       tea_dayCourse: d.data.data.course_list,
+            //       tea_courselist: d.data.data.day_list
+            //     })
                 
-                for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-                  //关联班级点名判断
-                  for (var rc = 0; rc < that.data.class_ids.length; rc++) {
-                    if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
-                      var csrc = "tea_dayCourse[" + i + "].rc"
-                      that.setData({
-                        [csrc]: true
-                      })
-                    }
-                  }
-                  console.log(that.data.tea_dayCourse)
-                  console.log("that.data.tea_dayCourse.rc")
+            //     for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
+            //       //关联班级点名判断
+            //       for (var rc = 0; rc < that.data.class_ids.length; rc++) {
+            //         if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
+            //           var csrc = "tea_dayCourse[" + i + "].rc"
+            //           that.setData({
+            //             [csrc]: true
+            //           })
+            //         }
+            //       }
+            //       console.log(that.data.tea_dayCourse)
+            //       console.log("that.data.tea_dayCourse.rc")
 
-                  var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-                  var end = that.data.tea_dayCourse[i].riqi + " " + end1
-                  console.log(end + "=============end")
-                  var iphone1 = end.substr(0, 4)
-                  var iphone2 = end.substr(5, 2)
-                  var iphone3 = end.substr(8, 2)
-                  var iphone4 = end.substr(11, 5)
-                  console.log(iphone1 + "=============iphone1")
-                  console.log(iphone2 + "=============iphone2")
-                  console.log(iphone3 + "=============iphone3")
-                  console.log(iphone4 + "=============iphone4")
-                  var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-                  var aa = Date.parse(end)
-                  var bb = Date.parse(iphone_cs)
-                  console.log(bb + "++++++==========bb")
+            //       var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
+            //       var end = that.data.tea_dayCourse[i].riqi + " " + end1
+            //       console.log(end + "=============end")
+            //       var iphone1 = end.substr(0, 4)
+            //       var iphone2 = end.substr(5, 2)
+            //       var iphone3 = end.substr(8, 2)
+            //       var iphone4 = end.substr(11, 5)
+            //       console.log(iphone1 + "=============iphone1")
+            //       console.log(iphone2 + "=============iphone2")
+            //       console.log(iphone3 + "=============iphone3")
+            //       console.log(iphone4 + "=============iphone4")
+            //       var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
+            //       var aa = Date.parse(end)
+            //       var bb = Date.parse(iphone_cs)
+            //       console.log(bb + "++++++==========bb")
 
-                  var timestamp = Date.parse(new Date());
-                  console.log(aa + "=================aa")
-                  console.log(timestamp + "=======================now")
-                  if (bb < timestamp) {
-                    var comp = "tea_dayCourse[" + i + "].comp"
-                    that.setData({
-                      [comp]: false
-                    })
-                  }
-                  else {
-                    var comp = "tea_dayCourse[" + i + "].comp"
-                    that.setData({
-                      [comp]: true
-                    })
-                  }
+            //       var timestamp = Date.parse(new Date());
+            //       console.log(aa + "=================aa")
+            //       console.log(timestamp + "=======================now")
+            //       if (bb < timestamp) {
+            //         var comp = "tea_dayCourse[" + i + "].comp"
+            //         that.setData({
+            //           [comp]: false
+            //         })
+            //       }
+            //       else {
+            //         var comp = "tea_dayCourse[" + i + "].comp"
+            //         that.setData({
+            //           [comp]: true
+            //         })
+            //       }
 
-                }
+            //     }
 
-                console.log(that.data.tea_dayCourse)
+            //     console.log(that.data.tea_dayCourse)
 
-                for (var i = 0; i < that.data.tea_courselist.length; i++) {
-                  var newarray = [{
-                    ym: that.data.tea_courselist[i].riqi.substr(0, 7),
-                    d: that.data.tea_courselist[i].riqi.substr(8, 2)
-                  }];
-                  that.setData({
-                    'dot_riqi': that.data.dot_riqi.concat(newarray)
-                  });
+            //     for (var i = 0; i < that.data.tea_courselist.length; i++) {
+            //       var newarray = [{
+            //         ym: that.data.tea_courselist[i].riqi.substr(0, 7),
+            //         d: that.data.tea_courselist[i].riqi.substr(8, 2)
+            //       }];
+            //       that.setData({
+            //         'dot_riqi': that.data.dot_riqi.concat(newarray)
+            //       });
 
-                }
-                console.log(that.data.dot_riqi)
+            //     }
+            //     console.log(that.data.dot_riqi)
 
-                // 日历点点
-                that.dot()
-
-
+            //     // 日历点点
+            //     that.dot()
 
 
 
-                // console.log(that.data.tea_dayCourse)
-              }
-            })
+
+
+            //     // console.log(that.data.tea_dayCourse)
+            //   }
+            // })
 
           }else{
 
+            that.setData({
+              tea_dayCourse: d.data.data.course_list,
+              tea_courselist: d.data.data.day_list
+            })
          
             that.setData({
               showYear: showYear,
@@ -1132,11 +1136,12 @@ Page({
         if (d.data.status == 1) {
           console.log("或教务")
           console.log(d.data.data)
-          that.setData({
-            tea_dayCourse: d.data.data.course_list,
-            tea_courselist: d.data.data.day_list
-          })
-          if (that.data.tea_courselist != ''){
+          
+          if (d.data.data.day_list != ''){
+            that.setData({
+              tea_dayCourse: d.data.data.course_list,
+              tea_courselist: d.data.data.day_list
+            })
             that.setData({
               showYear: showYear,
               showMonth: showMonth,
@@ -2199,6 +2204,12 @@ Page({
     this.initUserInfoData()
 
     // 加载数据
+    // var riqi = ""
+    // if (that.data.clickDate) {
+    //   riqi = that.data.clickDate
+    // } else {
+    //   riqi = that.data.nowDate
+    // }
     that.loadData(that.data.type, that.data.nowDate)
   },
 
@@ -2263,51 +2274,55 @@ Page({
     }
     console.log(that.data.stu_sta + "that.data.stu_sta")
     console.log("onload")
-    //获取当前年份和月份
-    let nowTime = new Date();
-    let nowYear = nowTime.getFullYear();
-    let nowMonth = nowTime.getMonth();
-    let nowDay = nowTime.getDate();
-    that.getMonthData(nowYear, nowMonth + 1);
-    that.setData({
-      showYear: nowYear,
-      showMonth: nowMonth + 1,
-      showDay: nowDay,
-      nowYear,
-      nowMonth: nowMonth + 1,
-      nowDay,
-      clickYear: nowYear,
-      clickMonth: nowMonth + 1,
-      clickDay: nowDay,
-      // show_month: nowMonth + 1
-    })
-    var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) 
-    var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
-    var nowmonth = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth)
-    that.setData({
-      nowDate: nowDate,
-      nowmonth: nowmonth,
-      showym: showym
-    })
+    
+    // if (!that.data.showYear) {
+      //获取当前年份和月份
+      let nowTime = new Date();
+      let nowYear = nowTime.getFullYear();
+      let nowMonth = nowTime.getMonth();
+      let nowDay = nowTime.getDate();
+      that.getMonthData(nowYear, nowMonth + 1);
+      that.setData({
+        showYear: nowYear,
+        showMonth: nowMonth + 1,
+        showDay: nowDay,
+        nowYear,
+        nowMonth: nowMonth + 1,
+        nowDay,
+        clickYear: nowYear,
+        clickMonth: nowMonth + 1,
+        clickDay: nowDay,
+        // show_month: nowMonth + 1
+      })
+      var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) 
+      var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
+      var nowmonth = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth)
+      that.setData({
+        nowDate: nowDate,
+        nowmonth: nowmonth,
+        showym: showym
+      })
 
 
-    for (var i = 0; i < that.data.nowWeekData.length;i++){
-      var nowWeekDataItem = that.data.nowWeekData[i]
-      nowWeekDataItem[2] = false
-      nowWeekDataItem[3] = 0
-    }
-    for (var i = 0; i < that.data.weekData.length; i++) {
-      var weekDataItem = that.data.weekData[i]
-      for (var j = 0; j < weekDataItem.length;j++){
-        var weekDataItem_item = weekDataItem[j]
-        weekDataItem_item[2] = false
-        weekDataItem_item[3] = 0
+      for (var i = 0; i < that.data.nowWeekData.length;i++){
+        var nowWeekDataItem = that.data.nowWeekData[i]
+        nowWeekDataItem[2] = false
+        nowWeekDataItem[3] = 0
       }
-    }
-    that.setData({
-      weekData: that.data.weekData,
-      nowWeekData: that.data.nowWeekData
-    })
+      for (var i = 0; i < that.data.weekData.length; i++) {
+        var weekDataItem = that.data.weekData[i]
+        for (var j = 0; j < weekDataItem.length;j++){
+          var weekDataItem_item = weekDataItem[j]
+          weekDataItem_item[2] = false
+          weekDataItem_item[3] = 0
+        }
+      }
+      that.setData({
+        weekData: that.data.weekData,
+        nowWeekData: that.data.nowWeekData
+      })
+    // }
+    
   },
     
   /**
@@ -2606,10 +2621,10 @@ Page({
           // console.log(aa + "=================aa")
           // console.log(timestamp + "=======================now")
           if (bb < timestamp) {
-            tea_dayCourse.comp = false
+            tea_dayCourse[i].comp = false
           }
           else {
-            tea_dayCourse.comp = true
+            tea_dayCourse[i].comp = true
           }
 
         }
