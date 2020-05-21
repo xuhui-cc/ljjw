@@ -1,10 +1,10 @@
 //app.js
 const ljjw = require('./utils/ljjw.js')
-
+const util = require('./utils/util.js')
 App({
 
   ljjw: ljjw,
-
+  util: util,
   onLaunch: function () {
     // 展示本地存储能力
 

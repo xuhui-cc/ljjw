@@ -38,68 +38,7 @@
       <!-- 课表页 -->
       <view  wx:if="{{type == 2}}">
         <!-- 课表日历 -->
-        <view class="rili" >
-          <!-- 年月显示切换 -->
-            <view class="date-layout" style="margin-top:{{naviBarHeight + (10/750 * naviBarWidth)}}px">
-              <text class="year">2020年</text>
-              <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
-                <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-              </view>
-              <text class="month">{{showMonth}}月</text>
-              <view style="width: 50rpx;height: 60rpx;margin-top: 10rpx;margin-left: 10rpx;">
-                <image class="next-month" src="../../images/next_sj.png" bindtap="next"></image>
-              </view>
-            </view>
-            <view class="heng1"></view>
-            <!-- 课表日历 -->
-            <view class="calendar">
-              <view class="calendar-header">
-                <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}" >
-                  <text class="ch-item-text">{{item}}</text>
-                </view>
-              </view>
-              <!-- 完整的当月数据 -->
-              <view class="calendar-month" wx:if="{{!calendarfold}}">
-                <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                  <view catchtap="{{item[1] == 'true'? 'clickDay' : ''}}"  data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" >{{item[0]}}</view>
-                    <view wx:elif="{{item[1] == 'true'}}">
-                      <!-- <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
-                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view> -->
-                      <view class="day">{{item[0]}}</view>
-                    
-                    </view>
-                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
-                  
-                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                    <view wx:if="{{item[2]}}" class="dot" ></view>
-                    <view wx:else="" class="dot1" ></view>
-                  </view>
-                </view>
-              </view>
-              <!-- 本周数据 -->
-              <view class="calendar-month-week" wx:else>
-                  <view catchtap="{{item[1] == 'true'? 'clickDay' : ''}}" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" >{{item[0]}}</view>
-                    <view wx:elif="{{item[1] == 'true'}}">
-                      <!-- <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
-                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view> -->
-                      <view class="day">{{item[0]}}</view>
-                    </view>
-                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
-                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
-                    <view wx:if="{{item[2]}}" class="dot" ></view>
-                    <view wx:else="" class="dot1" ></view>
-                  </view>
-                </view>
-            </view>
-            
-            <view class="xl_layout">
-              <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
-            </view>
-              
-
-        </view>
+        <calendar bind:dayClicked="dayClicked" bind:datePeriodChange="datePeriodChange" top="{{naviBarHeight + (10/750 * naviBarWidth)}}px" dots="{{dots}}"></calendar>
         <!-- 日历结束 -->
         <!-- 选择日期的课表 -->
         <view wx:if="{{dayCourse != ''}}" class="cs_layout">
@@ -125,69 +64,9 @@
       <!-- 考勤页 -->
       <view  wx:if="{{type == 3}}">
         <!-- 考勤日历 -->
-        <view class="rili" >
-          <!-- 年月显示切换 -->
-            <view class="date-layout" style="margin-top:{{naviBarHeight + (10/750 * naviBarWidth)}}px">
-              <text class="year">2020年</text>
-              <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
-                <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-              </view>
-              <text class="month">{{showMonth}}月</text>
-              <view style="width: 50rpx;height: 60rpx;margin-top: 10rpx;margin-left: 10rpx;">
-                <image class="next-month" src="../../images/next_sj.png" bindtap="next"></image>
-              </view>
-            </view>
-            <view class="heng1"></view>
-            <!-- 课表日历 -->
-            <view class="calendar">
-              <view class="calendar-header">
-                <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
-                  <text class="ch-item-text">{{item}}</text>
-                </view>
-              </view>
-              <!-- 完整的当月数据 -->
-              <view class="calendar-month" wx:if="{{!calendarfold}}">
-                <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                  <view catchtap="{{item[1] == 'true'?'clickDay':''}}" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle" >{{item[0]}}</view>
-                    <view wx:elif="{{item[1] == 'true'}}">
-                      <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
-                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    
-                    </view>
-                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
-                    <!-- <view> -->
-                      <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                    <!-- </view> -->
-                    
-                    <view wx:if="{{item[2] == 1}}" class="dot" ></view>
-                    <view wx:if="{{item[2] == 2}}" class="dot2" ></view>
-                    <view wx:if="{{item[2] == 0}}" class="dot1" ></view>
-                  </view>
-                </view>
-              </view>
-              <!-- 本周数据 -->
-              <view class="calendar-month-week" wx:else>
-                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle" >{{item[0]}}</view>
-                    <view wx:elif="{{item[1] == 'true'}}">
-                      <view wx:if="{{item[3] < 0}}" class="day" >{{item[0]}}</view>
-                      <view wx:else="" class="day"  style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}">{{item[0]}}</view>
-                    </view>
-                    <view wx:else="{{item[1] == 'false'}}" class="day1" >{{item[0]}}</view>
-                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png" style="{{item[3]%2 == 1?'background:rgba(242,250,255,1);':'background:rgba(255,247,242,1);'}}"></image>
-                    <view wx:if="{{item[2] == 1}}" class="dot" ></view>
-                    <view wx:if="{{item[2] == 2}}" class="dot2" ></view>
-                    <view wx:if="{{item[2] == 0}}" class="dot1" ></view>
-                  </view>
-                </view>
-            </view>
-            <view class="xl_layout">
-              <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
-            </view>
-        </view>
+        <calendar bind:dayClicked="dayClicked" bind:datePeriodChange="datePeriodChange" top="{{naviBarHeight + (10/750 * naviBarWidth)}}px" dots="{{dots}}" colors="{{calendarColors}}"></calendar>
       
-        <view class="stu-class">{{dayCheckon[0].classname}}</view>
+        <!-- <view class="stu-class">{{dayCheckon[0].classname}}</view> -->
 
         <!-- 选择日期考情表 -->
         <view class="cs_layout">
@@ -385,62 +264,14 @@
       <view wx:if="{{type == 2 || type == 3}}">
         <!-- <view wx:if="{{type != 1}}"> -->
         <!-- 课表日历 -->
-        <view class="rili">
-          <!-- 年月显示切换 -->
-            <view class="date-layout" style="margin-top:{{naviBarHeight + (10/750 * naviBarWidth)}}px">
-              <text class="year">2020年</text>
-              <view style="width: 50rpx;height: 60rpx;margin-left: 420rpx;margin-top: 10rpx;">
-                <image class="last-month" src="../../images/last.png" bindtap="last"></image>
-              </view>
-              <text class="month">{{showMonth}}月</text>
-              <view style="width: 50rpx;height: 60rpx;margin-top: 10rpx;margin-left: 10rpx;">
-                <image class="next-month" src="../../images/next_sj.png" bindtap="next"></image>
-              </view>
-            </view>
-            <view class="heng1"></view>
-            <!-- 课表日历 -->
-            <view class="calendar">
-              <view class="calendar-header">
-                <view class="ch-week" wx:for="{{week}}" wx:key="{{index}}">
-                  <text class="ch-item-text">{{item}}</text>
-                </view>
-              </view>
-              <!-- 完整的当月数据 -->
-              <view class="calendar-month" wx:if="{{!calendarfold}}">
-                <view class="calendar-month-week" wx:for="{{weekData}}" wx:for-index="weekIndex" wx:for-item="weekItem" wx:key="{{weekIndex}}">
-                  <view catchtap="{{item[1] == 'true'?'clickDay':''}}" data-day="{{item[0]}}"  class="cm-week-day" wx:for="{{weekItem}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0] && item[1] == 'true'}}"  class="cm-week-day-circle">{{item[0]}}</view>
-                    <view wx:elif="{{item[1] == 'true'}}" class="day">{{item[0]}}</view>
-                    <view wx:else="{{item[1] == 'false'}}" class="day1">{{item[0]}}</view>
-                  
-                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0] && item[1] == 'true'}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                    <view wx:if="{{item[2]}}" class="dot" ></view>
-                    <view wx:else="" class="dot1" ></view>
-                  </view>
-                </view>
-              </view>
-              <!-- 本周数据 -->
-              <view class="calendar-month-week" wx:else>
-                  <view catchtap="clickDay" data-day="{{item[0]}}" class="cm-week-day" wx:for="{{nowWeekData}}" wx:key="{{index}}">
-                    <view wx:if="{{clickYear == showYear && clickMonth == showMonth && clickDay == item[0]}}"  class="cm-week-day-circle">{{item[0]}}</view>
-                    <text wx:else class="day" >{{item[0]}}</text>
-                    <image wx:if="{{nowYear == showYear && nowMonth == showMonth && nowDay == item[0]}}" class="today" hidden="{{item[0] != nowDay}}"src="../../images/jin.png"></image>
-                    <view wx:if="{{item[2]}}" class="dot" ></view>
-                    <view wx:else="" class="dot1" ></view>
-                  </view>
-                </view>
-            </view>
-            <view class="xl_layout">
-              <image catchtap="foldAndUnfold" src="{{calendarfold ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="xl"></image>
-            </view>
-
-        </view>
+        
         <!-- 日历结束 -->
       </view>
       <!-- 公用日历结束 -->
 
       <!-- 老师点名 -->
       <view wx:if="{{type == 2}}" class="cs_layout">
+        <calendar bind:dayClicked="dayClicked" bind:datePeriodChange="datePeriodChange" top="{{naviBarHeight + (10/750 * naviBarWidth)}}px" dots="{{dots}}"></calendar>
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
           <view  class="mask1" wx:if="{{!item.comp}}"></view>
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}" wx:if="{{role == 1}}">
@@ -504,6 +335,7 @@
 
       <!-- 老师考勤 -->
       <view wx:if="{{type == 3}}" class="cs_layout">
+        <calendar bind:dayClicked="dayClicked" bind:datePeriodChange="datePeriodChange" top="{{naviBarHeight + (10/750 * naviBarWidth)}}px" dots="{{dots}}"></calendar>
         <view wx:if="{{tea_dayCourse != ''}}" wx:for='{{tea_dayCourse}}' wx:key="{{tea_cindex}}">
           <view class="t-cour-layout" style="{{item.teacher_id == uid?'background:rgba(240,251,248,1);border:2px solid rgba(45,193,160,1);':''}}">
             <view class="t-call-lay" data-tea_index='{{index}}' bindtap="to_t_stuwork">
@@ -533,7 +365,7 @@
 
         <!-- 课表为空 -->
         <view wx:if="{{tea_dayCourse == ''}}">
-          <image class='course_null' src='../../images/course_null.png'></image>
+          <image class='course_null' src='../../images/Checkon_null.png'></image>
         </view>
         <!-- 空课表 -->
         

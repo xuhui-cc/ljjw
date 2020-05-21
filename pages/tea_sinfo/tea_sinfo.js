@@ -120,6 +120,7 @@ Page({
     that.setData({
       dataarr: dataarr
     })
+    
     for(var i=0;i<that.data.dataarr.length;i++){
       var cs = "dataarr[" + i + "].id"
       that.setData({
@@ -236,8 +237,10 @@ Page({
   scrollToViewFn: function (e) {
     var that = this;
     var _id = e.target.dataset.id;
-    for (var i = 0; i < that.data.listMain.length; ++i) {
-      if (that.data.listMain[i].id === _id) {
+    for (var i = 0; i < that.data.dataarr.length; i++) {
+      let charItem = that.data.dataarr[i]
+      
+      if (that.data.dataarr[i].id === _id) {
         that.setData({
           isActive: _id,
           toView: 'inToView' + _id

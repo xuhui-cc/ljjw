@@ -1,11 +1,13 @@
 <view class="container">
 
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px">
+    <view class="navibar_contentView" style="height:{{naviBarHeight-stateBarHeight}}px;margin-top:{{stateBarHeight}}px;">
+      <view class="backimg_layout" bindtap="back">
+        <image class='back-img' src='../../images/back_img.png' ></image>
+      </view>
+      <text class="my-head">学生档案</text> 
+      <view class="backimg_layout"></view>
     </view>
-    
-    <text class="my-head">学生档案</text> 
   </view>
 
   <view class="mask-layout" wx:if="{{add_mask}}"></view>
@@ -25,41 +27,43 @@
   </view>
 
     <!-- 成绩分类显示菜单栏 -->
-  <view class="record-bar">
+  <view class="record-bar" style="margin-top:{{naviBarHeight}}px">
     <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">学情</text>
     <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">概况</text>
     <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">成绩</text>
   </view>
   <!-- 成绩分类显示菜单栏 -->
-  <view class='interval'></view>
+  <view class='interval' style="margin-top:{{naviBarHeight+88/750*naviBarWidth}}px"></view>
 
   <!-- 学情 -->
   <view wx:if="{{aud == 0}}" class="xq">
 
     
     <picker mode='selector' bindchange="cates_picker" range-key="{{'name'}}" value="{{cates_index}}" range="{{cates}}" > 
-      <view class="flex">
+      <view class="cateView">
         <view class="kemu">{{cates[cates_index].name}}</view>
         <image class="select" src="../../images/next.png"></image>
       </view>
     </picker>
     
 
-    <view class="cont-layout" wx:if="{{studyinfo != ''}}">
-      <view wx:for="{{studyinfo}}" wx:key="studyinfo_index">
-        <view>
-          <image class="xu" src="../../images/route2.png"></image>
-          <view class="flex">
-            <image class="dot" src="../../images/gc.png"></image>
+    <view class="cont-layout" wx:if="{{studyinfo != ''}}" style="margin-top:11rpx;">
+      <block wx:for="{{studyinfo}}" wx:key="studyinfo_index">
+        <view class="condition_contentView">
+          <!-- <image class="xu" src="../../images/route2.png"></image> -->
+          <view class="dashLine" wx:if="{{index != studyinfo.length-1}}"></view>
+          <view class="dateView">
+            <!-- <image class="dot" src="../../images/gc.png"></image> -->
+            <view class="circle"></view>
             <view class="date">{{item.createtime}}</view>
           </view>
-          <view class="flex">
+          <view class="avatar_nameView">
             <image class="ava" src="{{item.avatar}}"></image>
             <view class="name">{{item.teachername}}</view>
           </view>
-          <view class="xqfx">{{item.memo}}</view>
+          <view class="xqfx">学情分析：{{item.memo}}</view>
         </view>
-      </view>
+      </block>
     
     </view>
 
@@ -75,23 +79,24 @@
 
 
   <!-- 概况 -->
-  <view wx:if="{{aud == 1}}" class="xq" >
+  <view wx:if="{{aud == 1}}" class="xq conditionBottom" >
     <view class="cont-layout" wx:if="{{condition != ''}}">
-      <view wx:for="{{condition}}" wx:key="condition_index">
-        <view>
-          <image class="xu" src="../../images/route2.png"></image>
-          <view class="flex">
-            <image class="dot" src="../../images/gc.png"></image>
+      <block wx:for="{{condition}}" wx:key="condition_index">
+        <view class="condition_contentView">
+          <!-- <image class="xu" src="../../images/route2.png"></image> -->
+          <view class="dashLine" wx:if="{{index != condition.length-1}}"></view>
+          <view class="dateView">
+            <!-- <image class="dot" src="../../images/gc.png"></image> -->
+            <view class="circle"></view>
             <view class="date">{{item.createtime}}</view>
           </view>
-          <view class="flex">
+          <view class="avatar_nameView">
             <image class="ava" src="{{item.avatar}}"></image>
             <view class="name">{{item.teachername}}老师</view>
           </view>
-          <view class="xqfx">{{item.memo}}</view>
+          <view class="xqfx">学生概况：{{item.memo}}</view>
         </view>
-      </view>
-    
+      </block>
     </view>
 
     <image wx:else="" class='null_img' src='../../images/rec_null.png'></image>

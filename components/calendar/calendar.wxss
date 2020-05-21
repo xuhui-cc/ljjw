@@ -1,0 +1,166 @@
+/* component/calendar/calendar.wxss */
+/**index.wxss**/
+.month_view {
+  margin-top: 0rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 78.5rpx;
+  position: relative;
+}
+
+.year {
+  margin-left: 30rpx;
+  max-width: 150rpx;
+  font-size: 32rpx;
+  color: #272727;
+}
+
+.month {
+  margin-right: 46rpx;
+  width: 90rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: #272727;
+}
+
+.last_month_arrow {
+  position: absolute;
+  height: 78.5rpx;
+  right: 80rpx;
+  /* top: 10; */
+  width: 80rpx;
+  display: flex;
+  align-items: center;
+  padding-left: 30rpx;
+  justify-content: flex-start;
+}
+
+.last_month_arrow:active {
+  opacity: 0.6;
+}
+
+.next_month_arrow {
+  position: absolute;
+  height: 78.5rpx;
+  right: 0rpx;
+  /* top: 10; */
+  width: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 30rpx;
+}
+
+.next_month_arrow:active {
+  opacity: 0.6;
+}
+
+.month_arrow_image {
+  width: 16rpx;
+  height: 16rpx;
+}
+
+.monthView_bottomLine {
+  position: absolute;
+  top: 78rpx;
+  left: 0;
+  right: 0;
+  height: 0.5rpx;
+  background-color: #f1f1f1;
+  z-index: 2;
+}
+
+.weekDay_title {
+  background-color: white;
+  height: 82rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.weekDay {
+  color: #c5c5c5;
+  font-size: 22rpx;
+  width: 107rpx;
+}
+
+.dayListView {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 750rpx;
+  /* height: 93rpx; */
+  background-color: white;
+}
+
+.dayItemView {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 107rpx;
+  height: 93rpx;
+  position: relative;
+}
+
+.day_text {
+  color: #272727;
+  font-size: 32rpx;
+  z-index: 2;
+}
+
+.day_text_cannotClick {
+  color: #c5c5c5;
+  font-size: 32rpx;
+  z-index: 2;
+}
+
+.day_text_selected {
+  color: #ff9853;
+  font-size: 32rpx;
+  z-index: 2;
+}
+
+.today {
+  width: 52rpx;
+  height: 52rpx;
+  z-index: 2;
+}
+
+.dot {
+  border-radius: 4rpx;
+  width: 8rpx;
+  height: 8rpx;
+  background-color: #46bf6a;
+  position: absolute;
+  bottom: 8rpx;
+  z-index: 2;
+}
+
+.day_bgColor {
+  background-color: #f2faff;
+  position: absolute;
+  align-items: center;
+  height: 48rpx;
+  left: 0;
+  right: 0;
+}
+
+.showCalenderView {
+  background-color: white;
+  height: 55rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.calenderShow_arrow {
+  margin-right: 30rpx;
+  margin-bottom: 22rpx;
+  width: 23rpx;
+  height: 23rpx;
+}

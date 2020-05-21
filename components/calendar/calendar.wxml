@@ -1,0 +1,60 @@
+<!--component/calendar/calendar.wxml-->
+<!-- 月份显示 -->
+<view class="month_view" style="margin-top:{{top}}">
+  <text class="year">{{showYear}}年</text>
+  <text class="month">{{showMonth}}月</text>
+  <view class="last_month_arrow" bindtap="lastArrowClicked"><image src="../../images/last.png" class="month_arrow_image"></image></view>
+  <view class="next_month_arrow" bindtap="nextArrowClicked"><image src="../../images/next_sj.png" class="month_arrow_image"></image></view>
+  <view class="monthView_bottomLine"></view>
+</view>
+
+<!-- 日显示 -->
+<swiper circular="true" style="height:{{calenderHeight}}rpx" bindchange="calenderSwiperChange">
+  <block wx:for="{{calenderDataArray}}" wx:key="index" wx:for-item="dayItemArray">
+    <swiper-item>
+      <!-- 日历显示 -->
+      <view>
+        <!-- 周标题 -->
+        <view class="weekDay_title">
+          <view wx:for="{{['周日', '周一', '周二', '周三', '周四', '周五', '周六']}}" wx:key="*this">
+            <text class="weekDay">{{item}}</text>
+          </view>
+        </view>
+        <!-- 每一天 -->
+        <view class="dayListView">
+          <block wx:for="{{dayItemArray}}" wx:key="dateStr">
+            <view class="dayItemView" bindtap="dayItemClicked" data-index="{{index}}">
+              <!-- 可点击 -->
+              <block wx:if="{{item.canClicked}}">
+                <!-- 背景色 -->
+                <view wx:if="{{item.bgColor!= 0}}" style="background-color:{{item.bgColor == 1 ? '#f2faff' : '#fff7f2'}}" class="day_bgColor"></view>
+                <!-- 今天 -->
+                <block wx:if="{{item.isToday}}">
+                  <image src="../../images/jin.png" class="today"></image>
+                </block>
+                <!-- 选中天 -->
+                <block wx:elif="{{item.selected}}">
+                  <text class="day_text_selected">{{item.day}}</text>
+                </block>
+                <!-- 其他天 -->
+                <block wx:else>
+                  <text class="day_text">{{item.day}}</text>
+                </block>
+                <!-- 打点 -->
+                <view class="dot" wx:if="{{item.dotType != 0}}" style="background-color:{{item.dotType == 1 ? '#46bf6a' : '#ff9853'}}"></view>
+              </block>
+              <!-- 不可点击 -->
+              <block wx:else>
+                <text class="day_text_cannotClick">{{item.day}}</text>
+              </block>
+            </view>
+          </block>
+        </view>
+        <!-- 展开/关闭按钮 -->
+        <view class="showCalenderView" bindtap="showClaenderButtonClicked">
+          <image src="{{dateShowType == 1 ? '../../images/xsj.png' : '../../images/ssj.png'}}" class="calenderShow_arrow"></image>
+        </view>
+      </view>
+    </swiper-item>
+  </block>
+</swiper>

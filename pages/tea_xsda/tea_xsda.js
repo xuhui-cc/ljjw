@@ -16,6 +16,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.setUpNaviSize()
+
     let that = this
     var subject = wx.getStorageSync("subject")
     that.setData({
@@ -528,5 +531,23 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /**
+   * 设置自定义导航栏尺寸
+   */
+  setUpNaviSize: function () {
+    var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let systemInfo = wx.getSystemInfoSync()
+    let naviBarHeight = menuButtonRect.bottom+10
+    let naviBarWidth = systemInfo.screenWidth
+    
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarWidth: naviBarWidth,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top,
+      stateBarHeight: systemInfo.statusBarHeight
+    })
+  },
 })

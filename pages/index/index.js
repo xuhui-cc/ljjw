@@ -5,23 +5,22 @@ const app = getApp()
 Page({
   data: {
     type: 2,  //type 1-请假，2-课表，3-考勤
-    aud: 0,
+    aud: 0, // 0-未审核 1-已审核
+
+    // 打点数据
+    dots: [],
+
+    // 考勤日历背景色数据
+    calendarColors: [],
+
+    // 选中的日期 0000-00-00
+    clickDate: null,
+
+    // 当前日期 0000-00-00
+    nowDate: null,
+
     // role: 3,    //role：4 -学生；1 -老师；2 -教务；3 -管理员
     // audoc:true,
-    week: ["周日", '周一', '周二', '周三', '周四', '周五', '周六'],
-    //当前显示的年
-    showYear: null,
-    showMonth: null,
-    showDay: null,
-    nowYear: null,
-    nowMonth: null,
-    nowDay: null,
-    //选中的日
-    clickDay: null,
-    //当前周数据
-    nowWeekData: null,
-    //日历是否折叠
-    calendarfold: true,
     dot_riqi:[],
     dot_work: [],
     lea_date_arr:[]
@@ -36,215 +35,16 @@ Page({
     
   },
 
-  cs:function(){
-    let that = this
-    // console.log(that.data.stu_classlist)
-    if (that.data.stu_classlist){
-      var class_cs = []
-      for (var i = 0; i < that.data.stu_classlist.length; i++) {
-        var stu_class = that.data.stu_classlist[i]
 
-        var start = Number(stu_class.startriqi.substr(8, 2))
-        var end = that.data.stu_classlist[i].endriqi.substr(8, 2)
-        var class_num = end - start + 1
-
-        stu_class.class_num = class_num
-        stu_class.start = start
-
-        for (var j = stu_class.start; j < (stu_class.class_num + stu_class.start);j++){
-          class_cs.push([j,i+1])
-        }
-      }
-
-      that.setData({
-        stu_classlist: that.data.stu_classlist,
-        class_cs: class_cs
-      })
-      
-      that.class_color()
-    }
-  },
-
-  dot: function () {
-    let that = this
-    console.log("------------红点日期-------------")
-    console.log(that.data.dot_riqi)
-    console.log("-----------nowWeekData----------")
-    console.log(that.data.nowWeekData)
-    console.log("-------------that.data.showym---------")
-    console.log(that.data.showym)
-    for (var q = 0; q < that.data.dot_riqi.length; q++) {
-      // console.log(that.data.dot_riqi[q])
-      var dot_riqi_item = that.data.dot_riqi[q]
-      if (dot_riqi_item.ym == that.data.showym) {
-
-        // 本周
-        var nowWeekData = that.data.nowWeekData
-        for (var w = 0; w < nowWeekData.length; w++) {
-          var nowWeekDataItem = nowWeekData[w]
-          if (dot_riqi_item.d == nowWeekDataItem[0]) {
-            // console.log(that.data.nowWeekData[w][0])
-            nowWeekDataItem[2] = true 
-          } else {
-            // console.log("本周无课")
-          }
-        }
-
-        // 本月
-        for (var w = 0; w < that.data.weekData.length; w++) {
-          var weekDataItem = that.data.weekData[w]
-          for (var e = 0; e < weekDataItem.length; e++) {
-            var weekDataItem_item = weekDataItem[e]
-            if (weekDataItem_item[1] == "true"){
-              if (dot_riqi_item.d == weekDataItem_item[0]) {
-                // console.log(that.data.weekData[w][e][0])
-                weekDataItem_item[2] = true
-
-              } else {
-                // console.log(weekDataItem_item[0] + "无课")
-              }
-            }
-          }
-        }
-      }
-    }
-
-    console.log("----------------------------------------------------------------------------------------------")
-    console.log(nowWeekData)
-    that.setData({
-      nowWeekData: that.data.nowWeekData,
-      weekData: that.data.weekData
-    })
-  },
-
-  dot_work: function () {
-    let that = this
-    
-    for (var q = 0; q < that.data.dot_work.length; q++) {
-      
-      // console.log(that.data.dot_work[q])
-      var work = that.data.dot_work[q]
-      if (work.ym == that.data.showym) {
-        // 本周
-        var nowWeekData = that.data.nowWeekData
-        for (var w = 0; w < nowWeekData.length; w++) {
-          var nowWeekDataItem = that.data.nowWeekData[w]
-          if (work.d == nowWeekDataItem[0]) {
-            // console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
-            if (work.work != 0 ){
-              nowWeekDataItem[2] = 2
-            }else{
-              nowWeekDataItem[2] = 1
-            }
-          } 
-          else if (nowWeekDataItem[2]  <1) {
-            // console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
-            nowWeekDataItem[2] = 0
-          }
-        }
-
-        // 本月
-        for (var w = 0; w < that.data.weekData.length; w++) {
-          var weekDataItem = that.data.weekData[w]
-          var nowWeekDataItem = that.data.nowWeekData[w]
-          for (var e = 0; e < weekDataItem.length; e++) {
-            var weekDataItem_item = weekDataItem[e]
-            if (weekDataItem[1] == "true") {
-              if (work.d == weekDataItem_item[0]) {
-                // console.log(that.data.weekData[w][e][0])
-                if (work.work == 0){
-                  weekDataItem_item[2] = 1
-                }else{
-                  weekDataItem_item[2] = 2
-                }
-              } else if (nowWeekDataItem[2] < 1) {
-                // console.log(that.data.dot_work[q].d, that.data.nowWeekData[w][0])
-                nowWeekDataItem[2] = 0
-              }
-            }
-          }
-        }
-      }
-    }
-
-    that.setData({
-      nowWeekData: nowWeekData,
-      weekData: that.data.weekData,
-    })
-  },
-
-  class_color: function () {
-    let that = this
-    
-    for (var q = 0; q < that.data.class_cs.length; q++) {
-      // console.log(that.data.class_cs[q])
-      var class_cs_item = that.data.class_cs[q]
-
-      // 本周
-      for (var w = 0; w < that.data.nowWeekData.length; w++) {
-        var nowWeekDataItem = that.data.nowWeekData[w]
-        if (class_cs_item[0] == nowWeekDataItem[0]) {
-          nowWeekDataItem[3] = class_cs_item[1]
-
-        } else if (!nowWeekDataItem[3]) {
-          nowWeekDataItem[3] = -1
-        }
-      }
-
-      // 本月
-      for (var w = 0; w < that.data.weekData.length; w++) {
-        var weekDataItem = that.data.weekData[w]
-        for (var e = 0; e < weekDataItem.length; e++) {
-          var weekDataItem_item = weekDataItem[e]
-          if (weekDataItem_item[1] == "true") {
-            if (class_cs_item[0] == weekDataItem_item[0]) {
-              // console.log(that.data.weekData[w][e][0]  + "===================cs")
-              weekDataItem_item[3] = class_cs_item[1]
-
-            } else if (!weekDataItem_item[3]){
-              weekDataItem_item[3] = -1
-            }
-          }
-        }
-      }
-    }
-    that.setData({
-      nowWeekData: that.data.nowWeekData,
-      weekData: that.data.weekData
-    })
-  },
-
-  
-
-  menu_select:function(e){
-    let that = this
-    var type = e.currentTarget.dataset.type
-    console.log(type)
-
-    if (type == that.data.type) {
-      return
-    }
-
-    that.setData({
-      type : type
-    })
-    var riqi = ""
-    if (that.data.clickDate) {
-      riqi = that.data.clickDate
-    } else {
-      riqi = that.data.nowDate
-    }
-
-    that.loadData(type, riqi)
-    
-  },
-
-  loadData: function(type, riqi){
+  /**
+   * 刷新数据
+   * riqi: 请求日期 0000-00-00
+  */
+  loadData: function(riqi){
     let that = this
     let role = that.data.role*1
-    console.log("-------------type:"+type+"------------riqi:"+riqi+"---------role:"+role+"-----")
 
-    switch (type*1) {
+    switch (that.data.type*1) {
       case 1: {
         // 请假
         wx.hideTabBar({
@@ -268,7 +68,7 @@ Page({
           }
           case 4: {
             // 学生
-            that.studentGetLeaveList(0)
+            that.studentGetLeaveList()
             break
           }
         }
@@ -280,35 +80,32 @@ Page({
           animation: false,
         })
 
-        switch (role) {
-          case 1: {
-            // 老师
-            that.teacherGetCheckOnList(riqi)
-            break
-          }
-          case 2: {
-            // 教务
-            that.teacherGetCheckOnList(riqi)
-            break
-          }
-          case 3: {
-            // 管理员
+        // switch (role) {
+        //   case 1: {
+        //     // 老师
+        //     that.teacherGetCheckOnList(riqi)
+        //     break
+        //   }
+        //   case 2: {
+        //     // 教务
+        //     that.teacherGetCheckOnList(riqi)
+        //     break
+        //   }
+        //   case 3: {
+        //     // 管理员
             
-            // console.log("-------------管理员加载数据---------------")
-            break
-          }
-          case 4: {
-            // 学生
+        //     // console.log("-------------管理员加载数据---------------")
+        //     break
+        //   }
+        //   case 4: {
+        //     // 学生
 
-            // 获取日课程列表
-            that.StudentGetDayCourse(riqi)
-
-            // 学生获取月课程信息
-            that.studentGetMonthCourse(that.data.nowmonth)
+        //     // 获取日课程列表
+        //     that.StudentGetDayCourse(riqi)
             
-            break
-          }
-        }
+        //     break
+        //   }
+        // }
         break
       }
         
@@ -318,47 +115,24 @@ Page({
           animation: false,
         })
 
-        switch (role) {
-          case 1:
-            // 老师
-          case 2: 
-            // 教务
-          case 3: {
-            // 管理员
-            that.teacherGetCheckOnList(riqi)
-            break
-          }
-          case 4: {
-            // 学生
-
-            var nowWeekData = that.data.nowWeekData
-            for (var i = 0; i < nowWeekData.length; i++) {
-              var week = nowWeekData[i]
-              week[2] = false
-              week[3] = 0
-            }
-
-            var weekData = that.data.weekData
-            for (var i = 0; i < weekData.length; i++) {
-              var week = weekData[i]
-              for (var j = 0; j < week.length; j++) {
-                week[j][2] = false
-                week[j][3] = 0
-              }
-            }
-
-            that.setData({
-              nowWeekData: nowWeekData,
-              weekData: weekData
-            })
-            //学生某月考勤
-            that.studentGetMonthCheckon(that.data.nowMonth)
+        // switch (role) {
+        //   case 1:
+        //     // 老师
+        //   case 2: 
+        //     // 教务
+        //   case 3: {
+        //     // 管理员
+        //     that.teacherGetCheckOnList(riqi)
+        //     break
+        //   }
+        //   case 4: {
+        //     // 学生
       
-            //学生当日考勤
-            that.StudentGetDayCheckon(riqi)
-            break
-          }
-        }
+        //     //学生当日考勤
+        //     that.StudentGetDayCheckon(riqi)
+        //     break
+        //   }
+        // }
         break
       }
     }
@@ -370,35 +144,6 @@ Page({
         type = 2
       }
       that.AskforleaveCount(type)
-    }
-  },
-
-  aud_select : function(e){
-    let that = this
-    var aud = e.currentTarget.dataset.aud
-    that.setData({
-      aud:aud
-    })
-    if (aud == 0 && that.data.role == 4){
-      //学生请假未审核
-      that.studentGetLeaveList(0)
-    }
-    else if (aud == 1 && that.data.role == 4){
-      //学生请假已审核
-      that.studentGetLeaveList(1)
-    } else if (aud == 0 && that.data.role == 3){
-      that.admin_askfor()
-
-      
-    } else if (aud == 1 && that.data.role == 3){
-      that.admin_askfor()
-
-    } else if (aud == 0 && that.data.role == 2) {
-      that.jw_askfor()
-
-    } else if (aud == 1 && that.data.role == 2) {
-      that.jw_askfor()
-
     }
   },
 
@@ -696,847 +441,6 @@ Page({
     })
   },
 
-  last:function(){
-    let that = this
-    var showYear, showMonth, showym, showlast
-    if (that.data.showMonth == 1){
-      showYear = that.data.showYear - 1
-      console.log(showYear)
-      showMonth = 12
-      
-    }else{
-      
-      showYear = that.data.showYear
-      console.log(showYear)
-      showMonth = that.data.showMonth - 1
-    }
-
-      showym = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth)
-
-      showlast = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
-    
-    if(that.data.role <= 3){
-      
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": showlast
-      }
-      console.log(params)
-      that.setData({
-        class_ids: wx.getStorageSync("class_ids"),
-      })
-      console.log(that.data.class_ids)
-      console.log("that.data.class_ids")
-      app.ljjw.jwGetCheckOnList(params).then(d => {
-        // console.log(d.data.status)
-        if (d.data.status == 1) {
-          console.log("或教务")
-          console.log(d.data.data)
-         
-          if(d.data.data.day_list == ''){
-            wx.showToast({
-              title: '上个月还没有安排哦~',
-              icon: "none",
-              duration: 1200
-            })
-            // var params = {
-            //   "token": wx.getStorageSync("token"),
-            //   "uid": wx.getStorageSync("uid"),
-            //   "riqi": that.data.nowDate
-            // }
-            // console.log(params)
-            // that.setData({
-            //   class_ids: wx.getStorageSync("class_ids"),
-            // })
-            // console.log(that.data.class_ids)
-            // console.log("that.data.class_ids")
-            // app.ljjw.jwGetCheckOnList(params).then(d => {
-            //   // console.log(d.data.status)
-            //   if (d.data.status == 1) {
-            //     console.log("或教务")
-            //     console.log(d.data.data)
-            //     that.setData({
-            //       tea_dayCourse: d.data.data.course_list,
-            //       tea_courselist: d.data.data.day_list
-            //     })
-                
-            //     for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            //       //关联班级点名判断
-            //       for (var rc = 0; rc < that.data.class_ids.length; rc++) {
-            //         if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
-            //           var csrc = "tea_dayCourse[" + i + "].rc"
-            //           that.setData({
-            //             [csrc]: true
-            //           })
-            //         }
-            //       }
-            //       console.log(that.data.tea_dayCourse)
-            //       console.log("that.data.tea_dayCourse.rc")
-
-            //       var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-            //       var end = that.data.tea_dayCourse[i].riqi + " " + end1
-            //       console.log(end + "=============end")
-            //       var iphone1 = end.substr(0, 4)
-            //       var iphone2 = end.substr(5, 2)
-            //       var iphone3 = end.substr(8, 2)
-            //       var iphone4 = end.substr(11, 5)
-            //       console.log(iphone1 + "=============iphone1")
-            //       console.log(iphone2 + "=============iphone2")
-            //       console.log(iphone3 + "=============iphone3")
-            //       console.log(iphone4 + "=============iphone4")
-            //       var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            //       var aa = Date.parse(end)
-            //       var bb = Date.parse(iphone_cs)
-            //       console.log(bb + "++++++==========bb")
-
-            //       var timestamp = Date.parse(new Date());
-            //       console.log(aa + "=================aa")
-            //       console.log(timestamp + "=======================now")
-            //       if (bb < timestamp) {
-            //         var comp = "tea_dayCourse[" + i + "].comp"
-            //         that.setData({
-            //           [comp]: false
-            //         })
-            //       }
-            //       else {
-            //         var comp = "tea_dayCourse[" + i + "].comp"
-            //         that.setData({
-            //           [comp]: true
-            //         })
-            //       }
-
-            //     }
-
-            //     console.log(that.data.tea_dayCourse)
-
-            //     for (var i = 0; i < that.data.tea_courselist.length; i++) {
-            //       var newarray = [{
-            //         ym: that.data.tea_courselist[i].riqi.substr(0, 7),
-            //         d: that.data.tea_courselist[i].riqi.substr(8, 2)
-            //       }];
-            //       that.setData({
-            //         'dot_riqi': that.data.dot_riqi.concat(newarray)
-            //       });
-
-            //     }
-            //     console.log(that.data.dot_riqi)
-
-            //     // 日历点点
-            //     that.dot()
-
-
-
-
-
-            //     // console.log(that.data.tea_dayCourse)
-            //   }
-            // })
-
-          }else{
-
-            that.setData({
-              tea_dayCourse: d.data.data.course_list,
-              tea_courselist: d.data.data.day_list
-            })
-         
-            that.setData({
-              showYear: showYear,
-              showMonth: showMonth,
-              showlast: showlast,
-              showym: showym
-            })
-            that.getMonthData(that.data.showYear, that.data.showMonth);
-          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.tea_dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-
-          console.log(that.data.tea_dayCourse)
-
-          for (var i = 0; i < that.data.tea_courselist.length; i++) {
-            var newarray = [{
-              ym: that.data.tea_courselist[i].riqi.substr(0, 7),
-              d: that.data.tea_courselist[i].riqi.substr(8, 2)
-            }];
-            that.setData({
-              'dot_riqi': that.data.dot_riqi.concat(newarray)
-            });
-
-          }
-          console.log(that.data.dot_riqi)
-
-          // 日历点点
-          that.dot()
-
-
-
-
-
-          // console.log(that.data.tea_dayCourse)
-        }
-        }
-      })
-
-    } 
-    else if (that.data.role == 4 && that.data.type == 2) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "month": showym
-      }
-      console.log(params)
-      app.ljjw.jwGetMonthCourse(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d)
-          if (d.data.data.info != '') {
-            that.setData({
-              showYear: showYear,
-              showMonth: showMonth,
-              showlast: showlast,
-              showym: showym
-            })
-            that.getMonthData(that.data.showYear, that.data.showMonth);
-            that.setData({
-              stu_courselist: d.data.data.info,
-              stu_classlist: d.data.data.period_info
-            })
-            that.cs()
-            for (var i = 0; i < that.data.stu_courselist.length; i++) {
-              var newarray = [{
-                ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                d: that.data.stu_courselist[i].riqi.substr(8, 2)
-              }];
-              that.setData({
-                'dot_riqi': that.data.dot_riqi.concat(newarray)
-              });
-
-            }
-            console.log(that.data.dot_riqi)
-            // 日历点点
-            that.dot()
-            var params = {
-              "token": wx.getStorageSync("token"),
-              "uid": wx.getStorageSync("uid"),
-              "riqi": showlast
-            }
-            console.log(params)
-            app.ljjw.jwGetDayCourse(params).then(d => {
-              if (d.data.status == 1) {
-                that.setData({
-                  dayCourse: d.data.data
-                })
-                console.log(that.data.dayCourse)
-                for (var i = 0; i < that.data.dayCourse.length; i++) {
-                  var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
-                  var end = that.data.dayCourse[i].riqi + " " + end1
-                  console.log(end + "=============end")
-                  var iphone1 = end.substr(0, 4)
-                  var iphone2 = end.substr(5, 2)
-                  var iphone3 = end.substr(8, 2)
-                  var iphone4 = end.substr(11, 5)
-                  console.log(iphone1 + "=============iphone1")
-                  console.log(iphone2 + "=============iphone2")
-                  console.log(iphone3 + "=============iphone3")
-                  console.log(iphone4 + "=============iphone4")
-                  var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-                  var aa = Date.parse(end)
-                  var bb = Date.parse(iphone_cs)
-                  console.log(bb + "++++++==========bb")
-
-                  var timestamp = Date.parse(new Date());
-                  console.log(aa + "=================aa")
-                  console.log(timestamp + "=======================now")
-                  if (bb < timestamp) {
-                    var comp = "dayCourse[" + i + "].comp"
-                    that.setData({
-                      [comp]: false
-                    })
-                  }
-                  else {
-                    var comp = "dayCourse[" + i + "].comp"
-                    that.setData({
-                      [comp]: true
-                    })
-                  }
-
-                }
-                console.log(that.data.dayCourse)
-                console.log("that.data.dayCourse ")
-              }
-            })
-            that.setData({
-              calendarfold: false
-            })
-          }
-          else {
-            console.log("222")
-            wx.showToast({
-              title: '上个月还没有安排哦~',
-              icon: "none",
-              duration: 1500
-            })
-          }
-
-
-
-        }
-      })
-    }
-    else if (that.data.role == 4 && that.data.type == 3) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "month": showym
-      }
-      console.log(params)
-      app.ljjw.jwGetMonthCheckon(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d)
-          if(d.data.data != ''){
-            if (d.data.data.info != '') {
-              that.setData({
-                showYear: showYear,
-                showMonth: showMonth,
-                showlast: showlast,
-                showym: showym
-              })
-              that.getMonthData(that.data.showYear, that.data.showMonth);
-              if (d.data.data.info) {
-                that.setData({
-                  stu_courselist: d.data.data.info,
-                  stu_classlist: d.data.data.period_info
-                })
-              } else {
-                that.setData({
-                  stu_courselist: '',
-                  stu_classlist: d.data.data.period_info
-                })
-              }
-              that.cs()
-              if (that.data.stu_courselist != '') {
-                for (var i = 0; i < that.data.stu_courselist.length; i++) {
-                  var newarray = [{
-                    ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                    d: Number(that.data.stu_courselist[i].riqi.substr(8, 2)),
-                    work: Number(that.data.stu_courselist[i].check_status)
-                  }];
-                  that.setData({
-                    'dot_work': that.data.dot_work.concat(newarray)
-                  });
-
-                }
-                console.log(that.data.dot_work)
-
-                // 考勤点点
-                that.dot_work()
-              }
-              var params = {
-                "token": wx.getStorageSync("token"),
-                "uid": wx.getStorageSync("uid"),
-                "riqi": showlast
-              }
-              console.log(params)
-              app.ljjw.jwGetDayCheckon(params).then(d => {
-                if (d.data.status == 1) {
-                  that.setData({
-                    dayCheckon: d.data.data
-                  })
-                  console.log(that.data.dayCheckon)
-                }
-                else if (d.data.status == -1) {
-                  that.setData({
-                    dayCheckon: ''
-                  })
-                  console.log(that.data.dayCheckon)
-                }
-              })
-              that.setData({
-                calendarfold: false
-              })
-            }
-          }
-          
-          else {
-            wx.showToast({
-              title: '上个月还没有安排哦~',
-              icon: "none",
-              duration: 1500
-            })
-          }
-
-
-
-        }
-      })
-    }
-
-  },
-
-  next: function () {
-    let that = this
-    var showYear, showMonth, showym, showlast
-    if (that.data.showMonth == 12) {
-      showYear = that.data.showYear + 1
-      showMonth = 1
-      
-    } else {
-      showYear = that.data.showYear
-      showMonth = that.data.showMonth + 1
-     
-      showym = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth)
-      
-      showlast = showYear + "-" + (showMonth < 10 ? '0' + (showMonth) : showMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
-    }
-    if (that.data.role <= 3) {
-      
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": showlast
-      }
-      console.log(params)
-      that.setData({
-        class_ids: wx.getStorageSync("class_ids"),
-      })
-      console.log(that.data.class_ids)
-      console.log("that.data.class_ids")
-      app.ljjw.jwGetCheckOnList(params).then(d => {
-        console.log(d.data)
-        if (d.data.status == 1) {
-          console.log("或教务")
-          console.log(d.data.data)
-          
-          if (d.data.data.day_list != ''){
-            that.setData({
-              tea_dayCourse: d.data.data.course_list,
-              tea_courselist: d.data.data.day_list
-            })
-            that.setData({
-              showYear: showYear,
-              showMonth: showMonth,
-              showlast: showlast,
-              showym: showym,
-              clickDay: that.data.nowDay
-            })
-            that.getMonthData(that.data.showYear, that.data.showMonth);
-            that.setData({
-              calendarfold: false
-            })
-            // that.getMonthData(showYear, showMonth);
-            for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-              //关联班级点名判断
-              for (var rc = 0; rc < that.data.class_ids.length; rc++) {
-                if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
-                  var csrc = "tea_dayCourse[" + i + "].rc"
-                  that.setData({
-                    [csrc]: true
-                  })
-                }
-              }
-              console.log(that.data.tea_dayCourse)
-              console.log("that.data.tea_dayCourse.rc")
-
-              var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-              var end = that.data.tea_dayCourse[i].riqi + " " + end1
-              console.log(end + "=============end")
-              var iphone1 = end.substr(0, 4)
-              var iphone2 = end.substr(5, 2)
-              var iphone3 = end.substr(8, 2)
-              var iphone4 = end.substr(11, 5)
-              console.log(iphone1 + "=============iphone1")
-              console.log(iphone2 + "=============iphone2")
-              console.log(iphone3 + "=============iphone3")
-              console.log(iphone4 + "=============iphone4")
-              var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-              var aa = Date.parse(end)
-              var bb = Date.parse(iphone_cs)
-              console.log(bb + "++++++==========bb")
-
-              var timestamp = Date.parse(new Date());
-              console.log(aa + "=================aa")
-              console.log(timestamp + "=======================now")
-              if (bb < timestamp) {
-                var comp = "tea_dayCourse[" + i + "].comp"
-                that.setData({
-                  [comp]: false
-                })
-              }
-              else {
-                var comp = "tea_dayCourse[" + i + "].comp"
-                that.setData({
-                  [comp]: true
-                })
-              }
-
-            }
-
-            console.log(that.data.tea_dayCourse)
-
-            for (var i = 0; i < that.data.tea_courselist.length; i++) {
-              var newarray = [{
-                ym: that.data.tea_courselist[i].riqi.substr(0, 7),
-                d: that.data.tea_courselist[i].riqi.substr(8, 2)
-              }];
-              that.setData({
-                'dot_riqi': that.data.dot_riqi.concat(newarray)
-              });
-
-            }
-            console.log(that.data.dot_riqi)
-
-            // 日历点点
-            that.dot()
-            
-
-
-
-
-
-          // console.log(that.data.tea_dayCourse)
-          }else{
-            wx.showToast({
-              title: '下个月还没有安排哦~',
-              icon:"none",
-              duration:2000
-            })
-          }
-          
-          
-        }
-      })
-      
-
-    }
-    else if (that.data.role == 4 && that.data.type == 2) {
-      console.log(showym, that.data.nowmonth,"hhhhh")
-      if (showym.indexOf(that.data.nowmonth) != -1){
-        var params = {
-          "token": wx.getStorageSync("token"),
-          "uid": wx.getStorageSync("uid"),
-          "month": showym
-        }
-        console.log(params)
-        app.ljjw.jwGetMonthCourse(params).then(d => {
-          if (d.data.status == 1) {
-            console.log(d)
-            
-              that.setData({
-                showYear: showYear,
-                showMonth: showMonth,
-                showlast: showlast,
-                showym: showym
-              })
-              that.getMonthData(that.data.showYear, that.data.showMonth);
-              that.setData({
-                stu_courselist: d.data.data.info,
-                stu_classlist: d.data.data.period_info
-              })
-              console.log(that.data.stu_classlist + "[1]")
-              that.cs()
-              console.log("[cs,2]")
-              for (var i = 0; i < that.data.stu_courselist.length; i++) {
-                var newarray = [{
-                  ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                  d: that.data.stu_courselist[i].riqi.substr(8, 2)
-                }];
-                that.setData({
-                  'dot_riqi': that.data.dot_riqi.concat(newarray)
-                });
-
-              }
-              console.log("[3]")
-              console.log(that.data.dot_riqi)
-              // 日历点点
-              that.dot()
-              var params = {
-                "token": wx.getStorageSync("token"),
-                "uid": wx.getStorageSync("uid"),
-                "riqi": showlast
-              }
-              console.log(params)
-              app.ljjw.jwGetDayCourse(params).then(d => {
-                if (d.data.status == 1) {
-                  that.setData({
-                    dayCourse: d.data.data
-                  })
-                  console.log(that.data.dayCourse)
-                  for (var i = 0; i < that.data.dayCourse.length; i++) {
-                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
-                    var end = that.data.dayCourse[i].riqi + " " + end1
-                    console.log(end + "=============end")
-                    var iphone1 = end.substr(0, 4)
-                    var iphone2 = end.substr(5, 2)
-                    var iphone3 = end.substr(8, 2)
-                    var iphone4 = end.substr(11, 5)
-                    console.log(iphone1 + "=============iphone1")
-                    console.log(iphone2 + "=============iphone2")
-                    console.log(iphone3 + "=============iphone3")
-                    console.log(iphone4 + "=============iphone4")
-                    var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-                    var aa = Date.parse(end)
-                    var bb = Date.parse(iphone_cs)
-                    console.log(bb + "++++++==========bb")
-
-                    var timestamp = Date.parse(new Date());
-                    console.log(aa + "=================aa")
-                    console.log(timestamp + "=======================now")
-                    if (bb < timestamp) {
-                      var comp = "dayCourse[" + i + "].comp"
-                      that.setData({
-                        [comp]: false
-                      })
-                    }
-                    else {
-                      var comp = "dayCourse[" + i + "].comp"
-                      that.setData({
-                        [comp]: true
-                      })
-                    }
-
-                  }
-                  console.log(that.data.dayCourse)
-                  console.log("that.data.dayCourse ")
-                }
-              })
-              that.setData({
-                calendarfold: false
-              })
-
-          }
-        })
-      }else{
-        var params = {
-          "token": wx.getStorageSync("token"),
-          "uid": wx.getStorageSync("uid"),
-          "month": showym
-        }
-        console.log(params)
-        app.ljjw.jwGetMonthCourse(params).then(d => {
-          if (d.data.status == 1) {
-            console.log(d)
-            if (d.data.data.info != '') {
-              that.setData({
-                showYear: showYear,
-                showMonth: showMonth,
-                showlast: showlast,
-                showym: showym
-              })
-              that.getMonthData(that.data.showYear, that.data.showMonth);
-              that.setData({
-                stu_courselist: d.data.data.info,
-                stu_classlist: d.data.data.period_info
-              })
-              that.cs()
-              for (var i = 0; i < that.data.stu_courselist.length; i++) {
-                var newarray = [{
-                  ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                  d: that.data.stu_courselist[i].riqi.substr(8, 2)
-                }];
-                that.setData({
-                  'dot_riqi': that.data.dot_riqi.concat(newarray)
-                });
-
-              }
-              console.log(that.data.dot_riqi)
-              // 日历点点
-              that.dot()
-              var params = {
-                "token": wx.getStorageSync("token"),
-                "uid": wx.getStorageSync("uid"),
-                "riqi": showlast
-              }
-              console.log(params)
-              app.ljjw.jwGetDayCourse(params).then(d => {
-                if (d.data.status == 1) {
-                  that.setData({
-                    dayCourse: d.data.data
-                  })
-                  console.log(that.data.dayCourse)
-                  for (var i = 0; i < that.data.dayCourse.length; i++) {
-                    var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
-                    var end = that.data.dayCourse[i].riqi + " " + end1
-                    console.log(end + "=============end")
-                    var iphone1 = end.substr(0, 4)
-                    var iphone2 = end.substr(5, 2)
-                    var iphone3 = end.substr(8, 2)
-                    var iphone4 = end.substr(11, 5)
-                    console.log(iphone1 + "=============iphone1")
-                    console.log(iphone2 + "=============iphone2")
-                    console.log(iphone3 + "=============iphone3")
-                    console.log(iphone4 + "=============iphone4")
-                    var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-                    var aa = Date.parse(end)
-                    var bb = Date.parse(iphone_cs)
-                    console.log(bb + "++++++==========bb")
-
-                    var timestamp = Date.parse(new Date());
-                    console.log(aa + "=================aa")
-                    console.log(timestamp + "=======================now")
-                    if (bb < timestamp) {
-                      var comp = "dayCourse[" + i + "].comp"
-                      that.setData({
-                        [comp]: false
-                      })
-                    }
-                    else {
-                      var comp = "dayCourse[" + i + "].comp"
-                      that.setData({
-                        [comp]: true
-                      })
-                    }
-
-                  }
-                  console.log(that.data.dayCourse)
-                  console.log("that.data.dayCourse ")
-                }
-              })
-              that.setData({
-                calendarfold: false
-              })
-            }
-            else {
-              console.log("下月2")
-              wx.showToast({
-                
-                title: '下个月还没有安排哦~',
-                icon: "none",
-                duration: 1500
-              })
-            }
-
-
-
-          }
-        })
-      }
-      
-      
-      
-    }
-    else if (that.data.role == 4 && that.data.type == 3) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "month": showym
-      }
-      console.log(params)
-      app.ljjw.jwGetMonthCheckon(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d)
-          if (d.data.data != '') {
-            if (d.data.data.info != '') {
-              that.setData({
-                showYear: showYear,
-                showMonth: showMonth,
-                showlast: showlast,
-                showym: showym
-              })
-              that.getMonthData(that.data.showYear, that.data.showMonth);
-              if (d.data.data.info) {
-                that.setData({
-                  stu_courselist: d.data.data.info,
-                  stu_classlist: d.data.data.period_info
-                })
-              } else {
-                that.setData({
-                  stu_courselist: '',
-                  stu_classlist: d.data.data.period_info
-                })
-              }
-              that.cs()
-              if (that.data.stu_courselist != '') {
-                for (var i = 0; i < that.data.stu_courselist.length; i++) {
-                  var newarray = [{
-                    ym: that.data.stu_courselist[i].riqi.substr(0, 7),
-                    d: Number(that.data.stu_courselist[i].riqi.substr(8, 2)),
-                    work: Number(that.data.stu_courselist[i].check_status)
-                  }];
-                  that.setData({
-                    'dot_work': that.data.dot_work.concat(newarray)
-                  });
-
-                }
-                console.log(that.data.dot_work)
-
-                // 考勤点点
-                that.dot_work()
-              }
-              var params = {
-                "token": wx.getStorageSync("token"),
-                "uid": wx.getStorageSync("uid"),
-                "riqi": showlast
-              }
-              console.log(params)
-              app.ljjw.jwGetDayCheckon(params).then(d => {
-                if (d.data.status == 1) {
-                  that.setData({
-                    dayCheckon: d.data.data
-                  })
-                  console.log(that.data.dayCheckon)
-                }
-                else if (d.data.status == -1) {
-                  that.setData({
-                    dayCheckon: ''
-                  })
-                  console.log(that.data.dayCheckon)
-                }
-              })
-              that.setData({
-                calendarfold: false
-              })
-            }
-          }
-
-          else {
-            console.log("学生考勤下个月为空")
-            wx.showToast({
-              title: '下个月还没有安排哦~',
-              icon: "none",
-              duration: 1500
-            })
-          }
-
-
-
-        }
-      })
-    }
-
-    
-  },
-
-
   getMonthData(year, month) {
     let that = this;
     that.setData({
@@ -1665,286 +569,7 @@ Page({
     
 
   },
-
-  //点击某一天,课表
-  clickDay(e) {
-    let that = this
-    // var dxb = e.currentTarget.dataset.weekIndex
-    // console.log(dxb,"dxb")
-    if (e.currentTarget.dataset.day === -1) return;
-    that.setData({
-      showDay: e.currentTarget.dataset.day,
-      clickDay: e.currentTarget.dataset.day,
-      clickMonth: that.data.showMonth
-    })
-    // console.log(e.currentTarget.dataset.day1)
-    // console.log(that.data.clickYear + "-" + that.data.clickMonth + "-" + that.data.clickDay + "==================clickDate")
-    var clickDate = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
-    that.setData({
-      clickDate: clickDate
-    })
-
-    if(that.data.role == 4 && that.data.type == 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": clickDate
-      }
-      console.log(params)
-      app.ljjw.jwGetDayCourse(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            dayCourse: d.data.data
-          })
-          // console.log(that.data.dayCourse)
-          for (var i = 0; i < that.data.dayCourse.length; i++) {
-            var end1 = that.data.dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-          console.log(that.data.dayCourse)
-          console.log("that.data.dayCourse ")
-        }
-
-      })
-    }
-    else if (that.data.role == 4 && that.data.type == 3){
-      //学生当日考勤
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": clickDate
-      }
-      console.log(params)
-      app.ljjw.jwGetDayCheckon(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            dayCheckon: d.data.data
-          })
-          console.log(that.data.dayCheckon)
-        }
-        else if (d.data.status == -1) {
-          that.setData({
-            dayCheckon: ''
-          })
-          console.log(that.data.dayCheckon)
-        }
-
-      })
-    } else if(that.data.role <= 3){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": clickDate
-      }
-      console.log(params)
-      that.setData({
-        class_ids: wx.getStorageSync("class_ids"),
-      })
-      console.log(that.data.class_ids)
-      console.log("that.data.class_ids")
-      app.ljjw.jwGetCheckOnList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          that.setData({
-            tea_dayCourse: d.data.data.course_list
-          })
-          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            //关联班级点名判断
-            for (var rc = 0; rc < that.data.class_ids.length; rc++) {
-              if (that.data.tea_dayCourse[i].class_id == that.data.class_ids[rc]) {
-                var csrc = "tea_dayCourse[" + i + "].rc"
-                that.setData({
-                  [csrc]: true
-                })
-              }
-            }
-            console.log(that.data.tea_dayCourse)
-            console.log("that.data.tea_dayCourse.rc")
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.tea_dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-
-          console.log(that.data.tea_dayCourse)
-          console.log(that.data.tea_dayCourse)
-        }
-      })
-      console.log("我是老师或教务某天课表")
-    }
-    
-
-
-  },
-
-  //点击某一天,考勤
-  clickDay_work(e) {
-    let that = this
-
-    if (e.currentTarget.dataset.day === -1) return;
-    that.setData({
-      showDay: e.currentTarget.dataset.day,
-      clickDay: e.currentTarget.dataset.day,
-    })
-    console.log(e.currentTarget.dataset.day1)
-    // console.log(that.data.showYear + "-" + that.data.showMonth + "-" + that.data.clickDay + "==================clickDate")
-    var clickDate = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) + '-' + (that.data.clickDay < 10 ? '0' + (that.data.clickDay) : that.data.clickDay)
-    that.setData({
-      clickDate: clickDate
-    })
-    if (that.data.role == 4){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": clickDate
-      }
-      console.log(params)
-      app.ljjw.jwGetDayCheckon(params).then(d => {
-        if (d.data.status == 1) {
-          that.setData({
-            dayCheckon: d.data.data
-          })
-          console.log(that.data.dayCheckon)
-        }
-        else if (d.data.status == -1) {
-          that.setData({
-            dayCheckon: ''
-          })
-          console.log(that.data.dayCheckon)
-        }
-
-      })
-    } else if (that.data.role <= 3) {
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "riqi": clickDate
-      }
-      console.log(params)
-      that.setData({
-        class_ids: wx.getStorageSync("class_ids"),
-      })
-      console.log(that.data.class_ids)
-      console.log("that.data.class_ids")
-      app.ljjw.jwGetCheckOnList(params).then(d => {
-        console.log(d)
-        if (d.data.status == 1) {
-          that.setData({
-            tea_dayCourse: d.data.data.course_list
-          })
-          for (var i = 0; i < that.data.tea_dayCourse.length; i++) {
-            var end1 = that.data.tea_dayCourse[i].classtime.substr(8, 5)
-            var end = that.data.tea_dayCourse[i].riqi + " " + end1
-            console.log(end + "=============end")
-            var iphone1 = end.substr(0, 4)
-            var iphone2 = end.substr(5, 2)
-            var iphone3 = end.substr(8, 2)
-            var iphone4 = end.substr(11, 5)
-            console.log(iphone1 + "=============iphone1")
-            console.log(iphone2 + "=============iphone2")
-            console.log(iphone3 + "=============iphone3")
-            console.log(iphone4 + "=============iphone4")
-            var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-            var aa = Date.parse(end)
-            var bb = Date.parse(iphone_cs)
-            console.log(bb + "++++++==========bb")
-
-            var timestamp = Date.parse(new Date());
-            console.log(aa + "=================aa")
-            console.log(timestamp + "=======================now")
-            if (bb < timestamp) {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: false
-              })
-            }
-            else {
-              var comp = "tea_dayCourse[" + i + "].comp"
-              that.setData({
-                [comp]: true
-              })
-            }
-
-          }
-
-          console.log(that.data.tea_dayCourse)
-          console.log(that.data.tea_dayCourse)
-        }
-      })
-      console.log("我是老师或教务某天考勤")
-    }
-    
-
-
-  },
   
-  //折叠日历
-  foldAndUnfold() {
-    let that = this;
-    that.setData({
-      calendarfold: !that.data.calendarfold
-    })
-    // 日历点点
-    // that.dot()
-  },
 
   // 已审核折叠
   aud_fold:function(e){
@@ -2189,30 +814,16 @@ Page({
 
   onShow() {
     let that = this
-    // if (typeof this.getTabBar === 'function' &&
-    //   this.getTabBar()) {
-    //   console.log('index_onshow')
-    //   this.getTabBar().setData({
-    //     selected: 0
-    //   })
-    // }
-    // else{
-    //   console.log('未执行')
-    // }
 
     // 初始化data数据
     this.initUserInfoData()
 
     // 加载数据
-    // var riqi = ""
-    // if (that.data.clickDate) {
-    //   riqi = that.data.clickDate
-    // } else {
-    //   riqi = that.data.nowDate
-    // }
-    that.loadData(that.data.type, that.data.nowDate)
+    that.loadData(that.data.nowDate)
+
   },
 
+  //---------------------------------------------------私有方法--------------------------------------------------
   /**
    * 设置自定义导航栏尺寸
   */
@@ -2239,15 +850,17 @@ Page({
     let that = this;
     // console.log(-1%2 , "取余")
     var role = wx.getStorageSync("role")
-    
+    let nowDateStr = app.util.formatDate(new Date())
     if (!role) {
       that.setData({
         role: -1,
         login: false,
         uid: wx.getStorageSync("uid"),
         userInfo : wx.getStorageSync("userInfo"),
-        class_ids: wx.getStorageSync("class_ids")
+        class_ids: wx.getStorageSync("class_ids"),
         // stu_sta: wx.getStorageSync("stu_sta")
+
+        nowDate: nowDateStr
       }),
       wx.switchTab({
         url: '/pages/my/my',
@@ -2262,10 +875,11 @@ Page({
         login: true,
         uid: wx.getStorageSync("uid"),
         userInfo: wx.getStorageSync("userInfo"),
-        class_ids: wx.getStorageSync("class_ids")
+        class_ids: wx.getStorageSync("class_ids"),
         
-        
+        nowDate: nowDateStr
       })
+      
       if(that.data.role == 4){
         that.setData({
           stu_sta: wx.getStorageSync("stu_sta")
@@ -2275,66 +889,88 @@ Page({
     console.log(that.data.stu_sta + "that.data.stu_sta")
     console.log("onload")
     
-    // if (!that.data.showYear) {
-      //获取当前年份和月份
-      let nowTime = new Date();
-      let nowYear = nowTime.getFullYear();
-      let nowMonth = nowTime.getMonth();
-      let nowDay = nowTime.getDate();
-      that.getMonthData(nowYear, nowMonth + 1);
-      that.setData({
-        showYear: nowYear,
-        showMonth: nowMonth + 1,
-        showDay: nowDay,
-        nowYear,
-        nowMonth: nowMonth + 1,
-        nowDay,
-        clickYear: nowYear,
-        clickMonth: nowMonth + 1,
-        clickDay: nowDay,
-        // show_month: nowMonth + 1
-      })
-      var showym = that.data.showYear + "-" + (that.data.showMonth < 10 ? '0' + (that.data.showMonth) : that.data.showMonth) 
-      var nowDate = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth) + '-' + (that.data.nowDay < 10 ? '0' + (that.data.nowDay) : that.data.nowDay)
-      var nowmonth = that.data.nowYear + "-" + (that.data.nowMonth < 10 ? '0' + (that.data.nowMonth) : that.data.nowMonth)
-      that.setData({
-        nowDate: nowDate,
-        nowmonth: nowmonth,
-        showym: showym
-      })
-
-
-      for (var i = 0; i < that.data.nowWeekData.length;i++){
-        var nowWeekDataItem = that.data.nowWeekData[i]
-        nowWeekDataItem[2] = false
-        nowWeekDataItem[3] = 0
-      }
-      for (var i = 0; i < that.data.weekData.length; i++) {
-        var weekDataItem = that.data.weekData[i]
-        for (var j = 0; j < weekDataItem.length;j++){
-          var weekDataItem_item = weekDataItem[j]
-          weekDataItem_item[2] = false
-          weekDataItem_item[3] = 0
-        }
-      }
-      that.setData({
-        weekData: that.data.weekData,
-        nowWeekData: that.data.nowWeekData
-      })
-    // }
-    
   },
+
+  /**
+   * 打点数据处理
+   * dataArray: 接口返回的打点数据
+   * 
+   * dot.type 1-打绿点  2-打红点
+  */
+  dotsDataDeal: function (dataArray) {
+    if (!dataArray || dataArray == '') {
+      return
+    }
+    switch (this.data.type * 1) {
+      case 2: {
+        // 课表
+        switch (this.data.role * 1) {
+          case 1:
+            // 老师
+          case 2: 
+            // 教务
+          case 3: 
+            // 管理员
+          case 4: {
+            // 学生
+            for (var i = 0; i < dataArray.length; i++) {
+              var dot = dataArray[i]
+              dot.type = 1
+            }
+            break
+          }
+        }
+        break
+      }
+      case 3: {
+        // 考勤
+        switch (this.data.role * 1) {
+          case 1:
+            // 老师
+          case 2: 
+            // 教务
+          case 3: {
+            // 管理员
+            for (var i = 0; i < dataArray.length; i++) {
+              var dot = dataArray[i]
+              dot.type = 1
+            }
+            break
+          }
+          case 4: {
+            // 学生
+            for (var i = 0; i < dataArray.length; i++) {
+              var dot = dataArray[i]
+              if (dot.check_status == 0) {
+                dot.type = 1
+              } else {
+                dot.type = 2
+              }
+            }
+            break
+          }
+        }
+        break
+      }
+    }
+
+    this.setData({
+      dots: dataArray
+    })
+  },
+
     
+  //-----------------------------------------------接口调用---------------------------------------------------
   /**
    * 学生获取请假列表
    * type: 0-待审核、1-已审核
   */
-  studentGetLeaveList: function (type) {
+  studentGetLeaveList: function () {
     let that = this
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "type": type
+      "type": that.data.aud,
     }
     console.log(params)
     app.ljjw.jwGetStudentAskforleave(params).then(d => {
@@ -2392,57 +1028,6 @@ Page({
   },
 
   /**
-   * 学生获取月考勤数据
-  */
-  studentGetMonthCheckon: function(nowMonth) {
-    let that = this
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "month": nowMonth
-    }
-    app.ljjw.jwGetMonthCheckon(params).then(d => {
-      let status = d.data.status
-      if (status == 1) {
-        var data = d.data.data
-        
-        var stu_courselist = ''
-        var stu_classlist = data.period_info
-        if (data.info){
-          stu_courselist = data.info
-        }else{
-          stu_courselist = ''
-        }
-        that.setData({
-          'stu_classlist' : stu_classlist,
-          'stu_courselist': stu_courselist,
-        })
-        that.cs()
-        if (stu_courselist != ''){
-          for (var i = 0; i < stu_courselist.length; i++) {
-            var newarray = [{
-              ym: stu_courselist[i].riqi.substr(0, 7),
-              d: Number(stu_courselist[i].riqi.substr(8, 2)),
-              work: Number(stu_courselist[i].check_status)
-            }];
-            that.setData({
-              'dot_work': that.data.dot_work.concat(newarray)
-            });
-
-          }
-          // console.log(that.data.dot_work)
-
-          // 考勤点点
-          that.dot_work()
-        }
-        
-      } else if (status == -1){
-        console.log(d.data.msg)
-      }
-    })
-  },
-
-  /**
    * 学生获取日考勤列表
   */
   StudentGetDayCheckon: function(riqi) {
@@ -2455,6 +1040,21 @@ Page({
     // console.log(params)
     app.ljjw.jwGetDayCheckon(params).then(d => {
       if (d.data.status == 1) {
+        let data = d.data.data
+
+        // 判断是否有数据
+        if (!data || data == '') {
+          that.setData({
+            dayCheckon: null
+          })
+          wx.showToast({
+            title: '暂无考勤内容',
+            icon: 'none'
+          })
+          return
+        }
+
+        
         that.setData({
           dayCheckon: d.data.data
         })
@@ -2482,10 +1082,20 @@ Page({
     }
     // console.log(params)
     app.ljjw.jwGetDayCourse(params).then(d => {
+      
       if (d.data.status == 1) {
 
         var dayCourse = d.data.data
-        
+        if (!dayCourse || dayCourse == '') {
+          that.setData({
+            dayCourse: null
+          })
+          wx.showToast({
+            title: '暂无课程安排',
+            icon: 'none'
+          })
+          return
+        }
         // console.log(that.data.dayCourse)
         for (var i = 0; i < dayCourse.length; i++) {
           var course = dayCourse[i]
@@ -2521,47 +1131,8 @@ Page({
         })
         // console.log(that.data.dayCourse)
         // console.log("that.data.dayCourse ")
-      }
-    })
-  },
-
-  /**
-   * 学生获取月课程列表
-  */
-  studentGetMonthCourse: function(month) {
-    let that = this
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "month": month
-    }
-    // console.log(params)
-    app.ljjw.jwGetMonthCourse(params).then(d => {
-      if (d.data.status == 1) {
-        // console.log(d)
-        var data = d.data.data
-        that.data.stu_courselist = data.info
-        that.data.stu_classlist = data.period_info
-        that.cs()
-
-        var dot_riqi = that.data.dot_riqi
-        for (var i = 0; i < that.data.stu_courselist.length; i++) {
-          var stu_course = that.data.stu_courselist[i]
-          var newarray = [{
-            ym: stu_course.riqi.substr(0, 7),
-            d: stu_course.riqi.substr(8, 2)
-          }];
-          dot_riqi = dot_riqi.concat(newarray)
-        }
-        that.setData({
-          stu_courselist: that.data.stu_courselist,
-          stu_classlist: that.data.stu_classlist,
-          'dot_riqi': dot_riqi
-        });
-        console.log(that.data.dot_riqi)
-
-        // 日历点点
-        that.dot()
+      } else {
+        console.log(d.data.msg ? d.data.msg : "请求失败")
       }
     })
   },
@@ -2585,41 +1156,36 @@ Page({
     app.ljjw.jwGetCheckOnList(params).then(d => {
       // console.log(d.data.status)
       if (d.data.status == 1) {
-        console.log("或教务")
-        console.log(d.data.data)
+        // console.log("或教务")
+        // console.log(d.data.data)
 
         var tea_dayCourse = d.data.data.course_list
-        var tea_courselist = d.data.data.day_list
+        // var tea_courselist = d.data.data.day_list
 
         for (var i = 0; i < tea_dayCourse.length; i++) {
+          var course = tea_dayCourse[i]
           //关联班级点名判断
           for(var rc=0;rc<that.data.class_ids.length;rc++){
-            if (tea_dayCourse[i].class_id == that.data.class_ids[rc]){
-              tea_dayCourse[i].rc = true
+            if (course.class_id == that.data.class_ids[rc]){
+              course.rc = true
             }
           }
-          // console.log(that.data.tea_dayCourse)
-          // console.log("that.data.tea_dayCourse.rc")
-          var end1 = tea_dayCourse[i].classtime.substr(8, 5)
-          var end = tea_dayCourse[i].riqi + " " + end1
-          // console.log(end1 + "=======================end1")
-          // console.log(end + "=============end")
+          var end1 = course.classtime.substr(8, 5)
+          var end = course.riqi + " " + end1
+          
           var iphone1 = end.substr(0, 4)
           var iphone2 = end.substr(5, 2)
           var iphone3 = end.substr(8, 2)
           var iphone4 = end.substr(11, 5)
-          // console.log(iphone1 + "=============iphone1")
-          // console.log(iphone2 + "=============iphone2")
-          // console.log(iphone3 + "=============iphone3")
-          // console.log(iphone4 + "=============iphone4")
+          
           var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-          var aa = Date.parse(end)
+          
           var bb = Date.parse(iphone_cs)
-          // console.log(bb + "++++++==========bb")
+          
 
           var timestamp = Date.parse(new Date());
-          // console.log(aa + "=================aa")
-          // console.log(timestamp + "=======================now")
+          
+          // 判断课程是否结束
           if (bb < timestamp) {
             tea_dayCourse[i].comp = false
           }
@@ -2629,25 +1195,9 @@ Page({
 
         }
 
-        
-        console.log(that.data.tea_dayCourse)
-        var newDotRiqi = []
-        for(var i=0;i<tea_courselist.length;i++){
-          var newarray = {
-            ym: tea_courselist[i].riqi.substr(0, 7),
-            d: tea_courselist[i].riqi.substr(8, 2)
-          };
-          newDotRiqi.push(newarray)
-        }
-        console.log(newDotRiqi)
         that.setData({
           tea_dayCourse: tea_dayCourse,
-          tea_courselist: tea_courselist,
-          'dot_riqi': that.data.dot_riqi.concat(newDotRiqi)
         })
-
-        // 日历点点
-        that.dot()
       }
     })
   },
@@ -2676,5 +1226,257 @@ Page({
         console.log(that.data.red_num +"red_num")
       }
     })
-  }
+  },
+
+  /**
+   * 学生按日期段 获取课程信息
+   * startDate: 查询开始日期 0000-00-00
+   * endDate：查询结束日期 0000-00-00
+  */
+  studentGetPeriodCourse: function (startDate, endDate) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "startdate" : startDate,
+      "enddate" : endDate,
+    }
+    app.ljjw.jwGePeriodCourse(params).then(d => {
+      if (d.data.status == 1) {
+        let data = d.data.data
+        let dots = data.info
+        that.dotsDataDeal(dots)
+      }
+    })
+  },
+
+  /**
+   * 学生 按日期段 获取考勤信息
+   * startDate: 查询开始日期 0000-00-00
+   * endDate：查询结束日期 0000-00-00
+  */
+  studentGetPeriodCheckon: function (startDate, endDate) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "startdate" : startDate,
+      "enddate" : endDate,
+    }
+    app.ljjw.jwGetPeriodsCheckon(params).then(d => {
+
+      if (d.data.status == 1) {
+        let data = d.data.data
+
+        var dots = data.info
+        that.dotsDataDeal(dots)
+
+        var colors = data.period_info
+        that.setData({
+          calendarColors: colors
+        })
+      }
+    })
+  },
+
+  /**
+   * 老师/教务/管理员 按日期段 获取考勤信息
+  */
+  teacherGetPeriodCheckon: function (startDate, endDate) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "startdate" : startDate,
+      "enddate" : endDate,
+    }
+    app.ljjw.jwGetDayList(params).then(d => {
+      if (d.data.status == 1) {
+        let data = d.data.data
+        if (data && data != '') {
+          this.dotsDataDeal(data)
+        }
+      }
+    })
+  },
+
+  /*--------------------------------------------触发事件-------------------------------------------------*/
+  /**
+   * 顶部菜单栏 点击事件
+   */ 
+  menu_select:function(e){
+    let that = this
+    var type = e.currentTarget.dataset.type
+    console.log(type)
+
+    if (type == that.data.type) {
+      return
+    }
+
+    that.setData({
+      type : type
+    })
+    var riqi = ""
+    if (that.data.clickDate) {
+      riqi = that.data.clickDate
+    } else {
+      riqi = that.data.nowDate
+    }
+
+    that.loadData(riqi)
+  },
+
+  /**
+   * 请假 待审核/已审核 点击事件
+  */
+  aud_select : function(e){
+    let that = this
+    var aud = e.currentTarget.dataset.aud
+    if (aud == that.data.aud) {
+      return
+    }
+    that.setData({
+      aud:aud
+    })
+    if (that.data.role == 4){
+      //学生
+      that.studentGetLeaveList()
+    }
+    else if (that.data.role == 3){
+      // 管理员
+      that.admin_askfor()
+    }
+    else if (that.data.role == 2) {
+      // 教务
+      that.jw_askfor()
+    }
+  },
+
+  /**
+   * 天 点击事件
+  */
+  dayClicked: function (e) {
+    let that = this
+    console.log(e)
+    let dateStr = e.detail.dateStr
+    that.setData({
+      clickDate: dateStr
+    })
+    switch (that.data.type*1) {
+      case 2: {
+        // 课表
+        switch (that.data.role*1) {
+          case 1: {
+            // 老师
+            that.teacherGetCheckOnList(dateStr)
+            break
+          }
+          case 2: {
+            // 教务
+            that.teacherGetCheckOnList(dateStr)
+            break
+          }
+          case 3: {
+            // 管理员
+            that.teacherGetCheckOnList(dateStr)
+            break
+          }
+          case 4: {
+            // 学生
+            that.StudentGetDayCourse(dateStr)
+            break
+          }
+        }
+        break
+      }
+      case 3: {
+        // 考勤
+        switch (that.data.role*1) {
+          case 1: {
+            // 老师
+            that.teacherGetCheckOnList(dateStr)
+            break
+          }
+          case 2: {
+            // 教务
+            that.teacherGetCheckOnList(dateStr)
+            break
+          }
+          case 3: {
+            // 管理员
+            that.teacherGetCheckOnList(dateStr)
+            break
+          }
+          case 4: {
+            // 学生
+            that.StudentGetDayCheckon(dateStr)
+            break
+          }
+        }
+        break
+      }
+    }
+  },
+
+  /**
+   * 日历时间段改变回调
+  */
+  datePeriodChange: function (e) {
+    console.log(e)
+    let startDate = e.detail.startDate.dateStr
+    let endDate = e.detail.endDate.dateStr
+    switch (this.data.type * 1) {
+      case 2: {
+        // 课表
+        switch(this.data.role *1) {
+          case 1: {
+            // 老师
+            this.teacherGetPeriodCheckon(startDate, endDate)
+            break
+          }
+          case 2: {
+            // 教务
+            this.teacherGetPeriodCheckon(startDate, endDate)
+            break
+          }
+          case 3: {
+            // 管理员
+            break
+          }
+          case 4: {
+            // 学生
+            this.studentGetPeriodCourse(startDate, endDate)
+            break
+          }
+        }
+        break
+      }
+      case 3: {
+        // 考勤
+        switch(this.data.role *1) {
+          case 1: {
+            // 老师
+            this.teacherGetPeriodCheckon(startDate, endDate)
+            break
+          }
+          case 2: {
+            // 教务
+            this.teacherGetPeriodCheckon(startDate, endDate)
+            break
+          }
+          case 3: {
+            // 管理员
+            this.teacherGetPeriodCheckon(startDate, endDate)
+            break
+          }
+          case 4: {
+            // 学生
+            this.studentGetPeriodCheckon(startDate, endDate)
+            break
+          }
+        }
+        break
+      }
+    }
+  },
 })
