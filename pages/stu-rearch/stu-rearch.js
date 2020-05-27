@@ -154,7 +154,8 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "keyword": that.data.input_title
+        "keyword": that.data.input_title,
+        "class_id": that.data.class_id,
       }
       console.log(params)
       app.ljjw.jwGetFilesByKeyword(params).then(d => {

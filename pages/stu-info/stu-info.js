@@ -2,6 +2,8 @@
 const app = getApp()
 Page({
 
+  submiting: false,
+
   /**
    * 页面的初始数据
    */
@@ -156,26 +158,7 @@ Page({
               })
               // console.log(that.data.input_name + "=======that.data.input_name")
               //提交判断
-              if (that.data.input_name != undefined ){
-                
-                  if (that.data.sex_index != 0){
-                    if (that.data.input_school.indexOf("请选择") == -1){
-                      if (that.data.graduation_time != 0){
-                        if (that.data.input_major != undefined){
-                          if (that.data.input_email != undefined){
-                            if (that.data.stu_class_index != -1){
-                              that.setData({
-                                issubmit:true
-                              })
-                              console.log(that.data.issubmit)
-                            }
-                          
-                        }
-                      }
-                    }
-                  }
-                }
-              }
+              that.chargeCanSubmit()
               //提交判断结束
             }
           }
@@ -199,34 +182,7 @@ Page({
     that.setData({
       sex_index: e.detail.value
     })
-    if (that.data.sex_index != 0){
-    //提交判断
-      if (that.data.input_name != undefined) {
-       
-        if (that.data.avatar != undefined) {
-          if (that.data.input_school.indexOf("请选择") == -1) {
-            if (that.data.graduation_time != 0) {
-              if (that.data.input_major != undefined ) {
-                if (that.data.input_email != undefined ) {
-                  if (that.data.stu_class_index != -1) {
-                    that.setData({
-                      issubmit: true
-                    })
-                    console.log(that.data.issubmit)
-                  }
-               
-              }
-            }
-          }
-        }
-      }
-    }
-    //提交判断结束
-  }else{
-      that.setData({
-        issubmit: false
-      })
-  }
+    that.chargeCanSubmit()
   },
   stu_class_picker: function (e) {
     let that = this
@@ -235,34 +191,7 @@ Page({
       stu_class_index: e.detail.value
     })
     // console.log(that.data.input_name, that.data.input_phone, that.data.avatar, that.data.input_school.indexOf("请选择"), that.data.graduation_time, that.data.input_major, that.data.input_email, that.data.sex_index)
-    if(that.data.stu_class_index != -1){
-    //提交判断
-      if (that.data.input_name != undefined) {
-        
-        if (that.data.avatar != undefined) {
-          if (that.data.input_school.indexOf("请选择") == -1) {
-            if (that.data.graduation_time != 0) {
-              if (that.data.input_major != undefined) {
-                if (that.data.input_email != undefined ) {
-                  if (that.data.sex_index != 0) {
-                    that.setData({
-                      issubmit: true
-                    })
-                    console.log(that.data.issubmit)
-                  }
-                
-              }
-            }
-          }
-        }
-      }
-    }
-    //提交判断结束
-    } else {
-      that.setData({
-        issubmit: false
-      })
-    }
+    that.chargeCanSubmit()
   },
   graduation_time: function (e) {
     let that = this
@@ -270,34 +199,7 @@ Page({
     that.setData({
       graduation_time: e.detail.value
     })
-    if(that.data.graduation_time != 0){
-    //提交判断
-      if (that.data.input_name != undefined ) {
-        
-        if (that.data.avatar != undefined) {
-          if (that.data.input_school.indexOf("请选择") == -1) {
-            if (that.data.sex_index != 0) {
-              if (that.data.input_major != undefined ) {
-                if (that.data.input_email != undefined ) {
-                  if (that.data.stu_class_index != -1) {
-                    that.setData({
-                      issubmit: true
-                    })
-                    console.log(that.data.issubmit)
-                  }
-                }
-              
-            }
-          }
-        }
-      }
-    }
-    //提交判断结束
-    } else {
-      that.setData({
-        issubmit: false
-      })
-    }
+    that.chargeCanSubmit()
   },
 
   input_name:function(e){
@@ -311,34 +213,7 @@ Page({
         input_name: undefined
       })
     }
-    if (that.data.input_name != undefined) {
-    //提交判断
-    if (that.data.sex_index != 0) {
-      
-        if (that.data.avatar != undefined) {
-          if (that.data.input_school.indexOf("请选择") == -1) {
-            if (that.data.graduation_time != 0) {
-              if (that.data.input_major != undefined ) {
-                if (that.data.input_email != undefined ) {
-                  if (that.data.stu_class_index != -1) {
-                    that.setData({
-                      issubmit: true
-                    })
-                    console.log(that.data.issubmit)
-                  }
-                
-              }
-            }
-          }
-        }
-      }
-    }
-    //提交判断结束
-    } else {
-      that.setData({
-        issubmit: false
-      })
-    }
+    that.chargeCanSubmit()
   },
   input_phone: function (e) {
     let that = this
@@ -351,34 +226,7 @@ Page({
         input_phone: undefined
       })
     }
-    if (that.data.input_phone != undefined) {
-    //提交判断
-      if (that.data.input_name != undefined ) {
-      if (that.data.sex_index != 0) {
-        if (that.data.avatar != undefined) {
-          if (that.data.input_school.indexOf("请选择") == -1) {
-            if (that.data.graduation_time != 0) {
-              if (that.data.input_major != undefined ) {
-                if (that.data.input_email != undefined ) {
-                  if (that.data.stu_class_index != -1) {
-                    that.setData({
-                      issubmit: true
-                    })
-                    console.log(that.data.issubmit)
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    //提交判断结束
-    } else {
-      that.setData({
-        issubmit: false
-      })
-    }
+    that.chargeCanSubmit()
   },
   // input_school: function (e) {
   //   let that = this
@@ -404,34 +252,7 @@ Page({
         input_major: undefined
       })
     }
-    if (that.data.input_major != undefined){
-    //提交判断
-      if (that.data.input_name != undefined ) {
-        
-        if (that.data.avatar != undefined) {
-          if (that.data.input_school.indexOf("请选择") == -1) {
-            if (that.data.graduation_time != 0) {
-              if (that.data.sex_index != 0) {
-                if (that.data.input_email != undefined ) {
-                  if (that.data.stu_class_index != -1) {
-                    that.setData({
-                      issubmit: true
-                    })
-                    console.log(that.data.issubmit)
-                  }
-                
-              }
-            }
-          }
-        }
-      }
-    }
-    //提交判断结束
-    } else {
-      that.setData({
-        issubmit: false
-      })
-    }
+    that.chargeCanSubmit()
   },
   input_email: function (e) {
     let that = this
@@ -444,37 +265,14 @@ Page({
         input_email: undefined
       })
     }
-    if (that.data.input_email != undefined) {
-    //提交判断
-      if (that.data.input_name != undefined ) {
-        
-        if (that.data.avatar != undefined) {
-          if (that.data.input_school.indexOf("请选择") == -1) {
-            if (that.data.graduation_time != 0) {
-              if (that.data.input_major != undefined || that.data.input_major != ' ') {
-                if (that.data.sex_index != 0) {
-                  if (that.data.stu_class_index != -1) {
-                    that.setData({
-                      issubmit: true
-                    })
-                    console.log(that.data.issubmit)
-                  }
-                
-              }
-            }
-          }
-        }
-      }
-    }
-    //提交判断结束
-    } else {
-      that.setData({
-        issubmit: false
-      })
-    }
+    that.chargeCanSubmit()
   },
 
   submit:function(){
+    if (this.submiting) {
+      return
+    }
+    this.submiting = true
     let that = this
     if(that.data.issubmit){
       var params = {
@@ -491,10 +289,11 @@ Page({
         "sex": that.data.sex_index,
         
       }
-      console.log(params)
-      console.log(that.data.input_school + "that.data.input_school")
+      // console.log(params)
+      // console.log(that.data.input_school + "that.data.input_school")
       app.ljjw.jwSaveStudentBaseInfo(params).then(d => {
-        console.log(d)
+        that.submiting = false
+        // console.log(d)
         if (d.data.status == 1) {
           wx.navigateBack({
             delta: 1  // 返回上一级页面。
@@ -521,37 +320,11 @@ Page({
     // if(that.data.type == 0){
       var input_school = wx.getStorageSync("input_school")
       if (input_school) {
+        input_school = input_school.split(' ').join('')
         that.setData({
           input_school: input_school
         })
-        if (that.data.input_school.indexOf("请输入") == -1) {
-          //提交判断
-          if (that.data.input_name != undefined) {
-            
-              if (that.data.avatar != undefined) {
-                if (that.data.sex_index != 0) {
-                  if (that.data.graduation_time != 0) {
-                    if (that.data.input_major != undefined) {
-                      if (that.data.input_email != undefined) {
-                        if (that.data.stu_class_index != -1) {
-                          that.setData({
-                            issubmit: true
-                          })
-                          console.log(that.data.issubmit)
-                        }
-                      
-                    }
-                  }
-                }
-              }
-            }
-          }
-          //提交判断结束
-        } else {
-          that.setData({
-            issubmit: false
-          })
-        }
+        that.chargeCanSubmit()
       }
       else {
         that.setData({
@@ -603,23 +376,33 @@ Page({
   */
   chargeCanSubmit: function(){
     let that = this
-    var issubmit = false
-    if (that.data.input_name != undefined ){
-                
-      if (that.data.sex_index != 0){
-        if (that.data.input_school.indexOf("请选择") == -1){
-          if (that.data.graduation_time != 0){
-            if (that.data.input_major != undefined){
-              if (that.data.input_email != undefined){
-                if (that.data.stu_class_index != -1){
-                  issubmit = true
-                  
-                }
-              }
-            }
-          }
-        }
-      }
+    var issubmit = true
+    if (!that.data.input_name || that.data.input_name == ''){
+      issubmit = false
+    }
+
+    if (!that.data.sex_index || that.data.sex_index == '' || that.data.sex_index == 0) {
+      issubmit = false
+    }
+    
+    if (!that.data.input_school || that.data.input_school == '' || that.data.input_school == undefined) {
+      issubmit = false
+    }
+
+    if (!that.data.graduation_time || that.data.graduation_time == '' || that.data.graduation_time == 0) {
+      issubmit = false
+    }
+
+    if (!that.data.input_major || that.data.input_major == '') {
+      issubmit = false
+    }
+
+    if (!that.data.input_email || that.data.input_email == '') {
+      issubmit = false
+    }
+
+    if (!that.data.stu_class_index || that.data.stu_class_index == '' || that.data.stu_class_index == -1) {
+      issubmit = false
     }
 
     that.setData({

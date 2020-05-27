@@ -2,6 +2,9 @@
 const app = getApp()
 Page({
 
+  // 数据是否正在提交
+  dataSubmiting: false,
+
   /**
    * 页面的初始数据
    */
@@ -246,6 +249,10 @@ Page({
   },
 
   add_submit:function(){
+    if (this.dataSubmiting) {
+      return
+    }
+    this.dataSubmiting = true
     let that = this
     if (that.data.aud == 0){
       var params = {
@@ -272,6 +279,7 @@ Page({
           add_mask: false,
           input_condition: ''
         })
+        that.dataSubmiting = false
         var params = {
           "token": wx.getStorageSync("token"),
           "uid": wx.getStorageSync("uid"),    //老师uid
@@ -303,6 +311,7 @@ Page({
             that.setData({
               cscs:that.data.cates
             })
+            
             console.log(that.data.cates_index + "that.data.cates_index")
             console.log(that.data.cates)
             console.log("学生档案——学情获取成功")
@@ -331,6 +340,7 @@ Page({
           add_mask: false,
           input_condition: ''
         })
+        that.dataSubmiting = false
         var params = {
           "token": wx.getStorageSync("token"),
           "uid": wx.getStorageSync("uid"),    //老师uid

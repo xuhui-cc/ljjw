@@ -340,12 +340,14 @@ Page({
             }
             case 2: {
               // 选项任务
+               // 标题拆分
               for (var n = 0; n < item.title.length; n++) {
                 item.task_detail[n].title = item.title[n]
               }
-  
+                  
               for (var j = 0; j < item.task_detail.length; j++) {
                 var taskDetail = item.task_detail[j]
+                // 子标题拆分
                 if (taskDetail.child_title != null) {
                   taskDetail.child_title = taskDetail.child_title.split(",")
   
@@ -359,20 +361,21 @@ Page({
                 taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
   
                 for (var k = 0; k < taskDetail.options.length; k++) {
-                  var arr = []
+                  
                   var option = taskDetail.options[k]
-                  for (let n in option.lists) {
-  
-                    arr.push(option.lists[n]);
-                    console.log(arr)
-                    // var imgs = []
-                    option.imgs = []
-                    option.list = arr
+
+                  if (taskDetail.finished_info.answers.length > k) {
+                    let answer = taskDetail.finished_info.answers[k]
+                    option.answer = answer
                   }
+                  
+                  option.imgs = []
+                  option.list = Object.values(option.lists)
+
                   if (taskDetail.finished_info.attach && taskDetail.finished_info.attach != '' && taskDetail.finished_info.attach.length > k && taskDetail.finished_info.attach[k] != ""){
 
                     option.imgs = taskDetail.finished_info.attach[k].split(",")
-                    console.log(option.imgs)
+                    // console.log(option.imgs)
                   }
                   
                   for (var n = 0; n < option.list.length; n++) {
@@ -383,12 +386,12 @@ Page({
                     newOptionListItem.select = false
                     option.list[n] = newOptionListItem
   
-                    for (var m = 0; m < taskDetail.finished_info.answers.length;m++){
-                      let answer = taskDetail.finished_info.answers[m]
-                      if (newOptionListItem.option == answer){
+                    // for (var m = 0; m < taskDetail.finished_info.answers.length;m++){
+                    //   let answer = taskDetail.finished_info.answers[m]
+                      if (newOptionListItem.option == option.answer){
                         newOptionListItem.select = true
                       }
-                    }
+                    // }
   
                     for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
                       if(k == m){

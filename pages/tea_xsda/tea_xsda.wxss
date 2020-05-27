@@ -1,5 +1,5 @@
 page{
-  background:#fbfbfc;
+  background:white;
 }
 .nabigation_bar{
   position: fixed;
@@ -119,10 +119,10 @@ page{
   width:440rpx;
   height:300rpx;
   font-size:28rpx;
-  font-family:PingFang SC;
-  font-weight:400;
+  /* font-family:PingFang SC;
+  font-weight:400; */
   line-height:28rpx;
-  color:rgba(180,180,180,1);
+  color:black;
   opacity:1;
 }
 .reject-sub{
@@ -230,7 +230,7 @@ page{
   /* background: rgb(182, 131, 131); */
 }
 .conditionBottom {
-  margin-bottom: 230rpx;
+  padding-bottom: 230rpx;
 }
 .dateView {
   height: 24rpx;

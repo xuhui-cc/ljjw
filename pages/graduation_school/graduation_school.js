@@ -31,7 +31,7 @@ Page({
 
   input_school: function (e) {
     let that = this
-    console.log(e.detail.value)
+    console.log(e)
     that.setData({
       input_school: e.detail.value
     })
@@ -40,7 +40,7 @@ Page({
       "token": wx.getStorageSync("token"),
       "keyword": that.data.input_school
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwGetSchoolList(params).then(d => {
       if (d.data.status == 1) {
         if(d.data.data != ''){
@@ -51,11 +51,7 @@ Page({
         else{
           wx.setStorageSync("input_school", that.data.input_school)
         }
-        
-        
       }
-      
-
     })
     // wx.navigateBack({
     //   url: '../../pages/stu-info/stu-info',

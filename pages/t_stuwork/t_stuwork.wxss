@@ -1,6 +1,7 @@
 page{
   background: #FBFBFC;
 }
+
 .nabigation_bar{
   position: fixed;
   width:750rpx;
@@ -60,6 +61,7 @@ page{
   display: flex;
   justify-content: center;
   padding-top: 30rpx;
+  z-index: 40;
 }
 
 .bottom_button:active {
@@ -80,22 +82,47 @@ page{
   /* width:750rpx; */
   height:76rpx;
   font-size:28rpx;
-  font-family:PingFang SC;
-  font-weight:400;
+  /* font-family:PingFang SC;
+  font-weight:400; */
   line-height:76rpx;
   color:rgba(39,39,39,1);
   opacity:1;
+  position: fixed;
+  background-color: #fbfbfc;
+  z-index: 100;
+  width: 750rpx;
 }
+
 .stu-work-layout{
   width:750rpx;
-  height:1393rpx;
+  /* height:1393rpx; */
   background:rgba(255,255,255,1);
+  /* background-color: red; */
   opacity:1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .stu-suit{
   display: flex;
   flex-wrap: wrap;
 }
+
+.section_header {
+  display: flex;
+  height: 76rpx;
+  width: 750rpx;
+  background-color: white;
+}
+
+
+
+.section_placehoulder {
+  height: 76rpx;
+  width: 750rpx;
+  background-color: white;
+}
+
 .stu-suit-shu{
   margin-left: 30rpx;
   margin-top: 49rpx;

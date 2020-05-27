@@ -29,38 +29,13 @@ Page({
 
   onLoad: function (options) {
 
+    let that = this
     // 获取导航尺寸
     this.setUpNaviSize()
 
-    let that = this
-
-    let nowTime = new Date();
+    this.setUpDateInfo()
     
-    var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
-
-    var yestday = new Date(today - 24 * 3600 * 1000).getTime();
-    that.setData({
-      today: that.timestampToTime(today),
-      yestday: that.timestampToTime(yestday)
-    })
-    
-    
-    var role = wx.getStorageSync("role")
-    var userInfo = wx.getStorageSync("userInfo")
-    
-    if(!role){
-      that.setData({
-        role: -1
-      })
-    }else{
-      that.setData({
-        role: role
-      })
-    }
-    that.setData({
-      userInfo: userInfo
-      // name: userInfo.name,
-    })
+    this.setUpUserInfo()
 
     if(that.data.role == 4){
       var params = {
@@ -69,6 +44,7 @@ Page({
       }
       console.log(params)
       app.ljjw.jwGetStudentMainPage(params).then(d => {
+        
         if(d.data.status == 1){
           that.setData({
             mydata: d.data.data,
@@ -304,7 +280,6 @@ Page({
           wx.openDocument({
             showMenu: true,
             filePath: filePath,
-            fileType: 'doc',
             success: function (res) {
               console.log('打开文档成功')
               wx.hideLoading()
@@ -375,9 +350,14 @@ Page({
 
   },
   
-  to_stu_rea:function(){
+  /**
+   * 搜索按钮 点击事件
+  */
+  to_stu_rea: function() {
+    let classs = this.data.stu_class[this.data.stu_class_index]
+    
     wx.navigateTo({
-      url: '../../pages/stu-rearch/stu-rearch?type=' + 2 ,
+      url: '../../pages/stu-rearch/stu-rearch?type=' + 2 + '&class_id=' + classs.class_id,
     })
   },
 
@@ -511,30 +491,11 @@ Page({
   onShow: function () {
     this.onLoad()
 
-    // wx.checkSession({
-    //   fail () {
-    //     console.log("sessionKey过期")
-        wx.login({
-          complete: (res) => {
-            app.updateWxLoginCode(res.code)
-          },
-        })
-    //   },
-    //   success () {
-    //     console.log("sessionKey未过期")
-    //   }
-    // })
-
-    // if (typeof this.getTabBar === 'function' &&
-    //   this.getTabBar()) {
-    //   console.log('my_onshow')
-    //   this.getTabBar().setData({
-    //     selected: 3
-    //   })
-    // }
-    // else {
-    //   console.log('未执行')
-    // }
+    wx.login({
+      complete: (res) => {
+        app.updateWxLoginCode(res.code)
+      },
+    })
     
   },
 
@@ -645,5 +606,133 @@ Page({
     })
   },
 
+  /**
+   * 获取 今天/昨天 date数据
+  */
+  setUpDateInfo: function () {
+    let that = this
+
+    let nowTime = new Date();
+    
+    var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
+
+    var yestday = new Date(today - 24 * 3600 * 1000).getTime();
+    that.setData({
+      today: that.timestampToTime(today),
+      yestday: that.timestampToTime(yestday)
+    })
+  },
+
+  /**
+   * 获取用户信息
+  */
+  setUpUserInfo: function() {
+    let that = this
+    var role = wx.getStorageSync("role")
+    var userInfo = wx.getStorageSync("userInfo")
+    
+    if(!role){
+      that.setData({
+        role: -1
+      })
+    }else{
+      that.setData({
+        role: role
+      })
+    }
+    that.setData({
+      userInfo: userInfo
+      // name: userInfo.name,
+    })
+  },
+
+  // ------------------------------------------------------接口-----------------------------------------
+  /**
+   * 学生获取页面数据
+  */
+  studentGetPageInfo: function () {
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    // console.log(params)
+    app.ljjw.jwGetStudentMainPage(params).then(d => {
+      
+      if(d.data.status == 1){
+        that.setData({
+          mydata: d.data.data,
+          stu_class: d.data.data.classes
+          
+        })
+        // console.log(that.data.mydata)
+        if (that.data.mydata.status_text.indexOf("请完成您的基础信息") != -1){
+          wx.setStorageSync("stu_sta", false)
+        }else{
+          wx.setStorageSync("stu_sta", true)
+        }
+
+        if (that.data.mydata.files){
+          for (var i = 0; i < that.data.mydata.files.length; i++) {
+            if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1){
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "doc"
+              })
+            } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1){
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "pdf"
+              })
+            } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "ppt"
+              })
+            }else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "jpg"
+              })
+            } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: "png"
+              })
+            }else {
+              var form = "mydata.files[" + i + "].form"
+              that.setData({
+                [form]: null
+              })
+            }
+
+            var d = that.data.mydata.files[i].createtime.substr(10, 15)
+
+            if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
+              var createtime = "今天" + d
+              console.log(createtime)
+              var cs = "mydata.files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+            if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
+              var createtime = "昨天" + d
+              console.log(createtime)
+              var cs = "mydata.files[" + i + "].createtime"
+              that.setData({
+                [cs]: createtime
+              })
+            }
+
+          }
+        }
+        
+        console.log(that.data.mydata.files)
+        console.log("学生——我的主页接口获取成功")
+      }
+      
+      
+    })
+  }
   
 })

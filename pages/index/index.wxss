@@ -15,6 +15,7 @@ page{
 }
 
 .cs_layout{
+  position: relative;
   padding-bottom: 200rpx;
 }
 .aud_cs{
@@ -381,7 +382,10 @@ page{
 .c-name{
   margin-left: 18rpx;
   margin-top: 56rpx;
-  width:320rpx;
+  max-width:320rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   height:45rpx;
   font-size:32rpx;
   font-family:PingFang SC;
@@ -397,30 +401,35 @@ page{
   background:#FFFFFF;
   opacity:0.64;
   border-radius:14rpx;
+  z-index: 50;
 }
 .mask1{
   position: absolute;
-  margin-left: 30rpx;
-  margin-top: 0rpx;
-  width:700rpx;
-  height:230rpx;
+  margin-left: 29rpx;
+  margin-top: 15rpx;
+  width:696rpx;
+  height:228rpx;
   background:#FFFFFF;
   opacity:0.64;
-  border-radius:14rpx;
+  border-radius:10rpx;
+  z-index: 50;
 }
 .state{
-  margin-left: 53rpx;
+  margin-left: auto;
+  margin-right: 30rpx;
   margin-top: 54rpx;
-  width:72rpx;
+  /* max-width:300rpx; */
   height:50rpx;
   font-size:36rpx;
-  font-family:PingFang SC;
+  /* font-family:PingFang SC; */
   font-weight:bold;
   line-height:50rpx;
   opacity:1;
+  
 }
 .state-img{
-  margin-left: 72rpx;
+  margin-left: auto;
+  margin-right: 30rpx;
   margin-top: 71rpx;
   width:34.72rpx;
   height:25.65rpx;
@@ -740,6 +749,7 @@ page{
   opacity:1;
   border-radius:10rpx;
 }
+
 .t-info-layout{
   display: flex;
 }
@@ -855,6 +865,21 @@ page{
   margin-top: 9rpx;
   width:19rpx;
   height:19rpx;
+}
+.notCheckon {
+  /* position: absolute;
+  bottom: 70rpx;
+  right: 55rpx;
+  color: #d4d4d4;
+  font-size: 24rpx; */
+  margin-right: 30rpx;
+  height: 143rpx;
+  min-width: 91rpx;
+  justify-content: flex-end;
+  align-items: center;
+  color: #d4d4d4;
+  font-size: 24rpx;
+  display: flex;
 }
 .hm-lea-layout{
   position: absolute;
@@ -1178,9 +1203,129 @@ page{
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:10rpx;
+  position: relative;
+}
+.teacher_info {
+  display: flex;
+  height: 80.5rpx;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+.teacher_avatar {
+  width: 51rpx;
+  height: 51rpx;
+  border-radius: 50%;
+  margin-left: 34rpx;
+}
+.teacher_name {
+  margin-left: 13rpx;
+  font-size: 28rpx;
+  max-width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #272727;
+}
+.class_name {
+  margin-right: 36rpx;
+  margin-left: auto;
+  color: #d1d1d1;
+  font-size: 26rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300rpx;
+}
+.teacherInfo_bottomLine {
+  height: 0.5rpx;
+  background-color: #f1f1f1;
+  position: absolute;
+  bottom: 0;
+  left: 34rpx;
+  right: 30rpx;
+  z-index: 20;
 }
 .t-info{
   display: flex;
+}
+.class_infoView {
+  display: flex;
+  flex-direction: row;
+}
+.class_infoSubview1 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 34rpx;
+  margin-right: auto;
+}
+.class_time_Room {
+  display: flex;
+  flex-direction: row;
+  margin-top: 26rpx;
+  height: 37rpx;
+  align-items: center;
+}
+.class_title_view {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10rpx;
+  height: 37rpx;
+  align-items: center;
+}
+.clss_time_title {
+  font-size: 26rpx;
+  color: #ababab;
+  width: 52rpx;
+}
+.class_time {
+  margin-left: 16rpx;
+  color: #272727;
+  font-size: 26rpx;
+}
+.class_room_title {
+  margin-left: 45rpx;
+  font-size: 26rpx;
+  color: #ababab;
+  width: 52rpx;
+}
+.class_room {
+  margin-left: 19rpx;
+  font-size: 26rpx;
+  color: #272727;
+}
+.class_title_title {
+  font-size: 26rpx;
+  color: #ababab;
+  width: 52rpx;
+}
+.class_title {
+  font-size: 26rpx;
+  color: #272727;
+  margin-left: 15rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 400rpx;
+}
+.class_infoSubview2 {
+  display: flex;
+  flex-direction: row;
+  min-width: 91rpx;
+  margin-right: 30rpx;
+  justify-content: flex-end;
+  align-items: center;
+  height: 143rpx;
+}
+.class_dianming_arrow {
+  margin-right: 0rpx;
+  width: 16rpx;
+  height: 16rpx;
+}
+.class_dianming {
+  margin-right: 3rpx;
+  color: #2dc1a0;
+  font-size: 24rpx;
 }
 .t-ava{
   margin-left: 34rpx;
@@ -1204,7 +1349,7 @@ page{
   width:52rpx;
   height:37rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
+  /* font-family:PingFang SC; */
   font-weight:400;
   line-height:37rpx;
   color:rgba(171,171,171,1);
@@ -1323,7 +1468,7 @@ page{
   opacity:1;
 }
 .hm-t-class{
-  margin-left: 330rpx;
+  margin-right: 30rpx;
   margin-top: 25rpx;
   width:260rpx;
   height:37rpx;
@@ -1435,7 +1580,7 @@ page{
   opacity:1;
 }
 .hm-pro-date{
-  margin-left: 350rpx;
+  margin-right: 30rpx;
   margin-top: 30rpx;
   width:250rpx;
   height:33rpx;
@@ -1465,7 +1610,7 @@ page{
   border-radius:49rpx;
 }
 .hm-un-rejest{
-  margin-left: 39rpx;
+  margin-right: 45rpx;
   margin-top: 66rpx;
   margin-bottom: 67rpx;
   width:311rpx;

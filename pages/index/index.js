@@ -3,6 +3,11 @@
 const app = getApp()
 
 Page({
+
+
+  // 是否正在提交数据
+  dataSubmiting: false,
+
   data: {
     type: 2,  //type 1-请假，2-课表，3-考勤
     aud: 0, // 0-未审核 1-已审核
@@ -191,6 +196,10 @@ Page({
    * 教务/管理员 请假申请 审核通过
   */
   hm_pass:function(e){
+    if (this.dataSubmiting) {
+      return
+    }
+    this.dataSubmiting = true
     let that = this
     that.setData({
       type : 1
@@ -210,11 +219,11 @@ Page({
         "type": 1,
         "ask_id":that.data.admin_unaud_leave[ask_xb].id
       }
-      console.log(params)
+      // console.log(params)
 
       
       app.ljjw.jwAdminAskforleaveVerify(params).then(d => {
-        console.log(d)
+        // console.log(d)
         if (d.data.status == 1) {
           
           wx.showToast({
@@ -250,7 +259,8 @@ Page({
             [cscs]: false
           })
         }
-        console.log("我是管理员请假通过")
+        that.dataSubmiting = false
+        // console.log("我是管理员请假通过")
       })
     } else if (lea_role == 2){
       var cscs = "hm_unaud_leave[" + ask_xb + "].submit"
@@ -263,10 +273,9 @@ Page({
         "type": 1,
         "ask_id": that.data.hm_unaud_leave[ask_xb].id
       }
-      console.log(params)
-      
+      // console.log(params)
       app.ljjw.jwJiaowuAskforleaveVerify(params).then(d => {
-        console.log(d)
+        // console.log(d)
         if (d.data.status == 1) {
           
           wx.showToast({
@@ -304,7 +313,8 @@ Page({
             [cscs]: false
           })
         }
-        console.log("我是教务请假通过")
+        that.dataSubmiting = false
+        // console.log("我是教务请假通过")
       })
     }
     
@@ -325,7 +335,6 @@ Page({
       lea_role: lea_role,
       ask_xb: ask_xb
     })
-    
   },
 
   leafor_reason:function(e){
@@ -337,6 +346,10 @@ Page({
   },
 
   reject_pass:function(){
+    if (this.dataSubmiting) {
+      return
+    }
+    this.dataSubmiting = true
     let that = this
     that.setData({
       type : 1
@@ -385,7 +398,7 @@ Page({
           that.admin_askfor()
           console.log("我是管理员请假驳回成功")
         }
-        
+        that.dataSubmiting = false
       })
     } else if(that.data.lea_role == 2){
       var params = {
@@ -429,7 +442,7 @@ Page({
          that.jw_askfor()
           console.log("我是教务请假驳回成功")
         }
-
+        that.dataSubmiting = false
       })
     }
   },
@@ -941,10 +954,19 @@ Page({
             // 学生
             for (var i = 0; i < dataArray.length; i++) {
               var dot = dataArray[i]
-              if (dot.check_status == 0) {
-                dot.type = 1
-              } else {
+              if (dot.ischeckon == 0) {
+                // 未点名
                 dot.type = 2
+              } else {
+                // 已点名
+                if (dot.status == '未全勤') {
+                  // 未全勤
+                  dot.type = 2
+                } else {
+                  // 全勤
+                  dot.type = 1
+                }
+                
               }
             }
             break
@@ -1029,6 +1051,8 @@ Page({
 
   /**
    * 学生获取日考勤列表
+   * 返回值：
+   * ischeckon： 0-未点名 1-已点名
   */
   StudentGetDayCheckon: function(riqi) {
     let that = this
@@ -1054,9 +1078,15 @@ Page({
           return
         }
 
+        // 按课程开始时间排序
+        data.sort(function(a,b){
+            let astarttime = a.starttime
+            let bstarttime = b.starttime
+            return (astarttime - bstarttime)
+        })
         
         that.setData({
-          dayCheckon: d.data.data
+          dayCheckon: data
         })
         // console.log(that.data.dayCheckon)
       }
@@ -1139,13 +1169,20 @@ Page({
   
   /**
    * 老师/教务/管理员 获取某一天考勤
+   * 参数：
+   * riqi：0000-00-00
+   * type：1-课表   2-考勤
+   * 返回值：
+   * ischeckon：是否已点名
+   * cancheckon: 是否可以点名
   */
   teacherGetCheckOnList: function(riqi) {
     let that = this
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "riqi": riqi
+      "riqi": riqi,
+      "type": that.data.type == 2 ? "1" : "2"
     }
     console.log(params)
     that.setData({
@@ -1154,43 +1191,42 @@ Page({
     console.log(that.data.class_ids)
     console.log("that.data.class_ids")
     app.ljjw.jwGetCheckOnList(params).then(d => {
-      // console.log(d.data.status)
       if (d.data.status == 1) {
-        // console.log("或教务")
-        // console.log(d.data.data)
 
         var tea_dayCourse = d.data.data.course_list
         // var tea_courselist = d.data.data.day_list
 
+        if (!tea_dayCourse || tea_dayCourse == '' || tea_dayCourse.length == 0) {
+          that.setData({
+            tea_dayCourse: [],
+          })
+          if (that.data.type == 3) {
+            wx.showToast({
+              title: '暂无考勤内容',
+              icon: 'none'
+            })
+          }
+          return
+        }
+
+        var timestamp = (new Date()).getTime();
         for (var i = 0; i < tea_dayCourse.length; i++) {
           var course = tea_dayCourse[i]
-          //关联班级点名判断
+          
+          //关联班级 是否可以点名
           for(var rc=0;rc<that.data.class_ids.length;rc++){
             if (course.class_id == that.data.class_ids[rc]){
               course.rc = true
             }
           }
-          var end1 = course.classtime.substr(8, 5)
-          var end = course.riqi + " " + end1
-          
-          var iphone1 = end.substr(0, 4)
-          var iphone2 = end.substr(5, 2)
-          var iphone3 = end.substr(8, 2)
-          var iphone4 = end.substr(11, 5)
-          
-          var iphone_cs = iphone1 + "/" + iphone2 + "/" + iphone3 + " " + iphone4
-          
-          var bb = Date.parse(iphone_cs)
-          
 
-          var timestamp = Date.parse(new Date());
           
           // 判断课程是否结束
-          if (bb < timestamp) {
-            tea_dayCourse[i].comp = false
+          if (course.endtime*1000 < timestamp) {
+            course.comp = false
           }
           else {
-            tea_dayCourse[i].comp = true
+            course.comp = true
           }
 
         }
@@ -1289,6 +1325,7 @@ Page({
       "uid": wx.getStorageSync("uid"),
       "startdate" : startDate,
       "enddate" : endDate,
+      "type" : that.data.type == 2 ? '1' : '2'
     }
     app.ljjw.jwGetDayList(params).then(d => {
       if (d.data.status == 1) {

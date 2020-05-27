@@ -93,5 +93,13 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /**
+   * 获取页面辅助尺寸
+  */
+  // setUpNaviSize: function () {
+  //   let menuButtonRect = wx.getMenuButtonBoundingClientRect()
+
+  // }
 })

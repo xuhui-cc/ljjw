@@ -19,8 +19,8 @@
       <view wx:else="{{aud == 1}}" class="reject-title">学生概况</view>
     </view>
     <view class="reject-cont-lay">
-      <textarea wx:if="{{aud == 0}}" class="reject-for" placeholder="请输入该学生学情分析" bindinput='input_condition'></textarea>
-      <textarea wx:else="{{aud == 1}}" class="reject-for" placeholder="请输入该学生概况分析" bindinput='input_condition'></textarea>
+      <textarea wx:if="{{aud == 0}}" class="reject-for" placeholder="请输入该学生学情分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition'></textarea>
+      <textarea wx:else="{{aud == 1}}" class="reject-for" placeholder="请输入该学生概况分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition'></textarea>
     </view>
     <view class="reject-sub" style="{{input_condition? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{input_condition?'add_submit':''}}">确定</view>
   
@@ -36,7 +36,7 @@
   <view class='interval' style="margin-top:{{naviBarHeight+88/750*naviBarWidth}}px"></view>
 
   <!-- 学情 -->
-  <view wx:if="{{aud == 0}}" class="xq">
+  <view wx:if="{{aud == 0}}" class="xq conditionBottom">
 
     
     <picker mode='selector' bindchange="cates_picker" range-key="{{'name'}}" value="{{cates_index}}" range="{{cates}}" > 
@@ -47,7 +47,7 @@
     </picker>
     
 
-    <view class="cont-layout" wx:if="{{studyinfo != ''}}" style="margin-top:11rpx;">
+    <view class="cont-layout" wx:if="{{studyinfo && studyinfo != '' && studyinfo.length != 0}}" style="margin-top:11rpx;">
       <block wx:for="{{studyinfo}}" wx:key="studyinfo_index">
         <view class="condition_contentView">
           <!-- <image class="xu" src="../../images/route2.png"></image> -->
@@ -67,7 +67,7 @@
     
     </view>
 
-    <image wx:else="" class='null_img' src='../../images/rec_null.png'></image>
+    <image wx:else class='null_img' src='../../images/rec_null.png' mode="aspectFit"></image>
 
     <view wx:if="{{cates[cates_index].com}}" class="add" bindtap='add'>
         <image class="add-img" src="../../images/add.png"></image>
@@ -99,7 +99,7 @@
       </block>
     </view>
 
-    <image wx:else="" class='null_img' src='../../images/rec_null.png'></image>
+    <image wx:else class='null_img' src='../../images/rec_null.png' mode="aspectFit"></image>
 
     <view class="add" bindtap='add'>
       <image class="add-img" src="../../images/add.png"></image>
@@ -111,87 +111,88 @@
 
   <!-- 成绩 -->
   <view wx:if="{{aud == 2}}">
+    <block wx:if="{{student_score && student_score != '' && student_score.length != 0}}">
+      <view wx:for="{{student_score}}" wx:key="score_index">
+        <view class="rec-layout">
 
-    <view wx:for="{{student_score}}" wx:key="score_index">
-      <view class="rec-layout">
-
-        <view class="flex">
-          <view class="ks-name">{{item.mock_name}}</view>
-          <view class="ks-date">{{item.mock_date}}</view>
-        </view>
-        <view class="flex">
-          <view class="bj-name">{{item.classname}}</view>
-          <image wx:if="{{!item.isfold}}" class="xl-img" data-xb="{{index}}" src="../../images/xsj.png" bindtap='score_fold'></image>
-          <image wx:else="" class="xl-img" data-xb="{{index}}" src="../../images/ssj.png" bindtap='score_fold'></image>
-        </view>
-
-        <!-- 下拉展开 -->
-        <view wx:if="{{item.isfold}}">
           <view class="flex">
-            <view>
-              <view class="sl-cj" wx:if="{{item.sl_score != null}}">{{item.sl_score}}</view>
-              <view class="sl-cj" wx:if="{{item.sl_score == null}}">0</view>
-              <view class="km-sl">申论</view>
-            </view>
-            <view>
-              <view class="xc-cj" wx:if="{{item.xc_score != null}}">{{item.xc_score}}</view>
-              <view class="xc-cj" wx:if="{{item.xc_score == null}}">0</view>
-              <view class="km-xc">行测</view>
-            </view>
+            <view class="ks-name">{{item.mock_name}}</view>
+            <view class="ks-date">{{item.mock_date}}</view>
           </view>
-          <view class="rec-heng"></view>
+          <view class="flex">
+            <view class="bj-name">{{item.classname}}</view>
+            <image wx:if="{{!item.isfold}}" class="xl-img" data-xb="{{index}}" src="../../images/xsj.png" bindtap='score_fold'></image>
+            <image wx:else="" class="xl-img" data-xb="{{index}}" src="../../images/ssj.png" bindtap='score_fold'></image>
+          </view>
 
-          <!-- 申论 -->
-          <view wx:if="{{item.sl_score != null}}">
-            <view class="flex" wx:if="{{item.sl_scoreinfo != null}}">
-              <view class="km-title">题表</view>
-              <view class="rec_sl">分值</view>
+          <!-- 下拉展开 -->
+          <view wx:if="{{item.isfold}}">
+            <view class="flex">
+              <view>
+                <view class="sl-cj" wx:if="{{item.sl_score != null}}">{{item.sl_score}}</view>
+                <view class="sl-cj" wx:if="{{item.sl_score == null}}">0</view>
+                <view class="km-sl">申论</view>
+              </view>
+              <view>
+                <view class="xc-cj" wx:if="{{item.xc_score != null}}">{{item.xc_score}}</view>
+                <view class="xc-cj" wx:if="{{item.xc_score == null}}">0</view>
+                <view class="km-xc">行测</view>
+              </view>
+            </view>
+            <view class="rec-heng"></view>
+
+            <!-- 申论 -->
+            <view wx:if="{{item.sl_score != null}}">
+              <view class="flex" wx:if="{{item.sl_scoreinfo != null}}">
+                <view class="km-title">题表</view>
+                <view class="rec_sl">分值</view>
+              </view>
+              <view class="rec-cont">
+                <view wx:for="{{item.sl_scoreinfo}}" wx:key="sl_scoreinfo_index" wx:for-item="sl_scoreinfo">
+                  <view class="flex">
+                    <view class="km_sl">第{{index+ 1}}题</view>
+                    <view class="rec-num_sl">{{sl_scoreinfo}}</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+            <!-- 申论结束 -->
+
+            <!-- 行测 -->
+            <view wx:if="{{item.xc_score != null}}">
+            <view class="flex" wx:if="{{item.xc_scoreinfo != null}}">
+              <view class="km-title">科目</view>
+              <view class="ans">答对题目</view>
+              <view class="rec">分值</view>
             </view>
             <view class="rec-cont">
-              <view wx:for="{{item.sl_scoreinfo}}" wx:key="sl_scoreinfo_index" wx:for-item="sl_scoreinfo">
+              <view wx:for="{{item.xc_scoreinfo}}" wx:key="xc_scoreinfo_index" wx:for-item="xc_scoreinfo">
                 <view class="flex">
-                  <view class="km_sl">第{{index+ 1}}题</view>
-                  <view class="rec-num_sl">{{sl_scoreinfo}}</view>
+                  <view class="km">{{xc_scoreinfo.cateName}}</view>
+                  <view class="ans-num">{{xc_scoreinfo.cateDate.correct_num}}</view>
+                  <view class="rec-num">{{xc_scoreinfo.cateDate.get_score}}</view>
+                </view>
+                <view wx:for="{{xc_scoreinfo.child}}" wx:key="child_index" wx:for-item="child">
+                  <view class="flex">
+                    <view class="km" style='color:rgba(180,180,180,1);'>{{child.cateName}}</view>
+                    <view class="ans-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.correct_num}}</view>
+                    <view class="rec-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.get_score}}</view>
+                  </view>
                 </view>
               </view>
             </view>
-          </view>
-          <!-- 申论结束 -->
+            </view>
+            <!-- 行测结束 -->
+            
 
-          <!-- 行测 -->
-          <view wx:if="{{item.xc_score != null}}">
-          <view class="flex" wx:if="{{item.xc_scoreinfo != null}}">
-            <view class="km-title">科目</view>
-            <view class="ans">答对题目</view>
-            <view class="rec">分值</view>
+
           </view>
-          <view class="rec-cont">
-            <view wx:for="{{item.xc_scoreinfo}}" wx:key="xc_scoreinfo_index" wx:for-item="xc_scoreinfo">
-              <view class="flex">
-                <view class="km">{{xc_scoreinfo.cateName}}</view>
-                <view class="ans-num">{{xc_scoreinfo.cateDate.correct_num}}</view>
-                <view class="rec-num">{{xc_scoreinfo.cateDate.get_score}}</view>
-              </view>
-              <view wx:for="{{xc_scoreinfo.child}}" wx:key="child_index" wx:for-item="child">
-                <view class="flex">
-                  <view class="km" style='color:rgba(180,180,180,1);'>{{child.cateName}}</view>
-                  <view class="ans-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.correct_num}}</view>
-                  <view class="rec-num" style='color:rgba(180,180,180,1);'>{{child.cateDate.get_score}}</view>
-                </view>
-              </view>
-            </view>
-          </view>
-          </view>
-          <!-- 行测结束 -->
+          <!-- 下拉展开 -->
           
-
-
         </view>
-        <!-- 下拉展开 -->
-        
       </view>
-    </view>
-  
+    </block>
+    <image wx:else class='null_img' src='../../images/rec_null.png' mode="aspectFit"></image>
   </view>
   <!-- 成绩结束 -->
 

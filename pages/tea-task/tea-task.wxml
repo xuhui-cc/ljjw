@@ -1,10 +1,13 @@
 <view class="container">
 
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px">
+    <view class="naviBar_contentView" style="height:{{naviBarHeight-stateBarHeight}}px;margin-top:{{stateBarHeight}}px">
+      <view class="backimg_layout" bindtap="back">
+        <image class='back-img' src='../../images/back_img.png' ></image>
+      </view>
+      <text class="my-head">任务</text> 
+      <view class="backimg_layout"></view>
     </view>
-    <text class="my-head">任务</text> 
   </view>
 
   <view class="ques-layout">
@@ -29,7 +32,7 @@
         
         <view wx:if="{{item.fold}}">
           <!-- 选项式 -->
-          <block wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+          <block wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="task_detail_index">
             <view class='selectTask_title'>{{task_detail.title}}</view>
             <block wx:for="{{task_detail.options}}" wx:for-item="options" wx:for-key="options_index" wx:key="{{options_index}}">
               <view wx:if="{{options.title && options.title != ''}}" class="selectTask_subtitle">{{options.title}}</view>
@@ -43,17 +46,22 @@
           <!-- 选项式 -->
 
           <!-- 字段式 -->
-          <view wx:if="{{item.type == 3}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+          <block wx:if="{{item.type == 3}}">
             <view class='ques-cont'>{{item.title}}</view>
-            <view wx:for="{{task_detail.fieldlist.lists}}" wx:for-item="fieldlist" wx:for-key="fieldlist_index" wx:key="{{fieldlist_index}}">
-              <view class='ques-cont'>{{fieldlist}}</view>
-            </view>
-            
-          </view>
+            <block wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="task_detail_index">
+              <block wx:for="{{task_detail.fieldlist}}" wx:for-item="field" wx:for-index="field_index" wx:key="field_index">
+                <block wx:for="{{field.lists}}" wx:for-item="list" wx:for-key="fieldlist_index" wx:key="fieldlist_index">
+                  <view class='ques-cont'>{{list}}</view>
+                </block>
+              </block>
+              
+            </block>
+          </block>
+          
           <!-- 字段式 -->
 
           <!-- 考勤式 -->
-          <view wx:if="{{item.type == 4}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="{{task_detail_index}}">
+          <view wx:if="{{item.type == 4}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="task_detail_index">
             <!-- <view class='ques-cont'>{{item.title}}</view> -->
             <view class='ques-cont'>确认考勤{{task_detail.startdate}}~{{task_detail.enddate}}</view>
             

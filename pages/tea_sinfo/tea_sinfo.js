@@ -25,6 +25,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.getNaviSzie()
+
     let that = this
     var params = {
       "token": wx.getStorageSync("token"),
@@ -264,6 +267,23 @@ Page({
       }
     }
   },
+
+  /**
+   * 获取页面辅助尺寸
+  */
+  getNaviSzie: function () {
+    let menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let systemInfo = wx.getSystemInfoSync()
+    let naviHeight = menuButtonRect.bottom + 10
+    let saveBottom = systemInfo.screenHeight-systemInfo.safeArea.bottom
+    this.setData({
+      naviBarHeight: naviHeight,
+      statusBarHeight: systemInfo.statusBarHeight,
+      naviBarContentHeight: naviHeight - systemInfo.statusBarHeight,
+      contentHeight: systemInfo.screenHeight - naviHeight,
+      safeAreaBottom: saveBottom
+    })
+  }
 //   // 处理数据格式，及获取分组高度
 //   getBrands: function () {
 //     var that = this;

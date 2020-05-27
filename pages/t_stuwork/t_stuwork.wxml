@@ -15,76 +15,96 @@
 
     <view class="mask" wx:if="{{stu_detail}}"></view>
     <view class="bottom_button" style="height:{{bottomButton_Height}}px" bindtap="copyInfoButtonClcked">复制信息</view>
-    <view class="stu_num" style="margin-top:{{naviBarHeight}}px">班级共{{stu_totle}}人</view>
-    <view class="stu-work-layout">
-      <view class="stu-suit" wx:if="{{normal}}">
-        <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">正常到课({{normal_num}}人)：</view>
-      </view>
-      <view class="stu-suit" wx:if="{{normal}}">
-        <view wx:for="{{normal}}" wx:key="normal_index">
-          <view class="stu-info-layout" >
-            <image class="stu-avatar" src="{{item.avatar}}"></image>
-            <view class="stu-name">{{item.realname}}</view>
+    <view class="stu_num" id="stu_num" style="margin-top:{{naviBarHeight}}px">班级共{{stu_totle}}人</view>
+    <view class="stu-work-layout" style="margin-top:{{naviBarHeight + 76.0/750*naviBarWidth}}px; padding-bottom:{{bottomButton_Height+ 40/750.0*naviBarWidth}}px;">
+
+      <!-- 正常到课分区 -->
+      <block wx:if="{{normal}}">
+        <view class="section_header" id="normal_header" style="position:{{section_header_dic.normal_header.flex ? 'fixed' : 'static'}}; top:{{naviBarHeight+74.0/750*naviBarWidth + section_header_dic.normal_header.header_flex_top}}px;z-index:2;">
+          <view class="stu-suit-shu"></view>
+          <view class="stu-suit-head">正常到课({{normal_num}}人)：</view>
+        </view>
+        <view hidden="{{!section_header_dic.normal_header.flex}}" class="section_placehoulder"></view>
+        <view class="stu-suit">
+          <view wx:for="{{normal}}" wx:key="normal_index">
+            <view class="stu-info-layout" >
+              <image class="stu-avatar" src="{{item.avatar}}"></image>
+              <view class="stu-name">{{item.realname}}</view>
+            </view>
           </view>
         </view>
-      </view>
+      </block>
 
-      <view class="stu-suit" wx:if="{{later}}">
-        <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">迟到({{later_num}}人)：</view>
-      </view>
-      <view class="stu-suit" wx:if="{{later}}">
-        <view wx:for="{{later}}" wx:key="later_index">
-          <view class="stu-info-layout" >
-            <image class="stu-avatar" src="{{item.avatar}}"></image>
-            <view class="stu-name">{{item.realname}}</view>
+      <!-- 迟到分区 -->
+      <block wx:if="{{later}}">
+        <view class="section_header" id="later_header" style="position:{{section_header_dic.later_header.flex ? 'fixed' : 'static'}}; top:{{naviBarHeight+74.0/750*naviBarWidth + section_header_dic.later_header.header_flex_top}}px;z-index:3;">
+          <view class="stu-suit-shu"></view>
+          <view class="stu-suit-head">迟到({{later_num}}人)：</view>
+        </view>
+        <view hidden="{{!section_header_dic.later_header.flex}}" class="section_placehoulder"></view>
+        <view class="stu-suit">
+          <view wx:for="{{later}}" wx:key="later_index">
+            <view class="stu-info-layout" >
+              <image class="stu-avatar" src="{{item.avatar}}"></image>
+              <view class="stu-name">{{item.realname}}</view>
+            </view>
           </view>
         </view>
-      </view>
+      </block>
+      
 
-      <view class="stu-suit" wx:if="{{askforleave}}">
-        <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">请假({{askforleave_num}}人)：</view>
-      </view>
-      <view class="stu-suit" wx:if="{{askforleave}}">
-        <view wx:for="{{askforleave}}" wx:key="askforleave_index">
-          <view class="stu-info-layout" data-askfor_xb='{{index}}' bindtap="look_stu_datail">
-            <image class="stu-avatar" src="{{item.avatar}}"></image>
-            <view class="stu-name">{{item.realname}}</view>
-            <view wx:if="{{item.askforleave_info != ''}}" class="stu-xcx">查看详情</view>
+      <!-- 请假分区 -->
+      <block wx:if="{{askforleave}}">
+        <view class="section_header" id="askforleave_header" style="position:{{section_header_dic.askforleave_header.flex ? 'fixed' : 'static'}}; top:{{naviBarHeight+74.0/750*naviBarWidth + section_header_dic.askforleave_header.header_flex_top}}px; z-index:4;">
+          <view class="stu-suit-shu"></view>
+          <view class="stu-suit-head">请假({{askforleave_num}}人)：</view>
+        </view>
+        <view hidden="{{!section_header_dic.askforleave_header.flex}}" class="section_placehoulder"></view>
+        <view class="stu-suit">
+          <view wx:for="{{askforleave}}" wx:key="askforleave_index">
+            <view class="stu-info-layout" data-askfor_xb='{{index}}' bindtap="look_stu_datail">
+              <image class="stu-avatar" src="{{item.avatar}}"></image>
+              <view class="stu-name">{{item.realname}}</view>
+              <view wx:if="{{item.askforleave_info != ''}}" class="stu-xcx">查看详情</view>
+            </view>
           </view>
         </view>
-      </view>
+      </block>
 
-      <view class="stu-suit" wx:if="{{cutschool}}">
-        <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">旷课({{cutschool_num}}人)：</view>
-      </view>
-      <view class="stu-suit" wx:if="{{cutschool}}">
-        <view wx:for="{{cutschool}}" wx:key="index">
-          <view class="stu-info-layout" >
-            <image class="stu-avatar" src="{{item.avatar}}"></image>
-            <view class="stu-name">{{item.realname}}</view>
-            
+      <!-- 旷课分区 -->
+      <block wx:if="{{cutschool}}">
+        <view class="section_header" id="cutschool_header" style="position:{{section_header_dic.cutschool_header.flex ? 'fixed' : 'static'}}; top:{{naviBarHeight+74.0/750*naviBarWidth + section_header_dic.cutschool_header.header_flex_top}}px; z-index:5;">
+          <view class="stu-suit-shu"></view>
+          <view class="stu-suit-head">旷课({{cutschool_num}}人)：</view>
+        </view>
+        <view hidden="{{!section_header_dic.cutschool_header.flex}}" class="section_placehoulder"></view>
+        <view class="stu-suit">
+          <view wx:for="{{cutschool}}" wx:key="index">
+            <view class="stu-info-layout" >
+              <image class="stu-avatar" src="{{item.avatar}}"></image>
+              <view class="stu-name">{{item.realname}}</view>
+              
+            </view>
           </view>
         </view>
-      </view>
-
-      <view class="stu-suit" wx:if="{{leaveschool}}">
-        <view class="stu-suit-shu"></view>
-        <view class="stu-suit-head">离校({{leaveschool_num}}人)：</view>
-      </view>
-      <view class="stu-suit" wx:if="{{leaveschool}}">
-        <view wx:for="{{leaveschool}}" wx:key="leaveschool_index">
-          <view class="stu-info-layout" >
-            <image class="stu-avatar" src="{{item.avatar}}"></image>
-            <view class="stu-name">{{item.realname}}</view>
-            
+      </block>
+      
+      <!-- 离校分区 -->
+      <block wx:if="{{leaveschool}}">
+        <view class="section_header" id="leaveschool_header" style="position:{{section_header_dic.leaveschool_header.flex ? 'fixed' : 'static'}}; top:{{naviBarHeight+74.0/750*naviBarWidth + section_header_dic.leaveschool_header.header_flex_top}}px; z-index:6;">
+          <view class="stu-suit-shu"></view>
+          <view class="stu-suit-head">离校({{leaveschool_num}}人)：</view>
+        </view>
+        <view hidden="{{!section_header_dic.leaveschool_header.flex}}" class="section_placehoulder"></view>
+        <view class="stu-suit">
+          <view wx:for="{{leaveschool}}" wx:key="leaveschool_index">
+            <view class="stu-info-layout" >
+              <image class="stu-avatar" src="{{item.avatar}}"></image>
+              <view class="stu-name">{{item.realname}}</view>
+            </view>
           </view>
         </view>
-      </view>
-
+      </block>
     </view>
 
     <view class="mask-tip" wx:if="{{stu_detail}}">

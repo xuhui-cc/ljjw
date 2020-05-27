@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 分区头悬停状态
+    section_header_dic: {}
   },
 
   /**
@@ -95,6 +96,37 @@ Page({
 
   },
 
+  onPageScroll: function (e) {
+    // console.log(e)
+    if (!this.data.section_header_dic || Object.keys(this.data.section_header_dic).length == 0) {
+      return
+    }
+
+    var canReload = false
+    for (let key in this.data.section_header_dic) {
+      let section_header_item = this.data.section_header_dic[key]
+      if (e.scrollTop > section_header_item.top) {
+        if (!section_header_item.flex) {
+          section_header_item.flex = true
+          canReload = true
+        }
+      } else {
+        if (section_header_item.flex) {
+          section_header_item.flex = false
+          canReload = true
+        }
+      }
+      this.data.section_header_dic[key] = section_header_item
+    }
+    
+    if (canReload) {
+      console.log("改变一次悬停状态")
+      this.setData({
+        section_header_dic : this.data.section_header_dic
+      })
+    }
+  },
+
   /**
    * 设置自定义导航栏尺寸
   */
@@ -110,6 +142,43 @@ Page({
       naviBarSelectSub_Top: menuButtonRect.top,
       bottomButton_Height: systemInfo.screenHeight-systemInfo.safeArea.bottom+(80.0/750*naviBarWidth)
     })
+  },
+
+  /**
+   * 获取分区头高度信息
+  */
+  getSectionHeaderHeight: function () {
+    let that = this
+    let query1 = wx.createSelectorQuery()
+    query1.selectAll("#stu_num, .section_header").boundingClientRect(function (rects) {
+      console.log('表头top')
+      var stu_num_bottom = 0;
+      var section_header_dic = {}
+      // 分区头叠加高度 第n个为 分区头索引 * 分区头高度
+      var nextHeight = 0
+      rects.forEach(function (rect) {
+        console.log(rect)
+        if (rect.id == "stu_num") {
+          stu_num_bottom = rect.bottom
+        } else {
+          let section_header_item = {
+            top: rect.top - stu_num_bottom - nextHeight,
+            flex: false,
+            header_flex_top: nextHeight
+          }
+          section_header_dic[rect.id] = section_header_item
+          nextHeight = nextHeight + rect.height
+        }
+      })
+      that.setData({
+        section_header_dic: section_header_dic
+      })
+    }).exec()
+    // let query2 = wx.createSelectorQuery()
+    // query1.select("#later_header").boundingClientRect(function (res) {
+    //   console.log('分区头top')
+    //   console.log(res)
+    // }).exec()
   },
 
   /**
@@ -133,6 +202,12 @@ Page({
       // console.log(d)
       if (d.data.status == 1) {
         let checkData = d.data.data
+        let person = checkData.normal[0]
+        checkData.normal = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
+        checkData.cutschool = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
+        checkData.later = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
+        checkData.leaveschool = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
+        checkData.askforleave = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
         // 正常到课数量
         let normal_num = checkData.normal ? checkData.normal.length : 0
         // 旷课数量
@@ -160,33 +235,7 @@ Page({
 
           checkData:checkData
         })
-        // console.log(that.data.normal.length)
-        // if (that.data.normal){
-        //   that.setData({
-        //     normal_num: that.data.normal.length,
-        //   })
-        // }
-        // if (that.data.cutschool) {
-        //   that.setData({
-        //     cutschool_num: that.data.cutschool.length,
-        //   })
-        // }
-        // if (that.data.later) {
-        //   that.setData({
-        //     later_num: that.data.later.length,
-        //   })
-        // }
-        // if (that.data.leaveschool) {
-        //   that.setData({
-        //     leaveschool_num: that.data.leaveschool.length,
-        //   })
-        // }
-        // if (that.data.askforleave) {
-        //   that.setData({
-        //     askforleave_num: that.data.askforleave.length,
-        //   })
-        // }
-
+        that.getSectionHeaderHeight()
       }
       
     })

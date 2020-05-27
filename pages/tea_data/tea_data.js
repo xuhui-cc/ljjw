@@ -38,9 +38,9 @@ Page({
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwTeacherClassFiles(params).then(d => {
-      console.log(d)
+      // console.log(d)
       if (d.data.status == 1) {
         that.setData({
           tea_class: d.data.data.classes,
@@ -153,7 +153,7 @@ Page({
 
           var filePath = res.filePath
           console.log(filePath)
-
+          console.log(res)
           wx.openDocument({
             showMenu: true,
             filePath: filePath,
@@ -165,6 +165,8 @@ Page({
               console.log('打开文档成功')
             },
             fail: function(res) {
+              console.log('打开文档失败')
+              console.log(res)
               wx.hideLoading({
                 complete: (res) => {
                   wx.showToast({
@@ -177,6 +179,8 @@ Page({
           })
         },
         fail: function(res) {
+          console.log('文件下载失败')
+          console.log(res)
           wx.hideLoading({
             complete: (res) => {
               wx.showToast({
@@ -201,9 +205,9 @@ Page({
       "uid": wx.getStorageSync("uid"),
       "class_id": that.data.tea_class[that.data.tea_class_index].id,
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwTeacherClassFiles(params).then(d => {
-      console.log(d)
+      // console.log(d)
       if (d.data.status == 1) {
         that.setData({
           files: d.data.data.files
@@ -276,16 +280,18 @@ Page({
     that.setData({
       input_tltle: e.detail.value
     })
-    if(that.data.input_tltle != '')
+    
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
       "class_id": that.data.tea_class[that.data.tea_class_index].id,
-      "keyword": that.data.input_tltle
     }
-    console.log(params)
+    if(that.data.input_tltle != '') {
+      params.keyword = that.data.input_tltle
+    }
+    // console.log(params)
     app.ljjw.jwTeacherClassFiles(params).then(d => {
-      console.log(d)
+      // console.log(d)
       if (d.data.status == 1) {
         that.setData({
           files: d.data.data.files
