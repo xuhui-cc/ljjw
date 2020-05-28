@@ -19,7 +19,9 @@ function setOption(chart, xdata, ydata) {
     // },
     grid: {
       containLabel: true,
-      
+      left: '3%',
+      right:'4%',
+      bottom: '3%'
     },
     tooltip: {
       show: true,
@@ -93,6 +95,7 @@ function setOption(chart, xdata, ydata) {
       name: '总分',
       data: ydata,
       // data: [80,50,99],
+      smooth: true,
       type: 'line'
     }]
   }
@@ -170,7 +173,7 @@ Page({
     this.echartsComponnet.init((canvas, width, height) => {
       const chart = echarts.init(canvas, null, {
         width: width,
-        height: height
+        height: height,
       });
       setOption(chart, xdata, ydata)
       this.chart = chart;

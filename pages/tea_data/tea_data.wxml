@@ -1,21 +1,24 @@
 <view class="container">
 
   <!-- 导航栏 -->
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="go_back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
+  <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
+    <view class="naviBar_contentView" style="height:{{naviBarContentHeight}}px; margin-top:{{statusBarHeight}}px">
+      <view class="backimg_layout" bindtap="go_back">
+        <image class='back-img' src='../../images/back_img.png' ></image>
+      </view>
+      <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
+        <view class="bar-class">
+          {{tea_class[tea_class_index].name}}
+          <image class="bar-img" src="../../images/wxsj.png"></image>
+        </view>
+      </picker>
     </view>
-    <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
-      <view class="bar-class">{{tea_class[tea_class_index].name}}</view>
-    </picker>
-    <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" >
-      <image class="bar-img" src="../../images/wxsj.png"></image>
-    </picker>
+    
   </view>
   <!-- 导航栏结束 -->
 
   <view class="flex">
-    <view class="search-layout">
+    <view class="search-layout" style="margin-top:{{naviBarHeight + 30/750.0*screenWidth}}px">
       <image class="search-img" src="../../images/search_w.png"></image>
       <input class="search-input" placeholder="请输入资料标题" bindinput='search_tea_data'></input>
     </view>

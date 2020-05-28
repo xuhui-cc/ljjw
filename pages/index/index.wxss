@@ -1316,6 +1316,7 @@ page{
   justify-content: flex-end;
   align-items: center;
   height: 143rpx;
+  z-index: 51;
 }
 .class_dianming_arrow {
   margin-right: 0rpx;

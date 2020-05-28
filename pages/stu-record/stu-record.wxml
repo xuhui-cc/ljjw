@@ -141,7 +141,7 @@
     <view class="analyse-layout" wx:if="{{score != ''}}">
       <view class="stu-rec-flex">
         <view class="shu"></view>
-        <view class="analyse-title">模考总分折线图</view>
+        <view class="analyse-title">行测总分折线图</view>
       
 
       </view>
@@ -216,7 +216,7 @@
     <view class="analyse-layout" wx:if="{{score != ''}}">
       <view class="stu-rec-flex">
         <view class="shu"></view>
-        <view class="analyse-title">模考总分折线图</view>
+        <view class="analyse-title">申论总分折线图</view>
       
       </view>
       <ec-canvas wx:if="{{score != ''}}" id="mychart-dom-line" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>

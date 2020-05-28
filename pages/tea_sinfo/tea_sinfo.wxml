@@ -19,7 +19,7 @@
   
   <!-- 左侧列表内容部分 -->
   <scroll-view class="content" enable-back-to-top scroll-into-view="{{toView}}" scroll-y="true" scroll-with-animation="true" bindscroll="onPageScroll" style="margin-top:{{naviBarHeight}}px; height:{{contentHeight}}px; padding-bottom:{{safeAreaBottom}}px"> 
-    <view wx:for="{{dataarr}}" wx:for-item="group" wx:key="{{group.id}}" wx:for-index="cs" id="{{ 'inToView'+group.id}}" data-id='{{group.id}}'> 
+    <view wx:for="{{dataarr}}" wx:for-item="group" wx:key="groupName" wx:for-index="cs" id="{{ 'inToView'+cs}}" data-id='{{group.id}}'> 
       <!-- 字母 分组头 -->
       <view class="address_top" >{{group.groupName}}</view> 
       <block wx:for="{{group.users}}" wx:for-item="item" wx:key="brandId">
@@ -44,8 +44,8 @@
   </scroll-view> 
   <!-- 右侧字母导航 -->
   <view class="orientation_region"> 
-    <block wx:for="{{dataarr}}"  wx:key="{{item.id}}"> 
-      <view class="orientation_city  {{isActive==item.id ? 'active':'' }}" bindtap="scrollToViewFn" data-id="{{item.id}}" >
+    <block wx:for="{{dataarr}}"  wx:key="groupName"> 
+      <view class="orientation_city  {{isActive==index? 'active':'' }}" bindtap="scrollToViewFn" data-id="{{index}}" >
         {{item.groupName}}
       </view> 
     </block> 

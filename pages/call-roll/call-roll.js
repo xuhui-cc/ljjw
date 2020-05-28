@@ -134,7 +134,6 @@ Page({
     //   "data": submit
     // }
     // console.log(params)
-    // debugger
     // app.ljjw.jwSaveStudentSignIn(params).then(d => {
     //   console.log(d)
     //   if (d.data.status == 1) {

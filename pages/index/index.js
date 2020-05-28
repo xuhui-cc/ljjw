@@ -220,7 +220,6 @@ Page({
         "ask_id":that.data.admin_unaud_leave[ask_xb].id
       }
       // console.log(params)
-
       
       app.ljjw.jwAdminAskforleaveVerify(params).then(d => {
         // console.log(d)
@@ -252,13 +251,14 @@ Page({
             }
           })
 
-          that.admin_askfor()
+          
         }else{
           var cscs = "admin_unaud_leave[" + ask_xb + "].submit"
           that.setData({
             [cscs]: false
           })
         }
+        that.admin_askfor()
         that.dataSubmiting = false
         // console.log("我是管理员请假通过")
       })
@@ -304,7 +304,7 @@ Page({
             }
           })
           
-          that.jw_askfor()
+          
           
 
         }else{
@@ -313,6 +313,7 @@ Page({
             [cscs]: false
           })
         }
+        that.jw_askfor()
         that.dataSubmiting = false
         // console.log("我是教务请假通过")
       })
