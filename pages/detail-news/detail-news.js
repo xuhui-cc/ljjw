@@ -13,16 +13,17 @@ Page({
    */
   onLoad: function (options) {
     let that = this
+
+    that.setUpNaviSize()
+
     console.log(options.content)
     console.log(options.date)
     console.log(options.pics)
     that.setData({
       content: options.content,
       date: options.date,
-      pics: options.pics.split(",")
+      pics: (options.pics && options.pics != '' && options.pics != 'null') ? options.pics.split(",") : []
     })
-
-
 
   },
 
@@ -93,6 +94,24 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 设置自定义导航栏尺寸
+  */
+  setUpNaviSize: function () {
+    let menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let systemInfo = wx.getSystemInfoSync()
+    let naviBarHeight = menuButtonRect.bottom+10
+    let naviBarWidth = systemInfo.screenWidth
+    this.setData ({
+      naviBarHeight: naviBarHeight,
+      naviBarWidth: naviBarWidth,
+      naviBarSelectSub_Height: menuButtonRect.height,
+      naviBarSelectSub_Top: menuButtonRect.top,
+      bottomButton_Height: systemInfo.screenHeight-systemInfo.safeArea.bottom+(80.0/750*naviBarWidth),
+      statusBarHeight: systemInfo.statusBarHeight
+    })
   },
 
   /**

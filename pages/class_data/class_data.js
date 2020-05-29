@@ -24,80 +24,7 @@ Page({
       yestday: that.timestampToTime(yestday)
     })
 
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      
-    }
-    console.log(params)
-    app.ljjw.jwGetMyCollection(params).then(d => {
-      if (d.data.status == 1) {
-        that.setData({
-          mydata: d.data.data
-        })
-        for (var i = 0; i < that.data.mydata.length; i++) {
-          if (that.data.mydata[i].fileurl.indexOf(".doc") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "doc"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".pdf") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "pdf"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".ppt") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "ppt"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".jpg") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "jpg"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".png") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "png"
-            })
-          }else{
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: null
-            })
-          }
-
-          var d = that.data.mydata[i].col_time.substr(10, 15)
-
-          if (that.data.mydata[i].col_time.indexOf(that.data.today) != -1) {
-            var col_time = "今天" + d
-            console.log(col_time)
-            var cs = "mydata[" + i + "].col_time"
-            that.setData({
-              [cs]: col_time
-            })
-          }
-          if (that.data.mydata[i].col_time.indexOf(that.data.yestday) != -1) {
-            var col_time = "昨天" + d
-            console.log(col_time)
-            var cs = "mydata[" + i + "].col_time"
-            that.setData({
-              [cs]: col_time
-            })
-          }
-
-        }
-
-        console.log("我的收藏搜索接口获取成功")
-      } else {
-        that.setData({
-          mydata: ''
-        })
-      }
-
-
-    })
+    this.getFileList()
   },
 
   timestampToTime: function (timestamp) {
@@ -117,87 +44,103 @@ Page({
     })
   },
 
-  previewImage: function () {
-    let that = this
-    // var file_xb = e.currentTarget.dataset.file_xb
-    console.log("cs")
-    var image = []
-
-    image.push(that.data.mydata[that.data.file_xb].fileurl)
-    // var imgs = that.data.mydata.files[file_xb].fileurl
+  /**
+   * 图片显示大图
+  */
+  previewImage: function (pics) {
     wx.previewImage({
-      current: image[0],
-      urls: image
+      current: pics[0],
+      urls: pics
     })
-
   },
 
 
   open_file:function(e){
     let that = this
     var file_xb = e.currentTarget.dataset.file_xb
+    
     console.log(file_xb)
-    console.log(that.data.mydata[file_xb].fileurl)
-    that.setData({
-      file_xb: file_xb
-    })
-    console.log(file_xb)
-    // console.log(that.data.mydata.files[file_xb].fileurl)
-    if (that.data.mydata[file_xb].form.indexOf("png") != -1 || that.data.mydata[file_xb].form.indexOf("jpg") != -1) {
-      that.previewImage()
-      console.log("图")
-    } else {
-      let timestamp = Date.parse(new Date()); 
-      let fileTypeArray = that.data.mydata[file_xb].fileurl.split(".")
-      let fileType = fileTypeArray[fileTypeArray.length-1]
-      let customFilePath = wx.env.USER_DATA_PATH+"/"+timestamp+"."+fileType
-      console.log('得到自定义路径：')
-      console.log(customFilePath)
-      wx.showLoading({
-        title: '资料打开中...',
-      })
-      wx.downloadFile({
-        url: that.data.mydata[file_xb].fileurl, //仅为示例，并非真实的资源
-        filePath: customFilePath,
-        success(res) {
-          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+
+    let file = that.data.mydata[file_xb]
+
+    switch (file.formType) {
+      case 0:{
+        // 不支持格式
+        wx.showToast({
+          title: (file.fileurl && file.fileurl != '') ? '不支持该文件格式' : '文件不存在',
+          icon: 'none'
+        })
+        break
+      }
+      case 1:{
+        // 图片
+        let pics = file.fileurl
+        that.previewImage(pics)
+        break
+      }
+      default:{
+        // 其他支持的文件格式
+        let timestamp = Date.parse(new Date()); 
+        // let fileTypeArray = that.data.mydata.files[file_xb].fileurl.split(".")
+        let fileType = file.form
+        let customFilePath = wx.env.USER_DATA_PATH+"/"+timestamp+"."+fileType
+        console.log('得到自定义路径：')
+        console.log(customFilePath)
+        wx.showLoading({
+          title: '资料打开中...',
+        })
+        wx.downloadFile({
+          url: file.fileurl, //仅为示例，并非真实的资源
+          filePath: customFilePath,
+          success(res) {
+            // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+
+            console.log(res)
+            var filePath = res.filePath
+            console.log('返回自定义路径：')
+            console.log(filePath)
+
+            wx.openDocument({
+              showMenu: true,
+              filePath: filePath,
+              success: function (res) {
+                console.log('打开文档成功')
+                wx.hideLoading()
+              },
+
+              fail: function (res) {
+                console.log("fail");
+                console.log(res)
+                wx.hideLoading({
+                  complete: (res) => {
+                    wx.showToast({
+                      title: '文件打开失败',
+                      icon: 'none'
+                    })
+                  },
+                })
+              },
+              complete: function (res) {
+                console.log("complete");
+                console.log(res)
+              }
 
 
-          var filePath = res.filePath
-          console.log(filePath)
-
-          wx.openDocument({
-            showMenu: true,
-            filePath: filePath,
-            success: function (res) {
-              
-              console.log('打开文档成功')
-              wx.hideLoading()
-
-            },
-            fail: function(res) {
-              wx.hideLoading({
-                complete: (res) => {
-                  wx.showToast({
-                    title: '文件打开失败',
-                    icon: 'none'
-                  })
-                },
-              })
-            }
-          })
-        },
-        fail: function(res) {
-          wx.hideLoading({
-            complete: (res) => {
-              wx.showToast({
-                title: '文件下载失败',
-                icon: 'none'
-              })
-            },
-          })
-        }
-      })
+            })
+          },
+          fail: function(res) {
+            wx.hideLoading({
+              complete: (res) => {
+                wx.showToast({
+                  title: '文件下载失败',
+                  icon: 'none'
+                })
+              },
+            })
+          }
+        })
+        break
+      }
     }
   },
 
@@ -208,84 +151,7 @@ Page({
       input_title: e.detail.value
     })
 
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "keyword": that.data.input_title
-    }
-    console.log(params)
-    app.ljjw.jwGetMyCollection(params).then(d => {
-      console.log(d.data)
-      if (d.data.status == 1) {
-        that.setData({
-          mydata: d.data.data
-        })
-        for (var i = 0; i < that.data.mydata.length; i++) {
-          if (that.data.mydata[i].fileurl.indexOf(".doc") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "doc"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".pdf") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "pdf"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".ppt") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "ppt"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".jpg") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "jpg"
-            })
-          } else if (that.data.mydata[i].fileurl.indexOf(".png") != -1) {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: "png"
-            })
-          } else {
-            var form = "mydata[" + i + "].form"
-            that.setData({
-              [form]: null
-            })
-          }
-          var d = that.data.mydata[i].col_time.substr(10, 15)
-
-          if (that.data.mydata[i].col_time.indexOf(that.data.today) != -1) {
-            var col_time = "今天" + d
-            console.log(col_time)
-            var cs = "mydata[" + i + "].col_time"
-            that.setData({
-              [cs]: col_time
-            })
-          }
-          if (that.data.mydata[i].col_time.indexOf(that.data.yestday) != -1) {
-            var col_time = "昨天" + d
-            console.log(col_time)
-            var cs = "mydata[" + i + "].col_time"
-            that.setData({
-              [cs]: col_time
-            })
-          }
-
-        }
-
-        console.log("我的收藏搜索接口获取成功")
-      } else {
-        wx.showToast({
-          title: d.data.msg,
-          icon: "none",
-          duration: 2000
-        })
-      }
-
-
-    })
-  
-
+    this.getFileList(that.data.input_title)
   },
 
   cancel_collect:function(e){
@@ -356,5 +222,100 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  // --------------------------------------------接口----------------------------------------------------
+  /**
+   * 获取我的收藏列表
+  */
+  getFileList: function(keyword) {
+    let that = this
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+
+    if (keyword && keyword != '') {
+      params.keyword = keyword
+    }
+    app.ljjw.jwGetMyCollection(params).then(d => {
+      if (d.data.status == 1) {
+
+        let data = d.data.data
+
+        if (!data || data == '') {
+          that.setData({
+            mydata: ''
+          })
+          return
+        }
+        for (var i = 0; i < data.length; i++) {
+
+          let file = data[i]
+
+          // 截取后缀 获取格式
+          let form = null
+          if (file.fileurl && file.fileurl != '') {
+            let subFileUrlArray = file.fileurl.split(".")
+            if (subFileUrlArray && subFileUrlArray.length >= 2) {
+              form = subFileUrlArray[subFileUrlArray.length - 1]
+            }
+          }
+          file.form = form
+
+          let formType = 0 // 0-不支持格式 1-图片 2-word 3-pdf 4-ppt 5-jpg
+          switch(form) {
+            case "png":
+            case "jpg":
+            case "jpeg": {
+              // 图片
+              file.fileurl = file.fileurl.split(",")
+              formType = 1
+              break;
+            }
+            case "doc":
+            case "docx": {
+              // word
+              formType = 2
+              break
+            }
+            case "pdf": {
+              // pdf
+              formType = 3
+              break
+            }
+            case "ppt":
+            case "pptx": {
+              formType = 4
+              break
+            }
+          }
+          file.formType = formType
+
+          // 处理日期
+          var time = file.col_time.substr(10, 15)
+          if (file.col_time.indexOf(that.data.today) != -1) {
+            var col_time = "今天" + time
+            file.col_time = col_time
+          }
+
+          if (file.col_time.indexOf(that.data.yestday) != -1) {
+            var col_time = "昨天" + time
+            file.col_time = col_time
+          }
+        }
+
+        that.setData({
+          mydata: data
+        })
+
+      } else {
+        that.setData({
+          mydata: ''
+        })
+      }
+
+
+    })
   }
 })

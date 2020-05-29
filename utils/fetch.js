@@ -15,6 +15,7 @@ function ljjwfetch(api, path, params, info, loadingShow, loadingMsg) {
     }
     console.log(info+" "+path+" 参数：")
     console.log(params)
+    
 
     wx.request({
       url: `${api}?action=${path}`,

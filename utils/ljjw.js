@@ -164,7 +164,7 @@ function jwTeacherClassSignIn(params) {
 
 //老师点名学生状态更改
 function jwSaveStudentSignIn(params) {
-  return fetch.ljjwfetchpost(URI, 'jwSaveStudentSignIn', params, "老师点名学生状态更改")
+  return fetch.ljjwfetchpost(URI, 'jwSaveStudentSignIn', params, "老师点名学生状态更改", true, "提交中")
 }
 
 //老师查看学生基础信息
@@ -224,7 +224,7 @@ function jwTeacherTasks(params) {
 
 //老师——查看某节课考勤
 function jwViewScheduleCheckOn(params) {
-  return fetch.ljjwfetch(URI, 'jwViewScheduleCheckOn', params, "老师——查看某节课考勤")
+  return fetch.ljjwfetch(URI, 'jwViewScheduleCheckOn', params, "老师——查看某节课考勤", true)
 }
 
 //老师——新建消息

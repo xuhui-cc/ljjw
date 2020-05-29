@@ -265,7 +265,12 @@ Page({
       var nameStr = ''
       for (var i = 0; i < that.data.askforleave.length; i++) {
         let student = that.data.askforleave[i]
-        nameStr = nameStr + student.realname
+        if (i == 0) {
+          nameStr = nameStr + student.realname
+        } else {
+          nameStr = nameStr + "、" + student.realname
+        }
+        
       }
       copyStr = copyStr + "\n请假"+ that.data.askforleave_num + "人："+nameStr
     }

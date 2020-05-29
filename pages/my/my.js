@@ -38,88 +38,7 @@ Page({
     this.setUpUserInfo()
 
     if(that.data.role == 4){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-      }
-      console.log(params)
-      app.ljjw.jwGetStudentMainPage(params).then(d => {
-        
-        if(d.data.status == 1){
-          that.setData({
-            mydata: d.data.data,
-            stu_class: d.data.data.classes
-            
-          })
-          console.log(that.data.mydata)
-          if (that.data.mydata.status_text.indexOf("请完成您的基础信息") != -1){
-            wx.setStorageSync("stu_sta", false)
-          }else{
-            wx.setStorageSync("stu_sta", true)
-          }
-
-          if (that.data.mydata.files){
-            for (var i = 0; i < that.data.mydata.files.length; i++) {
-              if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1){
-                var form = "mydata.files[" + i + "].form"
-                that.setData({
-                  [form]: "doc"
-                })
-              } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1){
-                var form = "mydata.files[" + i + "].form"
-                that.setData({
-                  [form]: "pdf"
-                })
-              } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
-                var form = "mydata.files[" + i + "].form"
-                that.setData({
-                  [form]: "ppt"
-                })
-              }else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
-                var form = "mydata.files[" + i + "].form"
-                that.setData({
-                  [form]: "jpg"
-                })
-              } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
-                var form = "mydata.files[" + i + "].form"
-                that.setData({
-                  [form]: "png"
-                })
-              }else {
-                var form = "mydata.files[" + i + "].form"
-                that.setData({
-                  [form]: null
-                })
-              }
-
-              var d = that.data.mydata.files[i].createtime.substr(10, 15)
-
-              if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
-                var createtime = "今天" + d
-                console.log(createtime)
-                var cs = "mydata.files[" + i + "].createtime"
-                that.setData({
-                  [cs]: createtime
-                })
-              }
-              if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
-                var createtime = "昨天" + d
-                console.log(createtime)
-                var cs = "mydata.files[" + i + "].createtime"
-                that.setData({
-                  [cs]: createtime
-                })
-              }
-
-            }
-          }
-          
-          console.log(that.data.mydata.files)
-          console.log("学生——我的主页接口获取成功")
-        }
-        
-        
-      })
+      that.studentGetPageInfo()
     } 
     else if (that.data.role == 1){
       var params = {
@@ -148,176 +67,113 @@ Page({
   stu_class_picker: function (e) {
     let that = this
     console.log('picker发送选择改变，携带值为', e.detail.value)
+    let index = e.detail.value
     that.setData({
-      stu_class_index: e.detail.value
+      stu_class_index: index
     })
-    console.log(that.data.stu_class)
-    console.log(that.data.stu_class[that.data.stu_class_index].id)
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "class_id": that.data.stu_class[that.data.stu_class_index].class_id
-    }
-    console.log(params)
-    app.ljjw.jwGetStudentMainPage(params).then(d => {
-      if (d.data.status == 1) {
-        that.setData({
-          mydata: d.data.data,
-          
-
-        })
-        if (that.data.mydata.files) {
-          for (var i = 0; i < that.data.mydata.files.length; i++) {
-            if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "doc"
-              })
-            } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "pdf"
-              })
-            } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "ppt"
-              })
-            } else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "jpg"
-              })
-            } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "png"
-              })
-            } else {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: null
-              })
-            }
-
-            var d = that.data.mydata.files[i].createtime.substr(10, 15)
-
-            if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
-              var createtime = "今天" + d
-              console.log(createtime)
-              var cs = "mydata.files[" + i + "].createtime"
-              that.setData({
-                [cs]: createtime
-              })
-            }
-            if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
-              var createtime = "昨天" + d
-              console.log(createtime)
-              var cs = "mydata.files[" + i + "].createtime"
-              that.setData({
-                [cs]: createtime
-              })
-            }
-
-          }
-        }
-        console.log(that.data.mydata)
-        console.log("学生（班级切换）——我的主页接口获取成功")
-      }
-
-
-    })
+    
+    that.studentGetPageInfo(that.data.stu_class[index].class_id)
   },
 
-  previewImage: function () {
-    let that = this
-    // var file_xb = e.currentTarget.dataset.file_xb
-    console.log("cs")
-    var image = []
-    
-    image.push(that.data.mydata.files[that.data.file_xb].fileurl)
-    // var imgs = that.data.mydata.files[file_xb].fileurl
+  /**
+   * 图片显示大图
+  */
+  previewImage: function (pics) {
     wx.previewImage({
-      current: image[0],
-      urls: image
+      current: pics[0],
+      urls: pics
     })
-
   },
 
   // 打开文件
   open_file: function (e) {
     let that = this
     var file_xb = e.currentTarget.dataset.file_xb
-    that.setData({
-      file_xb:file_xb
-    })
+    // that.setData({
+    //   file_xb:file_xb
+    // })
     console.log(file_xb)
+    let file = that.data.mydata.files[file_xb]
+
     // console.log(that.data.mydata.files[file_xb].fileurl)
-    if (that.data.mydata.files[file_xb].form.indexOf("png") != -1 || that.data.mydata.files[file_xb].form.indexOf("jpg") != -1){
-      that.previewImage()
-      console.log("图")
-    }else{
-      let timestamp = Date.parse(new Date()); 
-      let fileTypeArray = that.data.mydata.files[file_xb].fileurl.split(".")
-      let fileType = fileTypeArray[fileTypeArray.length-1]
-      let customFilePath = wx.env.USER_DATA_PATH+"/"+timestamp+"."+fileType
-      console.log('得到自定义路径：')
-      console.log(customFilePath)
-      wx.showLoading({
-        title: '资料打开中...',
-      })
-      wx.downloadFile({
-        url: that.data.mydata.files[file_xb].fileurl, //仅为示例，并非真实的资源
-        filePath: customFilePath,
-        success(res) {
-          // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+    switch (file.formType) {
+      case 0:{
+        // 不支持格式
+        wx.showToast({
+          title: (file.fileurl && file.fileurl != '') ? '不支持该文件格式' : '文件不存在',
+          icon: 'none'
+        })
+        break
+      }
+      case 1:{
+        // 图片
+        let pics = file.fileurl
+        that.previewImage(pics)
+        break
+      }
+      default:{
+        // 其他支持的文件格式
+        let timestamp = Date.parse(new Date()); 
+        // let fileTypeArray = that.data.mydata.files[file_xb].fileurl.split(".")
+        let fileType = file.form
+        let customFilePath = wx.env.USER_DATA_PATH+"/"+timestamp+"."+fileType
+        console.log('得到自定义路径：')
+        console.log(customFilePath)
+        wx.showLoading({
+          title: '资料打开中...',
+        })
+        wx.downloadFile({
+          url: file.fileurl, //仅为示例，并非真实的资源
+          filePath: customFilePath,
+          success(res) {
+            // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
 
-          console.log(res)
-          var filePath = res.filePath
-          console.log('返回自定义路径：')
-          console.log(filePath)
+            console.log(res)
+            var filePath = res.filePath
+            console.log('返回自定义路径：')
+            console.log(filePath)
 
-          wx.openDocument({
-            showMenu: true,
-            filePath: filePath,
-            success: function (res) {
-              console.log('打开文档成功')
-              wx.hideLoading()
-            },
+            wx.openDocument({
+              showMenu: true,
+              filePath: filePath,
+              success: function (res) {
+                console.log('打开文档成功')
+                wx.hideLoading()
+              },
 
-            fail: function (res) {
-              console.log("fail");
-              console.log(res)
-              wx.hideLoading({
-                complete: (res) => {
-                  wx.showToast({
-                    title: '文件打开失败',
-                    icon: 'none'
-                  })
-                },
-              })
-            },
-            complete: function (res) {
-              console.log("complete");
-              console.log(res)
-            }
-
-
-          })
-        },
-        fail: function(res) {
-          wx.hideLoading({
-            complete: (res) => {
-              wx.showToast({
-                title: '文件下载失败',
-                icon: 'none'
-              })
-            },
-          })
-        }
+              fail: function (res) {
+                console.log("fail");
+                console.log(res)
+                wx.hideLoading({
+                  complete: (res) => {
+                    wx.showToast({
+                      title: '文件打开失败',
+                      icon: 'none'
+                    })
+                  },
+                })
+              },
+              complete: function (res) {
+                console.log("complete");
+                console.log(res)
+              }
 
 
-      })
+            })
+          },
+          fail: function(res) {
+            wx.hideLoading({
+              complete: (res) => {
+                wx.showToast({
+                  title: '文件下载失败',
+                  icon: 'none'
+                })
+              },
+            })
+          }
+        })
+        break
+      }
     }
   },
 
@@ -395,83 +251,12 @@ Page({
       "type":type,  //1-添加，2-取消
       "fileid":that.data.mydata.files[file_xb].id
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwStudentAddCollection(params).then(d => {
-      console.log(d.data.status +"d.data.status")
+      // console.log(d.data.status +"d.data.status")
       if (d.data.status == 1) {
-        console.log(d.data.msg)
-        var params = {
-          "token": wx.getStorageSync("token"),
-          "uid": wx.getStorageSync("uid"),
-          "class_id": that.data.stu_class[that.data.stu_class_index].class_id
-        }
-        console.log(params)
-        app.ljjw.jwGetStudentMainPage(params).then(d => {
-          if (d.data.status == 1) {
-            that.setData({
-              mydata: d.data.data,
-            })
-            if (that.data.mydata.files) {
-              for (var i = 0; i < that.data.mydata.files.length; i++) {
-                if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1) {
-                  var form = "mydata.files[" + i + "].form"
-                  that.setData({
-                    [form]: "doc"
-                  })
-                } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1) {
-                  var form = "mydata.files[" + i + "].form"
-                  that.setData({
-                    [form]: "pdf"
-                  })
-                } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
-                  var form = "mydata.files[" + i + "].form"
-                  that.setData({
-                    [form]: "ppt"
-                  })
-                } else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
-                  var form = "mydata.files[" + i + "].form"
-                  that.setData({
-                    [form]: "jpg"
-                  })
-                } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
-                  var form = "mydata.files[" + i + "].form"
-                  that.setData({
-                    [form]: "png"
-                  })
-                } else {
-                  var form = "mydata.files[" + i + "].form"
-                  that.setData({
-                    [form]: null
-                  })
-                }
-
-                var d = that.data.mydata.files[i].createtime.substr(10, 15)
-
-                if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
-                  var createtime = "今天" + d
-                  console.log(createtime)
-                  var cs = "mydata.files[" + i + "].createtime"
-                  that.setData({
-                    [cs]: createtime
-                  })
-                }
-                if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
-                  var createtime = "昨天" + d
-                  console.log(createtime)
-                  var cs = "mydata.files[" + i + "].createtime"
-                  that.setData({
-                    [cs]: createtime
-                  })
-                }
-
-              }
-            }
-            console.log(that.data.mydata)
-            console.log("学生（班级切换）——我的主页接口获取成功")
-          }
-
-
-        })
+        // console.log(d.data.msg)
+        that.studentGetPageInfo(that.data.stu_class[that.data.stu_class_index].class_id)
         console.log("收藏与取消收藏接口获取成功")
       }
 
@@ -650,88 +435,93 @@ Page({
   /**
    * 学生获取页面数据
   */
-  studentGetPageInfo: function () {
+  studentGetPageInfo: function (class_id) {
+    let that = this
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
+    }
+    if (class_id && class_id != '') {
+      params.class_id = class_id
     }
     // console.log(params)
     app.ljjw.jwGetStudentMainPage(params).then(d => {
       
       if(d.data.status == 1){
-        that.setData({
-          mydata: d.data.data,
-          stu_class: d.data.data.classes
-          
-        })
-        // console.log(that.data.mydata)
-        if (that.data.mydata.status_text.indexOf("请完成您的基础信息") != -1){
+
+        var data = d.data.data
+
+        if (data.status_text.indexOf("请完成您的基础信息") != -1){
           wx.setStorageSync("stu_sta", false)
         }else{
           wx.setStorageSync("stu_sta", true)
         }
 
-        if (that.data.mydata.files){
-          for (var i = 0; i < that.data.mydata.files.length; i++) {
-            if (that.data.mydata.files[i].fileurl.indexOf(".doc") != -1){
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "doc"
-              })
-            } else if (that.data.mydata.files[i].fileurl.indexOf(".pdf") != -1){
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "pdf"
-              })
-            } else if (that.data.mydata.files[i].fileurl.indexOf(".ppt") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "ppt"
-              })
-            }else if (that.data.mydata.files[i].fileurl.indexOf(".jpg") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "jpg"
-              })
-            } else if (that.data.mydata.files[i].fileurl.indexOf(".png") != -1) {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: "png"
-              })
-            }else {
-              var form = "mydata.files[" + i + "].form"
-              that.setData({
-                [form]: null
-              })
+        // 处理附件
+        if (data.files){
+          for (var i = 0; i < data.files.length; i++) {
+            let file = data.files[i]
+
+            // 截取后缀 获取格式
+            let form = null
+            if (file.fileurl && file.fileurl != '') {
+              let subFileUrlArray = file.fileurl.split(".")
+              if (subFileUrlArray && subFileUrlArray.length >= 2) {
+                form = subFileUrlArray[subFileUrlArray.length - 1]
+              }
+            }
+            file.form = form
+
+            let formType = 0 // 0-不支持格式 1-图片 2-word 3-pdf 4-ppt 5-jpg
+            switch(form) {
+              case "png":
+              case "jpg":
+              case "jpeg": {
+                // 图片
+                file.fileurl = file.fileurl.split(",")
+                formType = 1
+                break;
+              }
+              case "doc":
+              case "docx": {
+                // word
+                formType = 2
+                break
+              }
+              case "pdf": {
+                // pdf
+                formType = 3
+                break
+              }
+              case "ppt":
+              case "pptx": {
+                formType = 4
+                break
+              }
+            }
+            file.formType = formType
+
+            // 处理日期
+            var time = file.createtime.substr(10, 15)
+            if (file.createtime.indexOf(that.data.today) != -1) {
+              var createtime = "今天" + time
+              file.createtime = createtime
             }
 
-            var d = that.data.mydata.files[i].createtime.substr(10, 15)
-
-            if (that.data.mydata.files[i].createtime.indexOf(that.data.today) != -1) {
-              var createtime = "今天" + d
-              console.log(createtime)
-              var cs = "mydata.files[" + i + "].createtime"
-              that.setData({
-                [cs]: createtime
-              })
-            }
-            if (that.data.mydata.files[i].createtime.indexOf(that.data.yestday) != -1) {
-              var createtime = "昨天" + d
-              console.log(createtime)
-              var cs = "mydata.files[" + i + "].createtime"
-              that.setData({
-                [cs]: createtime
-              })
+            if (file.createtime.indexOf(that.data.yestday) != -1) {
+              var createtime = "昨天" + time
+              file.createtime = createtime
             }
 
           }
         }
-        
-        console.log(that.data.mydata.files)
-        console.log("学生——我的主页接口获取成功")
+
+        that.setData({
+          mydata: data,
+          stu_class: data.classes
+          
+        })
       }
-      
-      
     })
   }
   

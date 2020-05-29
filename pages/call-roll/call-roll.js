@@ -2,6 +2,8 @@
 const app = getApp()
 Page({
 
+  // 是否正在提交数据
+  dataSubmiting: false,
   /**
    * 页面的初始数据
    */
@@ -178,9 +180,9 @@ Page({
       "uid": wx.getStorageSync("uid"),
       "sid": that.data.sid
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwTeacherClassSignIn(params).then(d => {
-      console.log(d)
+      // console.log(d)
       if (d.data.status == 1) {
         that.setData({
           tea_info: d.data.data.info,
@@ -309,8 +311,11 @@ Page({
   */
   submitData: function(cb) {
     let that = this
-    console.log("hh")
-    
+    // console.log("hh")
+    if (this.dataSubmiting) {
+      return
+    }
+    this.dataSubmiting = true
 
     for (var i = 0; i < that.data.students_unsigned.length; i++) {
       var newarray = [{
@@ -338,6 +343,7 @@ Page({
       else{
         typeof cb == "function" && cb(false, d.data.msg)
       }
+      that.dataSubmiting = false
     })
   }
 })

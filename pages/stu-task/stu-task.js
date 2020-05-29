@@ -356,9 +356,26 @@ Page({
                   }
                 }
   
-                taskDetail.finished_info.answers = taskDetail.finished_info.answers.split(",")
-                taskDetail.finished_info.memo = taskDetail.finished_info.memo.split("|")
-                taskDetail.finished_info.attach = taskDetail.finished_info.attach.split("|")
+                let answers = taskDetail.finished_info.answers
+                if (answers && answers != '') {
+                  taskDetail.finished_info.answers = answers.split(",")
+                } else {
+                  taskDetail.finished_info.answers = []
+                }
+                
+                let memo = taskDetail.finished_info.memo
+                if (memo && memo != '') {
+                  taskDetail.finished_info.memo = memo.split("|")
+                } else {
+                  taskDetail.finished_info.memo = []
+                }
+                
+                let attach = taskDetail.finished_info.attach
+                if (attach && attach != '') {
+                  taskDetail.finished_info.attach = attach.split("|")
+                } else {
+                  taskDetail.finished_info.attach = []
+                }
   
                 for (var k = 0; k < taskDetail.options.length; k++) {
                   
