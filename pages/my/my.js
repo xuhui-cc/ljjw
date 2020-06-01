@@ -63,6 +63,10 @@ Page({
     
   },
 
+  onTabItemTap(item) {
+    app.setTaskItemDot()
+  },
+
   //学生班级选择器
   stu_class_picker: function (e) {
     let that = this

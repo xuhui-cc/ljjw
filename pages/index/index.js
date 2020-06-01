@@ -152,6 +152,10 @@ Page({
     }
   },
 
+  onTabItemTap(item) {
+    app.setTaskItemDot()
+  },
+
   stu_add_leave:function(){
     console.log('add_leave跳转')
     wx.navigateTo({

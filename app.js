@@ -36,6 +36,8 @@ App({
         }
       }
     })
+
+    this.setTaskItemDot()
   },
   globalData: {
     userInfo: null,
@@ -48,5 +50,34 @@ App({
   },
   updateWxLoginCode (code) {
     this.globalData.wxLoginCode = code
+  },
+
+  /**
+   * 获取tabbar任务item小红点是否显示
+  */
+  setTaskItemDot () {
+    let role = wx.getStorageSync('role')
+    if (!role || role == -1 || role == 3) {
+      return
+    }
+    let uid = wx.getStorageSync('uid')
+    let token = wx.getStorageSync('token')
+    let params = {
+      uid: uid,
+      token: token
+    }
+    ljjw.jwTaskBarRedPoint(params).then(d=>{
+      if (d.data.status == 1) {
+        if (d.data.data == 1) {
+          wx.showTabBarRedDot({
+            index: 2,
+          })
+        } else {
+          wx.showTabBarRedDot({
+            index: 2,
+          })
+        }
+      }
+    })
   }
 })

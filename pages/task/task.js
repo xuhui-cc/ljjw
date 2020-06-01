@@ -126,6 +126,7 @@ Page({
   onShow: function () {
     let that = this
     console.log("进入任务首页")
+    app.setTaskItemDot()
     // 判断登录状态
     this.setUpLogInStatus()
     console.log("角色是"+that.data.role)
@@ -191,31 +192,6 @@ Page({
           that.pageData.page = oldPage
         }
       })
-    }
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
-
-  /**
-   * 设置tabbar
-  */
-  setUpTabbar: function() {
-    let that = this
-    if (typeof this.getTabBar === 'function' &&
-      this.getTabBar()) {
-      console.log('task_onshow')
-      this.getTabBar().setData({
-        selected: 2
-      })
-    }
-    else {
-      console.log('未执行')
     }
   },
 
