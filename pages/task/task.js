@@ -334,7 +334,7 @@ Page({
         if (that.data.stu_class && that.data.stu_class.length > that.data.stu_class_index) {
           params.class_id = that.data.stu_class[that.data.stu_class_index].class_id
         }
-        console.log(params)
+        // console.log(params)
         app.ljjw.jwGetStudentTaskMain(params).then(d => {
           wx.stopPullDownRefresh({
             complete: (res) => {},

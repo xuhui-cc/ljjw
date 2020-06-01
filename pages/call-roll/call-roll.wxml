@@ -93,11 +93,11 @@
             <image class="stu-avatar" src="{{item.avatar}}"></image>
             <view class="syu-name">{{item.realname}}</view>
             <!-- 请假状态图 -->
-            <image wx:if="{{item.status == 0}}" class="stu-situ-img1" src="../../images/yes.png"></image>
-            <image wx:if="{{item.status == 1}}" class="stu-situ-img2" src="../../images/belate.png"></image>
-            <image wx:if="{{item.status == 2}}" class="stu-situ-img2" src="../../images/truancy.png"></image>
-            <image wx:if="{{item.status == 3}}" class="stu-situ-img2" src="../../images/leave.png"></image>
-            <image wx:if="{{item.status == 4}}" class="stu-situ-img2" src="../../images/leaved.png"></image>
+            <image wx:if="{{item.check_status == 0}}" class="stu-situ-img1" src="../../images/yes.png"></image>
+            <image wx:if="{{item.check_status == 1}}" class="stu-situ-img2" src="../../images/belate.png"></image>
+            <image wx:if="{{item.check_status == 2}}" class="stu-situ-img2" src="../../images/truancy.png"></image>
+            <image wx:if="{{item.check_status == 3}}" class="stu-situ-img2" src="../../images/leave.png"></image>
+            <image wx:if="{{item.check_status == 4}}" class="stu-situ-img2" src="../../images/leaved.png"></image>
             
 
           </view>

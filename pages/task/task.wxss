@@ -91,6 +91,14 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
+.messageState {
+  margin-top: 24rpx;
+  margin-left: 3rpx;
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background-color: #f14444;
+}
 .more{
   margin-left: 426rpx;
   margin-top: 31rpx;

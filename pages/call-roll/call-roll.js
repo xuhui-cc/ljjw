@@ -4,6 +4,8 @@ Page({
 
   // 是否正在提交数据
   dataSubmiting: false,
+  // 准备提交的数据
+  sumitDataDic: {},
   /**
    * 页面的初始数据
    */
@@ -15,6 +17,17 @@ Page({
   },
 
   back: function () {
+    let that = this
+    that.submitData(2, function(success, msg){
+      if (success) {
+        wx.showToast({
+          title: '提交成功',
+          duration:1500
+        })
+        
+        console.log("点名返回键,保存成功")
+      }
+    })
     wx.navigateBack({
       delta: 1  // 返回上一级页面。
     })
@@ -28,37 +41,9 @@ Page({
 
     that.setUpNaviSize()
 
-    var i = 0
     var sid = options.sid
     that.setData({
       sid:sid
-    })
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "sid": sid
-    }
-    console.log(params)
-    app.ljjw.jwTeacherClassSignIn(params).then(d => {
-      console.log(d)
-      if (d.data.status == 1) {
-        that.setData({
-          tea_info: d.data.data.info,
-          students_signed: d.data.data.students_signed,
-          students_unsigned: d.data.data.students_unsigned
-        })
-
-        
-        for (i; i < d.data.data.students_unsigned.length;i++){
-          var cs = "students_unsigned[" + i + "].status"
-          
-          that.setData({
-            [cs] : 0
-          })
-        }
-        console.log("老师点名页接口获取成功")
-      }
-      console.log(that.data.students_unsigned)
     })
   },
 
@@ -69,21 +54,22 @@ Page({
     var xb = e.currentTarget.dataset.xb
     console.log(xb)
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    for(var i = 0; i <= that.data.students_signed.length ;i++){
-      if(i == xb){
-        var change = "students_signed[" + xb + "].check_status"
-        that.setData({
-          [change]: e.detail.value
-        })
-      }
-    }
-    var newarray = [{
-      stu_id: that.data.students_signed[xb].stu_id,
-      status: e.detail.value
-    }];
-    this.setData({
-      'submit': this.data.submit.concat(newarray)
-    });
+
+    var change = "students_signed[" + xb + "].check_status"
+    that.setData({
+      [change]: e.detail.value
+    })
+
+    let student = that.data.students_signed[xb]
+    that.sumitDataDic[student.stu_id] = student
+
+    // var newarray = [{
+    //   stu_id: that.data.students_signed[xb].stu_id,
+    //   status: e.detail.value
+    // }];
+    // this.setData({
+    //   'submit': this.data.submit.concat(newarray)
+    // });
     
   },
 
@@ -94,34 +80,34 @@ Page({
     var unxb = e.currentTarget.dataset.unxb
     console.log(unxb)
     console.log('unpicker发送选择改变，携带值为', e.detail.value)
-    for (var i = 0; i < that.data.students_unsigned.length; i++) {
-      if (i == unxb) {
-        var change = "students_unsigned[" + unxb + "].status"
-        that.setData({
-          [change]: e.detail.value
-        })
-      }
-    }
 
-    for (var i = 0; i < that.data.students_unsigned.length;i++){
-      var newarray = [{
-        stu_id: that.data.students_unsigned[i].stu_id,
-        status: that.data.students_unsigned[i].status
-      }];
-      this.setData({
-        'submit': this.data.submit.concat(newarray)
-      });
-    }
+    var change = "students_unsigned[" + unxb + "].check_status"
+    that.setData({
+      [change]: e.detail.value
+    })
+
+    let student = that.data.students_unsigned[unxb]
+    that.sumitDataDic[student.stu_id] = student
+
+    // for (var i = 0; i < that.data.students_unsigned.length;i++){
+    //   var newarray = [{
+    //     stu_id: that.data.students_unsigned[i].stu_id,
+    //     status: that.data.students_unsigned[i].status
+    //   }];
+    //   this.setData({
+    //     'submit': this.data.submit.concat(newarray)
+    //   });
+    // }
     
   },
   submit:function(){
     let that = this
 
-    that.submitData(function(success, msg){
+    that.submitData(1, function(success, msg){
       if (success) {
         wx.showToast({
           title: '提交成功',
-          duration:1500
+          duration:1500 
         })
         wx.navigateBack({
           delta: 1  // 返回上一级页面。
@@ -184,23 +170,19 @@ Page({
     app.ljjw.jwTeacherClassSignIn(params).then(d => {
       // console.log(d)
       if (d.data.status == 1) {
-        that.setData({
-          tea_info: d.data.data.info,
-          students_signed: d.data.data.students_signed,
-          students_unsigned: d.data.data.students_unsigned
-        })
 
-
-        for (i; i < d.data.data.students_unsigned.length; i++) {
-          var cs = "students_unsigned[" + i + "].status"
-
-          that.setData({
-            [cs]: 0
-          })
+        let data = d.data.data
+        for (i; i < data.students_unsigned.length;i++){
+          let student = data.students_unsigned[i]
+          student.check_status = 0
+          that.sumitDataDic[student.stu_id] = student
         }
 
-        console.log("onshow")
-        
+        that.setData({
+          tea_info: data.info,
+          students_signed: data.students_signed,
+          students_unsigned: data.students_unsigned
+        })
       }
     })
   },
@@ -218,16 +200,7 @@ Page({
   onUnload: function () {
     let that = this
 
-    that.submitData(function(success, msg){
-      if (success) {
-        wx.showToast({
-          title: '提交成功',
-          duration:1500
-        })
-        
-        console.log("点名返回键,保存成功")
-      }
-    })
+    
     // console.log("hh")
     
 
@@ -308,8 +281,9 @@ Page({
 
   /**
    * 提交数据
+   * type 1-提交按钮 2-返回
   */
-  submitData: function(cb) {
+  submitData: function(type, cb) {
     let that = this
     // console.log("hh")
     if (this.dataSubmiting) {
@@ -317,16 +291,38 @@ Page({
     }
     this.dataSubmiting = true
 
-    for (var i = 0; i < that.data.students_unsigned.length; i++) {
-      var newarray = [{
-        stu_id: that.data.students_unsigned[i].stu_id,
-        status: that.data.students_unsigned[i].status
-      }];
-      this.setData({
-        'submit': this.data.submit.concat(newarray)
-      });
+    // for (var i = 0; i < that.data.students_unsigned.length; i++) {
+    //   var newarray = [{
+    //     stu_id: that.data.students_unsigned[i].stu_id,
+    //     status: that.data.students_unsigned[i].status
+    //   }];
+    //   this.setData({
+    //     'submit': this.data.submit.concat(newarray)
+    //   });
+    // }
+
+    let submitStudentArray = Object.values(that.sumitDataDic)
+    if (submitStudentArray.length == 0) {
+      if (type == 1) {
+        wx.showToast({
+          title: '暂未更改标注',
+          icon: 'none'
+        })
+      }
+      return
     }
-    var submit = JSON.stringify(that.data.submit)
+
+    var submitArray = []
+    for (var i = 0; i < submitStudentArray.length; i++) {
+      let student = submitStudentArray[i]
+      let submitData = {
+        stu_id: student.stu_id,
+        status: student.check_status
+      }
+      submitArray.push(submitData)
+    }
+
+    var submit = JSON.stringify(submitArray)
     var params = {
       "token": wx.getStorageSync("token"),
       "sid": that.data.sid,

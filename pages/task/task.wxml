@@ -76,6 +76,7 @@
             <view class="flex">
               <view class="shu"></view>
               <view class="head">消息通知</view>
+              <view class="messageState" hidden="{{item.isread == 0 ? false : true}}"></view>
               <view class="message-date">{{item.createtime}}</view>
             </view>
           <view class="message-cont">{{item.content}}</view>
