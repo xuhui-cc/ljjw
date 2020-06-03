@@ -5,22 +5,21 @@
       <view class="backimg_layout" bindtap="back">
         <image class='back-img' src='../../images/back_img.png' ></image>
       </view>
-      <text class="my-head">消息通知</text> 
+      <text class="my-head">消息通知</text>
+      <view class="backimg_layout"></view>
     </view>
   </view>
 
-  <view class="news-title" style="margin-top:{{naviBarHeight + 55/750.0*naviBarWidth}}px;">消息通知</view>
-  <view class="nwes-time">{{date}}</view>
-  <view class="news-cont">
-    <rich-text nodes="{{content}}"></rich-text>
+  <view class="detailView" style="margin-top:{{naviBarHeight}}px;">
+    <view class="nwes-time">{{date}}</view>
+    <view class="news-cont">
+      <rich-text nodes="{{content}}"></rich-text>
+    </view>
+    <view class='flex_warp' wx:if="{{pics && pics != '' && pics.length != 0}}">
+      <block wx:for="{{pics}}" wx:key="index">
+        <image class='img' src='{{item}}' bindtap='previewImg' data-xb="{{index}}" mode="widthFix"></image>
+      </block> 
+      
+    </view>
   </view>
-  <view class='flex_warp' wx:if="{{pics && pics != '' && pics.length != 0}}">
-    <block wx:for="{{pics}}" wx:key="index">
-      <image class='img' src='{{item}}' bindtap='previewImg' data-xb="{{index}}" mode="widthFix"></image>
-    </block> 
-    
-  </view>
-  
-
-
 </view>

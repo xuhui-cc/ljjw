@@ -2,11 +2,7 @@
 const app = getApp()
 Page({
 
-  pageData: {
-    perpage: 10,
-    page: 1,
-    canLoadNextPage: true,
-  },
+  
 
   /**
    * 页面的初始数据
@@ -108,6 +104,7 @@ Page({
     var xb = e.currentTarget.dataset.xb
     console.log(xb)
     console.log(that.data.message[xb])
+    this.readNoti(xb)
     wx.navigateTo({
       url: '../../pages/detail-news/detail-news?content=' + that.data.message[xb].content + '&date=' + that.data.message[xb].createtime + '&pics=' + that.data.message[xb].pics,
     })
@@ -131,8 +128,7 @@ Page({
     this.setUpLogInStatus()
     console.log("角色是"+that.data.role)
     // 刷新数据
-    this.pageData.page = 1
-    this.reloadData(this.pageData.page, function(success, msg){
+    this.reloadData(1, function(success, msg){
       if(!success) {
         wx.showToast({
           title: msg,
@@ -161,38 +157,14 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    let that = this
-    let oldPage = this.pageData.page
-    this.pageData.Page = 1
-    this.reloadData(this.pageData.page, function(success, msg){
-      if(!success) {
-        wx.showToast({
-          title: msg,
-          icon: 'none',
-        })
-        that.pageData.page = oldPage
-      }
-    })
+ 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-    if (this.pageData.canLoadNextPage) {
-      let that = this
-      let oldPage = this.pageData.page
-      this.pageData.page = oldPage + 1
-      this.reloadData(this.pageData.page, function(success, msg){
-        if(!success) {
-          wx.showToast({
-            title: msg,
-            icon: 'none',
-          })
-          that.pageData.page = oldPage
-        }
-      })
-    }
+
   },
 
   /**
@@ -244,7 +216,7 @@ Page({
           "token": wx.getStorageSync("token"),
           "uid": wx.getStorageSync("uid"),
           "page": page,
-          "limit": that.pageData.perpage,
+          "limit": 3,
         }
         
         if (that.data.tea_class && that.data.tea_class.length > that.data.tea_class_index) {
@@ -265,14 +237,7 @@ Page({
               pageData.morning_read.pics = pageData.morning_read.pics.split(",")
             }
             var newMessages = pageData.messages
-            if (newMessages.length < that.pageData.perpage) {
-              that.pageData.canLoadNextPage = false
-            } else {
-              that.pageData.canLoadNextPage = true
-            }
-            if (page > 1) {
-              newMessages = that.data.messages.concat(newMessages)
-            }
+
             var showNoData = false
             // if (newMessages.length == 0) {
             //   showNoData = true
@@ -285,10 +250,10 @@ Page({
               csmorningRead: pageData.morning_read,
               tea_class: pageData.classes,
               showNoData: showNoData,
+              unreadmsg: pageData.unreadmsg
             })
             typeof cb == "function" && cb(true, "加载成功")
           } else {
-            that.pageData.canLoadNextPage = false
             typeof cb == "function" && cb(false, msg)
           }
         })
@@ -305,7 +270,7 @@ Page({
           "token": wx.getStorageSync("token"),
           "uid": wx.getStorageSync("uid"),
           "page": page,
-          "limit": that.pageData.perpage,
+          "limit": 3,
         }
         if (that.data.stu_class && that.data.stu_class.length > that.data.stu_class_index) {
           params.class_id = that.data.stu_class[that.data.stu_class_index].class_id
@@ -323,16 +288,6 @@ Page({
               pageData.morning_read.pics = pageData.morning_read.pics.split(",")
             }
             var newMessages = pageData.messages
-            // 判断是否可以上啦加载
-            if (newMessages.length < that.pageData.perpage) {
-              that.pageData.canLoadNextPage = false
-            } else {
-              that.pageData.canLoadNextPage = true
-            }
-            // 分页数据处理
-            if (page > 1) {
-              newMessages = that.data.messages.concat(newMessages)
-            }
             // 判断是否加载空页面
             var showNoData = false
             // if (newMessages.length == 0) {
@@ -351,6 +306,7 @@ Page({
               newtaskcount: pageData.newtaskcount,
               csmorningRead: pageData.morning_read,
               showNoData: showNoData,
+              unreadmsg: pageData.unreadmsg
             })
             typeof cb == "function" && cb(true, "加载成功")
           } else if(status == -1){
@@ -358,15 +314,33 @@ Page({
               stu_info:false,
               showNoData: false,
             })
-            that.pageData.canLoadNextPage = false
             typeof cb == "function" && cb(false, "请先完善个人信息")
           } else {
-            that.pageData.canLoadNextPage = false
             typeof cb == "function" && cb(false, msg)
           }
         })
         break
     }
+  },
+
+  /**
+   * 将消息通知改为已读状态
+  */
+  readNoti: function (index) {
+    let noti = this.data.message[index]
+    if (noti.isread == 1) {
+      return
+    }
+
+    let params = {
+      uid: wx.getStorageSync('uid'),
+      token: wx.getStorageSync('token'),
+      msgid: noti.id
+    }
+
+    app.ljjw.jwReadMsg(params).then(d=>{
+
+    })
   },
 
   /**
@@ -378,8 +352,7 @@ Page({
     that.setData({
       stu_class_index: e.detail.value
     })
-    this.pageData.page = 1
-    that.reloadData(this.pageData.page, function(success,msg){
+    that.reloadData(1, function(success,msg){
       if(!success) {
         wx.showToast({
           title: msg,
@@ -398,8 +371,7 @@ Page({
     this.setData({
       tea_class_index: e.detail.value
     })
-    this.pageData.page = 1
-    this.reloadData(this.pageData.page, function(success, msg){
+    this.reloadData(1, function(success, msg){
       if(!success) {
         wx.showToast({
           title: msg,
@@ -408,5 +380,14 @@ Page({
       }
     })
   },
+
+  /**
+   * 历史消息 点击事件
+  */
+  showNotiList: function(e) {
+    wx.navigateTo({
+      url: '../../pages/noti_list/noti_list?class_id='+ (this.data.role == 4 ? this.data.stu_class[this.data.stu_class_index].class_id : this.data.tea_class[this.data.tea_class_index].id),
+    })
+  }
 
 })

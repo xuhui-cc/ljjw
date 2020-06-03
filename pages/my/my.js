@@ -365,7 +365,7 @@ Page({
           }
           
           
-          
+          app.setTaskItemDot()
           that.onLoad()
 
 

@@ -45,43 +45,66 @@
     <block wx:if="{{role != 3}}">
       <view class="read-layout" wx:if="{{csmorningRead != ''}}">
         <view class="flex" bindtap='to_stu_mornread' >
-          <view class="shu"></view>
-          <view class="head">每日晨读</view>
-          <view class="more">更多</view>
-          <image class="more-img" src="../../images/next.png"></image>
-        </view>
-        <view class="flex_warp">
-          <view wx:for="{{csmorningRead.pics}}" wx:key="img_index" >
-            <image class='read-img' data-xb='{{index}}' bindtap='previewImg' src='{{item}}'></image>
+          <view class="titleSubView1">
+            <view class="shu"></view>
+            <view class="head">每日晨读</view>
+          </view>
+          <view class="titleSubView2">
+            <view class="more">更多</view>
+            <image class="more-img" src="../../images/next.png"></image>
           </view>
         </view>
+        
+        <scroll-view class="csmorningRead_scrollView" scroll-x="true">
+          <block wx:for="{{csmorningRead.pics}}" wx:key="img_index" >
+            <image class='read-img' data-xb='{{index}}' bindtap='previewImg' src='{{item}}' style="margin-left:{{index==0?0:30}}rpx"></image>
+          </block>
+        </scroll-view>
       </view>
 
       <view class="{{csmorningRead != '' ? 'task-layout' : 'task-layout1'}}" bindtap="to_stu_task">
         <view class="flex">
-          <view class="shu"></view>
-          <view class="head">任务</view>
-          <image wx:if="{{role == 4 && newtaskcount > 0}}" class="tip" src="../../images/tip.png"></image>
-          <view wx:if="{{role == 4 && newtaskcount > 0}}" class="tip-num">{{newtaskcount}}</view>
-          <view class="more">查看</view>
-          <image class="more-img" src="../../images/next.png"></image>
+          <view class="titleSubView1">
+            <view class="shu"></view>
+            <view class="head">任务</view>
+            <!-- <image wx:if="{{role == 4 && newtaskcount > 0}}" class="tip" src="../../images/tip.png"></image> -->
+            <view wx:if="{{role == 4 && newtaskcount > 0}}" class="tip-num">{{newtaskcount}}</view>
+          </view>
+          <view class="titleSubView2">
+            <view class="more">查看</view>
+            <image class="more-img" src="../../images/next.png"></image>
+          </view>
         </view>
-        <view wx:if="{{role == 4}}" class="task-cont">你有任务未做，快去提交吧！</view>
+        <view wx:if="{{role == 4}}" class="task-cont">{{newtaskcount > 0 ? "你有任务未做，快去提交吧！" : "你所有的任务都在这里！"}}</view>
         <view wx:else="" class="task-cont">学员们提交的任务动态都在这里呦~</view>
       </view>
 
       <view class="cs_jj">
-        <view wx:for="{{message}}" wx:key="id" wx:for-index="xb" >
-          <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
-            <view class="flex">
-              <view class="shu"></view>
-              <view class="head">消息通知</view>
-              <view class="messageState" hidden="{{item.isread == 0 ? false : true}}"></view>
-              <view class="message-date">{{item.createtime}}</view>
-            </view>
-          <view class="message-cont">{{item.content}}</view>
+        <view class="flex" bindtap="showNotiList">
+          <view class="titleSubView1">
+            <view class="shu"></view>
+            <view class="head">消息通知</view>
+          </view>
+          <view class="titleSubView2">
+            <view class="haveUnreadMessageView" hidden="{{unreadmsg == 0 ? true : false}}"></view>
+            <view class="more">历史消息</view>
+            <image class="more-img" src="../../images/next.png"></image>
           </view>
         </view>
+        <block wx:for="{{message}}" wx:key="id" wx:for-index="xb" >
+          <view class="message-layout" bindtap="to_detail_news" data-xb="{{xb}}">
+            <view wx:if="{{xb != 0}}" class="notiTopLine"></view>
+            <view class="notiCell_time">
+              <view class="messageState" hidden="{{item.isread == 0 ? false : true}}"></view>
+              <view class="message-date" style="margin-left:{{item.isread == 0 ? 15 : 31}}rpx;">{{item.createtime}}</view>
+            </view>
+            <view class="message-cont">{{item.content}}</view>
+            <view class="noti_showDetail">
+              <text class="noti_showDetail_text" style="color:{{item.isread == 0 ? '#2dc1a0' : '#b4b4b4'}}">详情</text>
+              <image class="more-img" src="../../images/next.png"></image>
+            </view>
+          </view>
+        </block>
       </view>
     </block>
   </view>

@@ -18,11 +18,12 @@ page{
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
 .my-head{
   /* margin-left: 341rpx; */
   /* margin-top: 108rpx; */
-  width:460rpx;
+  /* width:460rpx; */
   /* height:48rpx; */
   font-size:34rpx;
   /* font-family:PingFang SC; */
@@ -49,6 +50,11 @@ page{
   align-items: center;
   /* background: rgba(39,39,39,1); */
 }
+.detailView {
+  width: 750rpx;
+  display: flex;
+  flex-direction: column;
+}
 .news-title{
   margin-left: 40rpx;
   margin-top: 231rpx;
@@ -60,26 +66,29 @@ page{
   color:rgba(0,0,0,1);
 }
 .nwes-time{
-  margin-left: 40rpx;
-  margin-top: 55rpx;
+  margin-left: 30rpx;
+  margin-top: 41rpx;
   
-  height:19rpx;
-  font-size:24rpx;
-  font-family:PingFang SC;
-  font-weight:400;
+  height:40rpx;
+  font-size:28rpx;
+  /* font-family:PingFang SC;
+  font-weight:400; */
   color:rgba(180,180,180,1);
 }
 .news-cont{
-  margin-left: 40rpx;
-  margin-top: 56rpx;
-  width: 664rpx;
+  margin-left: 30rpx;
+  margin-top: 20rpx;
+  width: 690rpx;
+  font-size: 30rpx;
+  color: #272727;
+  line-height: 49rpx;
 }
 .flex_warp{
-  margin-top: 50rpx;
+  margin-top: 53rpx;
   display: flex;
   flex-wrap: wrap;
-  width: 690rpx;
-  margin-left: 30rpx;
+  width: 710rpx;
+  margin-left: 20rpx;
   flex-direction: column;
 }
 .img{
@@ -87,4 +96,5 @@ page{
   /* height: auto; */
   /* margin-left: 15rpx; */
   /* margin-right: 30rpx; */
+  margin-top: 10rpx;
 }

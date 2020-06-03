@@ -1,0 +1,84 @@
+/* pages/noti_list/noti_list.wxss */
+page{
+  background-color: #fbfbfc;
+}
+.tableView {
+  display: flex;
+  flex-direction: column;
+  width: 690rpx;
+  margin-left: 30rpx;
+  background-color: white;
+  border-radius: 14rpx;
+  margin-top: 16rpx;
+  margin-bottom: 60rpx;
+}
+
+.message-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.notiCell_time {
+  height: 63rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.notiTopLine {
+  height: 9rpx;
+  margin-left: 31rpx;
+  width: 628rpx;
+  border-top: 0.5rpx solid #f1f1f1;
+}
+
+.messageState {
+  margin-left: 31rpx;
+  width: 13rpx;
+  height: 13rpx;
+  border-radius: 50%;
+  background-color: #f14444;
+}
+
+.message-date{
+  margin-left: 15rpx;
+  font-size:24rpx;
+  line-height:33rpx;
+  color:rgba(180,180,180,1);
+}
+
+.message-cont{
+  margin-left: 31rpx;
+  margin-top: 3rpx;
+  max-width:628rpx;
+  font-size:28rpx;
+  line-height:49rpx;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color:rgba(39,39,39,1);
+}
+
+.noti_showDetail {
+  height: 54rpx;
+  margin-bottom: 13rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.noti_showDetail_text {
+  margin-right: 3rpx;
+  font-size: 22rpx;
+  color: #b4b4b4;
+}
+
+.more-img{
+  margin-right: 29rpx;
+  width:18rpx;
+  height:18rpx;
+}

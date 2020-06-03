@@ -23,41 +23,42 @@
     "pages/stu_mornread/stu_mornread",
     "pages/add_message/add_message",
     "pages/stu_jcxx/stu_jcxx",
-    "pages/graduation_school/graduation_school"
+    "pages/graduation_school/graduation_school",
+    "pages/noti_list/noti_list"
   ],
-"tabBar": {
-  "custom": false,
-  "color": "#b4b4b4",
-  "selectedColor": "#2dc1a0",
-  "borderStyle": "black",
-  "backgroundColor": "#ffffff",
-  "list": [
-    {
-      "pagePath": "pages/index/index",
-      "text": "课表",
-      "iconPath": "/images/unselectCourse.png",
-      "selectedIconPath": "/images/selectCourse.png"
-    },
-    {
-      "pagePath": "pages/record/record",
-      "text": "成绩",
-      "iconPath": "/images/unselectRecord.png",
-      "selectedIconPath": "/images/selectRecord.png"
-    },
-    {
-      "pagePath": "pages/task/task",
-      "text": "任务",
-      "iconPath": "/images/unselectTask.png",
-      "selectedIconPath": "/images/selectTask.png"
-    },
-    {
-      "pagePath": "pages/my/my",
-      "text": "我的",
-      "iconPath": "/images/unselectMy.png",
-      "selectedIconPath": "/images/selectMy.png"
-    }
-  ]
-},
+  "tabBar": {
+    "custom": false,
+    "color": "#b4b4b4",
+    "selectedColor": "#2dc1a0",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "课表",
+        "iconPath": "/images/unselectCourse.png",
+        "selectedIconPath": "/images/selectCourse.png"
+      },
+      {
+        "pagePath": "pages/record/record",
+        "text": "成绩",
+        "iconPath": "/images/unselectRecord.png",
+        "selectedIconPath": "/images/selectRecord.png"
+      },
+      {
+        "pagePath": "pages/task/task",
+        "text": "任务",
+        "iconPath": "/images/unselectTask.png",
+        "selectedIconPath": "/images/selectTask.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "/images/unselectMy.png",
+        "selectedIconPath": "/images/selectMy.png"
+      }
+    ]
+  },
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#14CBA2",

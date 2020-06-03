@@ -1,0 +1,18 @@
+<!--pages/noti_list/noti_list.wxml-->
+<view class="tableView">
+  <block wx:for="{{notiList}}" wx:key="id">
+    <view class="message-layout" bindtap="to_detail_news" data-index="{{index}}">
+      <view wx:if="{{index != 0}}" class="notiTopLine"></view>
+      <view wx:else style="height:17rpx"></view>
+      <view class="notiCell_time">
+        <view class="messageState" hidden="{{item.isread == 0 ? false : true}}"></view>
+        <view class="message-date" style="margin-left:{{item.isread == 0 ? 15 : 31}}rpx;">{{item.createtime}}</view>
+      </view>
+      <view class="message-cont">{{item.content}}</view>
+      <view class="noti_showDetail">
+        <text class="noti_showDetail_text" style="color:{{item.isread == 0 ? '#2dc1a0' : '#b4b4b4'}}">详情</text>
+        <image class="more-img" src="../../images/next.png"></image>
+      </view>
+    </view>
+  </block>
+</view>
