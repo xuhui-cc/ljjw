@@ -24,7 +24,8 @@
     "pages/add_message/add_message",
     "pages/stu_jcxx/stu_jcxx",
     "pages/graduation_school/graduation_school",
-    "pages/noti_list/noti_list"
+    "pages/noti_list/noti_list",
+    "pages/feedBack_list/feedBack_list"
   ],
   "tabBar": {
     "custom": false,

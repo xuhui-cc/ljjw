@@ -2,8 +2,11 @@
 const app = getApp()
 Page({
 
-  
+  // class选择器选中的索引
+  classPickerSelectIndex: 0,
 
+  isClassPickerScrollStart: false,
+  isClassPickerScrollEnd: false,
   /**
    * 页面的初始数据
    */
@@ -15,6 +18,8 @@ Page({
     tea_class_index: 0,
     stu_info:true,
     showNoData: false, // 是否展示无数据页面
+    showClassPicker: false, // 是否展示班级选择器
+    showTopClassDot: false // 是否在导航栏班级 展示小红点
   },
 
   /**
@@ -245,12 +250,21 @@ Page({
             if (!(pageData.classes && pageData.classes.length != 0)) {
               showNoData = true
             }
+            var showTopClasssDot = false
+            for (var i = 0; i < pageData.classes.length; i++) {
+              let aclass = pageData.classes[i]
+              if (aclass.redpoint == 1) {
+                showTopClasssDot = true
+                break
+              }
+            }
             that.setData({
               message: newMessages,
               csmorningRead: pageData.morning_read,
               tea_class: pageData.classes,
               showNoData: showNoData,
-              unreadmsg: pageData.unreadmsg
+              unreadmsg: pageData.unreadmsg,
+              showTopClassDot: showTopClasssDot
             })
             typeof cb == "function" && cb(true, "加载成功")
           } else {
@@ -277,6 +291,7 @@ Page({
         }
         // console.log(params)
         app.ljjw.jwGetStudentTaskMain(params).then(d => {
+          
           wx.stopPullDownRefresh({
             complete: (res) => {},
           })
@@ -299,6 +314,16 @@ Page({
             // if (newMessages.length == 0 && pageData.morning_read.length == 0 && (pageData.newtaskcount == '' || pageData.newtaskcount == 0)) {
             //   showNoData = true
             // }
+
+            var showTopClasssDot = false
+            for (var i = 0; i < pageData.classes.length; i++) {
+              let aclass = pageData.classes[i]
+              if (aclass.redpoint == 1) {
+                showTopClasssDot = true
+                break
+              }
+            }
+
             // 更改数据 刷新界面
             that.setData({
               message: newMessages,
@@ -306,7 +331,8 @@ Page({
               newtaskcount: pageData.newtaskcount,
               csmorningRead: pageData.morning_read,
               showNoData: showNoData,
-              unreadmsg: pageData.unreadmsg
+              unreadmsg: pageData.unreadmsg,
+              showTopClassDot: showTopClasssDot
             })
             typeof cb == "function" && cb(true, "加载成功")
           } else if(status == -1){
@@ -347,19 +373,19 @@ Page({
    * 学生班级选定事件
   */
   stu_class_picker: function (e) {
-    let that = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    that.setData({
-      stu_class_index: e.detail.value
-    })
-    that.reloadData(1, function(success,msg){
-      if(!success) {
-        wx.showToast({
-          title: msg,
-          icon: 'none',
-        })
-      }
-    })
+    console.log("选中改变")
+    console.log(e)
+    let index = e.detail.value[0]
+    this.classPickerSelectIndex = index
+  },
+
+  classPickerScrollStart: function (e) {
+    this.isClassPickerScrollStart = true
+    this.isClassPickerScrollEnd = false
+  },
+  classPickerScrollEnd: function(e) {
+    this.isClassPickerScrollEnd = true
+    this.isClassPickerScrollStart = false
   },
 
   /**
@@ -387,6 +413,66 @@ Page({
   showNotiList: function(e) {
     wx.navigateTo({
       url: '../../pages/noti_list/noti_list?class_id='+ (this.data.role == 4 ? this.data.stu_class[this.data.stu_class_index].class_id : this.data.tea_class[this.data.tea_class_index].id),
+    })
+  },
+
+  /**
+   * 导航栏班级选择 点击事件
+  */
+  showClassPickerView: function (e) {
+    wx.hideTabBar({
+      animation: false,
+    })
+    this.setData({
+      showClassPicker: true
+    })
+  },
+
+  /**
+   * 班级选择器 取消按钮 点击事件
+  */
+  classPickerViewCancel: function (e) {
+    wx.showTabBar({
+      animation: false,
+    })
+    this.setData({
+      showClassPicker: false
+    })
+  },
+
+  /**
+   * 班级选择器 确定按钮 点击事件
+  */
+  classPickerViewSure: function (e) {
+    
+    if (this.isClassPickerScrollStart) {
+      return
+    }
+    this.classPickerViewCancel()
+
+    if (this.classPickerSelectIndex == this.data.stu_class_index) {
+      return
+    }
+
+    let that = this
+    
+    if (this.data.role == 4) {
+      that.setData({
+        stu_class_index: this.classPickerSelectIndex
+      })
+    } else {
+      that.setData({
+        tea_class_index: this.classPickerSelectIndex
+      })
+    }
+    
+    that.reloadData(1, function(success,msg){
+      if(!success) {
+        wx.showToast({
+          title: msg,
+          icon: 'none',
+        })
+      }
     })
   }
 

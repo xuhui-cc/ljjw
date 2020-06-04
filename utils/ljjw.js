@@ -79,7 +79,7 @@ function jwGetStudentScore(params) {
 
 //学生任务首页
 function jwGetStudentTaskMain(params) {
-  return fetch.ljjwfetch(URI, 'jwGetStudentTaskMain', params, true)
+  return fetch.ljjwfetch(URI, 'jwGetStudentTaskMain', params, "学生任务首页", true)
 }
 
 //学生成绩详情
