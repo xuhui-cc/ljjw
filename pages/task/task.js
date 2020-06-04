@@ -450,21 +450,24 @@ Page({
     }
     this.classPickerViewCancel()
 
-    if (this.classPickerSelectIndex == this.data.stu_class_index) {
-      return
-    }
-
-    let that = this
-    
-    if (this.data.role == 4) {
-      that.setData({
+    if(this.data.role == 4) {
+      if (this.classPickerSelectIndex == this.data.stu_class_index) {
+        return
+      }
+      this.setData({
         stu_class_index: this.classPickerSelectIndex
       })
     } else {
-      that.setData({
+      if (this.classPickerSelectIndex == this.data.tea_class_index) {
+        return
+      }
+      this.setData({
         tea_class_index: this.classPickerSelectIndex
       })
     }
+    
+
+    let that = this
     
     that.reloadData(1, function(success,msg){
       if(!success) {
