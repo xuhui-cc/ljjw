@@ -265,6 +265,8 @@ Page({
           var cdata=[];
           if(that.data.score.score_data.length>5){
             newdata=that.data.score.score_data.slice(that.data.score.score_data.length-5);
+          } else {
+            newdata = that.data.score.score_data
           }
           for (var i = 0; i < newdata.length; i++) {
             var lastdata;
