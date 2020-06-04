@@ -129,12 +129,18 @@ page{
 }
 .collect-layout{
   display: flex;
- 
   margin-top: 16rpx;
   width:750rpx;
   height:89rpx;
   background:rgba(255,255,255,1);
   opacity:1;
+  align-items: center;
+  justify-content: space-between;
+}
+.sectionHeader_subLayout {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
 }
 .shu{
   margin-left: 32rpx;
@@ -144,6 +150,18 @@ page{
   background:rgba(45,193,160,1);
   opacity:1;
   border-radius:224rpx;
+}
+.shu_new {
+  margin-left: 32rpx;
+  width: 5rpx;
+  height: 13rpx;
+  border-radius: 2.5rpx;
+  background-color: #2dc1a0;
+}
+.sectionHeader_title {
+  font-size: 30rpx;
+  color: #272727;
+  margin-left: 11rpx;
 }
 .my-collect{
   margin-left: 11rpx;
@@ -157,11 +175,28 @@ page{
   color:rgba(39,39,39,1);
   opacity:1;
 }
+.sectionHeader_arrow {
+  margin-right: 32rpx;
+  width: 21rpx;
+  height: 21rpx;
+}
 .to-collect{
   margin-left: 529rpx;
   margin-top: 34rpx;
   width:20rpx;
   height:20rpx;
+}
+.sectionHeader_dot {
+  margin-right: 2rpx;
+  width: 42rpx;
+  height: 30rpx;
+  border-radius: 15rpx;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: #f14444;
+  color: white;
+  font-size: 22rpx;
 }
 .search-img{
   margin-left: 41rpx;
@@ -210,7 +245,7 @@ page{
   border-radius:14rpx;
 }
 .clo_layout{
-  margin-bottom: 200rpx;
+  margin-bottom: 36rpx;
 }
 .data-tea{
   margin-left: 30rpx;

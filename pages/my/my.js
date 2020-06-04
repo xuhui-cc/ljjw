@@ -527,6 +527,17 @@ Page({
         })
       }
     })
+  },
+
+  // ------------------------------------------事件-------------------------------------
+  /**
+   * 问题反馈 点击事件
+  */
+  to_feedBack: function(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '../../pages/feedBack_list/feedBack_list' ,
+    })
   }
   
 })

@@ -57,13 +57,6 @@
     
     </view>
 
-
-    <view class="collect-layout" bindtap='to_class_data'>
-      <view class="shu"></view>
-      <view class="my-collect">我的收藏</view>
-      <image class="to-collect" src="../../images/next.png"></image>
-    </view>
-
     <view class="flex">
       <view class="shu"></view>
       <view class="my-collect">班级资料</view>
@@ -77,47 +70,65 @@
       </picker>
     </view>
 
-    <image wx:if="{{mydata.files == ''}}" class="file_null" src="../../images/file_null.png"></image>
-
     <view class="clo_layout">
 
-    <block wx:for="{{mydata.files}}" wx:key="index" >
-      <view class="data-layout">
-        <view class="flex">
-          <view class="data-tea">来自：{{item.createuser}}老师</view>
-          <view class="data-date">{{item.createtime}}</view>
-          <view class="flex" wx:if="{{item.colid == null}}" data-file_xb="{{index}}" bindtap='iscollect'>
-            <image class="class-uncollect" src="../../images/uncollect.png"></image>
-            <view class="data-uncollect">未收藏</view>
+      <block wx:for="{{mydata.files}}" wx:key="index" >
+        <view class="data-layout">
+          <view class="flex">
+            <view class="data-tea">来自：{{item.createuser}}老师</view>
+            <view class="data-date">{{item.createtime}}</view>
+            <view class="flex" wx:if="{{item.colid == null}}" data-file_xb="{{index}}" bindtap='iscollect'>
+              <image class="class-uncollect" src="../../images/uncollect.png"></image>
+              <view class="data-uncollect">未收藏</view>
+            </view>
+            <view class="flex" wx:if="{{item.colid}}" data-file_xb="{{index}}" bindtap='iscollect'>
+              <image class="class-uncollect" src="../../images/collect.png"></image>
+              <view class="data-collect">收藏</view>
+            </view>
+            
           </view>
-          <view class="flex" wx:if="{{item.colid}}" data-file_xb="{{index}}" bindtap='iscollect'>
-            <image class="class-uncollect" src="../../images/collect.png"></image>
-            <view class="data-collect">收藏</view>
-          </view>
-          
-        </view>
- 
-        <view class="data-heng"></view>
+  
+          <view class="data-heng"></view>
 
-        <view class="flex" data-file_xb="{{index}}" bindtap="open_file">
-          <!-- pdf -->
-          <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image> 
-          <!-- doc docx -->
-          <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
-          <!-- ppt pptx -->
-          <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
-          <!-- png jpg jpeg -->
-          <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
-          <!-- <image class="pdf" wx:if="{{item.form == 'jpg'}}" src="../../images/jpg.png" ></image> -->
-          <view>
-            <view class="data-name">{{item.title}}</view>
-            <view class="data-intro">{{item.intro}}</view>
+          <view class="flex" data-file_xb="{{index}}" bindtap="open_file">
+            <!-- pdf -->
+            <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image> 
+            <!-- doc docx -->
+            <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
+            <!-- ppt pptx -->
+            <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
+            <!-- png jpg jpeg -->
+            <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
+            <!-- <image class="pdf" wx:if="{{item.form == 'jpg'}}" src="../../images/jpg.png" ></image> -->
+            <view>
+              <view class="data-name">{{item.title}}</view>
+              <view class="data-intro">{{item.intro}}</view>
+            </view>
           </view>
-        </view>
 
-      </view>
-    </block>
+        </view>
+      </block>
     
+    </view>
+
+    <view class="collect-layout" bindtap='to_class_data'>
+      <view class="sectionHeader_subLayout">
+        <view class="shu_new"></view>
+        <view class="sectionHeader_title">我的收藏</view>
+      </view>
+      <image class="sectionHeader_arrow" src="../../images/next.png"></image>
+    </view>
+
+    <view class="collect-layout" bindtap='to_feedBack'>
+      <view class="sectionHeader_subLayout">
+        <view class="shu_new"></view>
+        <view class="sectionHeader_title">问题反馈</view>
+      </view>
+      <view class="sectionHeader_subLayout">
+        <view class="sectionHeader_dot">1</view>
+        <image class="sectionHeader_arrow" src="../../images/next.png"></image>
+      </view>
+      
     </view>
 
   </view>
