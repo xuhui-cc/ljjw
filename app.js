@@ -73,7 +73,7 @@ App({
             index: 2,
           })
         } else {
-          wx.showTabBarRedDot({
+          wx.hideTabBarRedDot({
             index: 2,
           })
         }
