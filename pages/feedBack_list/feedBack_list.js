@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 顶部菜单选中下标
+    menuSelectedIndex: 0,
   },
 
   /**
@@ -64,6 +65,7 @@ Page({
 
   },
 
+  // ------------------------------------------------私有方法---------------------------------------------------
   /**
    * 设置自定义导航栏尺寸
   */
@@ -82,4 +84,18 @@ Page({
       saveBottom: saveBottom
     })
   },
+  // ------------------------------------------------私有方法---------------------------------------------------
+  /**
+   * 顶部菜单 点击事件
+  */
+  menu_selected: function (e) {
+    console.log(e)
+    let index = e.currentTarget.dataset.index
+    if (index == this.data.menuSelectedIndex) {
+      return
+    }
+    this.setData({
+      menuSelectedIndex: index
+    })
+  }
 })

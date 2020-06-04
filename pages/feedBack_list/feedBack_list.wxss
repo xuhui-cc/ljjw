@@ -31,19 +31,27 @@
 
 .topMenuView {
   height: 100%;
-  width: 300rpx;
+  /* width: 178rpx; */
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  padding-bottom: 21rpx;
+  /* padding-bottom: 21rpx; */
   font-size: 32rpx;
   color: white;
-  background-color: red;
 }
 
-.topMenuView:visited {
+.topMenuViewVisited {
+  height: 100%;
+  /* width: 178rpx; */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: white;
   font-size: 38rpx;
   font-weight: bold;
+}
+.toMenuTitle {
+  margin-bottom: 21rpx;
 }
 
 .topMenuDot {
