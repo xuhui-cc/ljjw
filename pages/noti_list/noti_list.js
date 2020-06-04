@@ -124,7 +124,7 @@ Page({
               that.pageData.canLoadNextPage = true
             }
             if (page > 1) {
-              newMessages = that.data.messages.concat(newMessages)
+              newMessages = that.data.notiList.concat(newMessages)
             }
             var showNoData = false
 
@@ -173,7 +173,7 @@ Page({
             }
             // 分页数据处理
             if (page > 1) {
-              newMessages = that.data.messages.concat(newMessages)
+              newMessages = that.data.notiList.concat(newMessages)
             }
             // 判断是否加载空页面
             var showNoData = false
