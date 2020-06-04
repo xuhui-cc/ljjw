@@ -2,6 +2,8 @@
 const app = getApp()
 Page({
 
+  // 打开的文件路径 在onShow中删除文件
+  openFilePath: '',
   /**
    * 页面的初始数据
    */
@@ -100,6 +102,7 @@ Page({
             console.log('返回自定义路径：')
             console.log(filePath)
 
+            that.openFilePath = filePath
             wx.openDocument({
               showMenu: true,
               filePath: filePath,
@@ -186,7 +189,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.clearLocalFile()
   },
 
   /**
@@ -222,6 +225,31 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  /**
+   * 清除本地保存的文件
+  */
+  clearLocalFile: function() {
+    let that = this
+
+    if (this.openFilePath == '') {
+      return
+    }
+
+    let fs = wx.getFileSystemManager()
+    let filePath = this.openFilePath
+    fs.unlink({
+      filePath: filePath,
+      success (res) {
+        console.log("文件删除成功" + filePath)
+        that.openFilePath = ''
+      },
+      fail (res) {
+        console.log("文件删除失败"+filePath)
+        console.log(res)
+      }
+    })
   },
 
   // --------------------------------------------接口----------------------------------------------------
