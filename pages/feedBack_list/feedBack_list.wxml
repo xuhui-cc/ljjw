@@ -1,2 +1,13 @@
 <!--pages/feedBack_list/feedBack_list.wxml-->
-<text>pages/feedBack_list/feedBack_list.wxml</text>
+<view class="navigationBar" style="height:{{naviBarHeight}}px;">
+  <view class="navigationBar_contentView" style="height:{{navibar_content_height}}px; margin-top:{{statusBar_height}}px">
+    <view class="navibar_backImageView" bindtap="back">
+      <image class="navibar_backImage" src="../../images/back_img.png"></image>
+      <view class="topMenuView">反馈类型</view>
+      <!-- <view class="topMenuView">
+        反馈处理
+        <view class="topMenuDot">1</view>
+      </view> -->
+    </view>
+  </view>
+</view>
