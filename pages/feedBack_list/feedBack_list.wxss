@@ -1,6 +1,9 @@
 /* pages/feedBack_list/feedBack_list.wxss */
 
 /* 导航栏 */
+page{
+  background-color: #fbfbfc;
+}
 .navigationBar {
   position: fixed;
   width:750rpx;
@@ -66,4 +69,199 @@
   justify-content: center;
   margin-left: 3rpx;
   margin-bottom: 52rpx;
+}
+
+
+.contentView {
+  display: flex;
+  flex-direction: column;
+}
+
+/* item */
+.itemView {
+  width: 100%;
+  height: 89rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.itemView_subView {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+}
+
+.green {
+  width: 5rpx;
+  height: 13rpx;
+  border-radius: 2.5rpx;
+  margin-left: 32rpx;
+  background-color: #2dc1a0;
+}
+
+.item_title {
+  font-size: 30rpx;
+  color: #272727;
+  margin-left: 11rpx;
+}
+
+.item_nextImage {
+  margin-right: 32rpx;
+  width: 21rpx;
+  height: 21rpx;
+}
+
+/* 反馈处理 */
+.feedBackCell {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.feedBack_BackInfo {
+  width: 631rpx;
+  height: 106rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.feedBack_readStatus {
+  width: 65rpx;
+  height: 34rpx;
+  font-size: 22rpx;
+  font-weight: bold;
+  color: white;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-radius: 0 8rpx 8rpx 0;
+}
+
+.feedBack_createTime {
+  margin-left: 23rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #272727;
+  max-width: 300rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feedBack_type {
+  margin-left: 21rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #272727;
+  max-width: 222rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feedBack_dealType {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 119rpx;
+  height: 119rpx;
+}
+
+.feedBack_content {
+  margin-top: 6rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
+  font-size: 26rpx;
+  color: #dbdbdb;
+}
+
+.feedBack_openButton {
+  height: 100rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedBack_bottomLine {
+  height: 36rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
+  border-bottom: 1rpx dotted #e9e9e9;
+}
+.feedBack_bottom {
+  width: 100%;
+  height: 64rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.feedBack_bottomArrow {
+  width: 23rpx;
+  height: 23rpx;
+}
+
+.feedBack_bottomText {
+  margin-left: 15rpx;
+  font-size: 24rpx;
+  color: #b4b4b4;
+}
+
+.feedBack_stuPicture_collectionView {
+  margin-left: 30rpx;
+  width: 643rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.feedBack_stuPicture {
+  width: 200rpx;
+  height: 200rpx;
+  background-color: black;
+}
+
+.feddBack_stuPicture_bottomLine {
+  height: 50rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
+  border-bottom: 1rpx solid #ececec;
+}
+
+.feddBack_dealTimeView {
+  height: 113rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.feedBack_dealTime_image {
+  width: 31rpx;
+  height: 31rpx;
+  margin-left: 30rpx;
+}
+
+.feedBack_dealTime_time {
+  margin-left: 27rpx;
+  color: #272727;
+  font-size: 34rpx;
+  max-width: 632rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feedBack_dealContent {
+  margin-left: 30rpx;
+  width: 664rpx;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 26rpx;
 }

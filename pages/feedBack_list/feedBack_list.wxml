@@ -1,18 +1,90 @@
 <!--pages/feedBack_list/feedBack_list.wxml-->
 <!-- 导航 -->
-<view class="navigationBar" style="height:{{naviBarHeight}}px;">
-  <view class="navigationBar_contentView" style="height:{{navibar_content_height}}px; margin-top:{{statusBar_height}}px">
-    <!-- 返回按钮 -->
-    <view class="navibar_backImageView" bindtap="back">
-      <image class="navibar_backImage" src="../../images/back_img.png"></image>
-    </view>
-    <!-- menu -->
-    <view class="{{menuSelectedIndex == 0? 'topMenuViewVisited' : 'topMenuView'}}" bindtap="menu_selected" data-index="0">
-      <text class="toMenuTitle">反馈类型</text>
-    </view>
-    <view class="{{menuSelectedIndex == 1? 'topMenuViewVisited' : 'topMenuView'}}" style="margin-left:44rpx" bindtap="menu_selected" data-index="1">
-      <text class="toMenuTitle">反馈处理</text>
-      <view class="topMenuDot">1</view>
+<view class="container">
+  <view class="navigationBar" style="height:{{naviBarHeight}}px;">
+    <view class="navigationBar_contentView" style="height:{{navibar_content_height}}px; margin-top:{{statusBar_height}}px">
+      <!-- 返回按钮 -->
+      <view class="navibar_backImageView" bindtap="back">
+        <image class="navibar_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <!-- menu -->
+      <view class="{{menuSelectedIndex == 0? 'topMenuViewVisited' : 'topMenuView'}}" bindtap="menu_selected" data-index="0">
+        <text class="toMenuTitle">反馈类型</text>
+      </view>
+      <view class="{{menuSelectedIndex == 1? 'topMenuViewVisited' : 'topMenuView'}}" style="margin-left:44rpx" bindtap="menu_selected" data-index="1">
+        <text class="toMenuTitle">反馈处理</text>
+        <view class="topMenuDot">1</view>
+      </view>
     </view>
   </view>
+
+  <!-- 反馈类型 -->
+  <view wx:if="{{menuSelectedIndex==0}}" class="contentView" style="margin-top:{{naviBarHeight}}px">
+    <block wx:for="{{itemArray}}" wx:key="type">
+      <view class="itemView" style="margin-top:{{index==0 ? 0 : 16}}rpx">
+        <view class="itemView_subView">
+          <view class="green"></view>
+          <view class="item_title">{{item.title}}</view>
+        </view>
+        <view class="itemView_subView">
+          <image class="item_nextImage" src="../../images/next.png"></image>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 反馈处理 -->
+  <view wx:elif="{{menuSelectedIndex==1}}" class="contentView" style="margin-top:{{naviBarHeight}}px">
+    <block wx:for="{{feedBackList}}" wx:key="index">
+      <view class="feedBackCell" style="margin-top:{{index==0 ? 0 : 16}}rpx">
+        <view class="feedBack_BackInfo">
+          <!-- 已读未读状态 -->
+          <view class="feedBack_readStatus" style="background-color:{{item.isread==1 ? '#dbdbdb' : '#f14444'}}">{{item.isread==1 ? '已读' : '未读'}}</view>
+          <!-- 时间 -->
+          <text class="feedBack_createTime">{{item.time}}</text>
+          <!-- 反馈类型 -->
+          <text class="feedBack_type">类型：{{item.type}}</text>
+        </view>
+        <!-- 处理状态 -->
+        <image wx:if="{{item.dealType==1}}" src="../../images/feedBack_dealType_doing.png" class="feedBack_dealType"></image>
+        <image wx:if="{{item.dealType==2}}" src="../../images/feedBack_dealType_done.png" class="feedBack_dealType"></image>
+        <image wx:if="{{item.dealType==3}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
+        <!-- 反馈内容 -->
+        <view class="feedBack_content" style="{{item.open ? 'flex-wrap: wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center;'}}">{{item.content}}</view>
+        <block wx:if="{{item.open}}">
+          <!-- 反馈图片 -->
+          <view class="feedBack_stuPicture_collectionView" style="margin-top: 41rpx;">
+            <block wx:for="{{item.pics}}" wx:for-index="picIndex" wx:for-item="picPath" wx:key="picIndex">
+              <image class="feedBack_stuPicture" style="margin-top:{{picIndex>2 ? 21 : 0}}rpx; margin-left:{{picIndex%3==0 ? 0 : 21}}rpx"></image>
+            </block>
+          </view>
+          <view class="feddBack_stuPicture_bottomLine"></view>
+          <!-- 处理时间 -->
+          <view class="feddBack_dealTimeView">
+            <image class="feedBack_dealTime_image" src="../../images/feedBack_dealTime.png"></image>
+            <text class="feedBack_dealTime_time">{{item.dealTime}}</text>
+          </view>
+          <!-- 处理内容 -->
+          <view class="feedBack_dealContent" style="color:{{item.dealType==2 ? '#46bf6a' : '#f14444'}}">处理结果：{{item.dealContent}}</view>
+          <!-- 处理图片 -->
+          <view class="feedBack_stuPicture_collectionView" style="margin-top: 41rpx;">
+            <block wx:for="{{item.dealPics}}" wx:for-index="picIndex" wx:for-item="picPath" wx:key="picIndex">
+              <image class="feedBack_stuPicture" style="margin-top:{{picIndex>2 ? 21 : 0}}rpx; margin-left:{{picIndex%3==0 ? 0 : 21}}rpx"></image>
+            </block>
+          </view>
+          
+        </block>
+        <!-- 展开/收起按钮 -->
+        <view wx:if="{{item.dealType==2 || item.dealType==3}}" class="feedBack_openButton" bindtap="feedBackOpenButton" data-index="{{index}}">
+          <view class="feedBack_bottomLine"></view>
+          <view class="feedBack_bottom">
+            <image class="feedBack_bottomArrow" src="{{item.open ? '../../images/ssj.png' : '../../images/xsj.png'}}"></image>
+            <text class="feedBack_bottomText">{{item.open ? "收起" : "展开"}}</text>
+          </view>
+        </view>
+        <view wx:else style="height:35rpx"></view>
+      </view>
+    </block>
+  </view>
 </view>
+
