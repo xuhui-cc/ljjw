@@ -97,6 +97,12 @@ function setOption(chart, xdata, ydata) {
       x: 'center',
       type: 'value',
       name:'单位：%',
+      axisLabel:{
+        fontSize:16
+      },
+      nameTextStyle:{
+        fontSize:16
+      },
       splitLine: {
         lineStyle: {
           type: 'dashed'
