@@ -41,7 +41,15 @@ Page({
     this.setUpUserInfo()
 
     if(that.data.role == 4){
-      that.studentGetPageInfo()
+      if(that.data.stu_class && that.data.stu_class != '' && that.data.stu_class.length > that.data.stu_class_index) {
+        let class_id = that.data.stu_class[that.data.stu_class_index].class_id
+        that.studentGetPageInfo(class_id)
+      } else {
+        that.setData({
+          stu_class_index: 0
+        })
+        that.studentGetPageInfo()
+      }
     } 
     else if (that.data.role == 1){
       var params = {
