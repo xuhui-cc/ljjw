@@ -46,7 +46,10 @@ page{
 }
 
 .name{
-  max-width:128rpx;
+  max-width:350rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   height:45rpx;
   font-size:32rpx;
   font-family:PingFang SC;
