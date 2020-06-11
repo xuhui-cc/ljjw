@@ -279,7 +279,11 @@ Page({
       var nameStr = ''
       for (var i = 0; i < that.data.cutschool.length; i++) {
         let student = that.data.cutschool[i]
-        nameStr = nameStr + student.realname
+        if (i == 0) {
+          nameStr = nameStr + student.realname
+        } else {
+          nameStr = nameStr + "、" + student.realname
+        }
       }
       copyStr = copyStr + "\n旷课"+ that.data.cutschool_num + "人："+nameStr
     }
@@ -288,7 +292,11 @@ Page({
       var nameStr = ''
       for (var i = 0; i < that.data.later.length; i++) {
         let student = that.data.later[i]
-        nameStr = nameStr + student.realname
+        if (i == 0) {
+          nameStr = nameStr + student.realname
+        } else {
+          nameStr = nameStr + "、" + student.realname
+        }
       }
       copyStr = copyStr + "\n迟到"+ that.data.later_num + "人："+nameStr
     }
@@ -297,7 +305,11 @@ Page({
       var nameStr = ''
       for (var i = 0; i < that.data.leaveschool.length; i++) {
         let student = that.data.leaveschool[i]
-        nameStr = nameStr + student.realname
+        if (i == 0) {
+          nameStr = nameStr + student.realname
+        } else {
+          nameStr = nameStr + "、" + student.realname
+        }
       }
       copyStr = copyStr + "\n离校"+ that.data.leaveschool_num + "人："+nameStr
     }
