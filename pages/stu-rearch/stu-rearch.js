@@ -4,6 +4,8 @@ Page({
 
   // 打开的文件路径 在onShow中删除文件
   openFilePath: '',
+  // 是否正在加载
+  loading: false,
   /**
    * 页面的初始数据
    */
@@ -198,6 +200,9 @@ Page({
   },
 
   open_file: function (e) {
+    if (this.loading) {
+      return
+    }
     let that = this
     var file_xb = e.currentTarget.dataset.file_xb
     console.log(file_xb)
@@ -214,6 +219,7 @@ Page({
       })
       console.log("图")
     } else {
+      this.loading = true
       let timestamp = Date.parse(new Date()); 
       let fileTypeArray = that.data.mydata[file_xb].fileurl.split(".")
       let fileType = fileTypeArray[fileTypeArray.length-1]
@@ -240,8 +246,11 @@ Page({
             success: function (res) {
               console.log('打开文档成功')
               wx.hideLoading()
+              that.loading = false
             },
             fail: function(res) {
+              console.log('文件打开失败')
+              console.log(res)
               wx.hideLoading({
                 complete: (res) => {
                   wx.showToast({
@@ -250,10 +259,13 @@ Page({
                   })
                 },
               })
+              that.loading = false
             }
           })
         },
         fail: function(res) {
+          console.log('文件下载失败')
+          console.log(res)
           wx.hideLoading({
             complete: (res) => {
               wx.showToast({
@@ -262,6 +274,7 @@ Page({
               })
             },
           })
+          that.loading = false
         }
       })
     }
