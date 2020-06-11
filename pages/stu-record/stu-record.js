@@ -115,7 +115,7 @@ function setOption(chart, xdata, ydata) {
       data: ydata,
       score_data:xdata,
       // data: [80,50,99],
-      smooth: true,
+      // smooth: true,
       type: 'line'
     }]
   }
@@ -274,6 +274,7 @@ Page({
           } else {
             newdata = that.data.score.score_data
           }
+          cxnum = []
           for (var i = 0; i < newdata.length; i++) {
             var lastdata;
             if(that.data.aud==0){
