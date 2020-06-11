@@ -242,6 +242,8 @@ Page({
               wx.hideLoading()
             },
             fail: function(res) {
+              console.log('文件打开失败')
+              console.log(res)
               wx.hideLoading({
                 complete: (res) => {
                   wx.showToast({
@@ -254,6 +256,8 @@ Page({
           })
         },
         fail: function(res) {
+          console.log('文件下载失败')
+          console.log(res)
           wx.hideLoading({
             complete: (res) => {
               wx.showToast({

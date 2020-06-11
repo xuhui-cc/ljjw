@@ -112,7 +112,7 @@ Page({
               },
 
               fail: function (res) {
-                console.log("fail");
+                console.log("打开文档失败");
                 console.log(res)
                 wx.hideLoading({
                   complete: (res) => {
@@ -132,6 +132,8 @@ Page({
             })
           },
           fail: function(res) {
+            console.log('文件下载失败')
+            console.log(res)
             wx.hideLoading({
               complete: (res) => {
                 wx.showToast({
