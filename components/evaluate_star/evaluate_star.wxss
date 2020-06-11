@@ -1,0 +1,22 @@
+/* evaluate_star/evaluate_star.wxss */
+.contentView {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 195rpx;
+  min-height: 38rpx;
+}
+
+.star {
+  display: flex;
+  align-items: center;
+  flex-grow: 2;
+  justify-content: center;
+  height: 100%;
+}
+
+.star_iamge {
+  width: 38.8rpx;
+  height: 37.01rpx;
+}

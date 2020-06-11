@@ -265,3 +265,69 @@ page{
   flex-wrap: wrap;
   font-size: 26rpx;
 }
+
+.feedBack_dealPicture_bottomLine {
+  height: 56rpx;
+  width: 100%;
+  border-bottom: 0.5rpx solid #ececec;
+}
+
+.evaluated_scoredView {
+  margin-top: 12rpx;
+  height: 116rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.evaluate_scoreTitle {
+  font-size: 28rpx;
+  color: #272727;
+  margin-left: 30rpx;
+}
+
+.evaluated_content {
+  color: #8d8d8d;
+  font-size: 28rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.feedBack_evaluateTextArea_backgroundView {
+  margin-left: 30rpx;
+  width: 690rpx;
+  border-radius: 14rpx;
+  background-color: #f6f6f6;
+  height: 179rpx;
+}
+
+.feedBack_evaluateTextarea {
+  margin-left: 27rpx;
+  margin-top: 24rpx;
+  width: 636rpx;
+  height: 131rpx;
+  font-size: 28rpx;
+  color: black;
+}
+
+.feedBack_evaluateTextarea_placehoulder {
+  font-size: 28rpx;
+  color: #b4b4b4;
+}
+
+.feedBack_evaluate_submitButton {
+  margin-left: 30rpx;
+  width: 690rpx;
+  height: 90rpx;
+  border-radius: 45rpx;
+  background-color: #dedede;
+  font-size: 32rpx;
+  color: white;
+  margin-top: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

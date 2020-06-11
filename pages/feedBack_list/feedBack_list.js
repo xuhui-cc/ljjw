@@ -33,7 +33,7 @@ Page({
         time: '2019.09.04 09:20', 
         type: '软件使用', 
         dealType:1, // 1-处理中 2-已处理 3-被驳回
-        content: "问题：我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，如下图所示，打开后，是空白，或者是提示文件类型错误。问题：我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，如下图所示，打开后，是空白，或者是提示文件类型错误。",
+        content: "我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，如下图所示，打开后，是空白，或者是提示文件类型错误。问题：我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，如下图所示，打开后，是空白，或者是提示文件类型错误。",
         open: false,
         pics: ['','']
       },
@@ -42,24 +42,31 @@ Page({
         time: '2019.09.04 09:20', 
         type: '软件使用', 
         dealType: 2,
-        content: "问题：我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，打开后，是空白，或者是提示。",
+        content: "我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，打开后，是空白，或者是提示。",
         open: false,
         pics: ['',''],
         dealTime: '2019.06.07 09:15',
         dealContent: '这个问题已经修复，建议重新打开小程序即可解决。',
-        dealPics: ['', '', '', '']
+        dealPics: ['', '', '', ''],
+        evaluated: false, // 是否已评价
+        score: 0,
+        evaluate_content: '',
+        canEvaluateSubmit: false, // 是否可以提交评分
       },
       {
         isread: 0, 
         time: '2019.09.04 09:20', 
         type: '软件使用', 
         dealType: 3,
-        content: "问题：我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，打开后，是空白，或者是提示错误打开后，是空白，或者是提示错误或者是提示错误打开后。",
+        content: "我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，打开后，是空白，或者是提示错误打开后，是空白，或者是提示错误或者是提示错误打开后。",
         open: false,
         pics: ['', '', '', ''],
         dealTime: '2019.06.07 09:15',
         dealContent: '这个问题已经修复，建议重新打开小程序即可解决。',
-        dealPics: ['', '']
+        dealPics: ['', ''],
+        evaluated: true,
+        score: 3,
+        evaluate_content: "回复不是很清楚，但是可以勉强接受。"
       }],
   },
 
@@ -163,7 +170,18 @@ Page({
   },
 
   /**
-   * 反馈列表 每个单元格 展开/收起 点击事件
+   * 反馈类型 单元格 点击事件
+  */
+  feedBackTypeClicked: function(e) {
+    let index = e.currentTarget.dataset.index
+    let item = this.data.itemArray[index]
+    wx.navigateTo({
+      url: '../../pages/feedBack_submit/feedBack_submit?type=' + item.type + '&title=' + item.title,
+    })
+  },
+
+  /**
+   * 反馈列表 单元格 展开/收起 点击事件
   */
   feedBackOpenButton: function(e) {
     // console.log(e)
@@ -173,5 +191,45 @@ Page({
     this.setData({
       [setData]: !feedBack.open
     })
+  },
+
+  /**
+   * 评分星星 点击事件
+  */
+  startClicked: function (e) {
+    // console.log(e)
+    let feedBackIndex = e.detail.tag
+    let score = e.detail.score
+    
+    let feedBack = this.data.feedBackList[feedBackIndex]
+    feedBack.score = score
+    feedBack.canEvaluateSubmit = true
+
+    let change = 'feedBackList['+feedBackIndex+']'
+    this.setData({
+      [change]: feedBack
+    })
+  },
+
+  /**
+   * textarea文本输入
+  */
+  textareaInput: function(e) {
+    // console.log(e)
+    let newcontent = e.detail.value
+    let index = e.currentTarget.dataset.index
+
+    let change = "feedBackList["+index+"].evaluate_content"
+    this.setData({
+      [change]: newcontent
+    })
+
+  },
+
+  /**
+   * 评价 提价按钮
+  */
+  evaluateSubmit: function(e) {
+    console.log(e)
   }
 })

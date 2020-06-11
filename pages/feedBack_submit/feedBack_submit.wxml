@@ -1,0 +1,36 @@
+<!--pages/feedBack_submit/feedBack_submit.wxml-->
+<view class="container">
+  <view class="navigationBar" style="height:{{pageSize.naviHeight}}px">
+    <view class="navigation_content" style="height:{{pageSize.naviContentHeight}}px; margin-top:{{pageSize.statusBarHeight}}px;">
+      <view class="navigation_backView" bindtap="naviBackClicked">
+        <image class="navigation_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <view class="navgation_title">{{feedBackTypeModel.title}}</view>
+      <view class="navigation_backView"></view>
+    </view>
+  </view>
+
+  <view class="contentView" style="margin-top:{{pageSize.naviHeight}}px">
+    <!-- 输入框 -->
+    <view class="contentBgView">
+      <image class="content_image" src="../../images/feedBack_content.png"></image>
+      <textarea class="content_textarea" placeholder="请输入您的问题..." auto-height="true" placeholder-class="content_textarea_placehoulder" value="{{content}}" bindinput="textareaInput"></textarea>
+    </view>
+
+    <!-- 照片 -->
+    <view class="addImageTitle">添加照片</view>
+    <view class="imageCollectionView">
+      <block wx:for="{{imageArray}}" wx:key="index">
+        <view class="imageCell" style="margin-top:{{index>2 ? 11 : 0}}rpx; margin-left:{{index%3==0 ? 0 : 11}}rpx;">
+          <image class="image"></image>
+          <view class="image_deleteView" bindtap="deleteImage" data-index="{{index}}">
+            <image class="image_delete" src="../../images/gdel.png"></image>
+          </view>
+        </view>
+      </block>
+      <view class="imageCell" style="margin-top:{{imageArray.length>2 ? 11 : 0}}rpx; margin-left:{{imageArray.length%3==0 ? 0 : 11}}rpx;">
+        <image class="image" src="../../images/insert_img.png" bindtap="insertImage"></image>
+      </view>
+    </view>
+  </view>
+</view>

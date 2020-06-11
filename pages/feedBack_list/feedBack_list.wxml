@@ -21,7 +21,7 @@
   <!-- 反馈类型 -->
   <view wx:if="{{menuSelectedIndex==0}}" class="contentView" style="margin-top:{{naviBarHeight}}px">
     <block wx:for="{{itemArray}}" wx:key="type">
-      <view class="itemView" style="margin-top:{{index==0 ? 0 : 16}}rpx">
+      <view class="itemView" style="margin-top:{{index==0 ? 0 : 16}}rpx" bindtap="feedBackTypeClicked" data-index="{{index}}">
         <view class="itemView_subView">
           <view class="green"></view>
           <view class="item_title">{{item.title}}</view>
@@ -50,7 +50,7 @@
         <image wx:if="{{item.dealType==2}}" src="../../images/feedBack_dealType_done.png" class="feedBack_dealType"></image>
         <image wx:if="{{item.dealType==3}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
         <!-- 反馈内容 -->
-        <view class="feedBack_content" style="{{item.open ? 'flex-wrap: wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center;'}}">{{item.content}}</view>
+        <view class="feedBack_content" style="{{item.open ? 'flex-wrap: wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center;'}}">问题：{{item.content}}</view>
         <block wx:if="{{item.open}}">
           <!-- 反馈图片 -->
           <view class="feedBack_stuPicture_collectionView" style="margin-top: 41rpx;">
@@ -72,7 +72,28 @@
               <image class="feedBack_stuPicture" style="margin-top:{{picIndex>2 ? 21 : 0}}rpx; margin-left:{{picIndex%3==0 ? 0 : 21}}rpx"></image>
             </block>
           </view>
-          
+          <view class="feedBack_dealPicture_bottomLine"></view>
+          <!-- 已评分 -->
+          <block wx:if="{{item.evaluated}}">
+            <view class="evaluated_scoredView">
+              <text class="evaluate_scoreTitle">分值：</text>
+              <evaluate_star score="{{item.score}}" width="271rpx" height="100%" canSelect='0'></evaluate_star>
+            </view>
+            <view class="evaluated_content">备注：{{item.evaluate_content}}</view>
+            <view style="height:14rpx; width:100%;"></view>
+          </block>
+          <!-- 未评分 -->
+          <block wx:else>
+            <view class="evaluated_scoredView" style="height:136rpx; margin-top:0;">
+              <text class="evaluate_scoreTitle">打个分呗：</text>
+              <evaluate_star score="{{item.score}}" width="271rpx" height="100%" canSelect='1' tag="{{index}}" bind:starClicked="startClicked"></evaluate_star>
+            </view>
+            <view class="feedBack_evaluateTextArea_backgroundView">
+              <textarea class="feedBack_evaluateTextarea" placeholder="说点什么吧......" placeholder-class="feedBack_evaluateTextarea_placehoulder" value="{{item.evaluate_content}}" bindinput="textareaInput" data-index="{{index}}"></textarea>
+            </view>
+            <view class="feedBack_evaluate_submitButton" style="background-color:{{item.canEvaluateSubmit ? 'rgba(45,193,160,1)' : '#dedede'}}" bindtap="{{item.canEvaluateSubmit ? 'evaluateSubmit' : ''}}" data-index="{{index}}">提交</view>
+            <view style="height:20rpx; width:100%;"></view>
+          </block>
         </block>
         <!-- 展开/收起按钮 -->
         <view wx:if="{{item.dealType==2 || item.dealType==3}}" class="feedBack_openButton" bindtap="feedBackOpenButton" data-index="{{index}}">
