@@ -84,33 +84,6 @@ Page({
         wx.showTabBar({
           animation: false,
         })
-
-        // switch (role) {
-        //   case 1: {
-        //     // 老师
-        //     that.teacherGetCheckOnList(riqi)
-        //     break
-        //   }
-        //   case 2: {
-        //     // 教务
-        //     that.teacherGetCheckOnList(riqi)
-        //     break
-        //   }
-        //   case 3: {
-        //     // 管理员
-            
-        //     // console.log("-------------管理员加载数据---------------")
-        //     break
-        //   }
-        //   case 4: {
-        //     // 学生
-
-        //     // 获取日课程列表
-        //     that.StudentGetDayCourse(riqi)
-            
-        //     break
-        //   }
-        // }
         break
       }
         
@@ -119,25 +92,6 @@ Page({
         wx.showTabBar({
           animation: false,
         })
-
-        // switch (role) {
-        //   case 1:
-        //     // 老师
-        //   case 2: 
-        //     // 教务
-        //   case 3: {
-        //     // 管理员
-        //     that.teacherGetCheckOnList(riqi)
-        //     break
-        //   }
-        //   case 4: {
-        //     // 学生
-      
-        //     //学生当日考勤
-        //     that.StudentGetDayCheckon(riqi)
-        //     break
-        //   }
-        // }
         break
       }
     }
@@ -1138,30 +1092,69 @@ Page({
           return
         }
 
+        
         var timestamp = (new Date()).getTime();
+
+        var newCourseArray = []
         for (var i = 0; i < tea_dayCourse.length; i++) {
           var course = tea_dayCourse[i]
           
-          //关联班级 是否可以点名
-          for(var rc=0;rc<that.data.class_ids.length;rc++){
-            if (course.class_id == that.data.class_ids[rc]){
-              course.rc = true
+          // 判断是否是关联课程
+          switch(that.data.role) {
+            case 1: {
+              // 老师
+              switch(that.data.type) {
+                case 2: {
+                  // 课表
+                  if (course.teacher_id == that.data.uid) {
+                    newCourseArray.push(course)
+                  }
+                  break
+                }
+                case 3: {
+                  // 考勤
+                  if (that.data.class_ids.indexOf(course.class_id) != -1) {
+                    newCourseArray.push(course)
+                  }
+                  break
+                }
+              }
+              break
+            }
+            case 2: {
+              // 教务
+              if (that.data.class_ids.indexOf(course.class_id) != -1) {
+                course.rc = true
+                newCourseArray.push(course)
+              }
+              break
+            }
+            case 3: {
+              // 管理员
+              if (that.data.class_ids.indexOf(course.class_id) != -1) {
+                newCourseArray.push(course)
+              }
+              break
             }
           }
 
-          
           // 判断课程是否结束
           if (course.endtime*1000 < timestamp) {
             course.comp = false
-          }
-          else {
+          } else {
             course.comp = true
           }
+          // //关联班级 是否可以点名
+          // for(var rc=0;rc<that.data.class_ids.length;rc++){
+          //   if (course.class_id == that.data.class_ids[rc]){
+          //     course.rc = true
+          //   }
+          // }
 
         }
 
         that.setData({
-          tea_dayCourse: tea_dayCourse,
+          tea_dayCourse: newCourseArray,
         })
       }
     })
