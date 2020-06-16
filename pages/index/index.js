@@ -4,6 +4,12 @@ const app = getApp()
 
 Page({
 
+  // 分页数据
+  pageData: {
+    page: 1,
+    perpage: 10,
+    canLoadNextPage: true,
+  },
 
   // 是否正在提交数据
   dataSubmiting: false,
@@ -48,10 +54,11 @@ Page({
   loadData: function(riqi){
     let that = this
     let role = that.data.role*1
-
+    
     switch (that.data.type*1) {
       case 1: {
         // 请假
+        that.pageData.page = 1
         wx.hideTabBar({
           animation: true,
         })
@@ -68,7 +75,8 @@ Page({
           }
           case 3: {
             // 管理员
-            that.admin_askfor()
+            // that.admin_askfor()
+            that.adminGetLeaveList()
             break
           }
           case 4: {
@@ -97,12 +105,10 @@ Page({
     }
 
     // 小红点数量
-    if (role == 2 || role == 3) {
-      var type = 1
-      if (role == 3) {
-        type = 2
-      }
-      that.AskforleaveCount(type)
+    if (role == 2) {
+      that.AskforleaveCount(1)
+    } else if(role == 3) {
+      that.adminGetUnreadLeaveNoti()
     }
   },
 
@@ -165,6 +171,7 @@ Page({
     var lea_role = e.currentTarget.dataset.role
     var ask_xb = e.currentTarget.dataset.ask_xb
     console.log(lea_role, ask_xb)
+    /*
     if (lea_role == 3){
 
       var cscs = "admin_unaud_leave[" + ask_xb + "].submit"
@@ -201,7 +208,7 @@ Page({
         that.dataSubmiting = false
         // console.log("我是管理员请假通过")
       })
-    } else if (lea_role == 2){
+    } else */if (lea_role == 2){
       var cscs = "hm_unaud_leave[" + ask_xb + "].submit"
       that.setData({
         [cscs]: true
@@ -233,6 +240,7 @@ Page({
             [cscs]: false
           })
         }
+        that.pageData.page = 1
         that.jw_askfor()
         that.dataSubmiting = false
         // console.log("我是教务请假通过")
@@ -266,6 +274,9 @@ Page({
     })
   },
 
+  /**
+   * 教务/管理员-驳回请假申请
+  */
   reject_pass:function(){
     if (this.dataSubmiting) {
       return
@@ -275,6 +286,7 @@ Page({
     that.setData({
       type : 1
     })
+    /*
     if(that.data.lea_role ==3){
       var params = {
         "token": wx.getStorageSync("token"),
@@ -302,7 +314,7 @@ Page({
         }
         that.dataSubmiting = false
       })
-    } else if(that.data.lea_role == 2){
+    } else */if(that.data.lea_role == 2){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
@@ -322,6 +334,7 @@ Page({
             duration:1500
           })
           that.AskforleaveCount(1)
+          that.pageData.page = 1
           that.jw_askfor()
           console.log("我是教务请假驳回成功")
         }
@@ -479,27 +492,43 @@ Page({
 
   },
 
+  /**
+   * 管理员 假条 点击展开/关闭
+  */
   admin_aud_fold: function (e) {
     let that = this
     var aud_xb = e.currentTarget.dataset.aud_xb
     console.log(aud_xb)
     var cs = "admin_aud_leave[" + aud_xb + "].fold"
-    that.setData({
-      [cs]: !that.data.admin_aud_leave[aud_xb].fold
-    })
+    let leave = that.data.admin_aud_leave[aud_xb]
+    if (leave.fold) {
+      // 关闭
+      that.setData({
+        [cs]: false
+      })
+    } else {
+      // 展开
+      that.adminReadLeave(leave.id, function(success, msg){
+        that.setData({
+          [cs]: true
+        })
+      })
+    }
 
   },
 
   /**
    * 教务获取请假列表
   */
-  jw_askfor:function(){
+  jw_askfor:function(cb){
     let that = this
     if(that.data.aud == 0){
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "type": 1
+        "type": 1,
+        page: that.pageData.page,
+        limit: that.pageData.perpage
       }
       // console.log(params)
       app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
@@ -511,14 +540,30 @@ Page({
           for(var i=0;i<hm_unaud_leave.length;i++){
             hm_unaud_leave[i].submit = false
           }
+          // 处理分页数据
+          var newLeaveArray = []
+          if (that.pageData.page > 1) {
+            newLeaveArray = that.data.hm_unaud_leave.concat(hm_unaud_leave)
+          } else {
+            newLeaveArray = hm_unaud_leave
+          }
           that.setData({
-            hm_unaud_leave: hm_unaud_leave
+            hm_unaud_leave: newLeaveArray
           })
+
+          // 判断是否可以加载下一页
+          if (hm_unaud_leave.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
+          typeof cb == "function" && cb(true, "加载成功")
           // console.log(that.data.hm_unaud_leave)
         } else {
           that.setData({
             hm_unaud_leave: ''
           })
+          typeof cb == "function" && cb(false, "加载失败")
         }
         console.log("我是教务请假待审核")
       })
@@ -526,7 +571,9 @@ Page({
       var params = {
         "token": wx.getStorageSync("token"),
         "uid": wx.getStorageSync("uid"),
-        "type": 2
+        "type": 2,
+        page: that.pageData.page,
+        limit: that.pageData.perpage,
       }
       // console.log(params)
       app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
@@ -584,14 +631,30 @@ Page({
             leave.status_text = status_text
             leave.status_color = status_color
           }
+          // 分页数据处理
+          var newLeaveArray = []
+          if (that.pageData.page > 1) {
+            newLeaveArray = that.data.hm_aud_leave.concat(hm_aud_leave)
+          } else {
+            newLeaveArray = hm_aud_leave
+          }
+
+          // 判断是否可以加载下一页
+          if (hm_aud_leave.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
           that.setData({
-            hm_aud_leave: hm_aud_leave
+            hm_aud_leave: newLeaveArray
           })
+          typeof cb == "function" && cb(true, "加载成功")
           // console.log(that.data.hm_aud_leave)
         } else {
           that.setData({
             hm_aud_leave: ''
           })
+          typeof cb == "function" && cb(false, "加载失败")
         }
         console.log("教务请假已审核")
       })
@@ -602,6 +665,7 @@ Page({
   /**
    * 管理员获取请假列表
   */
+  /*
   admin_askfor: function () {
     let that = this
     if (that.data.aud == 0) {
@@ -705,7 +769,7 @@ Page({
       })
     }
 
-  },
+  },*/
 
 
   onShow() {
@@ -717,6 +781,106 @@ Page({
     // 加载数据
     that.loadData(that.data.nowDate)
 
+  },
+
+  onReachBottom() {
+    
+    if (this.data.type != 1 || !this.pageData.canLoadNextPage || this.data.role == 1) {
+      // 只有 学生/教务/管理员 且 请假 且 可以加载下一页 才能继续执行
+      return
+    }
+    let oldPage = this.pageData.page
+    this.pageData.page = oldPage + 1
+    let that = this
+    switch(that.data.role*1) {
+      case 1: {
+        // 老师
+        break
+      }
+      case 2: {
+        // 教务
+        this.jw_askfor(function (success, msg){
+          if (!success) {
+            that.pageData.page = oldPage
+          }
+        })
+        break
+      }
+      case 3: {
+        // 管理员
+        this.adminGetLeaveList(function (success, msg){
+          if (!success) {
+            that.pageData.page = oldPage
+          }
+        })
+        break
+      }
+      case 4: {
+        // 学生
+        this.studentGetLeaveList(function (success, msg) {
+          if (!success) {
+            that.pageData.page = oldPage
+          }
+        })
+        break
+      }
+    }
+  },
+
+  onPullDownRefresh: function () {
+    
+    if(this.data.type != 1 || this.data.role == 1) {
+      // 只有 学生/教务/管理员 且 请假 才能继续执行
+      wx.stopPullDownRefresh({
+        complete: (res) => {},
+      })
+      return
+    } 
+    let oldPage = this.pageData.page
+    this.pageData.page = 1
+    let that = this
+    switch(that.data.role*1){
+      case 1: {
+        // 老师
+        break
+      }
+      case 2: {
+        // 教务
+        that.jw_askfor(function (success, msg){
+          wx.stopPullDownRefresh({
+            complete: (res) => {},
+          })
+          if (!success) {
+            that.pageData.page = oldPage
+          }
+        })
+        break
+      }
+      case 3: {
+        // 管理员
+        this.adminGetLeaveList(function (success, msg) {
+          wx.stopPullDownRefresh({
+            complete: (res) => {},
+          })
+          if (!success) {
+            that.pageData.page = oldPage
+          }
+        })
+        break
+      }
+      case 4: {
+        // 学生
+        this.studentGetLeaveList(function (success, msg) {
+          wx.stopPullDownRefresh({
+            complete: (res) => {},
+          })
+          if (!success) {
+            that.pageData.page = oldPage
+          }
+        })
+        break
+      }
+    }
   },
 
   //---------------------------------------------------私有方法--------------------------------------------------
@@ -870,14 +1034,16 @@ Page({
    * 学生获取请假列表
    * type: 0-待审核、1-已审核
   */
-  studentGetLeaveList: function () {
+  studentGetLeaveList: function (cb) {
     let that = this
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
       "type": that.data.aud,
+      page: that.pageData.page,
+      limit: that.pageData.perpage
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwGetStudentAskforleave(params).then(d => {
 
       if (d.data.status == 1) {
@@ -919,15 +1085,32 @@ Page({
             }
           }
         }
+        // 分页数据处理
+        var newLeaveArray = []
+        var newLeaveArray1 = []
+        if (that.pageData.page > 1) {
+          newLeaveArray = that.data.leave.concat(newData)
+          newLeaveArray1 = that.data.wscs.concat(newData1)
+        } else {
+          newLeaveArray = newData
+          newLeaveArray1 = newData1
+        }
         that.setData({
-          leave: newData,
-          wscs: newData1
+          leave: newLeaveArray,
+          wscs: newLeaveArray1
         })
         
+        // 判断是否可加载下一页
+        if (newData1.length < that.pageData.perpage) {
+          that.pageData.canLoadNextPage = false
+        } else {
+          that.pageData.canLoadNextPage = true
+        }
 
-
-      } else if (d.data.status == -1) {
-        console.log(d.data.msg)
+        typeof cb == "function" && cb(true, "加载成功")
+      } else {
+        // console.log(d.data.msg)
+        typeof cb == "function" && cb(false, "加载失败")
       }
     })
   },
@@ -1174,14 +1357,21 @@ Page({
     }
     console.log(params)
     app.ljjw.jwGetAskforleaveCount(params).then(d => {
-      // console.log(d.data.status)
       if (d.data.status == 1) {
-        console.log("教务红点")
-        console.log(d.data.data)
+        let count = d.data.data
+        if (count != '') {
+          that.setData({
+            red_num: count
+          })
+        } else {
+          that.setData({
+            red_num: 0
+          })
+        }
+      } else {
         that.setData({
-          red_num: d.data.data
+          red_num: 0
         })
-        console.log(that.data.red_num +"red_num")
       }
     })
   },
@@ -1259,6 +1449,171 @@ Page({
     })
   },
 
+  /**
+   * 管理员 获取 请假消息 数量
+  */
+  adminGetUnreadLeaveNoti: function () {
+    let that = this
+    let params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    app.ljjw.jwAdminGetUnreadAskforleave(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        let redCount = d.data.data
+        if (redCount != '') {
+          that.setData({
+            red_num: redCount
+          })
+        } else {
+          that.setData({
+            red_num: 0
+          })
+        }
+      } else {
+        that.setData({
+          red_num: 0
+        })
+      }
+    })
+  },
+
+  /**
+   * 管理员 - 获取请假列表
+  */
+  adminGetLeaveList: function (cb) {
+    let that = this
+    let params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "page": that.pageData.page,
+      "limit": that.pageData.perpage,
+    }
+    app.ljjw.jwAdminViewAskforleaveList(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        var admin_aud_leave = d.data.data
+          
+        for (var i = 0; i < admin_aud_leave.length; i++) {
+          var leave = admin_aud_leave[i]
+          leave.fold = false
+          var status_text = ''
+          var status_color = ""
+          switch (leave.status*1) {
+            case 0: {
+              // 未审核
+              status_text = "未审核"
+              status_color = "#b4b4b4"
+              break
+            }
+            case 1: {
+              // 教务通过
+              // status_text = "待管理员审核"
+              // status_color = "#b4b4b4"
+              status_text = "审核通过"
+              status_color = "#46bf6a"
+              break
+            }
+            case 2: {
+              // 教务驳回
+              status_text = "审核驳回"
+              status_color = "#f14444"
+              break
+            }
+            case 3: {
+              // 管理员审核通过
+              status_text = "审核通过"
+              status_color = "#46bf6a"
+              break
+            }
+            case 4: {
+              // 管理员驳回
+              status_text = "审核驳回"
+              status_color = "#f14444"
+              break
+            }
+            case 5: {
+              // 假条作废（到期未审核）
+              status_text = "假条已作废"
+              status_color = "#fb895e"
+              break
+            }
+            default: {
+              status_text= "未知状态"
+              status_color = "#b4b4b4"
+            }
+          }
+          leave.status_text = status_text
+          leave.status_color = status_color
+
+          for (var j = 0; j < leave.verify_list.length; j++) {
+            let verify = leave.verify_list[j]
+            if (j==0) {
+              verify.title = "教务审核通过"
+              verify.type = 1
+            } else if (j == 1) {
+              if (verify.verify_status == 1) {
+                verify.title = "管理员审核通过"
+                verify.type = 3
+              } else {
+                verify.title = "管理员审核驳回"
+                verify.type = 4
+              }
+            }
+          }
+          leave.verify_list.unshift({
+            type: 0,
+            title: "发起",
+            verify_time: leave.createtime
+          })
+        }
+        // 分页数据处理
+        var newLeaveArray = []
+        if (that.pageData.page != 1) {
+          newLeaveArray = that.data.admin_aud_leave.concat(admin_aud_leave)
+        } else {
+          newLeaveArray = admin_aud_leave
+        }
+        // 是否可以加载下一页
+        if (admin_aud_leave.length < that.pageData.perpage) {
+          that.pageData.canLoadNextPage = false
+        } else {
+          that.pageData.canLoadNextPage = true
+        }
+        that.setData({
+          admin_aud_leave: newLeaveArray
+        })
+        typeof cb == "function" && cb(true, "加载成功")
+      } else {
+        that.setData({
+          admin_aud_leave: ''
+        })
+        typeof cb == "function" && cb(false, "加载失败")
+      }
+    })
+  },
+
+  /**
+   * 管理员 将请假消息变为已读
+  */
+  adminReadLeave: function(ask_id, cb) {
+    let that = this
+    let params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      ask_id: ask_id,
+    }
+    app.ljjw.jwUpdateAdminsaw(params).then(d=>{
+      let status = d.data.status
+      if(status == 1) {
+        typeof cb == "function" && cb(true, "加载成功")
+      } else {
+        typeof cb == "function" && cb(false, "加载失败")
+      }
+    })
+  },
+
   /*--------------------------------------------触发事件-------------------------------------------------*/
   /**
    * 顶部菜单栏 点击事件
@@ -1294,6 +1649,7 @@ Page({
     if (aud == that.data.aud) {
       return
     }
+    that.pageData.page= 1
     that.setData({
       aud:aud
     })
@@ -1301,11 +1657,13 @@ Page({
       //学生
       that.studentGetLeaveList()
     }
+    /*
     else if (that.data.role == 3){
       // 管理员
       that.admin_askfor()
       that.AskforleaveCount(2)
     }
+    */
     else if (that.data.role == 2) {
       // 教务
       that.jw_askfor()

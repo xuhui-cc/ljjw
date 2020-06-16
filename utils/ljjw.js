@@ -112,17 +112,22 @@ function jwStudentAddCollection(params) {
   return fetch.ljjwfetch(URI, 'jwStudentAddCollection', params, "学生我的收藏与取消收藏")
 }
 
-//小程序管理员-获取请假列表
+//小程序管理员-获取请假列表 （1.4.5废弃）
 function jwAdminGetAskforleaveList(params) {
   return fetch.ljjwfetch(URI, 'jwAdminGetAskforleaveList', params, "小程序管理员-获取请假列表", true)
 }
 
-//小程序管理员-获取请假列表
-function jwSaveAskforleave(params) {
-  return fetch.ljjwfetch(URI, 'jwSaveAskforleave', params, "小程序管理员-获取请假列表", true)
+// 管理员-获取请假列表 （>=1.4.5）
+function jwAdminViewAskforleaveList(params) {
+  return fetch.ljjwfetch(URI, 'jwAdminViewAskforleaveList', params, "管理员-获取请假列表 （>=1.4.5）", true)
 }
 
-//小程序管理员请假审批  type=1通过 type=2驳回
+//学生提交请假申请
+function jwSaveAskforleave(params) {
+  return fetch.ljjwfetch(URI, 'jwSaveAskforleave', params, "学生提交请假申请", true)
+}
+
+//小程序管理员请假审批  type=1通过 type=2驳回 （1.4.5废弃）
 function jwAdminAskforleaveVerify(params) {
   return fetch.ljjwfetch(URI, 'jwAdminAskforleaveVerify', params, "小程序管理员请假审批", true, "提交中")
 }
@@ -272,5 +277,15 @@ function jwReadMsg(params) {
   return fetch.ljjwfetch(URI, 'jwReadMsg', params, "消息阅读")
 }
 
+// 管理员-获取未读请假消息数量
+function jwAdminGetUnreadAskforleave(params) {
+  return fetch.ljjwfetch(URI, 'jwAdminGetUnreadAskforleave', params, "管理员获取未读请假消息数量")
+}
 
-module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg}
+// 管理员 将请假信息变为已读
+function jwUpdateAdminsaw(params) {
+  return fetch.ljjwfetchpost(URI, 'jwUpdateAdminsaw', params, '管理员 将请假信息变为已读', true)
+}
+
+
+module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw}

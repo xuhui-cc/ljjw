@@ -1639,7 +1639,7 @@ page{
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:14rpx;
-  
+  margin-top: 16rpx;
 }
 .hm-taud-class{
   margin-left: 270rpx;
@@ -1796,4 +1796,88 @@ page{
   margin-right: 27rpx;
   width: 17.71rpx;
   height: 17.71rpx;
+}
+
+.verifyCell {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.verifyStatus {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.verifyStatus_subView {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.verifyStatus_circle {
+  margin-left: 25rpx;
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  border: 3rpx solid #46bf6a;
+}
+
+.verifyStatus_time {
+  margin-right: 24rpx;
+  color: #b4b4b4;
+  font-size: 24rpx;
+}
+
+.verifyStatus_title {
+  font-size: 28rpx;
+  margin-left: 12rpx;
+}
+
+.verify_opretionName {
+  color: #b4b4b4;
+  font-size: 24rpx;
+  margin-left: 51rpx;
+  margin-top: 2rpx;
+}
+
+.verify_xuxian {
+  position: absolute;
+  width: 32rpx;
+  height: 90rpx;
+  top: 27rpx;
+  left: 0;
+  border-right: 3rpx dotted #46bf6a;
+}
+
+.verfiy_rejectReason {
+  color: #272727;
+  font-size: 24rpx;
+  margin-left: 51rpx;
+  margin-top: 14rpx;
+  max-width: 615rpx;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.adminLeave_readStatus {
+  margin-left: 25rpx;
+  background-color: #f14444;
+  border-radius: 6rpx;
+  color: white;
+  font-size: 22rpx;
+  font-weight: bold;
+  width: 65rpx;
+  height: 34rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adminLeaveNameAndReadStatus {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
