@@ -492,31 +492,6 @@ Page({
 
   },
 
-  /**
-   * 管理员 假条 点击展开/关闭
-  */
-  admin_aud_fold: function (e) {
-    let that = this
-    var aud_xb = e.currentTarget.dataset.aud_xb
-    console.log(aud_xb)
-    var cs = "admin_aud_leave[" + aud_xb + "].fold"
-    let leave = that.data.admin_aud_leave[aud_xb]
-    if (leave.fold) {
-      // 关闭
-      that.setData({
-        [cs]: false
-      })
-    } else {
-      // 展开
-      that.adminReadLeave(leave.id, function(success, msg){
-        that.setData({
-          [cs]: true
-        })
-      })
-    }
-
-  },
-
   
 
   /**
@@ -941,6 +916,73 @@ Page({
               }
             }
           }
+
+          // 判断假条状态
+          switch(item.status*1) {
+            case 0: {
+              // 未审核
+              item.statusTitle = "待审核"
+              item.statusColor = "#fbb95e"
+              break
+            }
+            case 1: {
+              // 教务审核通过
+              item.statusTitle = "审核通过"
+              item.statusColor = "rgba(70,191,106,1)"
+              break
+            }
+            case 2: {
+              // 教务审核驳回
+              item.statusTitle = "审核驳回"
+              item.statusColor = "rgba(241,68,68,1)"
+              break
+            }
+            case 3: {
+              // 管理员审核通过
+              item.statusTitle = "审核通过"
+              item.statusColor = "rgba(70,191,106,1)"
+              break
+            }
+            case 4: {
+              // 管理员审核驳回
+              item.statusTitle = "审核驳回"
+              item.statusColor = "rgba(241,68,68,1)"
+              break
+            }
+            case 5: {
+              // 假条已作废
+              item.statusTitle = "假条已作废"
+              item.statusColor = "#fbb95e"
+              break
+            }
+            default: {
+              item.statusTitle = "未知状态"
+              item.statusColor = "#fbb95e"
+              break
+            }
+          }
+
+          // 流程处理
+          for (var j = 0; j < item.verify_list.length; j++) {
+            let verify = item.verify_list[j]
+            if (j==0) {
+              verify.title = "教务审核通过"
+              verify.type = 1
+            } else if (j == 1) {
+              if (verify.verify_status == 1) {
+                verify.title = "管理员审核通过"
+                verify.type = 3
+              } else {
+                verify.title = "管理员审核驳回"
+                verify.type = 4
+              }
+            }
+          }
+          item.verify_list.unshift({
+            type: 0,
+            title: "发起",
+            verify_time: item.createtime
+          })
         }
         // 分页数据处理
         var newLeaveArray = []
@@ -1536,8 +1578,12 @@ Page({
           var hm_aud_leave = d.data.data
           
           for (var i = 0; i < hm_aud_leave.length;i++){
+
+            // 默认收起
             var leave = hm_aud_leave[i]
             leave.fold = false
+
+            // 假条状态
             var status_text = ''
             var status_color = ""
             switch (leave.status*1) {
@@ -1584,6 +1630,28 @@ Page({
             }
             leave.status_text = status_text
             leave.status_color = status_color
+
+            // 审核流程
+            for (var j = 0; j < leave.verify_list.length; j++) {
+              let verify = leave.verify_list[j]
+              if (j==0) {
+                verify.title = "教务审核通过"
+                verify.type = 1
+              } else if (j == 1) {
+                if (verify.verify_status == 1) {
+                  verify.title = "管理员审核通过"
+                  verify.type = 3
+                } else {
+                  verify.title = "管理员审核驳回"
+                  verify.type = 4
+                }
+              }
+            }
+            leave.verify_list.unshift({
+              type: 0,
+              title: "发起",
+              verify_time: leave.createtime
+            })
           }
           // 分页数据处理
           var newLeaveArray = []
@@ -1800,5 +1868,45 @@ Page({
         break
       }
     }
+  },
+
+  /**
+   * 管理员 假条 点击展开/关闭
+  */
+  admin_aud_fold: function (e) {
+    let that = this
+    var aud_xb = e.currentTarget.dataset.aud_xb
+    console.log(aud_xb)
+    var cs = "admin_aud_leave[" + aud_xb + "].fold"
+    let leave = that.data.admin_aud_leave[aud_xb]
+    if (leave.fold) {
+      // 关闭
+      that.setData({
+        [cs]: false
+      })
+    } else {
+      // 展开
+      if(leave.adminsaw == 1) {
+        that.setData({
+          [cs]: true
+        })
+      } else {
+        that.adminReadLeave(leave.id, function(success, msg){
+          if (success) {
+            let adminsawStr = "admin_aud_leave[" + aud_xb + "].adminsaw"
+            that.setData({
+              [cs]: true,
+              [adminsawStr]: 1
+            })
+          } else {
+            that.setData({
+              [cs]: true
+            })
+          }
+          that.adminGetUnreadLeaveNoti()
+        })
+      }
+    }
+
   },
 })

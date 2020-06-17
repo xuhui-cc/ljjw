@@ -169,15 +169,7 @@
                   <view class="hm-flex">
                     <text class="lea-time">请假时间：{{ask.date}}</text>
                     <block  wx:if="{{index == 0}}">
-                      <view wx:if="{{item.status==5}}" class="auded-result" style="color:#fbb95e;">假条已作废</view>
-                      <view wx:elif="{{item.verify_list.length == 1}}" >
-                        <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="auded-result">待管理员审核</view>
-                        <view wx:else="{{sitem.verify_list[0].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
-                      </view>
-                      <view wx:elif="{{item.verify_list.length == 2}}">
-                        <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="auded-result" style="color:rgba(70,191,106,1);">审核通过</view>
-                        <view wx:else="{{sitem.verify_list[1].verify_status == 2}}" class="auded-result" style="color:rgba(241,68,68,1);">审核驳回</view>
-                      </view>
+                      <view class="auded-result" style="color:{{item.statusColor}};">{{item.statusTitle}}</view>
                     </block>
                     
                   </view>
@@ -190,45 +182,40 @@
                 <image class="xuheng" src="../../images/xu.png"></image>
 
                 <view wx:if="{{!item.fold}}">
-                  <view class="aud-step">
-                    <image class="gc" src="../../images/gc.png"></image>
-                    <text class="lea-sta">发起</text>
-                    <text class="apply-time">{{item.createtime}}</text>
-                  </view>
-                  <image class="route" src="../../images/route.png"></image>
-                  <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
-                    <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
-                    <image wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
-                    <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start2">教务审核通过</view>
-                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">教务审核驳回</view>
-                    <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
-                    <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
-                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[0].reject_reason}}</view>
-                  </view>
-                  
-                  <image wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-route-xu" src="../../images/route.png"></image>
-                  <view class="hm-pro-two" wx:if="{{item.verify_list.length == 2}}">
-                  <image wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start" src="../../images/gc.png"></image>
-                    <image wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start" src="../../images/rc.png"></image>
-                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
-                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
-                    <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
-                    <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
-                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
-                  </view>
-                  </view>
+                  <!-- 处理流程 -->
+                  <image class="hm-un-xu" src="../../images/xu.png"></image>
+                  <block wx:for="{{item.verify_list}}" wx:key="index" wx:for-index="verify_index" wx:for-item="verfiy_item">
+                    <view class="verifyCell" style="{{verfiy_item.type == 4 ? '' : 'height: 105rpx'}}">
+                      <view class="verifyStatus">
+                        <view class="verifyStatus_subView">
+                          <!-- 小圆点 -->
+                          <view class="verifyStatus_circle" style="border:{{verfiy_item.type==4 ? '3rpx solid #f14444' : '3rpx solid #46bf6a'}}"></view>
+                          <!-- 审核状态 -->
+                          <view class="verifyStatus_title" style="color:{{verfiy_item.type==0 ? '#272727' : (verfiy_item.type==4 ? '#f14444' : '#46bf6a')}}">{{verfiy_item.title}}</view>
+                        </view>
+                        <!-- 操作时间 -->
+                        <view class="verifyStatus_time">{{verfiy_item.verify_time}}</view>
+                      </view>
+                      <!-- 操作人 -->
+                      <view wx:if="{{verify_index != 0}}" class="verify_opretionName">操作人：{{verfiy_item.verify_user}}</view>
+                      <!-- 竖虚线 -->
+                      <view class="verify_xuxian" wx:if="{{verify_index != item.verify_list.length-1}}"></view>
+                      <view class="verfiy_rejectReason" wx:if="{{verfiy_item.type==4}}">驳回原因：{{verfiy_item.reject_reason}}</view>
+                    </view>
+                  </block>
+                </view>
 
-                  <view wx:if="{{item.fold}}" class="unfold-btn" style="margin-top: 30rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
-                    <image class="unfold-img" src="../../images/xsj.png"></image>
-                    <text class="unfold-font">展开</text>
-                  </view>
+                <view wx:if="{{item.fold}}" class="unfold-btn" style="margin-top: 30rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
+                  <image class="unfold-img" src="../../images/xsj.png"></image>
+                  <text class="unfold-font">展开</text>
+                </view>
 
-                  <view wx:if="{{!item.fold}}" class="unfold-btn" style="margin-top: 50rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
-                    <image class="unfold-img" src="../../images/ssj.png"></image>
-                    <text class="unfold-font">收起</text>
-                  </view>
+                <view wx:if="{{!item.fold}}" class="unfold-btn" style="margin-top: 50rpx;" data-xb="{{index}}" bindtap="stu_lea_open"> 
+                  <image class="unfold-img" src="../../images/ssj.png"></image>
+                  <text class="unfold-font">收起</text>
                 </view>
               </view>
+            </view>
           </view>
 
           <!-- 新建 -->
@@ -481,34 +468,27 @@
                 </view>
                 <!-- 多请假时间循环结束 -->
                 <view class="hm-unaud-leafor">请假事由：{{item.reason}}</view>
+                <!-- 处理流程 -->
                 <image class="hm-un-xu" src="../../images/xu.png"></image>
-                <view class="hm-route">
-                  <view class="hm-flex">
-                    <image class="hm-pro-start" src="../../images/gc.png"></image>
-                    <view class="hm-pro-starttitle">发起</view>
-                    <view class="hm-audpro-date">{{item.createtime}}</view>
+                <block wx:for="{{item.verify_list}}" wx:key="index" wx:for-index="verify_index" wx:for-item="verfiy_item">
+                  <view class="verifyCell" style="{{verfiy_item.type == 4 ? '' : 'height: 105rpx'}}">
+                    <view class="verifyStatus">
+                      <view class="verifyStatus_subView">
+                        <!-- 小圆点 -->
+                        <view class="verifyStatus_circle" style="border:{{verfiy_item.type==4 ? '3rpx solid #f14444' : '3rpx solid #46bf6a'}}"></view>
+                        <!-- 审核状态 -->
+                        <view class="verifyStatus_title" style="color:{{verfiy_item.type==0 ? '#272727' : (verfiy_item.type==4 ? '#f14444' : '#46bf6a')}}">{{verfiy_item.title}}</view>
+                      </view>
+                      <!-- 操作时间 -->
+                      <view class="verifyStatus_time">{{verfiy_item.verify_time}}</view>
+                    </view>
+                    <!-- 操作人 -->
+                    <view wx:if="{{verify_index != 0}}" class="verify_opretionName">操作人：{{verfiy_item.verify_user}}</view>
+                    <!-- 竖虚线 -->
+                    <view class="verify_xuxian" wx:if="{{verify_index != item.verify_list.length-1}}"></view>
+                    <view class="verfiy_rejectReason" wx:if="{{verfiy_item.type==4}}">驳回原因：{{verfiy_item.reject_reason}}</view>
                   </view>
-                  <image class="hm-route-xu" src="../../images/route.png"></image>
-                <view class="hm-pro-two" wx:if="{{item.verify_list != ''}}">
-                    <image class="hm-pro-start" src="../../images/gc.png"></image>
-                    <view wx:if="{{item.verify_list[0].verify_status == 1}}" class="hm-pro-start2">教务审核通过</view>
-                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">教务审核驳回</view>
-                    <view class="hm-aud-pro-time">{{item.verify_list[0].verify_time}}</view>
-                    <view class="operator_jw">操作人：{{item.verify_list[0].verify_user}}</view>
-                    <view wx:if="{{item.verify_list[0].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[0].reject_reason}}</view>
-                  </view>
-                  
-                  <image class="hm-route-xu" src="../../images/route.png"></image>
-                  <view class="hm-pro-two" wx:if="{{item.verify_list.length == 2}}">
-                    <image class="hm-pro-start" src="../../images/gc.png"></image>
-                    <view wx:if="{{item.verify_list[1].verify_status == 1}}" class="hm-pro-start2">管理员审核通过</view>
-                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="hm-pro-start2" style="color:rgba(241,68,68,1);">管理员审核驳回</view>
-                    <view class="hm-aud-pro-time">{{item.verify_list[1].verify_time}}</view>
-                    <view class="operator_jw">操作人：{{item.verify_list[1].verify_user}}</view>
-                    <view wx:if="{{item.verify_list[1].verify_status == 2}}" class="reject_reason">驳回原因：{{item.verify_list[1].reject_reason}}</view>
-                  </view>
-                  
-                </view>
+                </block>
 
               </view>
             <!-- 单个审核样式 -->
@@ -545,9 +525,9 @@
                 <view class="teacher_leave_finished_sub1">
                   <view class="adminLeaveNameAndReadStatus">
                     <!-- 未读标记 -->
-                    <view class="adminLeave_readStatus" wx:if="{{index==0}}">未读</view>
+                    <view class="adminLeave_readStatus" wx:if="{{item.adminsaw==0}}">未读</view>
                     <!-- 请假人名字 -->
-                    <view class="teacher_leave_finished_name" style="margin-left:{{index==0 ? 14 : 24}}rpx;">{{item.realname}}</view>
+                    <view class="teacher_leave_finished_name" style="margin-left:{{item.adminsaw==0 ? 14 : 24}}rpx;">{{item.realname}}</view>
                   </view>
                   <!-- 假条状态 -->
                   <view class="teacher_leave_finied_state" style="color:{{item.status_color}}">{{item.status_text}}</view>
@@ -604,242 +584,4 @@
       </block>
     </block>
   </view>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </view>
