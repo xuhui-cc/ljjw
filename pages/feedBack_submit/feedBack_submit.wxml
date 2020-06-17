@@ -10,7 +10,7 @@
     </view>
   </view>
 
-  <view class="contentView" style="margin-top:{{pageSize.naviHeight}}px">
+  <view class="contentView" style="margin-top:{{pageSize.naviHeight}}px; padding-bottom:{{pageSize.safeareaBottom + 51/750.0*pageSize.screenWidth}}px;">
     <!-- 在校自习申请 使用时间 -->
     <block wx:if="{{feedBackTypeModel.type == 4}}">
       <view class="zixi_timeView">
@@ -36,15 +36,18 @@
     <view class="imageCollectionView">
       <block wx:for="{{imageArray}}" wx:key="index">
         <view class="imageCell" style="margin-top:{{index>2 ? 11 : 0}}rpx; margin-left:{{index%3==0 ? 0 : 11}}rpx;">
-          <image class="image"></image>
+          <image class="image" src="{{item}}" mode="aspectFill" bindtap="showBigPicture" data-index="{{index}}"></image>
           <view class="image_deleteView" bindtap="deleteImage" data-index="{{index}}">
             <image class="image_delete" src="../../images/gdel.png"></image>
           </view>
         </view>
       </block>
-      <view class="imageCell" style="margin-top:{{imageArray.length>2 ? 11 : 0}}rpx; margin-left:{{imageArray.length%3==0 ? 0 : 11}}rpx;">
+      <!-- 上传图片按钮 -->
+      <view wx:if="{{imageArray.length<maxPictureCount}}" class="imageCell" style="margin-top:{{imageArray.length>2 ? 11 : 0}}rpx; margin-left:{{imageArray.length%3==0 ? 0 : 11}}rpx;">
         <image class="image" src="../../images/insert_img.png" bindtap="insertImage"></image>
       </view>
     </view>
+
+    <view class="bottomButton" style="background-color:{{canSubmit ? 'rgba(45,193,160,1)' : '#DEDEDE'}}; bottom:{{pageSize.safeareaBottom + 41/750.0*pageSize.screenWidth}}px;" bindtap="submitButtonClciked">提交</view>
   </view>
 </view>

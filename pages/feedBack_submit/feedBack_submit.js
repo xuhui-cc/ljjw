@@ -1,5 +1,6 @@
 // pages/feedBack_submit/feedBack_submit.js
 const app = getApp()
+
 Page({
 
   /**
@@ -25,6 +26,12 @@ Page({
 
     // 反馈照片
     imageArray: [],
+
+    // 最多上传几张图片
+    maxPictureCount: 3,
+
+    // 是否可以提交
+    canSubmit: false,
   },
 
   /**
@@ -104,7 +111,53 @@ Page({
         statusBarHeight: statusBarHeight,
         naviContentHeight: naviHeight - statusBarHeight,
         safeareaBottom: safeareaBottom,
+        screenWidth: systemInfo.screenWidth
       }
+    })
+  },
+
+  /**
+   * 循环上传图片
+  */
+  circleUploadImage: function(pathList, index) {
+    let that = this
+    if (pathList.length <= index) {
+      return
+    }
+    let filePath = pathList[index]
+    this.uploadImage(filePath, function(success, imageData, errorMsg) {
+      console.log(imageData)
+      if(success) {
+        that.data.imageArray.push(imageData)
+        that.setData({
+          imageArray: that.data.imageArray
+        })
+
+        if (index < pathList.length-1) {
+          that.circleUploadImage(pathList, index+1)
+        }
+      }
+    })
+  },
+
+  /**
+   * 判断是否可以提交
+  */
+  determineWhetherYouCanSubmit: function () {
+    var canSubmit = true
+    if (this.data.feedBackTypeModel.type == 4) {
+      // 在校自习申请
+      if (!this.data.zixi_startTime_str || this.data.zixi_startTime_str == '' || this.data.zixi_startTime_str == String || !this.data.zixi_endTime_str || this.data.zixi_endTime_str == '' || this.data.zixi_endTime_str == String) {
+        canSubmit = false
+      }
+    }
+
+    if (!this.data.content || this.data.content == '') {
+      canSubmit = false
+    }
+
+    this.setData({
+      canSubmit: canSubmit
     })
   },
 
@@ -121,6 +174,88 @@ Page({
         title: options.title,
         subtitle: options.subtitle,
         today_date_str: today_date_str
+      }
+    })
+  },
+
+  // ------------------------------------------------接口-----------------------------------------
+  /**
+   * 上传图片
+  */
+  uploadImage: function(filePath, cb) {
+    let that = this
+    var token = wx.getStorageSync('token');
+    wx.showLoading({
+      title: '上传中',
+    })
+    wx.uploadFile({
+      url: app.ljjw.getUploadFileURI(),
+      filePath: filePath,
+      name: 'file',
+      formData: {
+        'file': filePath,
+        "token": token,
+        "action": "jwUploadAvatar",
+      },
+      success(r) {
+        wx.hideLoading({
+          complete: (res) => {
+            let hhh = JSON.parse(r.data);
+            console.log(hhh)
+            if (hhh.status == 1) {
+              typeof cb == "function" && cb(true, hhh.data, "加载成功")
+            } else {
+              let errorMsg = hhh.msg ? hhh.msg : '上传失败'
+              wx.showToast({
+                title: errorMsg,
+                icon: 'none'
+              })
+              typeof cb == "function" && cb(false, null, errorMsg)
+            }
+          },
+        })
+      },
+      fail(error) {
+        wx.hideLoading({
+          complete: (res) => {
+            wx.showToast({
+              title: '上传失败',
+              icon: 'none'
+            })
+            typeof cb == "function" && cb(false, null, "上传失败")
+          },
+        })
+      }
+    })
+  },
+
+  /**
+   * 问题反馈提交
+  */
+  submit: function() {
+    let that = this
+    var params = {
+      stu_id: wx.getStorageSync('uid'),
+      sort_id: that.data.feedBackTypeModel.type,
+      notes: that.data.content,
+    }
+    if (that.data.imageArray.length != 0) {
+      let paths = that.data.imageArray.join(',')
+      params.pics = paths
+    }
+    if (that.data.feedBackTypeModel.type == 4) {
+      params.timeduan = that.data.zixi_startTime_str + " ~ " + that.data.zixi_endTime_str
+    }
+    app.ljjw.saveFeedback(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        wx.showToast({
+          title: '提交成功',
+          icon: 'none'
+        })
+        wx.navigateBack({
+          complete: (res) => {},
+        })
       }
     })
   },
@@ -142,15 +277,25 @@ Page({
     this.setData({
       content: newContent
     })
+    this.determineWhetherYouCanSubmit()
   },
 
   /**
    * 上传图片 按钮 点击事件
   */
   insertImage: function () {
-    this.data.imageArray.push(this.data.imageArray.length+1)
-    this.setData({
-      imageArray: this.data.imageArray
+    // this.data.imageArray.push(this.data.imageArray.length+1)
+    // this.setData({
+    //   imageArray: this.data.imageArray
+    // })
+    let that = this
+    let count = this.data.maxPictureCount - this.data.imageArray.length
+    wx.chooseImage({
+      count: count,
+      success: (res)=> {
+        let tempFilePaths = res.tempFilePaths;
+        that.circleUploadImage(tempFilePaths, 0)
+      }
     })
   },
 
@@ -158,12 +303,24 @@ Page({
    * 删除图片 按钮 点击事件
   */
   deleteImage: function (e) {
-    console.log(e)
+    // console.log(e)
     let index = e.currentTarget.dataset.index
     this.data.imageArray.splice(index, 1)
     console.log(this.data.imageArray)
     this.setData({
       imageArray: this.data.imageArray
+    })
+  },
+
+  /**
+   * 展示大图
+  */
+  showBigPicture: function (e) {
+    let index = e.currentTarget.dataset.index
+    let url = this.data.imageArray[index]
+    wx.previewImage({
+      urls: this.data.imageArray,
+      current: url
     })
   },
 
@@ -185,5 +342,17 @@ Page({
         zixi_endTime_str: dateStr
       })
     }
+
+    this.determineWhetherYouCanSubmit()
+  },
+
+  /**
+   * 提交按钮 点击事件
+  */
+  submitButtonClciked: function () {
+    if (!this.data.canSubmit) {
+      return
+    }
+    this.submit()
   },
 })
