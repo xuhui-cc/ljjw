@@ -517,150 +517,7 @@ Page({
 
   },
 
-  /**
-   * 教务获取请假列表
-  */
-  jw_askfor:function(cb){
-    let that = this
-    if(that.data.aud == 0){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 1,
-        page: that.pageData.page,
-        limit: that.pageData.perpage
-      }
-      // console.log(params)
-      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
-        
-        if (d.data.status == 1) {
-          // console.log(d)
-          var hm_unaud_leave = d.data.data
-          
-          for(var i=0;i<hm_unaud_leave.length;i++){
-            hm_unaud_leave[i].submit = false
-          }
-          // 处理分页数据
-          var newLeaveArray = []
-          if (that.pageData.page > 1) {
-            newLeaveArray = that.data.hm_unaud_leave.concat(hm_unaud_leave)
-          } else {
-            newLeaveArray = hm_unaud_leave
-          }
-          that.setData({
-            hm_unaud_leave: newLeaveArray
-          })
-
-          // 判断是否可以加载下一页
-          if (hm_unaud_leave.length < that.pageData.perpage) {
-            that.pageData.canLoadNextPage = false
-          } else {
-            that.pageData.canLoadNextPage = true
-          }
-          typeof cb == "function" && cb(true, "加载成功")
-          // console.log(that.data.hm_unaud_leave)
-        } else {
-          that.setData({
-            hm_unaud_leave: ''
-          })
-          typeof cb == "function" && cb(false, "加载失败")
-        }
-        console.log("我是教务请假待审核")
-      })
-    } else if (that.data.aud == 1){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "type": 2,
-        page: that.pageData.page,
-        limit: that.pageData.perpage,
-      }
-      // console.log(params)
-      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
-        // console.log(d)
-        if (d.data.status == 1) {
-          var hm_aud_leave = d.data.data
-          
-          for (var i = 0; i < hm_aud_leave.length;i++){
-            var leave = hm_aud_leave[i]
-            leave.fold = false
-            var status_text = ''
-            var status_color = ""
-            switch (leave.status*1) {
-              case 0: {
-                // 未审核
-                status_text = "未审核"
-                status_color = "#b4b4b4"
-                break
-              }
-              case 1: {
-                // 教务通过
-                status_text = "待管理员审核"
-                status_color = "#b4b4b4"
-                break
-              }
-              case 2: {
-                // 教务驳回
-                status_text = "审核驳回"
-                status_color = "#f14444"
-                break
-              }
-              case 3: {
-                // 管理员审核通过
-                status_text = "审核通过"
-                status_color = "#46bf6a"
-                break
-              }
-              case 4: {
-                // 管理员驳回
-                status_text = "审核驳回"
-                status_color = "#f14444"
-                break
-              }
-              case 5: {
-                // 假条作废（到期未审核）
-                status_text = "假条已作废"
-                status_color = "#fb895e"
-                break
-              }
-              default: {
-                status_text= "未知状态"
-                status_color = "#b4b4b4"
-              }
-            }
-            leave.status_text = status_text
-            leave.status_color = status_color
-          }
-          // 分页数据处理
-          var newLeaveArray = []
-          if (that.pageData.page > 1) {
-            newLeaveArray = that.data.hm_aud_leave.concat(hm_aud_leave)
-          } else {
-            newLeaveArray = hm_aud_leave
-          }
-
-          // 判断是否可以加载下一页
-          if (hm_aud_leave.length < that.pageData.perpage) {
-            that.pageData.canLoadNextPage = false
-          } else {
-            that.pageData.canLoadNextPage = true
-          }
-          that.setData({
-            hm_aud_leave: newLeaveArray
-          })
-          typeof cb == "function" && cb(true, "加载成功")
-          // console.log(that.data.hm_aud_leave)
-        } else {
-          that.setData({
-            hm_aud_leave: ''
-          })
-          typeof cb == "function" && cb(false, "加载失败")
-        }
-        console.log("教务请假已审核")
-      })
-    }
-    
-  },
+  
 
   /**
    * 管理员获取请假列表
@@ -1612,6 +1469,151 @@ Page({
         typeof cb == "function" && cb(false, "加载失败")
       }
     })
+  },
+
+  /**
+   * 教务获取请假列表
+  */
+  jw_askfor:function(cb){
+    let that = this
+    if(that.data.aud == 0){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 1,
+        page: that.pageData.page,
+        limit: that.pageData.perpage
+      }
+      // console.log(params)
+      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
+        
+        if (d.data.status == 1) {
+          // console.log(d)
+          var hm_unaud_leave = d.data.data
+          
+          for(var i=0;i<hm_unaud_leave.length;i++){
+            hm_unaud_leave[i].submit = false
+          }
+          // 处理分页数据
+          var newLeaveArray = []
+          if (that.pageData.page > 1) {
+            newLeaveArray = that.data.hm_unaud_leave.concat(hm_unaud_leave)
+          } else {
+            newLeaveArray = hm_unaud_leave
+          }
+          that.setData({
+            hm_unaud_leave: newLeaveArray
+          })
+
+          // 判断是否可以加载下一页
+          if (hm_unaud_leave.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
+          typeof cb == "function" && cb(true, "加载成功")
+          // console.log(that.data.hm_unaud_leave)
+        } else {
+          that.setData({
+            hm_unaud_leave: ''
+          })
+          typeof cb == "function" && cb(false, "加载失败")
+        }
+        console.log("我是教务请假待审核")
+      })
+    } else if (that.data.aud == 1){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "type": 2,
+        page: that.pageData.page,
+        limit: that.pageData.perpage,
+      }
+      // console.log(params)
+      app.ljjw.jwJiaowuGetAskforleaveList(params).then(d => {
+        // console.log(d)
+        if (d.data.status == 1) {
+          var hm_aud_leave = d.data.data
+          
+          for (var i = 0; i < hm_aud_leave.length;i++){
+            var leave = hm_aud_leave[i]
+            leave.fold = false
+            var status_text = ''
+            var status_color = ""
+            switch (leave.status*1) {
+              case 0: {
+                // 未审核
+                status_text = "未审核"
+                status_color = "#b4b4b4"
+                break
+              }
+              case 1: {
+                // 教务通过
+                status_text = "审核通过"
+                status_color = "#46bf6a"
+                break
+              }
+              case 2: {
+                // 教务驳回
+                status_text = "审核驳回"
+                status_color = "#f14444"
+                break
+              }
+              case 3: {
+                // 管理员审核通过
+                status_text = "审核通过"
+                status_color = "#46bf6a"
+                break
+              }
+              case 4: {
+                // 管理员驳回
+                status_text = "审核驳回"
+                status_color = "#f14444"
+                break
+              }
+              case 5: {
+                // 假条作废（到期未审核）
+                status_text = "假条已作废"
+                status_color = "#fb895e"
+                break
+              }
+              default: {
+                status_text= "未知状态"
+                status_color = "#b4b4b4"
+              }
+            }
+            leave.status_text = status_text
+            leave.status_color = status_color
+          }
+          // 分页数据处理
+          var newLeaveArray = []
+          if (that.pageData.page > 1) {
+            newLeaveArray = that.data.hm_aud_leave.concat(hm_aud_leave)
+          } else {
+            newLeaveArray = hm_aud_leave
+          }
+
+          // 判断是否可以加载下一页
+          if (hm_aud_leave.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
+          that.setData({
+            hm_aud_leave: newLeaveArray
+          })
+          typeof cb == "function" && cb(true, "加载成功")
+          // console.log(that.data.hm_aud_leave)
+        } else {
+          that.setData({
+            hm_aud_leave: ''
+          })
+          typeof cb == "function" && cb(false, "加载失败")
+        }
+        console.log("教务请假已审核")
+      })
+    }
+    
   },
 
   /*--------------------------------------------触发事件-------------------------------------------------*/

@@ -544,6 +544,7 @@
               <view  data-aud_xb="{{index}}" bindtap="admin_aud_fold">
                 <view class="teacher_leave_finished_sub1">
                   <view class="adminLeaveNameAndReadStatus">
+                    <!-- 未读标记 -->
                     <view class="adminLeave_readStatus" wx:if="{{index==0}}">未读</view>
                     <!-- 请假人名字 -->
                     <view class="teacher_leave_finished_name" style="margin-left:{{index==0 ? 14 : 24}}rpx;">{{item.realname}}</view>
