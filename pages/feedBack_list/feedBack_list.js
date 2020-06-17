@@ -1,4 +1,5 @@
 // pages/feedBack_list/feedBack_list.js
+const app = getApp()
 Page({
 
   /**
@@ -7,24 +8,17 @@ Page({
   data: {
     // 顶部菜单选中下标
     menuSelectedIndex: 0,
-    // item列表
-    itemArray: [
-      {
-        title: "学习反馈",
-        type: 0
-      },
-      {
-        title: "生活反馈",
-        type: 1
-      },
-      {
-        title: "软件使用",
-        type: 2
-      },
-      {
-        title: "其他问题",
-        type: 3
-      }],
+
+    // 反馈处理数量
+    feedBackNotiCount: 0,
+    
+    /**
+     * item列表
+     * id: 类型id
+     * title：类型标题
+     * child：二级分类（字段 id， title）
+    */
+    itemArray: [],
 
     // 反馈列表
     feedBackList:[
@@ -68,13 +62,23 @@ Page({
         score: 3,
         evaluate_content: "回复不是很清楚，但是可以勉强接受。"
       }],
+
+      // 反馈类型 圆圈颜色
+      typeColor: ['#6D9DEE', '#FB895E', '#74BB71', '#FC7878', '#E1CB3C'],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    // console.log(options)
+    if (options.menu == 1) {
+      this.setData({
+        menuSelectedIndex: options.menu
+      })
+    }
     this.setUpNaviSize()
+    this.getFeedBackTypeList()
   },
 
   /**
@@ -145,6 +149,62 @@ Page({
       saveBottom: saveBottom
     })
   },
+
+  // --------------------------------------------------接口-----------------------------------------------------
+  /**
+   * 获取反馈类型列表
+  */
+  getFeedBackTypeList: function() {
+    let that = this
+    let params = {
+      "token": wx.getStorageSync("token")
+    }
+    app.ljjw.getFeedbackType(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        let data = d.data.data
+        for (var i = 0; i < data.length; i++) {
+          let type = data[i]
+          type.open = false
+        }
+        that.setData({
+          itemArray: data
+        })
+      }
+    })
+  },
+
+  /**
+   * 学生获取未读反馈消息数量
+  */
+  studentGetFeedBackNotiCount: function () {
+    let that = this
+    let prarms = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    app.ljjw.getUnreadCount(prarms).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        let data = d.data.data
+        let count = data.allcount
+        if (count && count != '') {
+          that.setData({
+            feedBackNotiCount: count
+          })
+        } else {
+          that.setData({
+            feedBackNotiCount: 0
+          })
+        }
+      } else {
+        that.setData({
+          feedBackNotiCount: 0
+        })
+      }
+    })
+  },
+
   // ------------------------------------------------交互事件---------------------------------------------------
   /**
    * 顶部菜单 点击事件
@@ -170,13 +230,44 @@ Page({
   },
 
   /**
-   * 反馈类型 单元格 点击事件
+   * 一级反馈类型 单元格 点击事件
   */
   feedBackTypeClicked: function(e) {
     let index = e.currentTarget.dataset.index
     let item = this.data.itemArray[index]
+    if (!item.child || !(item.child.constructor === Array) || item.child.length == 0) {
+      wx.showToast({
+        title: '没有二级分类',
+        icon: 'none'
+      })
+      return
+    }
+    if (item.child.length == 1) {
+      let childItem = item.child[0]
+      wx.navigateTo({
+        url: '../../pages/feedBack_submit/feedBack_submit?type=' + childItem.id + '&title=' + item.title,
+      })
+    } else {
+      let itemOpenStr = "itemArray["+index+"].open"
+      this.setData({
+        [itemOpenStr]: !item.open
+      })
+    }
+  },
+
+  /**
+   * 二级反馈类型 点击事件
+  */
+  feedBackSecondTypeClicked: function (e) {
+    // console.log(e)
+    let firstIndex = e.currentTarget.dataset.firstindex
+    let secondIndex = e.currentTarget.dataset.secondindex
+
+    let firstTypeItem = this.data.itemArray[firstIndex]
+    let secondTypeItem = firstTypeItem.child[secondIndex]
+
     wx.navigateTo({
-      url: '../../pages/feedBack_submit/feedBack_submit?type=' + item.type + '&title=' + item.title,
+      url: '../../pages/feedBack_submit/feedBack_submit?type=' + secondTypeItem.id + '&title=' + firstTypeItem.title + '&subtitle=' + secondTypeItem.title,
     })
   },
 

@@ -125,7 +125,7 @@
         <view class="sectionHeader_title">问题反馈</view>
       </view>
       <view class="sectionHeader_subLayout">
-        <view class="sectionHeader_dot">1</view>
+        <view class="sectionHeader_dot" wx:if="{{feedBackNotiCount > 0}}">{{feedBackNotiCount}}</view>
         <image class="sectionHeader_arrow" src="../../images/next.png"></image>
       </view>
       

@@ -1,4 +1,5 @@
 // pages/feedBack_submit/feedBack_submit.js
+const app = getApp()
 Page({
 
   /**
@@ -7,8 +8,17 @@ Page({
   data: {
     // 页面尺寸
     pageSize: {},
+
     // 反馈类型
     feedBackTypeModel: {},
+
+    // 在校自习申请 开始时间
+    zixi_startTime_str: String,
+    // 在校自习申请 结束时间
+    zixi_endTime_str: String,
+
+    // 今日日期
+    today_date_str: String,
 
     // 反馈内容
     content: '',
@@ -103,10 +113,14 @@ Page({
   */
   getFeedBackTypeModle: function(options) {
     // console.log(options)
+    let today_date_str = app.util.formatDate(new Date())
+    
     this.setData({
       feedBackTypeModel: {
         type: options.type,
-        title: options.title
+        title: options.title,
+        subtitle: options.subtitle,
+        today_date_str: today_date_str
       }
     })
   },
@@ -151,5 +165,25 @@ Page({
     this.setData({
       imageArray: this.data.imageArray
     })
-  }
+  },
+
+  /**
+   * 在校自习生情 选择时间
+  */
+  datePickerChange: function(e) {
+    // console.log(e)
+    let type = e.currentTarget.dataset.type
+    let dateStr = e.detail.value
+    if (type == 1) {
+      // 开始时间
+      this.setData({
+        zixi_startTime_str: dateStr
+      })
+    } else {
+      // 结束时间
+      this.setData({
+        zixi_endTime_str: dateStr
+      })
+    }
+  },
 })

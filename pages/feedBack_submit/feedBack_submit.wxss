@@ -43,6 +43,32 @@
   flex-direction: column;
 }
 
+.zixi_timeView {
+  height: 112rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+}
+
+.zixi_time_title {
+  margin-left: 30rpx;
+  width: 244rpx;
+  color: #272727;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.zixi_startTime {
+  width: 226rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+}
+
 .contentBgView {
   min-height: 341rpx;
   display: flex;
