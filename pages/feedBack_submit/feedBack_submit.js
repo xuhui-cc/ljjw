@@ -235,6 +235,7 @@ Page({
   submit: function() {
     let that = this
     var params = {
+      token: wx.getStorageSync('token'),
       stu_id: wx.getStorageSync('uid'),
       sort_id: that.data.feedBackTypeModel.type,
       notes: that.data.content,

@@ -3,14 +3,30 @@ const app = getApp()
 Page({
 
   /**
+   * 分页数据
+  */
+  pageData: {
+    page: 1,
+    perpage: 10,
+    canLoadNextPage: false
+  },
+
+  /**
    * 页面的初始数据
    */
   data: {
     // 顶部菜单选中下标
     menuSelectedIndex: 0,
 
-    // 反馈处理数量
-    feedBackNotiCount: 0,
+    // 页面红点
+    redDotCount: {
+      // 反馈处理 未读消息数量
+      feedBackNotiCount: 0,
+      // 待归还 未读消息数
+      feedBackNotReturn: 0,
+      // 已完成 未读消息数量
+      feedBackFinished: 0,
+    },
     
     /**
      * item列表
@@ -20,51 +36,52 @@ Page({
     */
     itemArray: [],
 
-    // 反馈列表
-    feedBackList:[
-      {
-        isread: 1, 
-        time: '2019.09.04 09:20', 
-        type: '软件使用', 
-        dealType:1, // 1-处理中 2-已处理 3-被驳回
-        content: "我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，如下图所示，打开后，是空白，或者是提示文件类型错误。问题：我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，如下图所示，打开后，是空白，或者是提示文件类型错误。",
-        open: false,
-        pics: ['','']
-      },
-      {
-        isread: 0, 
-        time: '2019.09.04 09:20', 
-        type: '软件使用', 
-        dealType: 2,
-        content: "我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，打开后，是空白，或者是提示。",
-        open: false,
-        pics: ['',''],
-        dealTime: '2019.06.07 09:15',
-        dealContent: '这个问题已经修复，建议重新打开小程序即可解决。',
-        dealPics: ['', '', '', ''],
-        evaluated: false, // 是否已评价
-        score: 0,
-        evaluate_content: '',
-        canEvaluateSubmit: false, // 是否可以提交评分
-      },
-      {
-        isread: 0, 
-        time: '2019.09.04 09:20', 
-        type: '软件使用', 
-        dealType: 3,
-        content: "我再使用小程序的时候，班级资料中的pdf格式文件打开有问题，打开后，是空白，或者是提示错误打开后，是空白，或者是提示错误或者是提示错误打开后。",
-        open: false,
-        pics: ['', '', '', ''],
-        dealTime: '2019.06.07 09:15',
-        dealContent: '这个问题已经修复，建议重新打开小程序即可解决。',
-        dealPics: ['', ''],
-        evaluated: true,
-        score: 3,
-        evaluate_content: "回复不是很清楚，但是可以勉强接受。"
-      }],
+    // 反馈类型 圆圈颜色
+    typeColor: ['#6D9DEE', '#FB895E', '#74BB71', '#FC7878', '#E1CB3C'],
 
-      // 反馈类型 圆圈颜色
-      typeColor: ['#6D9DEE', '#FB895E', '#74BB71', '#FC7878', '#E1CB3C'],
+    /**
+     * 反馈列表
+     * sort_id: 二级分类ID
+     * notes: 反馈内容
+     * pics: 反馈图片，以','隔开
+     * usetime: 申请试用自习室的时间段
+     * marked: 学员评分
+     * comment: 学员评价内容
+     * comment_time: 学员评分时间
+     * subtime: 学员提交反馈时间 10位时间戳
+     * dispose_user: 关联处理人
+     * operate_uid: 操作人
+     * feed_state: 处理状态 1-未处理 2-处理中 3-已处理 4-已驳回
+     * return_state: 申请归还状态 0-无归还状态 1-未归还 2-待确认 3-已归还 4-已驳回
+     * saw: 反馈处理后学员是否已读 0-未读 10已读
+     * parent: 一级分类名
+     * soncount: 二级分类数量
+     * 
+     * 自定义
+     * time：创建时间 0000-00-00 00:00
+     * canEvaluateSubmit：是否可以提交评论
+    */
+    feedBackList:[],
+
+    // 反馈处理 类型 1-未处理 2-待归还 3-已完结
+    feedBackListType: 1,
+    feedBackListMenu: [
+      {
+        title: "待处理",
+        type: 1,
+      }, 
+      {
+        title: "待归还",
+        type: 2,
+      }, 
+      {
+        title: "已完成",
+        type: 3
+      }
+    ],
+
+    // 选中要评价的反馈的索引
+    evaluateIndex: null
   },
 
   /**
@@ -92,7 +109,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.studentGetFeedBackNotiCount()
+    if (this.data.menuSelectedIndex == 1) {
+      this.pageData.page = 1
+      this.studentGetFeedBackList()
+    }
   },
 
   /**
@@ -146,7 +167,8 @@ Page({
       naviBarWidth: naviBarWidth,
       navibar_content_height: naviBarHeight - systemInfo.statusBarHeight,
       statusBar_height: systemInfo.statusBarHeight,
-      saveBottom: saveBottom
+      saveBottom: saveBottom,
+      screenWidth: systemInfo.screenWidth
     })
   },
 
@@ -185,21 +207,82 @@ Page({
     }
     app.ljjw.getUnreadCount(prarms).then(d=>{
       let status = d.data.status
+      let redDotCount = {
+        feedBackNotiCount: 0,
+        feedBackNotReturn: 0,
+        feedBackFinished: 0,
+      }
       if (status == 1) {
         let data = d.data.data
-        let count = data.allcount
-        if (count && count != '') {
-          that.setData({
-            feedBackNotiCount: count
-          })
-        } else {
-          that.setData({
-            feedBackNotiCount: 0
-          })
+        var allCount = data.allcount
+        var notReturnCount = data.daiguihuan
+        var finishedCount = data.yiwanjie
+        if (allCount && allCount != '') {
+          redDotCount.feedBackNotiCount = allCount
         }
+        if (notReturnCount && notReturnCount != '') {
+          redDotCount.feedBackNotReturn = notReturnCount
+        }
+        if (finishedCount && finishedCount != '') {
+          redDotCount.feedBackFinished = finishedCount
+        }
+        this.setData({
+          redDotCount: redDotCount
+        })
       } else {
         that.setData({
-          feedBackNotiCount: 0
+          redDotCount: redDotCount
+        })
+      }
+    })
+  },
+
+  /**
+   * 学生获取反馈列表
+   * params:
+   * type=1 未处理  type=2 待归还 type=3 已完结
+  */
+  studentGetFeedBackList: function (type) {
+    let that = this
+    let params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      type: type ? type : this.data.feedBackListType,
+      page: this.pageData.page,
+      limit: this.pageData.perpage,
+    }
+    app.ljjw.getFeedBackList(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        let feedBackList = d.data.data
+        
+        for (var i = 0; i < feedBackList.length; i++) {
+          let feedBack = feedBackList[i]
+          // 默认收起
+          feedBack.open = false
+          // 创建时间
+          feedBack.time = app.util.customFormatTimeByTimestamp(feedBack.subtime*1000, 'yyyy.MM.dd hh:mm')
+          // 反馈图片处理
+          feedBack.pics = (feedBack.pics && feedBack.pics != '') ? feedBack.pics.split(',') : []
+          // 是否已评分
+          feedBack.evaluated = (!feedBack.marked || feedBack.marked == '' || feedBack.marked == 0) ? false : true
+          // 流程列表 处理
+          for(var j = 0; j < feedBack.process_list.length; j++) {
+            let process = feedBack.process_list[j]
+            // 处理图片
+            process.images = (process.images && process.images != '') ? process.images.split(',') : []
+          }
+          if(feedBack.evaluated) {
+            // 已评价 添加评价记录到流程列表
+            feedBack.process_list.push({
+              proctime: '0000-00-00 00:00',
+              content: feedBack.comment,
+            })
+          }
+        }
+        that.setData({
+          feedBackList: feedBackList,
+          feedBackListType: params.type
         })
       }
     })
@@ -218,6 +301,8 @@ Page({
     this.setData({
       menuSelectedIndex: index
     })
+
+    this.studentGetFeedBackNotiCount()
   },
 
   /**
@@ -272,6 +357,17 @@ Page({
   },
 
   /**
+   * 反馈处理 菜单 点击事件
+  */
+  feedBackListMenuClicked: function (e) {
+    let type = e.currentTarget.dataset.type
+    if (type == this.data.feedBackListType) {
+      return
+    }
+    this.studentGetFeedBackList(type)
+  },
+
+  /**
    * 反馈列表 单元格 展开/收起 点击事件
   */
   feedBackOpenButton: function(e) {
@@ -293,7 +389,7 @@ Page({
     let score = e.detail.score
     
     let feedBack = this.data.feedBackList[feedBackIndex]
-    feedBack.score = score
+    feedBack.marked = score
     feedBack.canEvaluateSubmit = true
 
     let change = 'feedBackList['+feedBackIndex+']'
@@ -310,7 +406,7 @@ Page({
     let newcontent = e.detail.value
     let index = e.currentTarget.dataset.index
 
-    let change = "feedBackList["+index+"].evaluate_content"
+    let change = "feedBackList["+index+"].comment"
     this.setData({
       [change]: newcontent
     })
