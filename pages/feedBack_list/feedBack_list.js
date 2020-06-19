@@ -639,6 +639,7 @@ Page({
             that.setData({
               [feedBackCHange]: feedBack
             })
+            that.studentGetFeedBackNotiCount()
           } else {
             that.setData({
               [setData]: true
