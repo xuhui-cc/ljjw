@@ -1,0 +1,53 @@
+<!--pages/feedBack_submit/feedBack_submit.wxml-->
+<view class="container">
+  <view class="navigationBar" style="height:{{pageSize.naviHeight}}px">
+    <view class="navigation_content" style="height:{{pageSize.naviContentHeight}}px; margin-top:{{pageSize.statusBarHeight}}px;">
+      <view class="navigation_backView" bindtap="naviBackClicked">
+        <image class="navigation_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <view class="navgation_title">{{feedBackTypeModel.subtitle ? feedBackTypeModel.title+"-"+feedBackTypeModel.subtitle : feedBackTypeModel.title}}</view>
+      <view class="navigation_backView"></view>
+    </view>
+  </view>
+
+  <view class="contentView" style="margin-top:{{pageSize.naviHeight}}px; padding-bottom:{{pageSize.safeareaBottom + 51/750.0*pageSize.screenWidth}}px;">
+    <!-- 在校自习申请 使用时间 -->
+    <block wx:if="{{feedBackTypeModel.type == 4}}">
+      <view class="zixi_timeView">
+        <view class="zixi_time_title">使用时间：</view>
+        <picker mode="date" start="{{feedBackTypeModel.today_date_str}}" end="{{zixi_endTime_str}}" bindchange="datePickerChange" data-type="1">
+          <view class="zixi_startTime" style="color:{{zixi_startTime_str ? '#000' : '#CCCCCC'}}">{{zixi_startTime_str ? zixi_startTime_str : '请选择'}}</view>
+        </picker>
+        <view style="width:24rpx; height:0.5rpx; background-color:#707070;"></view>
+        <picker mode="date" start="{{zixi_startTime_str ? zixi_startTime_str : feedBackTypeModel.today_date_str}}" bindchange="datePickerChange" data-type="2">
+          <view class="zixi_startTime" style="color:{{zixi_endTime_str ? '#000' : '#CCCCCC'}}">{{zixi_endTime_str ? zixi_endTime_str : '请选择'}}</view>
+        </picker>
+      </view>
+      <view style="height:16rpx; width:100%; background-color:#FBFBFC"></view>
+    </block>
+    <!-- 输入框 -->
+    <view class="contentBgView">
+      <image class="content_image" src="../../images/feedBack_content.png"></image>
+      <textarea class="content_textarea" placeholder="请输入您的问题..." auto-height="true" placeholder-class="content_textarea_placehoulder" value="{{content}}" bindinput="textareaInput"></textarea>
+    </view>
+
+    <!-- 照片 -->
+    <view class="addImageTitle">添加照片</view>
+    <view class="imageCollectionView">
+      <block wx:for="{{imageArray}}" wx:key="index">
+        <view class="imageCell" style="margin-top:{{index>2 ? 11 : 0}}rpx; margin-left:{{index%3==0 ? 0 : 11}}rpx;">
+          <image class="image" src="{{item}}" mode="aspectFill" bindtap="showBigPicture" data-index="{{index}}"></image>
+          <view class="image_deleteView" bindtap="deleteImage" data-index="{{index}}">
+            <image class="image_delete" src="../../images/gdel.png"></image>
+          </view>
+        </view>
+      </block>
+      <!-- 上传图片按钮 -->
+      <view wx:if="{{imageArray.length<maxPictureCount}}" class="imageCell" style="margin-top:{{imageArray.length>2 ? 11 : 0}}rpx; margin-left:{{imageArray.length%3==0 ? 0 : 11}}rpx;">
+        <image class="image" src="../../images/insert_img.png" bindtap="insertImage"></image>
+      </view>
+    </view>
+
+    <view class="bottomButton" style="background-color:{{canSubmit ? 'rgba(45,193,160,1)' : '#DEDEDE'}}; bottom:{{pageSize.safeareaBottom + 41/750.0*pageSize.screenWidth}}px;" bindtap="submitButtonClciked">提交</view>
+  </view>
+</view>

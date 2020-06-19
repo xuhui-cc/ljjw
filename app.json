@@ -25,7 +25,8 @@
     "pages/stu_jcxx/stu_jcxx",
     "pages/graduation_school/graduation_school",
     "pages/noti_list/noti_list",
-    "pages/feedBack_list/feedBack_list"
+    "pages/feedBack_list/feedBack_list",
+    "pages/feedBack_submit/feedBack_submit"
   ],
   "tabBar": {
     "custom": false,

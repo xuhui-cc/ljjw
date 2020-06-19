@@ -14,6 +14,9 @@ Page({
     // role:0,
     
     stu_class_index: 0,
+
+    // 问题反馈消息数量
+    feedBackNotiCount: 0,
   },
 
   /**
@@ -308,8 +311,11 @@ Page({
       },
     })
 
+    // 清除文档缓存
     this.clearLocalFile()
     
+    // 获取问题反馈消息数
+    this.studentGetFeedBackNotiCount()
   },
 
   /**
@@ -575,6 +581,48 @@ Page({
           
         })
       }
+    })
+  },
+
+  /**
+   * 学生获取未读反馈消息数量
+  */
+  studentGetFeedBackNotiCount: function () {
+    let that = this
+    let prarms = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    app.ljjw.getUnreadCount(prarms).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        let data = d.data.data
+        let count = data.allcount
+        if (count && count != '') {
+          that.setData({
+            feedBackNotiCount: count
+          })
+        } else {
+          that.setData({
+            feedBackNotiCount: 0
+          })
+        }
+      } else {
+        that.setData({
+          feedBackNotiCount: 0
+        })
+      }
+    })
+  },
+
+  // ------------------------------------------事件-------------------------------------
+  /**
+   * 问题反馈 点击事件
+  */
+  to_feedBack: function(e) {
+    // console.log(e)
+    wx.navigateTo({
+      url: '../../pages/feedBack_list/feedBack_list?menu=' + (this.data.feedBackNotiCount == 0 ? 0 : 1),
     })
   }
   

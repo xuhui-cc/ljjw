@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "evaluate_star": "../../components/evaluate_star/evaluate_star"
+  },
+  "navigationStyle": "custom"
 }
