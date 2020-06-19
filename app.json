@@ -26,7 +26,8 @@
     "pages/graduation_school/graduation_school",
     "pages/noti_list/noti_list",
     "pages/feedBack_list/feedBack_list",
-    "pages/feedBack_submit/feedBack_submit"
+    "pages/feedBack_submit/feedBack_submit",
+    "pages/tea_feedBack_list/tea_feedBack_list"
   ],
   "tabBar": {
     "custom": false,

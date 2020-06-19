@@ -126,7 +126,12 @@ Page({
       })
     }
     this.setUpNaviSize()
-    this.getFeedBackTypeList()
+    if (this.data.menuSelectedIndex == 1) {
+      this.studentGetFeedBackList()
+    } else {
+      this.getFeedBackTypeList()
+    }
+
   },
 
   /**

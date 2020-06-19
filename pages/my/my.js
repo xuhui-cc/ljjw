@@ -624,6 +624,15 @@ Page({
     wx.navigateTo({
       url: '../../pages/feedBack_list/feedBack_list?menu=' + (this.data.feedBackNotiCount == 0 ? 0 : 1),
     })
+  },
+
+  /**
+   * 反馈处理按钮 点击事件
+  */
+  to_tea_feedBack: function(e) {
+    wx.navigateTo({
+      url: '../../pages/tea_feedBack_list/tea_feedBack_list',
+    })
   }
   
 })
