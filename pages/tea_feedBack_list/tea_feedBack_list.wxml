@@ -1,0 +1,21 @@
+<!--pages/tea_feedBack_list/tea_feedBack_list.wxml-->
+<!-- 导航 -->
+<view class="container">
+  <view class="navigationBar" style="height:{{naviBarHeight}}px;">
+    <view class="navigationBar_contentView" style="height:{{navibar_content_height}}px; margin-top:{{statusBar_height}}px">
+      <!-- 返回按钮 -->
+      <view class="navibar_backImageView" bindtap="back">
+        <image class="navibar_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <!-- menu -->
+      <view class="{{menuSelectedIndex == 0? 'topMenuViewVisited' : 'topMenuView'}}" bindtap="menu_selected" data-index="0">
+        <text class="toMenuTitle">待处理</text>
+        <view class="topMenuDot" wx:if="{{notDealCount>0}}">{{notDealCount > 9 ? '9+' : notDealCount}}</view>
+      </view>
+      <view class="{{menuSelectedIndex == 1? 'topMenuViewVisited' : 'topMenuView'}}" style="margin-left:44rpx" bindtap="menu_selected" data-index="1">
+        <text class="toMenuTitle">已处理</text>
+      </view>
+    </view>
+  </view>
+
+</view>
