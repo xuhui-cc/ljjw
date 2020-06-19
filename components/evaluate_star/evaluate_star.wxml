@@ -1,8 +1,8 @@
 <!--evaluate_star/evaluate_star.wxml-->
-<view class="contentView" style="width:{{width}}; height:{{height}};">
+<view class="contentView" style="width:{{width}}; height:{{height}}; margin-left:{{left}};">
   <block wx:for="{{starDataArray}}" wx:key="index">
     <view class="star" style="justify-content:{{index==0 ? 'flex-start' : (index==starDataArray.length-1 ? 'flex-end' : 'center')}}; flex-grow:{{(index==0 || index==starDataArray.length-1) ? 1 : 2}};" bindtap="{{canSelect == 1 ? '_starClicked' : ''}}" data-index="{{index}}">
-      <image class="star_iamge" src="{{item.type==0 ? './images/star_no.png' : './images/star_yes.png'}}"></image>
+      <image class="star_iamge" src="{{item.type==0 ? './images/star_no.png' : './images/star_yes.png'}}" style="width:{{starWidth}}; height:{{starHeight}};"></image>
     </view>
   </block>
 </view>

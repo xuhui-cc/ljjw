@@ -31,6 +31,24 @@ Component({
       value: 0
     },
 
+    // 左边距
+    left: {
+      type: String,
+      value: '0rpx'
+    },
+
+    // 星星宽度
+    starWidth: {
+      type: String,
+      value:'38.8rpx'
+    },
+
+    // 星星高度
+    starHeight: {
+      type: String,
+      value: '37.01rpx'
+    },
+
   },
 
   /**

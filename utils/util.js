@@ -54,7 +54,7 @@ const customFormatTimeByTimestamp = (timestamp, format) => {
     // date.getFullYear() + ""  转为字符串
     format = format.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length))
   }
-  console.log(format)
+  // console.log(format)
   for (var k in data) {
     if (new RegExp("(" + k + ")").test(format)) {
       format = format.replace(RegExp.$1, (RegExp.$1.length === 1) ? (data[k]) : (("00" + data[k]).substring(("" + data[k]).length)))

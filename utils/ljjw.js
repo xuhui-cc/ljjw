@@ -292,4 +292,19 @@ function getFeedBackList(params) {
   return fetch.ljjwfetch(URI, 'getFeedBackList', params, '学生获取反馈列表', true)
 }
 
-module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList}
+// 问题反馈 学生提交评分
+function saveStudentScore(params) {
+  return fetch.ljjwfetchpost(URI, 'saveStudentScore', params, '问题反馈 学生提交评分', true, '提交中')
+}
+
+// 问题反馈 学生提交归还
+function submitReturn(params) {
+  return fetch.ljjwfetchpost(URI, 'submitReturn', params, '问题反馈 学生提交归还', true, '提交中')
+}
+
+// 学生问题反馈变为已读
+function setFeedbackSaw(params) {
+  return fetch.ljjwfetchpost(URI, 'setFeedbackSaw', params, '学生问题反馈变为已读', true)
+}
+
+module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw}
