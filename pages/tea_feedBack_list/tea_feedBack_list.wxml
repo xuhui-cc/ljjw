@@ -29,10 +29,8 @@
     <block wx:if="{{feedBackList.length != 0}}" wx:for="{{feedBackList}}" wx:key="index">
       <view class="feedBackCell" style="margin-top:16rpx">
         <view class="feedBack_BackInfo">
-          <!-- 已读未读状态 -->
-          <view class="feedBack_readStatus" wx:if="{{item.saw==0}}">未读</view>
           <!-- 反馈类型 -->
-          <text class="feedBack_type" style="margin-left:{{item.saw==0 ? 16 : 30}}rpx">类型：{{item.soncount > 1 ? item.parent+'-'+item.title : item.parent}}</text>
+          <text class="feedBack_type" style="margin-left:30rpx">类型：{{item.soncount > 1 ? item.parent+'-'+item.title : item.parent}}</text>
         </view>
         <!-- 时间 -->
         <text class="feedBack_createTime">{{item.time}}</text>
