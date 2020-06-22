@@ -14,7 +14,7 @@ page{
   width: 100%;
   height: 300rpx;
   top:50%;
-  margin-bottom: 150rpx;
+  margin-top: -150rpx;
 }
 
 .navigationBar {
@@ -325,4 +325,210 @@ page{
   width: 311rpx;
   margin-left: 45rpx;
   border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.feedBackDealReject {
+  margin-left: 39rpx;
+  height: 78rpx;
+  width: 309rpx;
+  margin-top: 66rpx;
+  border-radius: 39rpx;
+  border: 2rpx solid #2DC1A0;
+  color: #2DC1A0;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typePicker {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.typePickerView {
+  height: 786rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 30rpx 30rpx 0 0;
+  background-color: white;
+  position: relative;
+}
+
+.typePicker_closeButton {
+  width: 96rpx;
+  height: 84rpx;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 0;
+  top: 0;
+}
+
+.typePicker_closeImage {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.typePicker_tableView {
+  margin-top: 21rpx;
+  height: 697rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.typePicker_cell {
+  height: 99rpx;
+  width: 100%;
+  border-bottom: 0.5rpx solid #F1F1F1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #272727;
+  font-size: 34rpx;
+}
+
+.feedBackDeal {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.feedBackDealView {
+  width: 644rpx;
+  height: 961rpx;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 14rpx;
+  position: relative;
+}
+
+.feebBackDeal_closeButton {
+  width: 84rpx;
+  height: 78rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedBackDeal_titleView {
+  width: 100%;
+  height: 114rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.feedBackDeal_titleColor {
+  margin-left: 44rpx;
+  width: 5rpx;
+  height: 13rpx;
+  border-radius: 2.5rpx;
+  background-color: #2DC1A0;
+}
+
+.feedBackDeal_title {
+  color: #272727;
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-left: 18rpx;
+}
+
+.feedBackDeal_inputVBgView {
+  background-color: #F6F6F6;
+  border-radius: 14rpx;
+  width: 558rpx;
+  margin-left: 43rpx;
+  height: 350rpx;
+}
+
+.feedBackDeal_textarea {
+  color: #272727;
+  font-size: 30rpx;
+  margin-left: 27rpx;
+  margin-top: 22rpx;
+  width: 504rpx;
+  height: 306rpx;
+}
+
+.feedBackDeal_textarea_placehoulder {
+  color: #B4B4B4;
+  font-size: 30rpx;
+}
+
+.feedBackDeal_imageView {
+  margin-left: 43rpx;
+  margin-top: 52rpx;
+  width: 558rpx;
+  height: 181rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.feedbackDeal_imageCell {
+  width: 175rpx;
+  height: 179rpx;
+  position: relative;
+}
+
+.feedBackDeal_image {
+  margin-top: 10rpx;
+  width: 168rpx;
+  height: 168rpx;
+}
+
+.feedBackDeal_imageDelete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50rpx;
+  height: 50rpx;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.feedbackDeal_DeleteImage {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.feedbackDeal_sureButton {
+  width: 311rpx;
+  height: 80rpx;
+  color: white;
+  font-size: 32rpx;
+  border-radius: 40rpx;
+  margin-top: 95rpx;
+  margin-right: auto;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
