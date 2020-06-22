@@ -18,6 +18,7 @@
     </view>
   </view>
 
+  <!-- 选择的关联分类 -->
   <view wx:if="{{menuSelectedIndex==1}}" class="selectTypeView" style="top:{{naviBarHeight}}px" bindtap="showTypePicker">
     <image class="selectTypeImage" src="../../images/feedBack_relativeClass.png"></image>
     <text class="selectTypeTitle">{{selectedTypeIndex==null ? "全部分类" : typeList[selectedTypeIndex].title}}</text>
@@ -88,13 +89,16 @@
               <view style="margin-left:93rpx; height:56rpx; width:10rpx;" wx:if="{{process_index != item.dealList.length-1}}"></view>
             </view>
           </block>
+          <!-- 反馈处理按钮 -->
           <view class="flex_row" wx:if="{{item.feed_state == 1 || item.feed_state==2}}">
             <!-- 确认/驳回按钮 -->
-            <view class="feedBackDealSure">通过</view>
-            <!-- 确认归还 按钮 -->
-            <!-- <view class="returnButton" wx:if="{{feedBackListType == 2 && item.showReturnButton}}" style="{{item.evaluated ? 'margin-left:30rpx; height:90rpx; width:690rpx; border-radius:45rpx' : 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:34rpx'}}" bindtap="feedBackReturnButtonClciked" data-index="{{index}}">确认归还</view> -->
-            <!-- 去评分 按钮 -->
-            <!-- <view class="evaluateButton" wx:if="{{feedBackListType != 1 && !item.evaluated}}" style="{{feedBackListType == 2 && item.showReturnButton ? 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:39rpx' : 'height:90rpx; width:442rpx; border-radius:45rpx; margin-left:auto; margin-right:auto'}}" bindtap="evaluateButtonClciked" data-index="{{index}}">去评分</view> -->
+            <view class="feedBackDealSure" bindtap="feedBackDealSureButtonClciked" data-index="{{index}}">通过</view>
+            <view class="feedBackDealReject" bindtap="feedBackDealRejectButtonClicked" data-index="{{index}}">驳回</view>
+          </view>
+          <!-- 归还处理按钮 -->
+          <view class="flex_row" wx:elif="{{item.feed_state==3 && item.return_state == 2}}">
+            <view class="feedBackDealSure" bindtap="feedBackReturnSureButtonClciked" data-index="{{index}}">确认通过</view>
+            <view class="feedBackDealReject" bindtap="feedBackReturnRejectButtonClicked" data-index="{{index}}">驳回</view>
           </view>
         </block>
         <!-- 展开/收起按钮 -->
@@ -112,5 +116,67 @@
     <block wx:if="{{!feedBackList || feedBackList == '' || feedBackList.length == 0}}">
       <image src="../../images/rec_null.png" mode="aspectFit" class="nullImage"></image>
     </block>
+  </view>
+</view>
+
+<!-- 关联分类选择器 -->
+<view class="typePicker" wx:if="{{showTypePicker}}">
+  <view class="typePickerView">
+    <view class="typePicker_tableView">
+      <scroll-view scroll-y="true" style="height: 100%">
+        <view class="typePicker_cell" style="font-weight:bold;" bindtap="typePickerAllTypeClciked">全部分类</view>
+        <block wx:for="{{typeList}}" wx:key="index">
+          <view class="typePicker_cell" bindtap="typePickerOptionSelected" data-index="{{index}}">
+            {{item.parentname+"-"+item.title}}
+          </view>
+        </block>
+      </scroll-view>
+    </view>
+    <!-- 关闭按钮 -->
+    <view class="typePicker_closeButton" bindtap="typePickerCloseButtonClicked">
+      <image class="typePicker_closeImage" src="../../images/close.png"></image>
+    </view>
+  </view>
+</view>
+
+<!-- 处理弹框 -->
+<view class="feedBackDeal" wx:if="{{dealData}}">
+  <view class="feedBackDealView">
+    <!-- 标题 -->
+    <view class="feedBackDeal_titleView">
+      <view class="feedBackDeal_titleColor"></view>
+      <view class="feedBackDeal_title">{{dealData.dealTitle}}</view>
+    </view>
+    <!-- 输入框 -->
+    <view class="feedBackDeal_inputVBgView">
+      <textarea class="feedBackDeal_textarea" placeholder="{{dealData.dealPlacehoulder}}" placeholder-class="feedBackDeal_textarea_placehoulder" value="{{dealData.dealContent}}" bindinput="feedbackDealTextareaInput"></textarea>
+    </view>
+    <!-- 上传图片 -->
+    <view class="feedBackDeal_imageView">
+      <scroll-view scroll-x="true" style="width:100%;">
+        <view class="flex_row">
+          <block wx:for="{{dealData.dealImages}}" wx:key="index">
+            <view class="feedbackDeal_imageCell" style="margin-left:{{index == 0 ? 0 : 20}}rpx;">
+              <!-- 图片 -->
+              <image class="feedBackDeal_image" src="{{item}}" mode="aspectFill" bindtap="showBigImage" data-type="3" data-imageindex="{{index}}"></image>
+              <!-- 删除图片按钮 -->
+              <view class="feedBackDeal_imageDelete"  bindtap="feedbackDealDeleteImage" data-index="{{index}}">
+                <image class="feedbackDeal_DeleteImage" src="../../images/gdel.png"></image>
+              </view>
+            </view>
+          </block>
+          <!-- 上传图片 按钮 -->
+          <view class="feedbackDeal_imageCell" wx:if="{{dealData.dealImages.length < maxUnloadImageCount}}" style="margin-left:{{dealData.dealImages.length == 0 ? 0 : 20}}rpx;">
+            <image class="feedBackDeal_image" src="../../images/insert_img.png" bindtap="feedBackAddImage"></image>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <!-- 确定按钮 -->
+    <view class="feedbackDeal_sureButton" style="background-color:{{dealData.canSubmit ? 'rgba(45,193,160,1)' : '#DEDEDE'}}" bindtap="feedbackDealSureButtonClciked">确定</view>
+    <!-- 关闭按钮 -->
+    <view class="feebBackDeal_closeButton" bindtap="feedBackDealCloseButtonClicked">
+      <image class="typePicker_closeImage" src="../../images/close.png"></image>
+    </view>
   </view>
 </view>

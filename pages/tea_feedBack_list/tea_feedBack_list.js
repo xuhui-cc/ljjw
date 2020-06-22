@@ -15,6 +15,9 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 最大上传图片数量
+    maxUnloadImageCount: 3,
+
     // 顶部菜单选中下标
     menuSelectedIndex: 0,
 
@@ -30,6 +33,18 @@ Page({
     selectedTypeIndex: null,
     // 是否展示关联分类选择弹框
     showTypePicker: false,
+
+    /**
+     * 反馈处理数据
+     * selectedFeedBackIndex： 将要处理的反馈索引
+     * dealType： 处理方式：1-反馈通过 2-反馈驳回 3-归还通过 4-归还驳回
+     * dealContent: 处理内容
+     * dealImages: 处理图片数组
+     * dealTitle： 处理方式标题
+     * dealPlacehoulder: 反馈内容 占位字符串
+     * canSubmit: 是否可以提交
+    */
+    dealData: null,
   },
 
   /**
@@ -72,14 +87,32 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let oldPage = this.pageData.page
+    this.pageData.page = 1
+    let that = this
+    this.teacherGetFeedBackList(this.data.menuSelectedIndex*1+1, function(success, msg){
+      wx.stopPullDownRefresh()
+      if (!success) {
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (!this.pageData.canLoadNextPage) {
+      return
+    }
+    let oldPage = this.pageData.page
+    this.pageData.page = oldPage + 1
+    let that = this
+    this.teacherGetFeedBackList(this.data.menuSelectedIndex*1+1, function(success, msg){
+      if (!success) {
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   /**
@@ -145,6 +178,53 @@ Page({
     }
   },
 
+  /**
+   * 判断 反馈处理是否可以提交
+  */
+  setFeedBackDealIfCanSubmit: function () {
+    let canSubmit = false
+    if (this.data.dealData.dealType == 1 || this.data.dealData.dealType == 3) {
+      canSubmit = true
+    } else {
+      let content = this.data.dealData.dealContent
+      if (content && content != '') {
+        canSubmit = true
+      }
+    }
+
+    if (this.data.dealData.canSubmit != canSubmit) {
+      let canSubmitChange = "dealData.canSubmit"
+      this.setData({
+        [canSubmitChange]: canSubmit
+      })
+    }
+  },
+
+  /**
+   * 循环上传图片
+  */
+  circleUploadImage: function(pathList, index) {
+    let that = this
+    if (pathList.length <= index) {
+      return
+    }
+    let filePath = pathList[index]
+    this.uploadImage(filePath, function(success, imageData, errorMsg) {
+      // console.log(imageData)
+      if(success) {
+        that.data.dealData.dealImages.push(imageData)
+        let imagesChange = "dealData.dealImages"
+        that.setData({
+          [imagesChange]: that.data.dealData.dealImages
+        })
+
+        if (index < pathList.length-1) {
+          that.circleUploadImage(pathList, index+1)
+        }
+      }
+    })
+  },
+
   // -------------------------------------------------接口-----------------------------------------------------
   /**
    * 获取老师待处理反馈数量
@@ -182,6 +262,10 @@ Page({
       type: type ? type : (this.data.menuSelectedIndex*1+1), // 1-待处理 2-已处理
       page: this.pageData.page,
       limit: this.pageData.perpage
+    }
+    if (type == 2 && this.data.selectedTypeIndex != null) {
+      let typeItem = this.data.typeList[this.data.selectedTypeIndex]
+      params.sort_id = typeItem.id
     }
     app.ljjw.getTeacherFeedbackList(params).then(d=>{
       let status = d.data.status
@@ -329,9 +413,124 @@ Page({
     app.ljjw.getTeacherAttachSort(params).then(d=>{
       let status = d.data.status
       if (status == 1) {
+        
         typeof cb == "function" && cb(true, "加载成功", d.data.data)
       } else {
         typeof cb == "function" && cb(false, "加载失败", null)
+      }
+    })
+  },
+
+  /**
+   * 上传图片
+  */
+  uploadImage: function(filePath, cb) {
+    let that = this
+    var token = wx.getStorageSync('token');
+    wx.showLoading({
+      title: '上传中',
+    })
+    wx.uploadFile({
+      url: app.ljjw.getUploadFileURI(),
+      filePath: filePath,
+      name: 'file',
+      formData: {
+        'file': filePath,
+        "token": token,
+        "action": "jwUploadAvatar",
+      },
+      success(r) {
+        wx.hideLoading({
+          complete: (res) => {
+            let hhh = JSON.parse(r.data);
+            console.log(hhh)
+            if (hhh.status == 1) {
+              typeof cb == "function" && cb(true, hhh.data, "加载成功")
+            } else {
+              let errorMsg = hhh.msg ? hhh.msg : '上传失败'
+              wx.showToast({
+                title: errorMsg,
+                icon: 'none'
+              })
+              typeof cb == "function" && cb(false, null, errorMsg)
+            }
+          },
+        })
+      },
+      fail(error) {
+        wx.hideLoading({
+          complete: (res) => {
+            wx.showToast({
+              title: '上传失败',
+              icon: 'none'
+            })
+            typeof cb == "function" && cb(false, null, "上传失败")
+          },
+        })
+      }
+    })
+  },
+
+  /**
+   * 提交反馈处理
+   * type: 1-通过 2-驳回
+  */
+  submitFeedBackDeal: function (type) {
+    let that = this
+    let feedBack = this.data.feedBackList[this.data.dealData.selectedFeedBackIndex]
+    let params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      type: type,
+      fid: feedBack.id
+    }
+    if (this.data.dealData.dealContent && this.data.dealData.dealContent != '') {
+      params.content = this.data.dealData.dealContent
+    }
+    if (this.data.dealData.dealImages.length != 0) {
+      params.images = this.data.dealData.dealImages.join(",")
+    }
+    app.ljjw.teacherConfirmFeedback(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        that.data.feedBackList.splice(that.data.dealData.selectedFeedBackIndex, 1)
+        that.setData({
+          feedBackList: that.data.feedBackList,
+          dealData: null
+        })
+        that.teacherGetFeedBackNotiCount()
+      }
+    })
+  },
+
+  /**
+   * 老师审批归还
+   * type: 1-通过 2-驳回
+  */
+  teacherSubmitReturnDeal: function (type) {
+    let that = this
+    let feedBack = this.data.feedBackList[this.data.dealData.selectedFeedBackIndex]
+    let params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      type: type,
+      fid: feedBack.id
+    }
+    if (this.data.dealData.dealContent && this.data.dealData.dealContent != '') {
+      params.content = this.data.dealData.dealContent
+    }
+    if (this.data.dealData.dealImages.length != 0) {
+      params.images = this.data.dealData.dealImages.join(",")
+    }
+    app.ljjw.teacherConfirmReturn(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        that.data.feedBackList.splice(that.data.dealData.selectedFeedBackIndex, 1)
+        that.setData({
+          feedBackList: that.data.feedBackList,
+          dealData: null
+        })
+        that.teacherGetFeedBackNotiCount()
       }
     })
   },
@@ -414,21 +613,22 @@ Page({
   showBigImage: function(e) {
     console.log(e)
     let type = e.currentTarget.dataset.type
-    let feedBack_index = e.currentTarget.dataset.feedbackindex
     let image_index = e.currentTarget.dataset.imageindex
-
-    let feedBack = this.data.feedBackList[feedBack_index]
     
     if (type == 1) {
       // 反馈图片
+      let feedBack_index = e.currentTarget.dataset.feedbackindex
+      let feedBack = this.data.feedBackList[feedBack_index]
       let urls = feedBack.pics
       let current = urls[image_index]
       wx.previewImage({
         urls: urls,
         current: current
       })
-    } else {
+    } else if (type == 2) {
       // 流程处理图片
+      let feedBack_index = e.currentTarget.dataset.feedbackindex
+      let feedBack = this.data.feedBackList[feedBack_index]
       let processIndex = e.currentTarget.dataset.dealindex
       let process = feedBack.dealList[processIndex]
       let urls = process.pics
@@ -437,6 +637,231 @@ Page({
         urls: urls,
         current: current
       })
+    } else if (type == 3) {
+      // 处理上传图片
+      let urls = this.data.dealData.dealImages
+      let current = urls[image_index]
+      wx.previewImage({
+        urls: urls,
+        current: current
+      })
+    }
+  },
+
+  /**
+   * 反馈处理 通过按钮 点击事件
+  */
+  feedBackDealSureButtonClciked: function (e) {
+    // console.log(e)
+    let index = e.currentTarget.dataset.index
+    let dealData = {
+      selectedFeedBackIndex: index,
+      dealType: 1,
+      dealTitle: "处理确认",
+      dealPlacehoulder: "请填写处理确认信息（可不填）",
+      canSubmit: true,
+      dealImages: [],
+    }
+    this.setData({
+      dealData: dealData
+    })
+  },
+
+  /**
+   * 反馈处理 驳回按钮 点击事件
+  */
+  feedBackDealRejectButtonClicked: function (e) {
+    // console.log(e)
+    let index = e.currentTarget.dataset.index
+    let dealData = {
+      selectedFeedBackIndex: index,
+      dealType: 2,
+      dealTitle: "处理驳回",
+      dealPlacehoulder: "请填写驳回原因（必填）",
+      canSubmit: false,
+      dealImages: [],
+    }
+    this.setData({
+      dealData: dealData
+    })
+  },
+
+  /**
+   * 归还处理 确认通过按钮 点击事件
+  */
+  feedBackReturnSureButtonClciked: function (e) {
+    // console.log(e)
+    let index = e.currentTarget.dataset.index
+    let dealData = {
+      selectedFeedBackIndex: index,
+      dealType: 3,
+      dealTitle: "归还确认",
+      dealPlacehoulder: "请填写归还确认信息（可不填）",
+      canSubmit: true,
+      dealImages: [],
+    }
+    this.setData({
+      dealData: dealData
+    })
+  },
+
+  /**
+   * 归还处理 驳回按钮 点击事件
+  */
+  feedBackReturnRejectButtonClicked: function (e) {
+    // console.log(e)
+    let index = e.currentTarget.dataset.index
+    let dealData = {
+      selectedFeedBackIndex: index,
+      dealType: 4,
+      dealTitle: "归还驳回",
+      dealPlacehoulder: "请填写驳回原因（必填）",
+      canSubmit: false,
+      dealImages: [],
+    }
+    this.setData({
+      dealData: dealData
+    })
+  },
+
+  /**
+   * 关联分类选择器 关闭按钮 点击事件
+  */
+  typePickerCloseButtonClicked: function (e) {
+    this.setData({
+      showTypePicker: false,
+    })
+  },
+
+  /**
+   * 关联分类选择器 全部分类 按钮 点击事件
+  */
+  typePickerAllTypeClciked: function (e) {
+    if (this.data.selectedTypeIndex == null) {
+      return
+    }
+    let oldSelectedTypeIndex = this.data.selectedTypeIndex
+    let oldPage = this.pageData.page
+    this.setData({
+      selectedTypeIndex: null
+    })
+    this.pageData.page = 1
+    let that = this
+    this.teacherGetFeedBackList(this.data.menuSelectedIndex*1+1, function(success, msg){
+      if (!success) {
+        that.setData({
+          selectedTypeIndex: oldSelectedTypeIndex
+        })
+        that.pageData.page = oldPage
+      }
+    })
+  },
+
+  /**
+   * 关联分类选择器 选择分类事件
+  */
+  typePickerOptionSelected: function(e) {
+    let index = e.currentTarget.dataset.index
+    if (index == this.data.selectedTypeIndex) {
+      return
+    }
+    let oldSelectedTypeIndex = this.data.selectedTypeIndex
+    let oldPage = this.pageData.page
+    this.setData({
+      selectedTypeIndex: index
+    })
+    this.pageData.page = 1
+    let that = this
+    this.teacherGetFeedBackList(this.data.menuSelectedIndex*1+1, function(success, msg){
+      if (!success) {
+        that.setData({
+          selectedTypeIndex: oldSelectedTypeIndex
+        })
+        that.pageData.page = oldPage
+      }
+    })
+  },
+
+  /**
+   * 反馈弹框 关闭按钮 点击事件
+  */
+  feedBackDealCloseButtonClicked: function () {
+    this.setData({
+      dealData: null
+    })
+  },
+
+  /**
+   * 反馈弹框 输入框 输入事件
+  */
+  feedbackDealTextareaInput: function(e) {
+    console.log(e)
+    let content = e.detail.value
+    let contentCHange = "dealData.dealContent"
+    this.setData({
+      [contentCHange]: content
+    })
+  },
+
+  /**
+   * 反馈处理 上传图片
+  */
+  feedBackAddImage: function() {
+    let that = this
+    let count = this.data.maxUnloadImageCount - this.data.dealData.dealImages.length
+    wx.chooseImage({
+      count: count,
+      success: (res)=> {
+        let tempFilePaths = res.tempFilePaths;
+        that.circleUploadImage(tempFilePaths, 0)
+      }
+    })
+  },
+
+  /**
+   * 反馈处理 删除图片
+  */
+  feedbackDealDeleteImage: function(e) {
+    let index = e.currentTarget.dataset.index
+    let images = this.data.dealData.dealImages
+    images.splice(index, 1)
+    let iamgesChange = "dealData.dealImages"
+    this.setData({
+      [iamgesChange]: images
+    })
+  },
+
+  /**
+   * 反馈处理 确定按钮 点击事件
+  */
+  feedbackDealSureButtonClciked: function() {
+    
+    if (!this.data.dealData.canSubmit) {
+      return
+    }
+    
+    switch(this.data.dealData.dealType) {
+      case 1: {
+        // 审批通过
+        this.submitFeedBackDeal(1)
+        break
+      }
+      case 2: {
+        // 审批驳回
+        this.submitFeedBackDeal(2)
+        break
+      }
+      case 3: {
+        // 归还通过
+        this.teacherSubmitReturnDeal(1)
+        break
+      }
+      case 4:{
+        // 归还驳回
+        this.teacherSubmitReturnDeal(2)
+        break
+      }
     }
   }
+
 })
