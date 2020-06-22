@@ -68,8 +68,14 @@
         <text class="feedBack_createTime">{{item.time}}</text>
         <!-- 处理状态 -->
         <image wx:if="{{item.feed_state==1 || item.feed_state==2}}" src="../../images/feedBack_dealType_doing.png" class="feedBack_dealType"></image>
-        <image wx:if="{{item.feed_state==3}}" src="../../images/feedBack_dealType_done.png" class="feedBack_dealType"></image>
-        <image wx:if="{{item.feed_state==4}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
+        <block wx:elif="{{item.feed_state==3}}">
+          <image wx:if="{{item.return_state==0}}" src="../../images/feedBack_dealType_done.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==1}}" src="../../images/feedBack_dealType_notReturn.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==2}}" src="../../images/feedBack_dealType_returning.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==3}}" src="../../images/feedBack_dealType_returned.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==4}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
+        </block>
+        <image wx:elif="{{item.feed_state==4}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
         <!-- 反馈内容 -->
         <view class="feedBack_content" style="{{item.open ? 'flex-wrap: wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center;'}}">问题：{{item.notes}}</view>
         <block wx:if="{{item.open}}">
@@ -115,9 +121,9 @@
           </block>
           <view class="flex_row">
             <!-- 确认归还 按钮 -->
-            <view class="returnButton" wx:if="{{feedBackListType == 2 && item.showReturnButton}}" style="{{item.evaluated ? 'margin-left:30rpx; height:90rpx; width:690rpx; border-radius:45rpx' : 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:34rpx'}}" bindtap="feedBackReturnButtonClciked" data-index="{{index}}">确认归还</view>
+            <view class="returnButton" wx:if="{{feedBackListType == 2 && (item.return_state == 1 || item.return_state == 4)}}" style="{{item.evaluated ? 'margin-left:30rpx; height:90rpx; width:690rpx; border-radius:45rpx' : 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:34rpx'}}" bindtap="feedBackReturnButtonClciked" data-index="{{index}}">确认归还</view>
             <!-- 去评分 按钮 -->
-            <view class="evaluateButton" wx:if="{{feedBackListType != 1 && !item.evaluated}}" style="{{feedBackListType == 2 && item.showReturnButton ? 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:39rpx' : 'height:90rpx; width:442rpx; border-radius:45rpx; margin-left:auto; margin-right:auto'}}" bindtap="evaluateButtonClciked" data-index="{{index}}">去评分</view>
+            <view class="evaluateButton" wx:if="{{feedBackListType != 1 && !item.evaluated}}" style="{{feedBackListType == 2 && (item.return_state == 1 || item.return_state == 4) ? 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:39rpx' : 'height:90rpx; width:442rpx; border-radius:45rpx; margin-left:auto; margin-right:auto'}}" bindtap="evaluateButtonClciked" data-index="{{index}}">去评分</view>
           </view>
         </block>
         <!-- 展开/收起按钮 -->

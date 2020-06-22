@@ -86,7 +86,6 @@ Page({
      *     timestamp: 处理时间 10位时间戳
      *     time: 处理时间 0000-00-00 00:00
      *     type: 1-无处理结果 2-处理通过 3-处理驳回 4-学生提交归还 5-归还老师审核通过 6-归还老师审核驳回 7-评价
-     * showReturnButton: 是否展示确认归还按钮
     */
     feedBackList:[],
 
@@ -170,14 +169,40 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    if (this.data.menuSelectedIndex == 0) {
+      wx.stopPullDownRefresh({
+        complete: (res) => {},
+      })
+      return
+    }
+    let oldPage = this.pageData.page
+    let that = this
+    this.pageData.page = 1
+    this.studentGetFeedBackList(this.data.feedBackListType, function (success, msg) {
+      wx.stopPullDownRefresh({
+        complete: (res) => {},
+      })
+      if (!success) {
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    if (!this.pageData.canLoadNextPage) {
+      return
+    }
+    let oldPage = this.pageData.page
+    let that = this
+    this.pageData.page = oldPage + 1
+    this.studentGetFeedBackList(this.data.feedBackListType, function (success, msg) {
+      if (!success) {
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   /**
@@ -313,7 +338,7 @@ Page({
    * params:
    * type=1 未处理  type=2 待归还 type=3 已完结
   */
-  studentGetFeedBackList: function (type) {
+  studentGetFeedBackList: function (type, cb) {
     let that = this
     let params = {
       "token": wx.getStorageSync("token"),
@@ -337,17 +362,6 @@ Page({
           feedBack.pics = (feedBack.pics && feedBack.pics != '') ? feedBack.pics.split(',') : []
           // 是否已评分
           feedBack.evaluated = (!feedBack.marked || feedBack.marked == '' || feedBack.marked == 0) ? false : true
-          // 是否展示确认归还按钮
-          if (type == 2) {
-            var showReturnButton = true
-            if (feedBack.apply_return && feedBack.apply_return != '' && feedBack.apply_return.length != 0) {
-              let lastApply = feedBack.apply_return[feedBack.apply_return.length-1]
-              if (lastApply.type == 1) {
-                showReturnButton = false
-              }
-            }
-            feedBack.showReturnButton = showReturnButton
-          }
           // 流程列表 处理
           let dealList = []
           for(var j = 0; j < feedBack.process_list.length; j++) {
@@ -401,7 +415,7 @@ Page({
                   content : apply.content,
                   name : apply.proc_user,
                   timestamp: apply.deal_time,
-                  time: app.util.customFormatTimeByTimestamp(apply.deal_time*1000, 'yyyy.MM.dd hh:mm'),
+                  time: app.util.customFormatTimeByTimestamp(apply.deal_time*1000, 'yyyy-MM-dd hh:mm'),
                   role: 2,
                   type: 5,
                   timeColor: '#272727',
@@ -416,7 +430,7 @@ Page({
                   content : apply.content,
                   name : apply.proc_user,
                   timestamp: apply.deal_time,
-                  time: app.util.customFormatTimeByTimestamp(apply.deal_time*1000, 'yyyy.MM.dd hh:mm'),
+                  time: app.util.customFormatTimeByTimestamp(apply.deal_time*1000, 'yyyy-MM-dd hh:mm'),
                   role: 2,
                   type: 6,
                   timeColor: '#F14444',
@@ -440,10 +454,29 @@ Page({
           })
           feedBack.dealList = dealList
         }
+
+        // 分页数据处理
+        var newList = []
+        if (that.pageData.page == 1) {
+          newList = feedBackList
+        } else {
+          newList = that.data.feedBackList.concat(feedBackList)
+        }
+
+        // 判断是否可以加载下一页
+        if (feedBackList.length < that.pageData.perpage) {
+          that.pageData.canLoadNextPage = false
+        } else {
+          that.pageData.canLoadNextPage = true
+        }
+
         that.setData({
-          feedBackList: feedBackList,
+          feedBackList: newList,
           feedBackListType: params.type
         })
+        typeof cb == "function" && cb(true, "加载成功")
+      } else {
+        typeof cb == "function" && cb(false, "加载失败")
       }
     })
   },
@@ -506,7 +539,7 @@ Page({
         })
         let current_timestamp = (Date.parse(new Date()))/1000
         feedBack.dealList.push(that.getDealObject(current_timestamp, '', 4))
-        feedBack.showReturnButton = false
+        feedBack.return_state = 2
         let feedBackChange = "feedBackList["+index+"]"
         that.setData({
           [feedBackChange]: feedBack
@@ -555,6 +588,14 @@ Page({
     })
 
     this.studentGetFeedBackNotiCount()
+    if (index == 1) {
+      this.pageData.page = 1
+      this.studentGetFeedBackList()
+    } else {
+      if(!this.data.itemArray || this.data.itemArray == '' || this.data.itemArray.length == 0) {
+        this.getFeedBackTypeList()
+      }
+    }
   },
 
   /**
@@ -616,6 +657,7 @@ Page({
     if (type == this.data.feedBackListType) {
       return
     }
+    this.pageData.page = 1
     this.studentGetFeedBackList(type)
     this.studentGetFeedBackNotiCount()
   },

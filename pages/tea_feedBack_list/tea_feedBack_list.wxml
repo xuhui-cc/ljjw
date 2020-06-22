@@ -18,4 +18,99 @@
     </view>
   </view>
 
+  <view wx:if="{{menuSelectedIndex==1}}" class="selectTypeView" style="top:{{naviBarHeight}}px" bindtap="showTypePicker">
+    <image class="selectTypeImage" src="../../images/feedBack_relativeClass.png"></image>
+    <text class="selectTypeTitle">{{selectedTypeIndex==null ? "全部分类" : typeList[selectedTypeIndex].title}}</text>
+  </view>
+
+  <view class="contentView" style="margin-top:{{naviBarHeight+(menuSelectedIndex==1 ? 94/750.0*screenWidth : 0)}}px; padding-bottom:{{saveBottom + 30/750.0*screenWidth}}px">
+    <!-- 反馈列表循环 -->
+    <block wx:if="{{feedBackList.length != 0}}" wx:for="{{feedBackList}}" wx:key="index">
+      <view class="feedBackCell" style="margin-top:16rpx">
+        <view class="feedBack_BackInfo">
+          <!-- 已读未读状态 -->
+          <view class="feedBack_readStatus" wx:if="{{item.saw==0}}">未读</view>
+          <!-- 反馈类型 -->
+          <text class="feedBack_type" style="margin-left:{{item.saw==0 ? 16 : 30}}rpx">类型：{{item.soncount > 1 ? item.parent+'-'+item.title : item.parent}}</text>
+        </view>
+        <!-- 时间 -->
+        <text class="feedBack_createTime">{{item.time}}</text>
+        <!-- 处理状态 -->
+        <image wx:if="{{item.feed_state==1 || item.feed_state==2}}" src="../../images/feedBack_dealType_doing.png" class="feedBack_dealType"></image>
+        <block wx:elif="{{item.feed_state==3}}">
+          <image wx:if="{{item.return_state==0}}" src="../../images/feedBack_dealType_done.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==1}}" src="../../images/feedBack_dealType_notReturn.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==2}}" src="../../images/feedBack_dealType_returning.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==3}}" src="../../images/feedBack_dealType_returned.png" class="feedBack_dealType"></image>
+          <image wx:elif="{{item.return_state==4}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
+        </block>
+        <image wx:elif="{{item.feed_state==4}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
+        <!-- 反馈内容 -->
+        <view class="feedBack_content" style="{{item.open ? 'flex-wrap: wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center;'}}">问题：{{item.notes}}</view>
+        <block wx:if="{{item.open}}">
+          <!-- 反馈图片 -->
+          <view class="feedBack_stuPicture_collectionView" wx:if="{{item.pics.length != 0}}" style="margin-top: 41rpx;">
+            <block wx:for="{{item.pics}}" wx:for-index="picIndex" wx:for-item="picPath" wx:key="picIndex">
+              <image class="feedBack_stuPicture" src="{{picPath}}" mode="aspectFill" style="margin-top:{{picIndex>2 ? 21 : 0}}rpx; margin-left:{{picIndex%3==0 ? 0 : 21}}rpx" bindtap="showBigImage" data-type="1" data-feedbackindex="{{index}}" data-imageindex="{{picIndex}}"></image>
+            </block>
+          </view>
+          <view class="feddBack_stuPicture_bottomLine"></view>
+
+          <!-- 处理流程 -->
+          <block wx:for="{{item.dealList}}" wx:key="index" wx:for-index="process_index" wx:for-item="process_item">
+            <view class="feedBackProcessCell" style="margin-top:{{process_index==0 ? 41 : 0}}rpx">
+              <!-- 虚线 -->
+              <view class="feedBackProcess_dotLine" wx:if="{{process_index != item.dealList.length-1}}"></view>
+              <view class="feedBackProcess_infoView">
+                <view class="flex_itemAlignCenter">
+                  <!-- 角色 -->
+                  <view class="feedBackProcess_role" style="background-color:{{process_item.role == 1 ? '#F3A913' : '#46A1FB'}};">{{process_item.role == 1 ? '我' : '师'}}</view>
+                  <!-- 处理人名字 -->
+                  <text class="feedBackProcess_username" wx:if="{{process_item.name && process_item.name != ''}}" style="color:{{process_item.timeColor}};">{{process_item.name}}</text>
+                  <!-- 处理时间 -->
+                  <text class="feedBack_dealTime_time" style="margin-left:{{(process_item.name && process_item.name != '') ? 38 : 20}}rpx; color:{{process_item.timeColor}};">{{process_item.time}}</text>
+                </view>
+                <!-- 流程状态 -->
+                <view class="feedBackProcess_status" wx:if="{{process_item.type != 7}}" style="color:{{process_item.statusColor}};">{{process_item.status}}</view>
+                <view wx:else style="margin-right:47rpx; width:219rpx">
+                  <evaluate_star score="{{item.marked}}" width="219rpx" height="100%" canSelect='0' starWidth="31rpx" starHeight="29.5rpx"></evaluate_star>
+                </view>
+              </view>
+              <!-- 处理内容 -->
+              <view class="feedBack_dealContent" wx:if="{{process_item.content && process_item.content != ''}}" style="color:{{process_item.contentColor}};">{{process_item.content}}</view>
+              <!-- 处理图片 -->
+              <view class="feedBack_stuPicture_collectionView" wx:if="{{process_item.pics && process_item.pics != '' && process_item.pics.length != 0}}" style="margin-top: 40rpx;">
+                <block wx:for="{{process_item.pics}}" wx:for-index="picIndex" wx:for-item="picPath" wx:key="picIndex">
+                  <image class="feedBack_stuPicture" src="{{picPath}}" mode="aspectFill" style="margin-top:{{picIndex>2 ? 14 : 0}}rpx; margin-left:{{picIndex%3==0 ? 0 : 14}}rpx" bindtap="showBigImage" data-type="2" data-feedbackindex="{{index}}" data-imageindex="{{picIndex}}" data-dealindex="{{process_index}}"></image>
+                </block>
+              </view>
+              <!-- 空出高度 -->
+              <view style="margin-left:93rpx; height:56rpx; width:10rpx;" wx:if="{{process_index != item.dealList.length-1}}"></view>
+            </view>
+          </block>
+          <view class="flex_row" wx:if="{{item.feed_state == 1 || item.feed_state==2}}">
+            <!-- 确认/驳回按钮 -->
+            <view class="feedBackDealSure">通过</view>
+            <!-- 确认归还 按钮 -->
+            <!-- <view class="returnButton" wx:if="{{feedBackListType == 2 && item.showReturnButton}}" style="{{item.evaluated ? 'margin-left:30rpx; height:90rpx; width:690rpx; border-radius:45rpx' : 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:34rpx'}}" bindtap="feedBackReturnButtonClciked" data-index="{{index}}">确认归还</view> -->
+            <!-- 去评分 按钮 -->
+            <!-- <view class="evaluateButton" wx:if="{{feedBackListType != 1 && !item.evaluated}}" style="{{feedBackListType == 2 && item.showReturnButton ? 'height:80rpx; width:311rpx; border-radius:40rpx; margin-left:39rpx' : 'height:90rpx; width:442rpx; border-radius:45rpx; margin-left:auto; margin-right:auto'}}" bindtap="evaluateButtonClciked" data-index="{{index}}">去评分</view> -->
+          </view>
+        </block>
+        <!-- 展开/收起按钮 -->
+        <view class="feedBack_openButton" bindtap="feedBackOpenButton" data-index="{{index}}">
+          <view class="feedBack_bottomLine"></view>
+          <view class="feedBack_bottom">
+            <image class="feedBack_bottomArrow" src="{{item.open ? '../../images/ssj.png' : '../../images/xsj.png'}}"></image>
+            <text class="feedBack_bottomText">{{item.open ? "收起" : "展开"}}</text>
+          </view>
+        </view>
+        <!-- <view wx:else style="height:35rpx"></view> -->
+      </view>
+    </block>
+    <!-- 空页面 -->
+    <block wx:if="{{!feedBackList || feedBackList == '' || feedBackList.length == 0}}">
+      <image src="../../images/rec_null.png" mode="aspectFit" class="nullImage"></image>
+    </block>
+  </view>
 </view>
