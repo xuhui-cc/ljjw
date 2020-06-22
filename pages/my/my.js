@@ -17,6 +17,9 @@ Page({
 
     // 问题反馈消息数量
     feedBackNotiCount: 0,
+
+    // 老师未处理问题反馈数量
+    teacherNotDealCount: 0,
   },
 
   /**
@@ -315,7 +318,11 @@ Page({
     this.clearLocalFile()
     
     // 获取问题反馈消息数
-    this.studentGetFeedBackNotiCount()
+    if(this.data.role == 4) {
+      this.studentGetFeedBackNotiCount()
+    } else {
+      this.teacherGetFeedBackNotiCount()
+    }
   },
 
   /**
@@ -614,6 +621,31 @@ Page({
       }
     })
   },
+
+  /**
+   * 获取老师待处理反馈数量
+  */
+ teacherGetFeedBackNotiCount: function () {
+  let that = this
+  let prarms = {
+    "token": wx.getStorageSync("token"),
+    "uid": wx.getStorageSync("uid"),
+  }
+  app.ljjw.getTeacherUnreadCount(prarms).then(d=>{
+    let status = d.data.status
+    if (status == 1) {
+      let data = d.data.data
+
+      that.setData({
+        teacherNotDealCount: data
+      })
+    } else {
+      that.setData({
+        teacherNotDealCount: 0
+      })
+    }
+  })
+},
 
   // ------------------------------------------事件-------------------------------------
   /**

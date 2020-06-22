@@ -83,7 +83,7 @@
         <view class="feedBack_content" style="{{item.open ? 'flex-wrap: wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center;'}}">问题：{{item.notes}}</view>
         <block wx:if="{{item.open}}">
           <!-- 反馈图片 -->
-          <view class="feedBack_stuPicture_collectionView" wx:if="{{item.pics.length != 0}}" style="margin-top: 41rpx;">
+          <view class="feedBack_stuPicture_collectionView" wx:if="{{item.pics.length != 0}}" style="margin-top: 41rpx; margin-left:30rpx; width:690rpx;">
             <block wx:for="{{item.pics}}" wx:for-index="picIndex" wx:for-item="picPath" wx:key="picIndex">
               <image class="feedBack_stuPicture" src="{{picPath}}" mode="aspectFill" style="margin-top:{{picIndex>2 ? 21 : 0}}rpx; margin-left:{{picIndex%3==0 ? 0 : 21}}rpx" bindtap="showBigImage" data-type="1" data-feedbackindex="{{index}}" data-imageindex="{{picIndex}}"></image>
             </block>
@@ -113,7 +113,7 @@
               <!-- 处理内容 -->
               <view class="feedBack_dealContent" wx:if="{{process_item.content && process_item.content != ''}}" style="color:{{process_item.contentColor}};">{{process_item.content}}</view>
               <!-- 处理图片 -->
-              <view class="feedBack_stuPicture_collectionView" wx:if="{{process_item.pics && process_item.pics != '' && process_item.pics.length != 0}}" style="margin-top: 40rpx;">
+              <view class="feedBack_stuPicture_collectionView" wx:if="{{process_item.pics && process_item.pics != '' && process_item.pics.length != 0}}" style="margin-top: 40rpx; margin-left:93rpx; width:629rpx;">
                 <block wx:for="{{process_item.pics}}" wx:for-index="picIndex" wx:for-item="picPath" wx:key="picIndex">
                   <image class="feedBack_stuPicture" src="{{picPath}}" mode="aspectFill" style="margin-top:{{picIndex>2 ? 14 : 0}}rpx; margin-left:{{picIndex%3==0 ? 0 : 14}}rpx" bindtap="showBigImage" data-type="2" data-feedbackindex="{{index}}" data-imageindex="{{picIndex}}" data-dealindex="{{process_index}}"></image>
                 </block>

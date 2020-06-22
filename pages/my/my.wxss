@@ -368,43 +368,40 @@ page{
   margin-left: 30rpx;
   margin-top: 20rpx;
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width:690rpx;
   height:191rpx;
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:14rpx;
 }
+.flex_row {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
 .img{
   margin-left: 47rpx;
-  margin-top: 25rpx;
-
   width:141rpx;
   height:141rpx;
 }
 .tea-shu{
   margin-left: 40rpx;
-  margin-top: 88rpx;
   width:5rpx;
   height:16rpx;
-  
-  opacity:1;
-  border-radius:224rpx;
+  border-radius:2.5rpx;
 }
 .tea-cla-data{
   margin-left: 14rpx;
-  margin-top: 66rpx;
-  width:168rpx;
-  height:59rpx;
+  max-width:200rpx;
   font-size:42rpx;
-  font-family:PingFang SC;
   font-weight:bold;
-  line-height:59rpx;
   color:rgba(39,39,39,1);
-  opacity:1;
 }
 .img-next{
-  margin-left: 212rpx;
-  margin-top: 85rpx;
-  width:20rpx;
-  height:20rpx;
+  margin-right: 42rpx;
+  width:20.81rpx;
+  height:20.81rpx;
 }
