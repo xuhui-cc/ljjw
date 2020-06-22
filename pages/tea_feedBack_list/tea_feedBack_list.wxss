@@ -215,8 +215,8 @@ page{
 }
 
 .feedBack_stuPicture_collectionView {
-  margin-left: 93rpx;
-  width: 629rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

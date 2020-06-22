@@ -801,6 +801,7 @@ Page({
     this.setData({
       [contentCHange]: content
     })
+    this.setFeedBackDealIfCanSubmit()
   },
 
   /**
