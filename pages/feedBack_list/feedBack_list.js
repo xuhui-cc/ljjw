@@ -53,6 +53,7 @@ Page({
      * operate_uid: 操作人
      * feed_state: 处理状态 1-未处理 2-处理中 3-已处理 4-已驳回
      * return_state: 申请归还状态 0-无归还状态 1-未归还 2-待确认 3-已归还 4-已驳回
+     * need_return: 0-不需要归还 1-需要归还
      * saw: 反馈处理后学员是否已读 0-未读 10已读
      * parent: 一级分类名
      * soncount: 二级分类数量
