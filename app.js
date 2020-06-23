@@ -38,6 +38,7 @@ App({
     })
 
     this.setTaskItemDot()
+    this.getMyUserInfo()
   },
   globalData: {
     userInfo: null,
@@ -78,6 +79,59 @@ App({
           })
         }
       }
+    })
+  },
+
+  /**
+   * 刷新用户信息
+  */
+  getMyUserInfo () {
+    let that = this
+    let params = {
+      uid : wx.getStorageSync('uid'),
+      token : wx.getStorageSync('token')
+    }
+    ljjw.jwgetUserinfoByUid(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        let data = d.data.data
+        // 判断角色有没有改变
+        var role = data.role.split(",")
+        if(role.length == 2){
+          role[0] = role[1]
+        }
+        let oldRole = wx.getStorageSync('role')
+        if (role[0] != oldRole) {
+          that.clearLocalInfo()
+          return
+        }
+
+        // 判断关联班级有没有改变
+        if (role && data.class_ids != null) {
+          var class_ids = data.class_ids.split(",")
+          var oldClassIds = wx.getStorageSync('class_ids')
+          if (class_ids.length != oldClassIds.length) {
+            that.clearLocalInfo()
+            return
+          } else {
+            for (var i = 0; i < class_ids.length; i++) {
+              let newClass = class_ids[i]
+              let oldClass = oldClassIds[i]
+              if (newClass != oldClass) {
+                that.clearLocalInfo()
+                return
+              }
+            }
+          }
+        }
+        wx.setStorageSync('userInfo', data.userInfo)
+      }
+    })
+  },
+
+  clearLocalInfo () {
+    wx.clearStorage({
+      complete: (res) => {},
     })
   }
 })
