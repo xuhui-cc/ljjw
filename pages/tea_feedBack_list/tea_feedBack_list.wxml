@@ -21,7 +21,7 @@
   <!-- 选择的关联分类 -->
   <view wx:if="{{menuSelectedIndex==1}}" class="selectTypeView" style="top:{{naviBarHeight}}px" bindtap="showTypePicker">
     <image class="selectTypeImage" src="../../images/feedBack_relativeClass.png"></image>
-    <text class="selectTypeTitle">{{selectedTypeIndex==null ? "全部分类" : typeList[selectedTypeIndex].title}}</text>
+    <text class="selectTypeTitle">{{selectedTypeIndex==null ? "全部分类" : typeList[selectedTypeIndex].parentname + '-' + typeList[selectedTypeIndex].title}}</text>
   </view>
 
   <view class="contentView" style="margin-top:{{naviBarHeight+(menuSelectedIndex==1 ? 94/750.0*screenWidth : 0)}}px; padding-bottom:{{saveBottom + 30/750.0*screenWidth}}px">
