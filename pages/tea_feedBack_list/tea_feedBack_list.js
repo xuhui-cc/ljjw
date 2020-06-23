@@ -2,6 +2,8 @@
 const app = getApp()
 Page({
 
+  // 是否正在提交数据
+  submiting: false,
   /**
    * 分页数据
   */
@@ -476,6 +478,10 @@ Page({
    * type: 1-通过 2-驳回
   */
   submitFeedBackDeal: function (type) {
+    if (this.submiting) {
+      return
+    }
+    this.submiting = true
     let that = this
     let feedBack = this.data.feedBackList[this.data.dealData.selectedFeedBackIndex]
     let params = {
@@ -500,6 +506,7 @@ Page({
         })
         that.teacherGetFeedBackNotiCount()
       }
+      that.submiting = false
     })
   },
 
@@ -508,6 +515,10 @@ Page({
    * type: 1-通过 2-驳回
   */
   teacherSubmitReturnDeal: function (type) {
+    if (this.submiting) {
+      return
+    }
+    this.submiting = true
     let that = this
     let feedBack = this.data.feedBackList[this.data.dealData.selectedFeedBackIndex]
     let params = {
@@ -532,6 +543,7 @@ Page({
         })
         that.teacherGetFeedBackNotiCount()
       }
+      that.submiting = false
     })
   },
 
