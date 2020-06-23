@@ -2,6 +2,9 @@
 const app = getApp()
 Page({
 
+  // 是否正在提交数据
+  submiting: false,
+
   /**
    * 分页数据
   */
@@ -486,6 +489,10 @@ Page({
    * 学生提交评分
   */
   studentEvaluateSubmit: function() {
+    if (this.submiting) {
+      return
+    }
+    this.submiting = true
     let feedBack = this.data.feedBackList[this.data.evaluateIndex]
     let that = this
     let params = {
@@ -517,6 +524,7 @@ Page({
         })
         that.evaluateViewClose()
       }
+      that.submiting = false
     })
   },
 
@@ -524,6 +532,10 @@ Page({
    * 学生 提交归还
   */
   studentFeedBackSubmitReturn: function (index) {
+    if (this.submiting) {
+      return
+    }
+    this.submiting = true
     let feedBack = this.data.feedBackList[index]
     let that = this
     let params = {
@@ -546,6 +558,7 @@ Page({
           [feedBackChange]: feedBack
         })
       }
+      that.submiting = false
     })
   },
 
@@ -679,7 +692,12 @@ Page({
     } else {
       if (feedBack.saw == 0 && !feedBack.open) {
         // 未读 要展开
+        if (this.submiting) {
+          return
+        }
+        this.submiting = true
         this.studentFeedBackRead(index, function(success, msg) {
+          
           if (success) {
             feedBack.open = true
             feedBack.saw = 1
@@ -693,6 +711,7 @@ Page({
               [setData]: true
             })
           }
+          that.submiting = false
         })
       } else {
         that.setData({

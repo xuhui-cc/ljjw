@@ -3,6 +3,8 @@ const app = getApp()
 
 Page({
 
+  // 是否正在提交数据
+  submiting: false,
   /**
    * 页面的初始数据
    */
@@ -233,6 +235,10 @@ Page({
    * 问题反馈提交
   */
   submit: function() {
+    if (this.submiting) {
+      return
+    }
+    this.submiting = true
     let that = this
     var params = {
       token: wx.getStorageSync('token'),
@@ -258,6 +264,7 @@ Page({
           complete: (res) => {},
         })
       }
+      that.submiting = false
     })
   },
 
