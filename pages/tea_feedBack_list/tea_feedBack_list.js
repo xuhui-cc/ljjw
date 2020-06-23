@@ -255,6 +255,7 @@ Page({
 
   /**
    * 老师获取反馈列表
+   * type： 1-待处理 2-已处理
   */
   teacherGetFeedBackList: function(type, cb) {
     let that = this
@@ -558,11 +559,11 @@ Page({
       return
     }
     let that = this
+    let oldPage = this.pageData.page
+    this.pageData.page = 1
     this.teacherGetFeedBackList(index*1+1, function(success, msg) {
-      if (success) {
-        that.setData({
-          menuSelectedIndex: index
-        })
+      if (!success) {
+        that.pageData.page = oldPage
       }
     })
     this.teacherGetFeedBackNotiCount()
