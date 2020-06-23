@@ -753,6 +753,8 @@ Page({
           selectedTypeIndex: oldSelectedTypeIndex
         })
         that.pageData.page = oldPage
+      } else {
+        that.typePickerCloseButtonClicked()
       }
     })
   },
@@ -778,6 +780,8 @@ Page({
           selectedTypeIndex: oldSelectedTypeIndex
         })
         that.pageData.page = oldPage
+      } else {
+        that.typePickerCloseButtonClicked()
       }
     })
   },
