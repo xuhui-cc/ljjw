@@ -558,7 +558,10 @@ Page({
           [feedBackChange]: feedBack
         })
       }
-      that.submiting = false
+      setTimeout(function(){
+        that.submiting = false
+      }, 500)
+      
     })
   },
 

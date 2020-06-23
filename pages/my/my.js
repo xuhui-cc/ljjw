@@ -242,6 +242,9 @@ Page({
    * 搜索按钮 点击事件
   */
   to_stu_rea: function() {
+    if (!this.data.stu_class || this.data.stu_class == '' || this.data.stu_class.length <= this.data.stu_class_index) {
+      return
+    }
     let classs = this.data.stu_class[this.data.stu_class_index]
     
     wx.navigateTo({
@@ -527,6 +530,13 @@ Page({
         if (data.files){
           for (var i = 0; i < data.files.length; i++) {
             let file = data.files[i]
+
+            // 前两个 标记为最新
+            if (i < 2) {
+              file.isNew = true
+            } else {
+              file.isNew = false
+            }
 
             // 截取后缀 获取格式
             let form = null

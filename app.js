@@ -37,6 +37,10 @@ App({
       }
     })
 
+    
+  },
+
+  onShow() {
     this.setTaskItemDot()
     this.getMyUserInfo()
   },
@@ -87,6 +91,10 @@ App({
   */
   getMyUserInfo () {
     let that = this
+    let oldRole = wx.getStorageSync('role')
+    if (!oldRole || oldRole == "" || oldRole == 0) {
+      return
+    }
     let params = {
       uid : wx.getStorageSync('uid'),
       token : wx.getStorageSync('token')
@@ -100,7 +108,7 @@ App({
         if(role.length == 2){
           role[0] = role[1]
         }
-        let oldRole = wx.getStorageSync('role')
+        
         if (role[0] != oldRole) {
           that.clearLocalInfo()
           return
@@ -131,7 +139,15 @@ App({
 
   clearLocalInfo () {
     wx.clearStorage({
-      complete: (res) => {},
+      fail:function(res) {
+        console.log()
+      },
+      complete: (res) => {
+        console.log('清空数据完成，即将跳转至我的')
+        wx.switchTab({
+          url: '/pages/my/my',
+        })
+      },
     })
   }
 })

@@ -66,7 +66,7 @@
               <view class="feedBackProcess_infoView">
                 <view class="flex_itemAlignCenter">
                   <!-- 角色 -->
-                  <view class="feedBackProcess_role" style="background-color:{{process_item.role == 1 ? '#F3A913' : '#46A1FB'}};">{{process_item.role == 1 ? '我' : '师'}}</view>
+                  <view class="feedBackProcess_role" style="background-color:{{process_item.role == 1 ? '#F3A913' : '#46A1FB'}};">{{process_item.role == 1 ? '学' : '师'}}</view>
                   <!-- 处理人名字 -->
                   <text class="feedBackProcess_username" wx:if="{{process_item.name && process_item.name != ''}}" style="color:{{process_item.timeColor}};">{{process_item.name}}</text>
                   <!-- 处理时间 -->

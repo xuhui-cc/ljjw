@@ -71,44 +71,48 @@
     </view>
 
     <view class="clo_layout">
-
-      <block wx:for="{{mydata.files}}" wx:key="index" >
-        <view class="data-layout">
-          <view class="flex">
-            <view class="data-tea">来自：{{item.createuser}}老师</view>
-            <view class="data-date">{{item.createtime}}</view>
-            <view class="flex" wx:if="{{item.colid == null}}" data-file_xb="{{index}}" bindtap='iscollect'>
-              <image class="class-uncollect" src="../../images/uncollect.png"></image>
-              <view class="data-uncollect">未收藏</view>
+      <block wx:if="{{mydata.files && mydata.files != '' && mydata.files.length != 0}}">
+        <block wx:for="{{mydata.files}}" wx:key="index" >
+          <view class="data-layout">
+            <view class="flex">
+              <view class="data-tea">来自：{{item.createuser}}老师</view>
+              <view class="data-date">{{item.createtime}}</view>
+              <view class="flex" wx:if="{{item.colid == null}}" data-file_xb="{{index}}" bindtap='iscollect'>
+                <image class="class-uncollect" src="../../images/uncollect.png"></image>
+                <view class="data-uncollect">未收藏</view>
+              </view>
+              <view class="flex" wx:if="{{item.colid}}" data-file_xb="{{index}}" bindtap='iscollect'>
+                <image class="class-uncollect" src="../../images/collect.png"></image>
+                <view class="data-collect">收藏</view>
+              </view>
+              
             </view>
-            <view class="flex" wx:if="{{item.colid}}" data-file_xb="{{index}}" bindtap='iscollect'>
-              <image class="class-uncollect" src="../../images/collect.png"></image>
-              <view class="data-collect">收藏</view>
-            </view>
-            
-          </view>
-  
-          <view class="data-heng"></view>
-
-          <view class="flex" data-file_xb="{{index}}" bindtap="open_file">
-            <!-- pdf -->
-            <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image> 
-            <!-- doc docx -->
-            <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
-            <!-- ppt pptx -->
-            <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
-            <!-- png jpg jpeg -->
-            <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
-            <!-- <image class="pdf" wx:if="{{item.form == 'jpg'}}" src="../../images/jpg.png" ></image> -->
-            <view>
-              <view class="data-name">{{item.title}}</view>
-              <view class="data-intro">{{item.intro}}</view>
-            </view>
-          </view>
-
-        </view>
-      </block>
     
+            <view class="data-heng"></view>
+
+            <view class="flex" data-file_xb="{{index}}" bindtap="open_file">
+              <!-- pdf -->
+              <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image> 
+              <!-- doc docx -->
+              <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
+              <!-- ppt pptx -->
+              <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
+              <!-- png jpg jpeg -->
+              <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
+              <!-- <image class="pdf" wx:if="{{item.form == 'jpg'}}" src="../../images/jpg.png" ></image> -->
+              <view>
+                <view class="flex_row" style="margin-top:48rpx;">
+                  <view wx:if="{{item.isNew}}" class="newFile">新</view>
+                  <view class="data-name" style="margin-left:{{item.isNew ? 11 : 33}}rpx">{{item.title}}</view>
+                </view>
+                <view class="data-intro">{{item.intro}}</view>
+              </view>
+            </view>
+
+          </view>
+        </block>
+      </block>
+      <view wx:else class="nullFile">暂无班级资料~</view>
     </view>
 
     <view class="collect-layout" bindtap='to_class_data'>
