@@ -43,9 +43,9 @@
   </view>
 
   <!-- 反馈处理 -->
-  <view wx:elif="{{menuSelectedIndex==1}}" class="contentView" style="margin-top:{{naviBarHeight}}px; padding-bottom:{{saveBottom + 30/750.0*screenWidth}}px">
+  <view wx:elif="{{menuSelectedIndex==1}}" class="contentView" style="margin-top:{{naviBarHeight+88/750.0*screenWidth}}px; padding-bottom:{{saveBottom + 30/750.0*screenWidth}}px">
     <!-- 菜单 待处理/待归还/已完成 -->
-    <view class="feedBackListTypeMenu">
+    <view class="feedBackListTypeMenu" style="top:{{naviBarHeight}}px">
       <block wx:for="{{feedBackListMenu}}" wx:key="type">
         <view class="{{feedBackListType==item.type ? 'feedBackListMenuView_selected' : 'feedBackListMenuView'}}" style="margin-left:{{index == 0 ? 51 : 0}}rpx;" bindtap="feedBackListMenuClicked" data-type="{{item.type}}">
           {{item.title}}
