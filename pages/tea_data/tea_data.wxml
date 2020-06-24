@@ -29,14 +29,14 @@
     <block wx:for="{{files}}" wx:key="index">
       <!-- 学生 -->
       <block wx:if="{{type == 1}}">
-        <view class="fileCell" style="margin-top:{{index == 0 ? 30 : 16}}rpx">
+        <view class="fileCell" style="margin-top:{{index == 0 ? 30 : 16}}rpx" data-file_xb='{{index}}' bindtap='open_file'>
           <view class="fileCell_headerView">
             <view class="flex_row">
               <view class="fillCell_name">来自：{{item.pubname}}老师</view>
             </view>
             <view class="flex_row">
               <view class="fillCell_time">{{item.createtime}}</view>
-              <view class="fillCell_collection" bindtap="collectionButtonClicked" data-index="{{index}}">
+              <view class="fillCell_collection" catchtap="collectionButtonClicked" data-index="{{index}}">
                 <image src="{{item.colid ? '../../images/collect.png' : '../../images/uncollect.png'}}" class="fileCell_collection_image"></image>
                 <view class="fileCell_collection_title" style="color:{{item.colid ? '#2DC1A0' : '#D9D9D9'}}">{{item.colid ? '已收藏' : '收藏'}}</view>
               </view>

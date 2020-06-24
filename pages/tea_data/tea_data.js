@@ -363,10 +363,11 @@ Page({
             let oneClass = data.classes[i]
             oneClass.name = oneClass.classname
             oneClass.pubname = oneClass.createuser
+            oneClass.id = oneClass.class_id
           }
         }
-        var newFiles = (that.data.files && that.data.files) != '' ? that.data.files : []
-        if (data.files && data.files != '') {
+        var newFiles = []
+        if (data.files && data.files.constructor === Array) {
           for (var i = 0; i < data.files.length; i++) {
             var file = data.files[i]
 
@@ -424,7 +425,7 @@ Page({
           if (that.pageData.page == 1) {
             newFiles = data.files
           } else {
-            newFiles = newFiles.concat(data.files)
+            newFiles = that.data.files.concat(data.files)
           }
 
           if (data.files.length < that.pageData.perpage) {
@@ -433,6 +434,7 @@ Page({
             that.pageData.canLoadNextPage = true
           }
         } else {
+          newFiles = (that.data.files && that.data.files != '') ? that.data.files : []
           that.pageData.canLoadNextPage = false
         }
         that.setData({

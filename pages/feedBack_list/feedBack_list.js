@@ -417,7 +417,7 @@ Page({
                 deal = {
                   pics : (apply.images && apply.images != '') ? apply.images.split(',') : [],
                   content : apply.content,
-                  name : apply.proc_user,
+                  name : apply.procuser,
                   timestamp: apply.deal_time,
                   time: app.util.customFormatTimeByTimestamp(apply.deal_time*1000, 'yyyy-MM-dd hh:mm'),
                   role: 2,
@@ -432,7 +432,7 @@ Page({
                 deal = {
                   pics : (apply.images && apply.images != '') ? apply.images.split(',') : [],
                   content : apply.content,
-                  name : apply.proc_user,
+                  name : apply.procuser,
                   timestamp: apply.deal_time,
                   time: app.util.customFormatTimeByTimestamp(apply.deal_time*1000, 'yyyy-MM-dd hh:mm'),
                   role: 2,
