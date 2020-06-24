@@ -430,3 +430,9 @@ page{
   align-items: center;
   justify-content: center;
 }
+
+.sectionHeader_more {
+  margin-right: 2rpx;
+  color: #2DC1A0;
+  font-size: 24rpx;
+}

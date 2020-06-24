@@ -17,50 +17,79 @@
   </view>
   <!-- 导航栏结束 -->
 
-  <view class="flex">
-    <view class="search-layout" style="margin-top:{{naviBarHeight + 30/750.0*screenWidth}}px">
-      <image class="search-img" src="../../images/search_w.png"></image>
-      <input class="search-input" placeholder="请输入资料标题" bindinput='search_tea_data'></input>
-    </view>
-    
+  <view class="search_bar" style="margin-top:{{naviBarHeight+30/750.0*screenWidth}}px">
+    <image class="search-img" src="../../images/search_w.png"></image>
+    <input class="search-input" placeholder="请输入资料标题..." placeholder-class="search_input_placehoulder" bindinput='search_tea_data'></input>
   </view>
 
  
 
   <!-- 清晰搜索 -->
   <view style="margin-bottom:200rpx;">
-    <view wx:for="{{files}}" wx:key="index">
-    
-
-      <view data-file_xb='{{index}}' bindtap='open_file'>
-        <view class="pub-date">{{item.createtime}}</view>
-        <view class="data-layout">
-          <view class="flex">
-            <view class="data-tea">来自：{{item.pubname}}老师</view>
+    <block wx:for="{{files}}" wx:key="index">
+      <!-- 学生 -->
+      <block wx:if="{{type == 1}}">
+        <view class="fileCell" style="margin-top:{{index == 0 ? 30 : 16}}rpx">
+          <view class="fileCell_headerView">
+            <view class="flex_row">
+              <view class="fillCell_name">来自：{{item.pubname}}老师</view>
+            </view>
+            <view class="flex_row">
+              <view class="fillCell_time">{{item.createtime}}</view>
+              <view class="fillCell_collection" bindtap="collectionButtonClicked" data-index="{{index}}">
+                <image src="{{item.colid ? '../../images/collect.png' : '../../images/uncollect.png'}}" class="fileCell_collection_image"></image>
+                <view class="fileCell_collection_title" style="color:{{item.colid ? '#2DC1A0' : '#D9D9D9'}}">{{item.colid ? '已收藏' : '收藏'}}</view>
+              </view>
+            </view>
           </view>
-          <view class="data-heng"></view>
-          <view class="flex">
+          <view class="fileCell_content">
             <!-- pdf -->
-            <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image>
+            <image class="fileCell_typeImage" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image>
             <!-- doc docx -->
-            <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
+            <image class="fileCell_typeImage" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
             <!-- ppt pptx -->
-            <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
+            <image class="fileCell_typeImage" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
             <!-- png jpg jpeg -->
-            <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
-            <!-- <image class="pdf" wx:if="{{item.form == 'jpg'}}" src="../../images/jpg.png" ></image> -->
-            <view>
-              <view class="data-name">{{item.title}}</view>
-              <view class="data-intro">{{item.intro}}</view>
+            <image class="fileCell_typeImage" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
+            <view class="fileCell_contentText">
+              <view class="fileCell_fileName">{{item.title}}</view>
+              <view class="fileCell_fileIntroduce">{{item.intro}}</view>
             </view>
           </view>
         </view>
-      </view>
-    </view>
+      </block>
+      <!-- 老师 -->
+      <block wx:if="{{type == 2}}">
+        <view data-file_xb='{{index}}' bindtap='open_file'>
+          <view class="pub-date">{{item.createtime}}</view>
+          <view class="data-layout">
+            <view class="flex">
+              <view class="data-tea">来自：{{item.pubname}}老师</view>
+            </view>
+            <view class="data-heng"></view>
+            <view class="flex">
+              <!-- pdf -->
+              <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image>
+              <!-- doc docx -->
+              <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
+              <!-- ppt pptx -->
+              <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
+              <!-- png jpg jpeg -->
+              <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
+              <!-- <image class="pdf" wx:if="{{item.form == 'jpg'}}" src="../../images/jpg.png" ></image> -->
+              <view>
+                <view class="data-name">{{item.title}}</view>
+                <view class="data-intro">{{item.intro}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </block>
     
   </view>
 
-  <view wx:if="{{files == ''}}">
+  <view wx:if="{{!files || files == '' || files.length == 0}}">
     <image class='file_null_img' src='../../images/file_null.png'></image>
   </view>
   <!-- 清晰搜索 -->

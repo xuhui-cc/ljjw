@@ -2,6 +2,11 @@
 const app = getApp()
 Page({
 
+  pageData:{
+    page: 1,
+    perpage: 10,
+    canLoadNextPage: false,
+  },
   // 打开的文件路径 在onShow中删除文件
   openFilePath: '',
   // 是否正在加载
@@ -10,7 +15,10 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 选中的班级索引
     tea_class_index:0,
+    // 类型 1-学生 2-老师
+    type: 0,
   },
 
   timestampToTime: function (timestamp) {
@@ -29,16 +37,7 @@ Page({
    */
   onLoad: function (options) {
     this.getNaviSzie()
-    let that = this
-    let nowTime = new Date();
-
-    var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
-
-    var yestday = new Date(today - 24 * 3600 * 1000).getTime();
-    that.setData({
-      today: that.timestampToTime(today),
-      yestday: that.timestampToTime(yestday)
-    })
+    this.initData(options)
     this.getFileList()
   },
 
@@ -155,11 +154,18 @@ Page({
 
   tea_class_picker: function (e) {
     let that = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    that.setData({
-      tea_class_index: e.detail.value
+    let index = e.detail.value
+    let oldPage = this.pageData.page
+    this.pageData.page = 1
+    this.getFileList(that.data.tea_class[index].id, function(success, msg){
+      if(success) {
+        that.setData({
+          tea_class_index: index
+        })
+      } else {
+        that.pageData.page = oldPage
+      }
     })
-    this.getFileList(that.data.tea_class[that.data.tea_class_index].id)
   },
 
   search_tea_data:function(e){
@@ -168,8 +174,13 @@ Page({
     that.setData({
       input_tltle: e.detail.value
     })
-    
-    this.getFileList(that.data.tea_class[that.data.tea_class_index].id)
+    let oldPage = this.pageData.page
+    this.pageData.page = 1
+    this.getFileList(that.data.tea_class[that.data.tea_class_index].id, function(success, msg){
+      if (!success) {
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   go_back:function(){
@@ -210,14 +221,34 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    let that = this
+    let oldPage = that.pageData.page
+    that.pageData.page = 1
+    that.getFileList(that.data.tea_class[that.data.tea_class_index].id, function(success, msg){
+      wx.stopPullDownRefresh({
+        complete: (res) => {},
+      })
+      if (!success) {
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
+    let that = this
+    if (!that.pageData.canLoadNextPage) {
+      return
+    }
+    let oldPage = that.pageData.page
+    that.pageData.page = oldPage + 1
+    that.getFileList(that.data.tea_class[that.data.tea_class_index].id, function(success, msg){
+      if (!success) {
+        that.pageData.page = oldPage
+      }
+    })
   },
 
   /**
@@ -270,26 +301,71 @@ Page({
     })
   },
 
+  /**
+   * 初始化数据
+  */
+  initData: function (options) {
+    let that = this
+    let nowTime = new Date();
+
+    var today = new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate()).getTime(); //今天凌晨
+
+    var yestday = new Date(today - 24 * 3600 * 1000).getTime();
+    that.setData({
+      today: that.timestampToTime(today),
+      yestday: that.timestampToTime(yestday),
+      type: options.type
+    })
+  },
+
   // -------------------------------------------------接口----------------------------------------------
   /**
    * 获取附件列表
   */
-  getFileList: function(class_id) {
+  getFileList: function(class_id, cb) {
     let that = this
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
+      page: this.pageData.page,
+      limit: this.pageData.perpage
     }
     if (class_id && class_id != '') {
       params.class_id = class_id
     }
-    
-    app.ljjw.jwTeacherClassFiles(params).then(d => {
+    if(this.data.input_tltle && this.data.input_tltle != '') {
+      params.keyword = this.data.input_tltle
+    }
+    let request = null
+    switch(this.data.type*1) {
+      case 1: {
+        // 学生
+        request = app.ljjw.jwGetStudentClassFiles(params)
+        break
+      }
+      case 2: {
+        // 老师
+        request = app.ljjw.jwTeacherClassFiles(params)
+        break
+      }
+      default: {
+        return
+      }
+    }
+    request.then(d => {
       
       if (d.data.status == 1) {
 
         let data = d.data.data
 
+        if (data.classes && data.classes != '' && that.data.type == 1) {
+          for(var i = 0; i < data.classes.length; i++) {
+            let oneClass = data.classes[i]
+            oneClass.name = oneClass.classname
+            oneClass.pubname = oneClass.createuser
+          }
+        }
+        var newFiles = (that.data.files && that.data.files) != '' ? that.data.files : []
         if (data.files && data.files != '') {
           for (var i = 0; i < data.files.length; i++) {
             var file = data.files[i]
@@ -345,10 +421,51 @@ Page({
               file.createtime = createtime
             }
           }
+          if (that.pageData.page == 1) {
+            newFiles = data.files
+          } else {
+            newFiles = newFiles.concat(data.files)
+          }
+
+          if (data.files.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
+        } else {
+          that.pageData.canLoadNextPage = false
         }
         that.setData({
           tea_class: data.classes,
-          files: data.files
+          files: newFiles
+        })
+
+        typeof cb == "function" && cb(true, "成功")
+      } else {
+        typeof cb == "function" && cb(false, "加载失败")
+      }
+    })
+  },
+
+  /**
+   * 学生 收藏按钮 点击事件
+  */
+  collectionButtonClicked: function(e) {
+    let index = e.currentTarget.dataset.index
+    let file = this.data.files[index]
+    let type = file.colid == null ? 1 : 2
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+      "type":type,  //1-添加，2-取消
+      "fileid":file.id
+    }
+    let that  =this
+    app.ljjw.jwStudentAddCollection(params).then(d => {
+      if (d.data.status == 1) {
+        let colidChange = "files["+index+"].colid"
+        that.setData({
+          [colidChange] : type == 1 ? 1 : null
         })
       }
     })

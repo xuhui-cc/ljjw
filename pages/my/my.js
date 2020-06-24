@@ -252,11 +252,7 @@ Page({
     })
   },
 
-  to_tea_data:function(){
-    wx.navigateTo({
-      url: '../../pages/tea_data/tea_data',
-    })
-  },
+  
 
   to_tea_sinfo: function () {
     wx.navigateTo({
@@ -527,7 +523,15 @@ Page({
         }
 
         // 处理附件
-        if (data.files){
+        /*
+        if (data.files && data.file != ''){
+          var newFiles = []
+          if (data.files.length >= 2) {
+            newFiles = [data.files[0], data.files[1]]
+          } else if (data.file.length == 1) {
+            newFiles = [data.files[0]]
+          }
+          data.files = newFiles
           for (var i = 0; i < data.files.length; i++) {
             let file = data.files[i]
 
@@ -591,6 +595,7 @@ Page({
 
           }
         }
+        */
 
         that.setData({
           mydata: data,
@@ -675,6 +680,25 @@ Page({
     wx.navigateTo({
       url: '../../pages/tea_feedBack_list/tea_feedBack_list',
     })
-  }
+  },
+
+
+  /**
+   * 学生端 班级资料 点击事件
+  */
+  to_student_data: function () {
+    wx.navigateTo({
+      url: '../../pages/tea_data/tea_data?type=1',
+    })
+  },
+
+  /**
+   * 老师端 班级资料 点击事件
+  */
+  to_tea_data:function(){
+    wx.navigateTo({
+      url: '../../pages/tea_data/tea_data?type=2',
+    })
+  },
   
 })
