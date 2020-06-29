@@ -137,6 +137,12 @@ Page({
             "identifier": "teacher"
           }]
         infoData.eduList = eduList
+
+        let avatar = infoData.avatar
+        if (!avatar || avatar.indexOf('http') == -1) {
+          infoData.avatar = '../../images/avatar_null.png'
+        }
+
         that.setData({
           mydata: infoData,
         })

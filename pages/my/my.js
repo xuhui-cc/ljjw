@@ -391,7 +391,12 @@ Page({
 
           wx.setStorageSync('token', d.data.token);
           wx.setStorageSync('uid', d.data.uid);
-          wx.setStorageSync('userInfo', d.data.userInfo)
+
+          let userinfo = d.data.userInfo
+          if (!userinfo.avatar || userinfo.avatar.indexOf('http') == -1) {
+            userinfo.avatar = '../../images/avatar_null.png'
+          }
+          wx.setStorageSync('userInfo', userinfo)
           wx.setStorageSync('role', role[0])
           
           if(role[0] != 4){
@@ -480,7 +485,6 @@ Page({
     let that = this
     var role = wx.getStorageSync("role")
     var userInfo = wx.getStorageSync("userInfo")
-    
     if(!role){
       that.setData({
         role: -1
@@ -522,81 +526,9 @@ Page({
           wx.setStorageSync("stu_sta", true)
         }
 
-        // 处理附件
-        /*
-        if (data.files && data.file != ''){
-          var newFiles = []
-          if (data.files.length >= 2) {
-            newFiles = [data.files[0], data.files[1]]
-          } else if (data.file.length == 1) {
-            newFiles = [data.files[0]]
-          }
-          data.files = newFiles
-          for (var i = 0; i < data.files.length; i++) {
-            let file = data.files[i]
-
-            // 前两个 标记为最新
-            if (i < 2) {
-              file.isNew = true
-            } else {
-              file.isNew = false
-            }
-
-            // 截取后缀 获取格式
-            let form = null
-            if (file.fileurl && file.fileurl != '') {
-              let subFileUrlArray = file.fileurl.split(".")
-              if (subFileUrlArray && subFileUrlArray.length >= 2) {
-                form = subFileUrlArray[subFileUrlArray.length - 1]
-              }
-            }
-            file.form = form
-
-            let formType = 0 // 0-不支持格式 1-图片 2-word 3-pdf 4-ppt 5-jpg
-            switch(form) {
-              case "png":
-              case "jpg":
-              case "jpeg": {
-                // 图片
-                file.fileurl = file.fileurl.split(",")
-                formType = 1
-                break;
-              }
-              case "doc":
-              case "docx": {
-                // word
-                formType = 2
-                break
-              }
-              case "pdf": {
-                // pdf
-                formType = 3
-                break
-              }
-              case "ppt":
-              case "pptx": {
-                formType = 4
-                break
-              }
-            }
-            file.formType = formType
-
-            // 处理日期
-            var time = file.createtime.substr(10, 15)
-            if (file.createtime.indexOf(that.data.today) != -1) {
-              var createtime = "今天" + time
-              file.createtime = createtime
-            }
-
-            if (file.createtime.indexOf(that.data.yestday) != -1) {
-              var createtime = "昨天" + time
-              file.createtime = createtime
-            }
-
-          }
+        if (!data.avatar || data.avatar.indexOf('http') == -1) {
+          data.avatar = '../../images/avatar_null.png'
         }
-        */
-
         that.setData({
           mydata: data,
           stu_class: data.classes

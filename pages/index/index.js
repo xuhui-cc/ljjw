@@ -1233,6 +1233,11 @@ Page({
           //   }
           // }
 
+          let avatar = course.avatar
+          if (!avatar || avatar.indexOf('http') == -1) {
+            course.avatar = '../../images/avatar_null.png'
+          }
+
         }
 
         that.setData({
@@ -1466,6 +1471,16 @@ Page({
             title: "发起",
             verify_time: leave.createtime
           })
+
+          // 老师头像处理
+          if (leave.course && leave.course != '') {
+            for (var j = 0; j < leave.course.length; j++) {
+              let course = leave.course[j]
+              if (!course.avatar || course.avatar.indexOf('http') == -1) {
+                course.avatar = '../../images/avatar_null.png'
+              } 
+            }
+          }
         }
         // 分页数据处理
         var newLeaveArray = []
@@ -1534,7 +1549,18 @@ Page({
           var hm_unaud_leave = d.data.data
           
           for(var i=0;i<hm_unaud_leave.length;i++){
+            // 默认收起
             hm_unaud_leave[i].submit = false
+            // 老师头像处理
+            let leave = hm_unaud_leave[i]
+            if (leave.course && leave.course != '') {
+              for (var j = 0; j < leave.course.length; j++) {
+                let course = leave.course[j]
+                if (!course.avatar || course.avatar.indexOf('http') == -1) {
+                  course.avatar = '../../images/avatar_null.png'
+                }
+              }
+            }
           }
           // 处理分页数据
           var newLeaveArray = []
@@ -1652,6 +1678,16 @@ Page({
               title: "发起",
               verify_time: leave.createtime
             })
+
+            // 老师头像处理
+            if (leave.course && leave.course != '') {
+              for (var j = 0; j < leave.course.length; j++) {
+                let course = leave.course[j]
+                if (!course.avatar || course.avatar.indexOf('http') == -1) {
+                  course.avatar = '../../images/avatar_null.png'
+                }
+              }
+            }
           }
           // 分页数据处理
           var newLeaveArray = []

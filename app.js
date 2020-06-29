@@ -132,7 +132,11 @@ App({
             }
           }
         }
-        wx.setStorageSync('userInfo', data.userInfo)
+        let userinfo = data.userInfo
+        if (!userinfo.avatar || userinfo.avatar.indexOf('http') == -1) {
+          userinfo.avatar = '../../images/avatar_null.png'
+        }
+        wx.setStorageSync('userInfo', userinfo)
       }
     })
   },

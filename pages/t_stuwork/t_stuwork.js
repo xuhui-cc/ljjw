@@ -202,23 +202,61 @@ Page({
       // console.log(d)
       if (d.data.status == 1) {
         let checkData = d.data.data
-        // let person = checkData.normal[0]
-        // checkData.normal = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
-        // checkData.cutschool = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
-        // checkData.later = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
-        // checkData.leaveschool = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
-        // checkData.askforleave = [person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person, person]
         // 正常到课数量
         let normal_num = checkData.normal ? checkData.normal.length : 0
+        if(normal_num != 0) {
+          for (var i = 0; i < checkData.normal.length; i++) {
+            let student = checkData.normal[i]
+            // 处理学生头像
+            if (!student.avatar || student.avatar.indexOf('http') == -1) {
+              student.avatar = '../../images/avatar_null.png'
+            }
+          }
+        }
         // 旷课数量
         let cutschool_num = checkData.cutschool ? checkData.cutschool.length : 0
+        if (cutschool_num != 0) {
+          for (var i = 0; i < checkData.cutschool.length; i++) {
+            let student = checkData.cutschool[i]
+            // 处理学生头像
+            if (!student.avatar || student.avatar.indexOf('http') == -1) {
+              student.avatar = '../../images/avatar_null.png'
+            }
+          }
+        }
         // 迟到数量
         let later_num = checkData.later ? checkData.later.length : 0
+        if (later_num != 0) {
+          for (var i = 0; i < checkData.later.length; i++) {
+            let student = checkData.later[i]
+            // 处理学生头像
+            if (!student.avatar || student.avatar.indexOf('http') == -1) {
+              student.avatar = '../../images/avatar_null.png'
+            }
+          }
+        }
         // 离校数量
         let leaveschool_num = checkData.leaveschool ? checkData.leaveschool.length : 0
+        if (leaveschool_num != 0) {
+          for (var i = 0; i < checkData.leaveschool.length; i++) {
+            let student = checkData.leaveschool[i]
+            // 处理学生头像
+            if (!student.avatar || student.avatar.indexOf('http') == -1) {
+              student.avatar = '../../images/avatar_null.png'
+            }
+          }
+        }
         // 请假数量
         let askforleave_num = checkData.askforleave ? checkData.askforleave.length : 0
-
+        if (askforleave_num != 0) {
+          for (var i = 0; i < checkData.askforleave.length; i++) {
+            let student = checkData.askforleave[i]
+            // 处理学生头像
+            if (!student.avatar || student.avatar.indexOf('http') == -1) {
+              student.avatar = '../../images/avatar_null.png'
+            }
+          } 
+        }
         that.setData({
           stu_totle: checkData.stucount,
           cutschool: checkData.cutschool,

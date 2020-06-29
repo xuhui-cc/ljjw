@@ -172,14 +172,32 @@ Page({
       if (d.data.status == 1) {
 
         let data = d.data.data
-        for (i; i < data.students_unsigned.length;i++){
+
+        // 处理老师头像
+        let classInfo = data.info
+        if (!classInfo.avatar || classInfo.avatar.indexOf("http") == -1) {
+          classInfo.avatar = '../../images/avatar_null.png'
+        }
+
+        for (var i=0; i < data.students_unsigned.length;i++){
           let student = data.students_unsigned[i]
           student.check_status = 0
           that.sumitDataDic[student.stu_id] = student
+          // 处理未标注学生头像
+          if (!student.avatar || student.avatar.indexOf('http') == -1) {
+            student.avatar = '../../images/avatar_null.png'
+          }
+        }
+        for (var i = 0; i < data.students_signed.length; i++) {
+          let student = data.students_signed[i]
+          // 处理已标注学生头像
+          if (!student.avatar || student.avatar.indexOf('http') == -1) {
+            student.avatar = '../../images/avatar_null.png'
+          }
         }
 
         that.setData({
-          tea_info: data.info,
+          tea_info: classInfo,
           students_signed: data.students_signed,
           students_unsigned: data.students_unsigned
         })

@@ -84,6 +84,11 @@ Page({
           noneCharArray.push(student)
         }
       }
+
+      // 处理头像
+      if (!student.avatar || student.avatar.indexOf('http') == -1) {
+        student.avatar = '../../images/avatar_null.png'
+      }
     }
 
     // 排序
