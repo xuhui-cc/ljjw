@@ -29,11 +29,18 @@
     <block wx:if="{{feedBackList.length != 0}}" wx:for="{{feedBackList}}" wx:key="index">
       <view class="feedBackCell" style="margin-top:16rpx">
         <view class="feedBack_BackInfo">
-          <!-- 反馈类型 -->
-          <text class="feedBack_type" style="margin-left:30rpx">类型：{{item.soncount > 1 ? item.parent+'-'+item.title : item.parent}}</text>
+          <!-- 提交反馈学生名字 -->
+          <view class="feedBack_userName" wx:if="{{item.stu_name && item.stu_name != ''}}">{{item.stu_name}}</view>
+          <view class="feedBack_classname" style="margin-left:{{(item.stu_name && item.stu_name != '') ? 38 : 30}}rpx;">{{(item.class_name && item.class_name != '') ? item.class_name : '当前无班级'}}</view>
         </view>
-        <!-- 时间 -->
-        <text class="feedBack_createTime">{{item.time}}</text>
+        <view class="feddBack_BaseInfo2">
+          <!-- 反馈类型 -->
+          <text class="feedBack_type" style="margin-left:0rpx">类型：{{item.soncount > 1 ? item.parent+'-'+item.title : item.parent}}</text>
+          <!-- 间隔线 -->
+          <view class="feedBack_typeTime_separator"></view>
+          <!-- 时间 -->
+          <text class="feedBack_createTime">{{item.time}}</text>
+        </view>
         <!-- 处理状态 -->
         <image wx:if="{{item.feed_state==1 || item.feed_state==2}}" src="../../images/feedBack_dealType_doing.png" class="feedBack_dealType"></image>
         <block wx:elif="{{item.feed_state==3}}">
