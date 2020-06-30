@@ -13,7 +13,6 @@
   </view>
   <!-- 导航栏结束 -->
 
-    <view class="mask" wx:if="{{stu_detail}}"></view>
     <view class="bottom_button" style="height:{{bottomButton_Height}}px" bindtap="copyInfoButtonClcked">复制信息</view>
     <view class="stu_num" id="stu_num" style="margin-top:{{naviBarHeight}}px">班级共{{stu_totle}}人</view>
     <view class="stu-work-layout" style="margin-top:{{naviBarHeight + 76.0/750*naviBarWidth}}px; padding-bottom:{{bottomButton_Height+ 40/750.0*naviBarWidth}}px;">
@@ -107,56 +106,59 @@
       </block>
     </view>
 
-    <view class="mask-tip" wx:if="{{stu_detail}}">
-      <image class="mask-close" src="../../images/close.png" bindtap="clo_mask"></image>
-      <view class="mask-head">
-        <view class="mask-shu"></view>
-        <view class="mask-title">请假详情</view>
-      </view>
-      <view class="mask-head">
-        <image class="stu-avatar_detail" src="{{askforleave_avatar}}"></image>
-        <view class="stu-name_detail">{{askforleave_info.stuname}}</view>
-        <view class="lea-time">请假时间：{{askforleave_info.date}}  </view>
-      </view>
-      <view class="mask-heng"></view>
-      <view class="mask-head">
-        <view class="lea-cour">请假课程：</view>
-        <view class="lea-cour-cont">
-          <view wx:for="{{askforleave_info.schedule_info}}" wx:key="schedule_index">
-            <view class="cour-cont">
-              <view class="cour-date">{{item.classtime}}</view>
-              <view class="cour-name">{{item.title}}</view>
+    <view class="mask" wx:if="{{stu_detail}}">
+      <view class="mask-tip" wx:if="{{stu_detail}}">
+        <image class="mask-close" src="../../images/close.png" bindtap="clo_mask"></image>
+        <view class="mask-head">
+          <view class="mask-shu"></view>
+          <view class="mask-title">请假详情</view>
+        </view>
+        <view class="mask-head">
+          <image class="stu-avatar_detail" src="{{askforleave_avatar}}"></image>
+          <view class="stu-name_detail">{{askforleave_info.stuname}}</view>
+          <view class="lea-time">请假时间：{{askforleave_info.date}}  </view>
+        </view>
+        <view class="mask-heng"></view>
+        <view class="mask-head">
+          <view class="lea-cour">请假课程：</view>
+          <view class="lea-cour-cont">
+            <view wx:for="{{askforleave_info.schedule_info}}" wx:key="schedule_index">
+              <view class="cour-cont">
+                <view class="cour-date">{{item.classtime}}</view>
+                <view class="cour-name">{{item.title}}</view>
+              </view>
             </view>
           </view>
         </view>
+        <view class="lea-for">请假事由：{{askforleave_info.reason}}</view>
+        <image class="mask-xu" src="../../images/xu.png"></image>
+        <view class="lea-pro">
+          <view class="mask-head">
+            <image class="mask-cir" src="../../images/gc.png"></image>
+            <view class="pro-start">发起</view>
+            <view class="start-time">{{askforleave_info.createtime}}</view>
+          </view>
+          <image class="pro-img" src="../../images/route.png"></image>
+          <view class="mask-head" wx:if="{{askforleave_info.verify_list[0] != ''}}">
+            <image class="mask-cir" src="../../images/gc.png"></image>
+            <view wx:if="{{askforleave_info.verify_list[0].verify_status == 1}}" class="pro-two" style='color:rgba(70,191,106,1);'>教务审核通过</view>
+            <view wx:elif="{{askforleave_info.verify_list[0].verify_status == 2}}" class="pro-two" style='color:rgba(241,68,68,1);'>教务审核驳回</view>
+            <view class="pro-ope">操作人：{{askforleave_info.verify_list[0].verify_name}}</view>
+            <view class="start-time2">{{askforleave_info.verify_list[0].createtime}}</view>
+          </view>
+          <image wx:if="{{askforleave_info.verify_list[0] != ''}}" class="pro-img" src="../../images/route.png"></image>
+          <view class="mask-head" wx:if="{{askforleave_info.verify_list[1] != ''}}">
+            <image class="mask-cir" src="../../images/gc.png"></image>
+            <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 1}}" style='color:rgba(70,191,106,1);'>管理员审核通过</view>
+            <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 2}}" style='color:rgba(241,68,68,1);'>管理员审核驳回</view>
+            <view class="pro-ope">操作人：{{askforleave_info.verify_list[1].verify_name}}</view>
+            <view class="end-time">{{askforleave_info.verify_list[1].createtime}}</view>
+          </view>
+        </view>
+        
       </view>
-      <view class="lea-for">请假事由：{{askforleave_info.reason}}</view>
-      <image class="mask-xu" src="../../images/xu.png"></image>
-      <view class="lea-pro">
-        <view class="mask-head">
-          <image class="mask-cir" src="../../images/gc.png"></image>
-          <view class="pro-start">发起</view>
-          <view class="start-time">{{askforleave_info.createtime}}</view>
-        </view>
-        <image class="pro-img" src="../../images/route.png"></image>
-        <view class="mask-head" wx:if="{{askforleave_info.verify_list[0] != ''}}">
-          <image class="mask-cir" src="../../images/gc.png"></image>
-          <view wx:if="{{askforleave_info.verify_list[0].verify_status == 1}}" class="pro-two" style='color:rgba(70,191,106,1);'>教务审核通过</view>
-          <view wx:elif="{{askforleave_info.verify_list[0].verify_status == 2}}" class="pro-two" style='color:rgba(241,68,68,1);'>教务审核驳回</view>
-          <view class="pro-ope">操作人：{{askforleave_info.verify_list[0].verify_name}}</view>
-          <view class="start-time2">{{askforleave_info.verify_list[0].createtime}}</view>
-        </view>
-        <image wx:if="{{askforleave_info.verify_list[0] != ''}}" class="pro-img" src="../../images/route.png"></image>
-        <view class="mask-head" wx:if="{{askforleave_info.verify_list[1] != ''}}">
-          <image class="mask-cir" src="../../images/gc.png"></image>
-          <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 1}}" style='color:rgba(70,191,106,1);'>管理员审核通过</view>
-          <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 2}}" style='color:rgba(241,68,68,1);'>管理员审核驳回</view>
-          <view class="pro-ope">操作人：{{askforleave_info.verify_list[1].verify_name}}</view>
-          <view class="end-time">{{askforleave_info.verify_list[1].createtime}}</view>
-        </view>
-      </view>
-      
     </view>
+    
 
 
 

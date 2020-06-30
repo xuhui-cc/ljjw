@@ -407,7 +407,7 @@ Page({
           
           
           app.setTaskItemDot()
-          that.onLoad()
+          that.onShow()
 
 
         } else {

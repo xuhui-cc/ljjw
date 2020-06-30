@@ -34,17 +34,17 @@
     </view>
     <view class="t-cour-shu"></view>
     <view class="cour-info">
-      <view class="cour-info-display">
+      <view class="cour-info-display" style="margin-top:28rpx">
         <view class="cour-timetitle">时间</view>
         <view class="cour-time">{{tea_info.classtime}}</view>
         <view class="cour-placetitle">教室</view>
         <view class="cour-time">{{tea_info.classroom}}</view>
       </view>
-      <view class="cour-info-display">
+      <view class="cour-info-display" style="margin-top:19rpx">
         <view class="cour-nametitle">课程</view>
         <view class="cour-name">{{tea_info.title}}</view>
       </view>
-      <view class="cour-info-display">
+      <view class="cour-info-display" style="margin-top:18rpx">
         <view class="cour-nametitle">班级</view>
         <view class="cour-name">{{tea_info.classname}}</view>
       </view>

@@ -139,7 +139,7 @@
   <!-- 排名往后 -->
   <view class="rank-layout" wx:if="{{scorelist != ''}}">
     <view wx:for="{{scorelist}}" wx:key="list_index">
-      <view class="flex">
+      <view class="flex" bindtap="fold" data-xb="{{index}}">
         <view class="rank-num">{{index + 4}}</view>
         <image class="rank-ava" src="{{item.avatar}}"></image>
         <view class="rank-name">{{item.realname}}</view>
@@ -152,8 +152,8 @@
           <text wx:if="{{item.sl_score == null}}">0</text>
           <text wx:if="{{item.sl_score != null}}">{{item.sl_score}}</text>
         </view>
-        <image wx:if="{{item.fold}}" data-xb='{{index}}' class="rank-xl" src="../../images/xsj.png" bindtap='fold'></image>
-        <image wx:else="" data-xb='{{index}}' class="rank-xl" src="../../images/ssj.png" bindtap='fold'></image>
+        <image wx:if="{{item.fold}}" class="rank-xl" src="../../images/xsj.png"></image>
+        <image wx:else class="rank-xl" src="../../images/ssj.png"></image>
       </view>
       <view class="rank-heng"></view>
 
