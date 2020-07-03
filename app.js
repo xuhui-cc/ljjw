@@ -132,6 +132,18 @@ App({
             }
           }
         }
+
+        if (role && role == 4) {
+          let stuinfo = data.stuinfo
+          wx.setStorageSync('stuinfo', stuinfo)
+        } else {
+          try {
+            wx.removeStorageSync('stuinfo')
+          } catch (e) {
+            // Do something when catch error
+          }
+        }
+
         let userinfo = data.userInfo
         if (!userinfo.avatar || userinfo.avatar.indexOf('http') == -1) {
           userinfo.avatar = '../../images/avatar_null.png'

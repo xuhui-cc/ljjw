@@ -176,11 +176,13 @@ Page({
     })
     let oldPage = this.pageData.page
     this.pageData.page = 1
-    this.getFileList(that.data.tea_class[that.data.tea_class_index].id, function(success, msg){
-      if (!success) {
-        that.pageData.page = oldPage
-      }
-    })
+    if (that.data.tea_class && that.data.tea_class != '' && that.data.tea_class.length != 0) {
+      this.getFileList(that.data.tea_class[that.data.tea_class_index].id, function(success, msg){
+        if (!success) {
+          that.pageData.page = oldPage
+        }
+      })
+    }
   },
 
   go_back:function(){
@@ -224,14 +226,20 @@ Page({
     let that = this
     let oldPage = that.pageData.page
     that.pageData.page = 1
-    that.getFileList(that.data.tea_class[that.data.tea_class_index].id, function(success, msg){
+    if (that.data.tea_class && that.data.tea_class != '' && that.data.tea_class.length != 0) {
+      that.getFileList(that.data.tea_class[that.data.tea_class_index].id, function(success, msg){
+        wx.stopPullDownRefresh({
+          complete: (res) => {},
+        })
+        if (!success) {
+          that.pageData.page = oldPage
+        }
+      })
+    } else {
       wx.stopPullDownRefresh({
         complete: (res) => {},
       })
-      if (!success) {
-        that.pageData.page = oldPage
-      }
-    })
+    }
   },
 
   /**

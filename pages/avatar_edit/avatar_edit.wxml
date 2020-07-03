@@ -1,0 +1,21 @@
+<!--pages/avatar_edit/avatar_edit.wxml-->
+<view class="container">
+  <!-- 导航 -->
+  <view class="navigationBar" style="height:{{pageSize.naviHeight}}px">
+    <view class="navigation_content" style="height:{{pageSize.naviContentHeight}}px; margin-top:{{pageSize.statusBarHeight}}px;">
+      <view class="navigation_backView" bindtap="naviBackClicked">
+        <image class="navigation_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <view class="navgation_title">编辑头像</view>
+      <view class="navigation_backView"></view>
+    </view>
+  </view>
+
+  <image-cropper id="image-cropper" limit_move="{{true}}" disable_rotate="{{true}}" imgSrc="{{imagePath}}" disable_ratio="{{true}}" bindload="cropperload" bindimageload="loadimage" bindtapcut="clickcut"></image-cropper>
+
+  <!-- 底部按钮 -->
+  <view class="bottomButton" style="bottom:{{pageSize.safeareaBottom}}px">
+    <view class="cancelButton" bindtap="cancelButtonClciked">取消</view>
+    <view class="sureButton" bindtap="sureButtonClciked">确定</view>
+  </view>
+</view>

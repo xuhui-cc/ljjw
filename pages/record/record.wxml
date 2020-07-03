@@ -2,7 +2,7 @@
   <!-- 导航栏 -->
   <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
     <view class="navibar_selecteSub" style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px;">
-      <picker mode='selector' wx:if="{{tea_class}}" bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
+      <picker mode='selector' wx:if="{{tea_class && tea_class != '' && tea_class.length != 0}}" bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
         <view class="bar-class">
           {{tea_class[tea_class_index].name}}
           <image wx:if="{{tea_class}}" class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
@@ -10,7 +10,7 @@
         
       </picker>
 
-      <picker mode='selector' wx:if="{{stu_class}}" bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
+      <picker mode='selector' wx:if="{{stu_class && stu_class != '' && stu_class.length != 0}}" bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 
         <view class="bar-class">
           {{stu_class[stu_class_index].classname}}
           <image wx:if="{{stu_class}}" class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
@@ -20,11 +20,11 @@
   </view>
   <!-- 导航栏结束 -->
 
-  <view wx:if="{{!login}}">
+  <view wx:if="{{showNoData}}">
     <image class="mull-img" src="../../images/rec_null.png"></image>
   </view>
 
-  <view wx:if="{{login}}">
+  <view wx:else>
 
     <!-- 学生角色 -->
     <view class="stu-rec" wx:if="{{role == 4}}">

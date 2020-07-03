@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 是否打开图片选择方式页面
+    showPictureTypeSelect: false,
   },
 
   timestampToTime: function (timestamp) {
@@ -24,6 +25,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getPageSize()
     this.getStudentBaseInfo()
   },
 
@@ -76,6 +78,38 @@ Page({
 
   },
 
+  // --------------------------------------------------私有方法----------------------------------------------
+  /**
+   * 获取页面辅助尺寸
+  */
+  getPageSize: function() {
+    let systemInfo = wx.getSystemInfoSync()
+    let menuBounding = wx.getMenuButtonBoundingClientRect()
+    let naviHeight = menuBounding.bottom + 10
+    let statusBarHeight = systemInfo.statusBarHeight
+    let safeareaBottom = systemInfo.windowHeight - systemInfo.safeArea.bottom
+
+    this.setData({
+      pageSize: {
+        naviHeight: naviHeight,
+        statusBarHeight: statusBarHeight,
+        naviContentHeight: naviHeight - statusBarHeight,
+        safeareaBottom: safeareaBottom,
+        screenWidth: systemInfo.screenWidth
+      }
+    })
+  },
+
+  /**
+   * 跳转至图片编辑页
+  */
+  gotoPictureEditPage: function (path) {
+    wx.navigateTo({
+      url: "../../pages/avatar_edit/avatar_edit?path="+path
+    })
+  },
+
+  // --------------------------------------------------------------接口-------------------------------------------------
   /**
    * 获取学生基本信息
    * 参数：token、uid
@@ -148,5 +182,155 @@ Page({
         })
       }
     })
+  },
+
+  /**
+   * 上传图片
+   * 参数：
+   * path：图片路径
+  */
+  uploadAvatar: function(path) {
+    let that = this
+    wx.showLoading({
+      title: '上传中'
+    })
+    wx.uploadFile({
+      url: app.ljjw.getUploadFileURI(),
+      filePath: path,
+      name: 'file',
+      formData: {
+        'file': path,
+        "token": wx.getStorageSync('token'),
+        "action": "jwUploadAvatar", //action=uploads&authhash=445454554
+      },
+      success(r) {
+        wx.hideLoading()
+        let result = JSON.parse(r.data);
+        if (result.status == 1) {
+          let url = result.data
+          that.updateUserAvatar(url)
+        } else {
+          wx.showToast({
+            title: result.msg ? result.msg : '上传失败'
+          })
+          console.log('失败')
+          console.log(result.status)
+        }
+      },
+      fail (res) {
+        wx.hideLoading()
+        wx.showToast({
+          title: '上传失败',
+          icon: 'none'
+        })
+      }
+    })
+  },
+
+  /**
+   * 更新头像
+  */
+  updateUserAvatar: function(url) {
+    let that = this
+    let params = {
+      avatar: url,
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    wx.showLoading({
+      title: '更新中'
+    })
+    app.ljjw.jwUpdateStudentBaseInfo(params).then(d => {
+      wx.hideLoading()
+      if (d.data.status == 1) {
+        let avatarChangeStr = 'mydata.avatar'
+        let userInfo = wx.getStorageSync('userInfo')
+        userInfo.avatar = url
+        wx.setStorageSync('userInfo', userInfo)
+        that.setData({
+          [avatarChangeStr]: url
+        })
+        wx.showToast({
+          title: "更新成功",
+          icon: 'none'
+        })
+      }
+    })
+  },
+
+  // -------------------------------------------------------action-----------------------------------------
+  /**
+   * 头像点击事件
+  */
+  avatarTap: function(e) {
+    this.setData({
+      showPictureTypeSelect: true
+    })
+  },
+
+  /**
+   * 导航栏 返回按钮 点击事件
+  */
+  naviBackClicked : function() {
+    wx.navigateBack({
+      complete: (res) => {},
+    })
+  },
+
+  pictureTypeButtonClicked: function(e) {
+    // console.log(e)
+    let that = this
+    let type = (e.currentTarget.dataset.type)*1
+    switch(type) {
+      case 1: {
+        //相机
+        wx.chooseImage({
+          count: 1,
+          sourceType: ['camera'],
+          success (res) {
+            if (res.tempFilePaths && res.tempFilePaths.length >= 1) {
+              let path = res.tempFilePaths[0]
+              that.gotoPictureEditPage(path)
+            }
+          },
+          fail (res) {
+            console.log('打开相机失败')
+            console.log(res)
+          }
+        })
+        this.setData({
+          showPictureTypeSelect: false
+        })
+        break
+      }
+      case 2: {
+        // 相册
+        wx.chooseImage({
+          count: 1,
+          success (res) {
+            console.log(res)
+            if (res.tempFilePaths && res.tempFilePaths.length >= 1) {
+              let path = res.tempFilePaths[0]
+              that.gotoPictureEditPage(path)
+            }
+          },
+          fail (res) {
+            console.log('打开相册失败')
+            console.log(res)
+          }
+        })
+        this.setData({
+          showPictureTypeSelect: false
+        })
+        break
+      }
+      case 3: {
+        //取消
+        this.setData({
+          showPictureTypeSelect: false
+        })
+        break
+      }
+    }
   }
 })

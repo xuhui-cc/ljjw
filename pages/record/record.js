@@ -11,6 +11,9 @@ Page({
     tea_class_index:0,
     stu_class_index: 0,
     // role: 4,  //role：4 -学生；1 -老师；2 -教务；3 -管理员
+
+    // 是否展示无数据页面
+    showNoData: false,
   },
 
   /**
@@ -33,25 +36,26 @@ Page({
     that.setData({
       tea_class_index: e.detail.value
     })
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "class_id": that.data.tea_class[that.data.tea_class_index].id
-    }
-    console.log(params)
-    app.ljjw.jwTeacherScoreMainPage(params).then(d => {
-      console.log(d)
-      if (d.data.status == 1) {
-        console.log(d.data.data)
-        that.setData({
-          tea_class: d.data.data.classes,
-          tea_mock_list: d.data.data.mock_list
-        })
-        console.log("老师成绩首页获取成功")
-      }
+    this.reloadData()
+    // var params = {
+    //   "token": wx.getStorageSync("token"),
+    //   "uid": wx.getStorageSync("uid"),
+    //   "class_id": that.data.tea_class[that.data.tea_class_index].id
+    // }
+    // console.log(params)
+    // app.ljjw.jwTeacherScoreMainPage(params).then(d => {
+    //   console.log(d)
+    //   if (d.data.status == 1) {
+    //     console.log(d.data.data)
+    //     that.setData({
+    //       tea_class: d.data.data.classes,
+    //       tea_mock_list: d.data.data.mock_list
+    //     })
+    //     console.log("老师成绩首页获取成功")
+    //   }
 
 
-    })
+    // })
   },
 
   stu_class_picker: function (e) {
@@ -65,11 +69,11 @@ Page({
       "uid": wx.getStorageSync("uid"),
       "class_id": that.data.stu_class[that.data.stu_class_index].class_id
     }
-    console.log(params)
+    // console.log(params)
     app.ljjw.jwGetStudentScore(params).then(d => {
-      console.log(d)
+      // console.log(d)
       if (d.data.status == 1) {
-        console.log(d.data.data)
+        // console.log(d.data.data)
         that.setData({
           stu_score: d.data.data.list,
           // stu_class: d.data.data.classes
@@ -217,20 +221,28 @@ Page({
           params.class_id = that.data.tea_class[that.data.tea_class_index].id
         }
         app.ljjw.jwTeacherScoreMainPage(params).then(d => {
-          // console.log(d)
           if (d.data.status == 1) {
-            // console.log(d.data.data)
+            // 判断是否需要空页面
+            var showNoData = false
+            let classes = d.data.data.classes
+            let mockList = d.data.data.mock_list
+            if (!classes || classes == '' || classes.length == 0 || !mockList || mockList == '' || mockList.length == 0) {
+              showNoData = true
+            }
             that.setData({
-              tea_class: d.data.data.classes,
-              tea_mock_list: d.data.data.mock_list
+              tea_class: classes,
+              tea_mock_list: mockList,
+              showNoData: showNoData
             })
-            console.log("老师成绩首页获取成功")
           }
         })
         break
       }
       case 3: {
         // 管理员
+        that.setData({
+          showNoData: true
+        })
         break
       }
       case 4: {
@@ -246,14 +258,25 @@ Page({
         app.ljjw.jwGetStudentScore(params).then(d => {
           // console.log(d)
           if (d.data.status == 1) {
+            let classes = d.data.data.classes
+            let list = d.data.data.list
+            var showNoData = false
+            if (classes && classes != '' && classes.length != 0 && list && list != '' && list.length != 0) {
+              showNoData = false
+            } else {
+              showNoData = true
+            }
             that.setData({
               stu_score: d.data.data.list,
-              stu_class: d.data.data.classes
+              stu_class: d.data.data.classes,
+              showNoData: showNoData
             })
             console.log("学生成绩获取成功")
+          } else {
+            that.setData({
+              showNoData: true
+            })
           }
-  
-  
         })
         break
       }

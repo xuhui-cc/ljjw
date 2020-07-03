@@ -9,10 +9,10 @@
       </view>
       <!-- menu -->
       <view class="{{menuSelectedIndex == 0? 'topMenuViewVisited' : 'topMenuView'}}" bindtap="menu_selected" data-index="0">
-        <text class="toMenuTitle">反馈类型</text>
+        <text class="toMenuTitle">类型</text>
       </view>
       <view class="{{menuSelectedIndex == 1? 'topMenuViewVisited' : 'topMenuView'}}" style="margin-left:44rpx" bindtap="menu_selected" data-index="1">
-        <text class="toMenuTitle">反馈处理</text>
+        <text class="toMenuTitle">处理</text>
         <view class="topMenuDot" wx:if="{{redDotCount.feedBackNotiCount>0}}">{{redDotCount.feedBackNotiCount > 9 ? '9+' : redDotCount.feedBackNotiCount}}</view>
       </view>
     </view>

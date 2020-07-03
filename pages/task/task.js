@@ -227,14 +227,14 @@ Page({
         if (that.data.tea_class && that.data.tea_class.length > that.data.tea_class_index) {
           params.class_id = that.data.tea_class[that.data.tea_class_index].id
         }
-        console.log("jwTeacherTasksMainPage\n请求参数：")
-        console.log(params)
+        // console.log("jwTeacherTasksMainPage\n请求参数：")
+        // console.log(params)
         app.ljjw.jwTeacherTasksMainPage(params).then(d => {
           wx.stopPullDownRefresh({
             complete: (res) => {},
           })
-          console.log("请求结果：")
-          console.log(d.data)
+          // console.log("请求结果：")
+          // console.log(d.data)
           let status = d.data.status
           var pageData = d.data.data
           if (status == 1) {
@@ -268,6 +268,10 @@ Page({
             })
             typeof cb == "function" && cb(true, "加载成功")
           } else {
+            that.setData({
+              showNoData: true,
+              showTopClassDot: false,
+            })
             typeof cb == "function" && cb(false, msg)
           }
         })
@@ -308,21 +312,24 @@ Page({
             // if (newMessages.length == 0) {
             //   showNoData = true
             // }
+            var showTopClasssDot = false
             if (!(pageData.classes && pageData.classes.length != 0)) {
               showNoData = true
+            } else {
+              for (var i = 0; i < pageData.classes.length; i++) {
+                let aclass = pageData.classes[i]
+                if (aclass.redpoint == 1) {
+                  showTopClasssDot = true
+                  break
+                }
+              }
             }
             // if (newMessages.length == 0 && pageData.morning_read.length == 0 && (pageData.newtaskcount == '' || pageData.newtaskcount == 0)) {
             //   showNoData = true
             // }
 
-            var showTopClasssDot = false
-            for (var i = 0; i < pageData.classes.length; i++) {
-              let aclass = pageData.classes[i]
-              if (aclass.redpoint == 1) {
-                showTopClasssDot = true
-                break
-              }
-            }
+            
+            
 
             // 更改数据 刷新界面
             that.setData({

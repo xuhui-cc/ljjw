@@ -229,14 +229,6 @@ Page({
 
   },
 
-
-  // 老师班级档案跳转
-  to_class_data: function () {
-    wx.navigateTo({
-      url: '../../pages/class_data/class_data',
-    })
-
-  },
   
   /**
    * 搜索按钮 点击事件
@@ -403,6 +395,9 @@ Page({
             wx.setStorageSync('subject', d.data.cate_info)
             // wx.setStorageSync('subject_name', d.data.cate_info.name)
             console.log(d.data.cate_info)
+          } else {
+            let stuinfo = data.stuinfo
+            wx.setStorageSync('stuinfo', stuinfo)
           }
           
           
@@ -596,10 +591,18 @@ Page({
 
   // ------------------------------------------事件-------------------------------------
   /**
-   * 问题反馈 点击事件
+   * 学生端 问题反馈 点击事件
   */
   to_feedBack: function(e) {
     // console.log(e)
+    let stuinfo = wx.getStorageSync('stuinfo')
+    if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+      wx.showToast({
+        title: '暂无权限',
+        icon: 'none'
+      })
+      return
+    }
     wx.navigateTo({
       url: '../../pages/feedBack_list/feedBack_list?menu=' + (this.data.feedBackNotiCount == 0 ? 0 : 1),
     })
@@ -619,6 +622,14 @@ Page({
    * 学生端 班级资料 点击事件
   */
   to_student_data: function () {
+    let stuinfo = wx.getStorageSync('stuinfo')
+    if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+      wx.showToast({
+        title: '暂无权限',
+        icon: 'none'
+      })
+      return
+    }
     wx.navigateTo({
       url: '../../pages/tea_data/tea_data?type=1',
     })
@@ -631,6 +642,24 @@ Page({
     wx.navigateTo({
       url: '../../pages/tea_data/tea_data?type=2',
     })
+  },
+
+  /**
+   * 学生端 我的收藏 点击事件
+  */
+  to_class_data: function () {
+    let stuinfo = wx.getStorageSync('stuinfo')
+    if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+      wx.showToast({
+        title: '暂无权限',
+        icon: 'none'
+      })
+      return
+    }
+    wx.navigateTo({
+      url: '../../pages/class_data/class_data',
+    })
+
   },
   
 })

@@ -6,7 +6,7 @@
       <view class="backimg_layout" bindtap="go_back">
         <image class='back-img' src='../../images/back_img.png' ></image>
       </view>
-      <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
+      <picker mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" wx:if="{{tea_class && tea_class != '' && tea_class.length != 0}}"> 
         <view class="bar-class">
           {{tea_class[tea_class_index].name}}
           <image class="bar-img" src="../../images/wxsj.png"></image>
@@ -90,7 +90,7 @@
   </view>
 
   <view wx:if="{{!files || files == '' || files.length == 0}}">
-    <image class='file_null_img' src='../../images/file_null.png'></image>
+    <image class='file_null_img' src='../../images/file_null.png' mode="aspectFit"></image>
   </view>
   <!-- 清晰搜索 -->
 

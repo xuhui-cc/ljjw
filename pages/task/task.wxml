@@ -3,7 +3,7 @@
   <!-- 导航栏 -->
   <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
     <view class="navibar_selecteSub" style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px;">
-      <block wx:if="{{role <= 2}}">
+      <block wx:if="{{role <= 2 && tea_class && tea_class != '' && tea_class.length > 0}}">
         <image class="add" src="../../images/add.png" bindtap="add_layout"></image>
         <view class="bar-class" bindtap="showClassPickerView">
           {{tea_class[tea_class_index].name}}
@@ -11,26 +11,13 @@
           <view wx:if="{{showTopClassDot}}" class="class_noDealView"></view>
         </view>
       </block>
-      <block wx:elif="{{role == 4}}}">
+      <block wx:elif="{{role == 4 && stu_class && stu_class != '' && stu_class.length != 0}}">
         <view class="bar-class" bindtap="showClassPickerView">
           {{stu_class[stu_class_index].classname}}
           <image wx:if="{{stu_class}}"  class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
           <view wx:if="{{showTopClassDot}}" class="class_noDealView"></view>
         </view>
       </block>
-      
-      <!-- <picker wx:if="{{role == 4}}" mode='selector' bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" >
-          <view class="bar-class">
-            {{stu_class[stu_class_index].classname}}
-            <image wx:if="{{stu_class}}"  class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
-          </view>
-      </picker>
-      <picker wx:else="{{role == 1}}" mode='selector' bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
-        <view class="bar-class">
-          {{tea_class[tea_class_index].name}}
-          <image wx:if="{{tea_class}}" class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
-        </view>
-      </picker> -->
     </view>
   </view>
   <!-- 导航栏结束 -->
@@ -43,7 +30,7 @@
   <!-- 加载数据 -->
   <view wx:else class="showContent" style="margin-top:{{naviBarHeight}}px;">
     <!-- classPickerView -->
-    <view class="classPickerView_blackBgView" hidden="{{!showClassPicker}}">
+    <view class="classPickerView_blackBgView" wx:if="{{showClassPicker}}">
       <view class="classPickerView_bgView">
         <view class="classPickerView_actionView">
           <view class="classPickerView_Button" bindtap="classPickerViewCancel">取消</view>
