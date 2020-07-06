@@ -303,6 +303,7 @@ Page({
     }
     // console.log(params)
     app.ljjw.jwStudentTaskFinished(params).then(d => {
+    // app.ljjw.testAPi(params).then(d => {
       // console.log(d)
       let status = d.data.status
 
@@ -456,17 +457,7 @@ Page({
               for (var j = 0; j < item.task_detail.length; j++) {
                 var taskDetail = item.task_detail[j]
                 taskDetail.cs = []
-                var classdate = taskDetail.classdate
-  
-                for (var k = 0; k < newData1.task_detail.length; k++) {
-                  // if (that.data.leave[i].add_arr[k].date == '')
-  
-                  if (classdate == newData1.task_detail[k].classdate) {
-                    taskDetail.cs.push([newData1.task_detail[k].classtime, newData1.task_detail[k].check_status])
-                  }
-                  else {
-                  }
-                }
+                taskDetail.cs.push([taskDetail.classtime, taskDetail.check_status])
               }
               break
             }

@@ -191,7 +191,12 @@ Page({
     if (!role) {
       that.setData({
         role: -1,
-        login: false
+        login: false,
+        tea_class: null,
+        tea_mock_list: null,
+        tea_class: null,
+        tea_mock_list: null,
+        showNoData: true
       })
 
     } else {

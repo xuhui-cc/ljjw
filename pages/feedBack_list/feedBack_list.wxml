@@ -28,7 +28,7 @@
           <view class="item_title">{{item.title}}</view>
         </view>
         <view class="itemView_subView">
-          <image class="item_nextImage" src="../../images/turnDown.png" style="{{item.open ? 'transform: rotate(180deg);' : ''}}"></image>
+          <image class="item_nextImage" src="../../images/turnDown.png" style="{{item.open ? 'transform: rotate(180deg);' : ''}}" wx:if="{{item.child && item.child.length>1}}"></image>
         </view>
       </view>
       <!-- 二级分类 -->

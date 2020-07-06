@@ -21,7 +21,7 @@
   <!-- 导航栏结束 -->
 
   <view wx:if="{{showNoData}}">
-    <image class="mull-img" src="../../images/rec_null.png"></image>
+    <image class="mull-img" src="../../images/rec_null.png" mode="aspectFit"></image>
   </view>
 
   <view wx:else>

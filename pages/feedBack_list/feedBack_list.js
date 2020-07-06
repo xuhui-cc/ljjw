@@ -287,7 +287,11 @@ Page({
         let data = d.data.data
         for (var i = 0; i < data.length; i++) {
           let type = data[i]
-          type.open = false
+          if (type.child && type.child.length > 1) {
+            type.open = true
+          } else {
+            type.open = false
+          }
         }
         that.setData({
           itemArray: data

@@ -213,8 +213,14 @@ page{
   opacity:1;
 }
 .mull-img{
-  margin-left:260rpx;
-  margin-top: 400rpx;
-  width:294rpx;
-  height:329rpx;
+  /* margin-left:260rpx; */
+  /* margin-top: 400rpx; */
+  /* width:294rpx; */
+  /* height:329rpx; */
+  position: fixed;
+  width: 100%;
+  height: 300rpx;
+  top: 50%;
+  left: 0;
+  margin-top: -150rpx;
 }

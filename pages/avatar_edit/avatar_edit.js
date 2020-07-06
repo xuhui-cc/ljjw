@@ -90,7 +90,7 @@ Page({
         statusBarHeight: statusBarHeight,
         naviContentHeight: naviHeight - statusBarHeight,
         safeareaBottom: safeareaBottom,
-        screenWidth: systemInfo.screenWidth
+        screenWidth: systemInfo.screenWidth,
       }
     })
   },

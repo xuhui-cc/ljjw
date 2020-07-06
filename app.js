@@ -82,6 +82,10 @@ App({
             index: 2,
           })
         }
+      } else {
+        wx.hideTabBarRedDot({
+          index: 2,
+        })
       }
     })
   },

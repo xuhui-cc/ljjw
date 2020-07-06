@@ -396,7 +396,7 @@ Page({
             // wx.setStorageSync('subject_name', d.data.cate_info.name)
             console.log(d.data.cate_info)
           } else {
-            let stuinfo = data.stuinfo
+            let stuinfo = d.data.stuinfo
             wx.setStorageSync('stuinfo', stuinfo)
           }
           

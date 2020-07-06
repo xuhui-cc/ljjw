@@ -305,10 +305,14 @@ Page({
       }
       case 2: {
         // 相册
+        this.setData({
+          showPictureTypeSelect: false
+        })
         wx.chooseImage({
           count: 1,
+          sourceType: ['album'],
           success (res) {
-            console.log(res)
+            // console.log(res)
             if (res.tempFilePaths && res.tempFilePaths.length >= 1) {
               let path = res.tempFilePaths[0]
               that.gotoPictureEditPage(path)
@@ -319,9 +323,7 @@ Page({
             console.log(res)
           }
         })
-        this.setData({
-          showPictureTypeSelect: false
-        })
+        
         break
       }
       case 3: {

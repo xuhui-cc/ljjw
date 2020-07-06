@@ -17,7 +17,7 @@ Page({
     stu_class_index: 0,
     tea_class_index: 0,
     stu_info:true,
-    showNoData: false, // 是否展示无数据页面
+    showNoData: true, // 是否展示无数据页面
     showClassPicker: false, // 是否展示班级选择器
     showTopClassDot: false // 是否在导航栏班级 展示小红点
   },
@@ -194,14 +194,22 @@ Page({
       this.setData({
         role: -1,
         login:false,
-        showNoData: true
+        showNoData: true,
+        message: null,
+        stu_class:null,
+        newtaskcount: 0,
+        csmorningRead: null,
+        unreadmsg: 0,
+        showTopClassDot: false,
+
+        tea_class: null,
       })
       
     } else {
       this.setData({
         role: role*1,
         login:true,
-        showNoData: role == 3 ? true : false,
+        showNoData: role == 3 ? true : this.data.showNoData,
       })
     }
   },

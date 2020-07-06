@@ -556,9 +556,10 @@ Component({
             cut_top: 0
           });
         }
-        if (this.data.cut_top > this.data.info.windowHeight - this.data.height) {
+        let new_cut_top = parseInt(this.data.info.windowHeight - this.data.height)
+        if (this.data.cut_top > new_cut_top) {
           this.setData({
-            cut_top: this.data.info.windowHeight - this.data.height
+            cut_top: new_cut_top
           });
         }
       }, _cutDetectionPositionLeft = () => {
@@ -568,9 +569,10 @@ Component({
             cut_left: 0
           });
         }
-        if (this.data.cut_left > this.data.info.windowWidth - this.data.width) {
+        let new_cut_left = parseInt(this.data.info.windowWidth - this.data.width)
+        if (this.data.cut_left > new_cut_left) {
           this.setData({
-            cut_left: this.data.info.windowWidth - this.data.width
+            cut_left: new_cut_left
           });
         }
       };
