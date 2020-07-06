@@ -28,7 +28,7 @@
     <!-- 输入框 -->
     <view class="contentBgView">
       <image class="content_image" src="../../images/feedBack_content.png"></image>
-      <textarea class="content_textarea" placeholder="请输入您的问题..." auto-height="true" placeholder-class="content_textarea_placehoulder" value="{{content}}" bindinput="textareaInput"></textarea>
+      <textarea class="content_textarea" placeholder="请输入您的问题..." auto-height="true" placeholder-class="content_textarea_placehoulder" value="{{content}}" bindinput="textareaInput" maxlength="600"></textarea>
     </view>
 
     <!-- 照片 -->

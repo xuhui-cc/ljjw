@@ -157,7 +157,7 @@
     </view>
     <!-- 评价内容 -->
     <view class="feedBack_evaluateTextArea_backgroundView">
-      <textarea class="feedBack_evaluateTextarea" placeholder="来写个评价吧..." placeholder-class="feedBack_evaluateTextarea_placehoulder" value="{{evaluateContent}}" bindinput="textareaInput" fixed="true"></textarea>
+      <textarea class="feedBack_evaluateTextarea" placeholder="来写个评价吧..." placeholder-class="feedBack_evaluateTextarea_placehoulder" value="{{evaluateContent}}" bindinput="textareaInput" fixed="true" maxlength="600"></textarea>
     </view>
     <!-- 提交按钮 -->
     <view class="feedBack_evaluate_submitButton" style="background-color:{{evaluateScore != 0 ? 'rgba(45,193,160,1)' : '#dedede'}}" bindtap="{{evaluateScore != 0 ? 'evaluateSubmit' : ''}}">提交</view>

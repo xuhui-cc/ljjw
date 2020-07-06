@@ -19,7 +19,8 @@ Page({
     stu_info:true,
     showNoData: true, // 是否展示无数据页面
     showClassPicker: false, // 是否展示班级选择器
-    showTopClassDot: false // 是否在导航栏班级 展示小红点
+    showTopClassDot: false, // 是否在导航栏班级 展示小红点
+    showNoPower: false // 是否无权限
   },
 
   /**
@@ -132,16 +133,17 @@ Page({
     // 判断登录状态
     this.setUpLogInStatus()
     console.log("角色是"+that.data.role)
-    // 刷新数据
-    this.reloadData(1, function(success, msg){
-      if(!success) {
-        wx.showToast({
-          title: msg,
-          icon: 'none',
-        })
-      }
-    })
-    
+    if (!this.data.showNoPower) {
+      // 刷新数据
+      this.reloadData(1, function(success, msg){
+        if(!success) {
+          wx.showToast({
+            title: msg,
+            icon: 'none',
+          })
+        }
+      })
+    }
   },
 
   /**
@@ -206,10 +208,18 @@ Page({
       })
       
     } else {
+      var showNoPower = false
+      if (role == 4) {
+        let stuinfo = wx.getStorageSync('stuinfo')
+        if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+          showNoPower = true
+        }
+      }
       this.setData({
         role: role*1,
         login:true,
         showNoData: role == 3 ? true : this.data.showNoData,
+        showNoPower: showNoPower
       })
     }
   },

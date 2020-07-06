@@ -41,7 +41,7 @@
             
             <!-- 回答textArea -->
             <view class="remark-layout">
-              <textarea class="remark" placeholder="点击输入文字......" placeholder-class="remark-placehoulder" data-task_type="{{1}}"  data-task_index="{{task_index}}" bindinput="type1_content" value="{{item.submit_content}}"></textarea>
+              <textarea class="remark" placeholder="点击输入文字......" placeholder-class="remark-placehoulder" data-task_type="{{1}}"  data-task_index="{{task_index}}" bindinput="type1_content" value="{{item.submit_content}}" maxlength="600"></textarea>
             </view>
 
             <!-- 添加照片 -->
@@ -92,7 +92,7 @@
               </view>
               <!-- 子标题备注 -->
               <view wx:if="{{task_detail.option_type == 2 || task_detail.option_type == 4}}" class="remark-layout">
-                <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}"  placeholder="说点什么吧……" placeholder-class="remark-placehoulder" data-task_type="{{2}}" bindinput="type1_content" value="{{options.submit_content}}"></textarea>
+                <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}"  placeholder="说点什么吧……" placeholder-class="remark-placehoulder" data-task_type="{{2}}" bindinput="type1_content" value="{{options.submit_content}}" maxlength="600"></textarea>
               </view>
               <!-- 子标题 添加照片 -->
               <view wx:if="{{task_detail.option_type >=3}}" class="add">添加照片</view>
@@ -139,7 +139,7 @@
                   </block>
                   <!-- 备注 -->
                   <view class="remark-layout" wx:if="{{task_detail.field_type == 2 || task_detail.field_type == 4}}">
-                    <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-fieldlist_index="{{fieldlist_index}}"  placeholder="说点什么吧……" data-task_type="{{3}}" value="{{type1_content}}" bindinput="type1_content" value="{{fieldlist.submit_content}}"></textarea>
+                    <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-fieldlist_index="{{fieldlist_index}}"  placeholder="说点什么吧……" data-task_type="{{3}}" value="{{type1_content}}" bindinput="type1_content" value="{{fieldlist.submit_content}}" maxlength="600"></textarea>
                   </view>
                   <!-- 添加照片 -->
                   <block wx:if="{{task_detail.field_type >=3}}">
@@ -223,7 +223,7 @@
       <view class="reject-title">驳回原因</view>
     </view>
     <view class="reject-cont-lay">
-      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='reject_for'></textarea>
+      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='reject_for' maxlength="600"></textarea>
     </view>
     <view wx:if="{{isreject}}" class="reject-sub" bindtap='reject'>确定</view>
     <view wx:else="{{isreject}}" class="reject-sub1" >确定</view>

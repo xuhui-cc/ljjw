@@ -14,6 +14,8 @@ Page({
 
     // 是否展示无数据页面
     showNoData: false,
+    // 是否无权限
+    noPower: false,
   },
 
   /**
@@ -37,25 +39,6 @@ Page({
       tea_class_index: e.detail.value
     })
     this.reloadData()
-    // var params = {
-    //   "token": wx.getStorageSync("token"),
-    //   "uid": wx.getStorageSync("uid"),
-    //   "class_id": that.data.tea_class[that.data.tea_class_index].id
-    // }
-    // console.log(params)
-    // app.ljjw.jwTeacherScoreMainPage(params).then(d => {
-    //   console.log(d)
-    //   if (d.data.status == 1) {
-    //     console.log(d.data.data)
-    //     that.setData({
-    //       tea_class: d.data.data.classes,
-    //       tea_mock_list: d.data.data.mock_list
-    //     })
-    //     console.log("老师成绩首页获取成功")
-    //   }
-
-
-    // })
   },
 
   stu_class_picker: function (e) {
@@ -200,9 +183,17 @@ Page({
       })
 
     } else {
+      var noPower = false
+      if (role == 4) {
+        let stuinfo = wx.getStorageSync('stuinfo')
+        if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+          noPower = true
+        }
+      }
       that.setData({
         role: role,
-        login: true
+        login: true,
+        noPower: noPower
       })
     }
   },

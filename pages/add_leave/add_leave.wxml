@@ -68,7 +68,7 @@
       <view class="tobelea-cour-shu"></view>
       <view class="tobelea-cour-title">请假事由</view>
     </view>
-    <textarea class="tobelea-cour-cont" placeholder="请输入请假事由..." bindinput='lea_for'></textarea>
+    <textarea class="tobelea-cour-cont" placeholder="请输入请假事由..." bindinput='lea_for' maxlength="600"></textarea>
   
   
   

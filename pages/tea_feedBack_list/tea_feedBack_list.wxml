@@ -157,7 +157,7 @@
     </view>
     <!-- 输入框 -->
     <view class="feedBackDeal_inputVBgView">
-      <textarea class="feedBackDeal_textarea" fixed="true" placeholder="{{dealData.dealPlacehoulder}}" placeholder-class="feedBackDeal_textarea_placehoulder" value="{{dealData.dealContent}}" bindinput="feedbackDealTextareaInput"></textarea>
+      <textarea class="feedBackDeal_textarea" fixed="true" placeholder="{{dealData.dealPlacehoulder}}" placeholder-class="feedBackDeal_textarea_placehoulder" value="{{dealData.dealContent}}" bindinput="feedbackDealTextareaInput" maxlength="600"></textarea>
     </view>
     <!-- 上传图片 -->
     <view class="feedBackDeal_imageView">

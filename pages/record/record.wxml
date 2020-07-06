@@ -18,11 +18,14 @@
       </picker>
     </view>
   </view>
-  <!-- 导航栏结束 -->
 
-  <view wx:if="{{showNoData}}">
-    <image class="mull-img" src="../../images/rec_null.png" mode="aspectFit"></image>
-  </view>
+  <!-- 无数据 -->
+  <block wx:if="{{noPower}}">
+    <null_image title="暂无权限" type="1"></null_image>
+  </block>
+  <block wx:elif="{{showNoData}}">
+    <null_image title="暂无内容" type="1"></null_image>
+  </block>
 
   <view wx:else>
 
@@ -45,11 +48,7 @@
 
         </view>
       </view>
-        
-
-      <image wx:if="{{stu_score == ''}}" class="mull-img" src="../../images/tera_record_null.png"></image>
     </view>
-    <!-- 学生角色结束 -->
 
     <!-- 老师角色 -->
     <view class="stu-rec" wx:elif="{{role <= 2}}">
@@ -72,21 +71,7 @@
 
         </view>
       </view>
-
-      <image wx:if="{{tea_mock_list == ''}}" class="mull-img" src="../../images/rec_null.png"></image>
-    
     </view>
-    <!-- 老师角色 -->
-
-    <view  wx:else="{{role == 3}}">
-      <image class="mull-img" src="../../images/rec_null.png"></image>
-    </view>
-
   </view>
-
-
-
-
-
 </view>
 <!-- container -->

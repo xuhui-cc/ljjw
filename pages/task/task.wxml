@@ -23,9 +23,12 @@
   <!-- 导航栏结束 -->
 
   <!-- 加载空页面 -->
-  <view wx:if="{{showNoData}}">
-    <image class='task-null' src='../../images/null.png'></image>
-  </view>
+  <block wx:if="{{showNoPower}}">
+    <null_image title="暂无权限" type="6"></null_image>
+  </block>
+  <block wx:elif="{{showNoData}}">
+    <null_image title="暂无任务内容" type="6"></null_image>
+  </block>
 
   <!-- 加载数据 -->
   <view wx:else class="showContent" style="margin-top:{{naviBarHeight}}px;">

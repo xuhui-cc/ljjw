@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "calendar": "/components/calendar/calendar"
+    "calendar": "/components/calendar/calendar",
+    "null_image": "../../components/null_image/null_image"
   },
   "navigationStyle": "custom",
   "enablePullDownRefresh": true

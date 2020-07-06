@@ -139,7 +139,14 @@ App({
 
         if (role && role == 4) {
           let stuinfo = data.stuinfo
-          wx.setStorageSync('stuinfo', stuinfo)
+          if (stuinfo) {
+            let oldStuInfo = wx.getStorageSync('stuinfo')
+            if (stuinfo.ifused != oldStuInfo.ifused) {
+              that.clearLocalInfo()
+              return
+            }
+            wx.setStorageSync('stuinfo', stuinfo)
+          }
         } else {
           try {
             wx.removeStorageSync('stuinfo')
