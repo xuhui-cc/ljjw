@@ -39,7 +39,7 @@
           <view class="classPickerView_Button" bindtap="classPickerViewCancel">取消</view>
           <view class="classPickerView_Button" style="color:rgb(39,188,86)" bindtap="classPickerViewSure">确定</view>
         </view>
-        <picker-view indicator-style="height: 50px;" class="classPickerView" bindpickend="classPickerScrollEnd" bindpickstart="classPickerScrollStart" bindchange="stu_class_picker">
+        <picker-view indicator-style="height: 50px;" class="classPickerView" bindpickend="classPickerScrollEnd" bindpickstart="classPickerScrollStart" bindchange="stu_class_picker" value="{{role== 4 ? [stu_class_index] : [tea_class_index]}}">
           <picker-view-column>
             <block wx:if="{{role==4}}">
               <block wx:for="{{stu_class}}" wx:key="class_id">

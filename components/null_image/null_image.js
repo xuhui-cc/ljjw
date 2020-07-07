@@ -19,6 +19,11 @@ Component({
     type: {
       type: Number,
       value: 1
+    },
+
+    z_index: {
+      type: Number,
+      value: -1
     }
   },
 

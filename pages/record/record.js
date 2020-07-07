@@ -99,22 +99,14 @@ Page({
    */
   onShow: function () {
     let that = this
-    // if (typeof that.getTabBar === 'function' &&
-    //   that.getTabBar()) {
-    //   console.log('record_onshow')
-    //   that.getTabBar().setData({
-    //     selected: 1
-    //   })
-    // }
-    // else {
-    //   console.log('未执行')
-    // }
 
     // 获取登录状态及角色
     that.setUpLogInStatus()
 
     // 加载数据
-    that.reloadData()
+    if (!this.data.noPower) {
+      that.reloadData()
+    }
   },
 
   /**

@@ -34,7 +34,10 @@ Page({
     // audoc:true,
     dot_riqi:[],
     dot_work: [],
-    lea_date_arr:[]
+    lea_date_arr:[],
+
+    // 是否无权限
+    noPower: false
   },
   //事件处理函数
   
@@ -611,7 +614,9 @@ Page({
     this.initUserInfoData()
 
     // 加载数据
-    that.loadData(that.data.nowDate)
+    if (!this.data.noPower) {
+      that.loadData(that.data.nowDate)
+    }
 
   },
 
@@ -773,7 +778,13 @@ Page({
       })
       
       if(that.data.role == 4){
+        let noPower = false
+        let stuinfo = wx.getStorageSync('stuinfo')
+        if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+          noPower = true
+        }
         that.setData({
+          noPower: noPower,
           stu_sta: wx.getStorageSync("stu_sta")
         })
       }
@@ -1736,6 +1747,10 @@ Page({
     that.setData({
       type : type
     })
+
+    if (that.data.noPower) {
+      return
+    }
     var riqi = ""
     if (that.data.clickDate) {
       riqi = that.data.clickDate
@@ -1759,6 +1774,9 @@ Page({
     that.setData({
       aud:aud
     })
+    if (that.data.noPower) {
+      return
+    }
     if (that.data.role == 4){
       //学生
       that.studentGetLeaveList()

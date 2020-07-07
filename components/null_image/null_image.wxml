@@ -1,5 +1,5 @@
 <!--components/null_image/null_image.wxml-->
-<view class="noPowerView">
+<view class="noPowerView" style="z-index:{{z_index}};">
   <image class="noPower_Image" src="{{srcDic[type]}}" mode="aspectFit"></image>
   <text class="noPower_title">{{title}}</text>
 </view>
