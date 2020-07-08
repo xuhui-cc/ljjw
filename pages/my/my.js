@@ -596,7 +596,7 @@ Page({
   to_feedBack: function(e) {
     // console.log(e)
     let stuinfo = wx.getStorageSync('stuinfo')
-    if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+    if (!stuinfo || !stuinfo.checked || stuinfo.checked == 0 || !stuinfo.ifused || stuinfo.ifused == 0) {
       wx.showToast({
         title: '暂无权限',
         icon: 'none'
@@ -623,7 +623,7 @@ Page({
   */
   to_student_data: function () {
     let stuinfo = wx.getStorageSync('stuinfo')
-    if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+    if (!stuinfo || !stuinfo.checked || stuinfo.checked == 0 || !stuinfo.ifused || stuinfo.ifused == 0) {
       wx.showToast({
         title: '暂无权限',
         icon: 'none'
@@ -649,7 +649,7 @@ Page({
   */
   to_class_data: function () {
     let stuinfo = wx.getStorageSync('stuinfo')
-    if (stuinfo && stuinfo.ifused && stuinfo.ifused == 0) {
+    if (!stuinfo || !stuinfo.checked || stuinfo.checked == 0 || !stuinfo.ifused || stuinfo.ifused == 0) {
       wx.showToast({
         title: '暂无权限',
         icon: 'none'

@@ -277,6 +277,9 @@ Page({
     })
   },
 
+  /**
+   * 选择图片类型弹框 相机/相册/取消按钮 点击事件
+  */
   pictureTypeButtonClicked: function(e) {
     // console.log(e)
     let that = this

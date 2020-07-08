@@ -271,9 +271,13 @@ Page({
 
   leafor_reason:function(e){
     let that = this
-    console.log(e.detail.value)
+    // console.log(e.detail.value)
+    let value = e.detail.value
+    if (value == ' ') {
+      value = ''
+    }
     that.setData({
-      input_reason: e.detail.value
+      input_reason: value
     })
   },
 

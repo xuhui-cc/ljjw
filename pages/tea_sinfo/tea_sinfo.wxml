@@ -16,8 +16,8 @@
   </view>
   <!-- 导航栏结束 -->
 
-  <block wx:if="{{!dataarr || dataarr.length == 0}}">
-    <image class="nullImage" src="../../images/null.png" mode="aspectFit"></image>
+  <block wx:if="{{!dataarr || dataarr=='' || dataarr.length == 0}}">
+    <null_image title="该班级暂无学员" type="7"></null_image>
   </block>
   
   <block wx:else>

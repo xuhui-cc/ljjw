@@ -1,7 +1,7 @@
 page{
   background: rgba(251,251,252,1)
 }
-.nabigation_bar{
+.navigationBar {
   position: fixed;
   width:750rpx;
   height:176rpx;
@@ -9,6 +9,34 @@ page{
   opacity:1;
   display: flex;
   z-index: 100;
+}
+
+.navigation_content {
+  width: 750rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigation_backView {
+  width: 100rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.navigation_backImage {
+  width: 27.11rpx;
+  height: 27.11rpx;
+  margin-left: 32rpx;
+}
+
+.navgation_title {
+  color: white;
+  font-size: 34rpx;
+  font-weight: bold;
 }
 .my-head{
   /* margin-left: 341rpx; */
@@ -30,9 +58,7 @@ page{
   width: 27rpx;
   height: 27rpx;
 }
-.layout{
-  /* margin-top: 176rpx; */
-}
+
 .submit{
   margin-left: 30rpx;
   margin-top: 94rpx;
@@ -105,4 +131,37 @@ page{
   margin-top: 36rpx;
   width:18rpx;
   height:18rpx;
+}
+
+.pictureGet_bgView {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: flex-end;
+  z-index: 102;
+}
+
+.pictureGet_View {
+  height: 320rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20rpx 20rpx 0 0;
+  background-color: rgb(226, 226, 226);
+  overflow: hidden;
+}
+
+.pictureGet_button {
+  background-color: white;
+  color: #272727;
+  font-size: 32rpx;
+  height: 99rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

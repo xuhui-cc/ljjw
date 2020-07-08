@@ -99,42 +99,8 @@ Page({
           that.setData({
             dayCourse: d.data.data
           })
-
-          // var addNewSelectedDay = true
-          // for (var i = 0; i <that.data.lea_date_arr1.length; i++) {
-          //   var selectedDay = that.data.lea_date_arr1[i]
-          //   if (selectedDay.date == e.detail.value) {
-          //     addNewSelectedDay = false
-          //   }
-          // }
-
-          // if (addNewSelectedDay) {
-          //   var newarray1 = [{
-          //     date: e.detail.value,
-          //     hh: []
-          //   }];
-  
-  
-          //   this.setData({
-          //     'lea_date_arr1': this.data.lea_date_arr1.concat(newarray1)
-          //   });
-          // }
           
           for (var j = 0; j < that.data.dayCourse.length; j++) {
-            // for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
-
-            //   if (that.data.leave_stu_time == that.data.lea_date_arr1[i].date) {
-            //     for (var qq = 0; qq < that.data.lea_date_arr1[i].hh.length; qq++) {
-            //       if (that.data.lea_date_arr1[i].hh[qq][2] == that.data.dayCourse[index].id) {
-            //         that.data.lea_date_arr1[i].hh.splice(qq, 1)
-            //       }
-            //     }
-  
-  
-  
-            //   }
-  
-            // }
             var selected = false
             var course = that.data.dayCourse[j]
             for(var i = 0; i < that.data.lea_date_arr1.length; i++) {
@@ -358,11 +324,15 @@ Page({
   //请假原因填写
   lea_for:function(e){
     let that = this
-    console.log(e.detail.value)
+    // console.log(e.detail.value)
+    let value = e.detail.value
+    if (value == ' ') {
+      value = ''
+    }
     that.setData({
-      lea_for: e.detail.value
+      lea_for: value
     })
-    if (that.data.lea_for != '' && that.data.lea_date_arr1 != '') {
+    if (value != '' && that.data.lea_date_arr1 != '') {
       for (var i = 0; i < that.data.lea_date_arr1.length; i++) {
         if (that.data.lea_date_arr1[i].hh != '') {
           if (that.data.promise) {

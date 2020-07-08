@@ -282,6 +282,9 @@ Page({
   textareaInput: function (e) {
     // console.log(e)
     let newContent = e.detail.value
+    if (newContent == ' ') {
+      newContent = ''
+    }
     this.setData({
       content: newContent
     })

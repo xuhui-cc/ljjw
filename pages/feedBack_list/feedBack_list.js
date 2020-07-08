@@ -746,7 +746,9 @@ Page({
   textareaInput: function(e) {
     // console.log(e)
     let newcontent = e.detail.value
-    
+    if (newcontent == ' ') {
+      newcontent = ''
+    }
     this.setData({
       evaluateContent: newcontent
     })

@@ -1,12 +1,17 @@
 <view class="container">
 
-    <!-- <view class="nabigation_bar">
-      <image class='back-img' src='../../images/back_img.png' bindtap="back"></image>
-      <text class="my-head">完善基础信息</text> 
-    </view> -->
+  <!-- 导航 -->
+  <view class="navigationBar" style="height:{{pageSize.naviHeight}}px">
+    <view class="navigation_content" style="height:{{pageSize.naviContentHeight}}px; margin-top:{{pageSize.statusBarHeight}}px;">
+      <view class="navigation_backView" bindtap="naviBackClicked">
+        <image class="navigation_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <view class="navgation_title">完善基础信息</view>
+      <view class="navigation_backView"></view>
+    </view>
+  </view>
 
-
-  <view class="layout">
+  <view style="margin-top:{{pageSize.naviHeight}}px;">
     <view class="flex">
       <view class="shu"></view>
       <view class="info-tltle">我的头像</view>
@@ -97,19 +102,15 @@
   </view>
 
   <view class='submit' bindtap="submit" style="{{issubmit ? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}">提交</view>
+</view>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- container -->
+<!-- actionsheet 弹框 -->
+<view class="pictureGet_bgView" wx:if="{{showPictureTypeSelect}}">
+  <view class="pictureGet_View" style="height:{{pageSize.safeareaBottom + 318/750.0*pageSize.screenWidth}}px">
+    <view class="pictureGet_button" style="margin-top:0rpx;" bindtap="pictureTypeButtonClicked" data-type="1">拍照</view>
+    <view class="pictureGet_button" style="margin-top:1rpx;" bindtap="pictureTypeButtonClicked" data-type="2">从手机相册选择</view>
+    <view class="pictureGet_button" style="margin-top:20rpx;" bindtap="pictureTypeButtonClicked" data-type="3">取消</view>
+    <view style="width:100%; height:{{pageSize.safeareaBottom}}px; background-color:white;"></view>
+  </view>
 </view>

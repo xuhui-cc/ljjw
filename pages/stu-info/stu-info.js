@@ -13,12 +13,17 @@ Page({
     stu_class_index:-1,
     sex_index :0 ,
     graduation_time: '请选择',
+
+    // 是否展示选择图片类型弹框
+    showPictureTypeSelect: false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getPageSize()
+
     let that = this
     var type = options.type
     that.setData({
@@ -100,12 +105,6 @@ Page({
 
       })
     }
-    
-
-
-
-
-
   },
 
 
@@ -126,55 +125,7 @@ Page({
     return Y + M;
   },
 
-  chooseImg() {
-    let that = this;
-    wx.chooseImage({
-      sourceType: ['album', 'camera'],
-      success: (res) => {
-        let tempFilePaths = res.tempFilePaths;
-        console.log(tempFilePaths)
-
-        var token = wx.getStorageSync('token');
-        wx.uploadFile({
-          url: app.ljjw.getUploadFileURI(),
-          filePath: tempFilePaths[0],
-          name: 'file',
-          
-          formData: {
-            'file': tempFilePaths[0],
-            "token": token,
-            "action": "jwUploadAvatar", //action=uploads&authhash=445454554
-          },
-          header: {
-            'content-type': 'multipart/form-data'
-          },
-          success(r) {
-            console.log(r)
-            let d = JSON.parse(r.data);
-            console.log(d.data)
-            if(d.status == 1){
-              that.setData({
-                avatar : d.data
-              })
-              // console.log(that.data.input_name + "=======that.data.input_name")
-              //提交判断
-              that.chargeCanSubmit()
-              //提交判断结束
-            }
-          }
-        })
-          
-
-
-        
-
-          
-       
-        }
-
-      
-    })
-  },
+  
 
   sex_picker: function (e) {
     let that = this
@@ -370,7 +321,7 @@ Page({
 
   },
 
-
+//----------------------------------------------私有方法--------------------------------------------
   /**
    * 判断是否可以提交
   */
@@ -409,5 +360,211 @@ Page({
       issubmit:issubmit
     })
     console.log(that.data.issubmit)
+  },
+
+  /**
+   * 获取页面辅助尺寸
+  */
+  getPageSize: function() {
+    let systemInfo = wx.getSystemInfoSync()
+    let menuBounding = wx.getMenuButtonBoundingClientRect()
+    let naviHeight = menuBounding.bottom + 10
+    let statusBarHeight = systemInfo.statusBarHeight
+    let safeareaBottom = systemInfo.windowHeight - systemInfo.safeArea.bottom
+
+    this.setData({
+      pageSize: {
+        naviHeight: naviHeight,
+        statusBarHeight: statusBarHeight,
+        naviContentHeight: naviHeight - statusBarHeight,
+        safeareaBottom: safeareaBottom,
+        screenWidth: systemInfo.screenWidth
+      }
+    })
+  },
+
+  /**
+   * 跳转至图片编辑页
+  */
+  gotoPictureEditPage: function (path) {
+    wx.navigateTo({
+      url: "../../pages/avatar_edit/avatar_edit?path="+path
+    })
+  },
+
+  // --------------------------------------------------接口----------------------------------------
+  /**
+   * 上传图片
+  */
+  uploadAvatar: function(path) {
+    let that = this
+    var token = wx.getStorageSync('token');
+    wx.showLoading({
+      title: '上传中',
+    })
+    wx.uploadFile({
+      url: app.ljjw.getUploadFileURI(),
+      filePath: path,
+      name: 'file',
+      
+      formData: {
+        'file': path,
+        "token": token,
+        "action": "jwUploadAvatar", //action=uploads&authhash=445454554
+      },
+      header: {
+        'content-type': 'multipart/form-data'
+      },
+      success(r) {
+        console.log(r)
+        let d = JSON.parse(r.data);
+        if(d.status == 1){
+          that.setData({
+            avatar : d.data
+          })
+          // console.log(that.data.input_name + "=======that.data.input_name")
+          //提交判断
+          that.chargeCanSubmit()
+          //提交判断结束
+        }
+        wx.hideLoading({
+          success: (res) => {},
+        })
+      },
+      fail (res) {
+        console.log('上传失败')
+        console.log(res)
+        wx.hideLoading({
+          success: (res) => {},
+        })
+      }
+    })
+  },
+
+  //-------------------------------------------------点击事件---------------------------------------
+  /**
+   * 导航栏 返回按钮 点击事件
+  */
+  naviBackClicked : function() {
+    wx.navigateBack({
+      complete: (res) => {},
+    })
+  },
+  /**
+   * 选择头像 点击事件
+  */
+  chooseImg() {
+    this.setData({
+      showPictureTypeSelect: true,
+    })
+    // let that = this;
+    // wx.chooseImage({
+    //   sourceType: ['album', 'camera'],
+    //   success: (res) => {
+    //     let tempFilePaths = res.tempFilePaths;
+    //     console.log(tempFilePaths)
+
+    //     var token = wx.getStorageSync('token');
+    //     wx.uploadFile({
+    //       url: app.ljjw.getUploadFileURI(),
+    //       filePath: tempFilePaths[0],
+    //       name: 'file',
+          
+    //       formData: {
+    //         'file': tempFilePaths[0],
+    //         "token": token,
+    //         "action": "jwUploadAvatar", //action=uploads&authhash=445454554
+    //       },
+    //       header: {
+    //         'content-type': 'multipart/form-data'
+    //       },
+    //       success(r) {
+    //         console.log(r)
+    //         let d = JSON.parse(r.data);
+    //         console.log(d.data)
+    //         if(d.status == 1){
+    //           that.setData({
+    //             avatar : d.data
+    //           })
+    //           // console.log(that.data.input_name + "=======that.data.input_name")
+    //           //提交判断
+    //           that.chargeCanSubmit()
+    //           //提交判断结束
+    //         }
+    //       }
+    //     })
+          
+
+
+        
+
+          
+       
+    //     }
+
+      
+    // })
+  },
+
+  /**
+   * 选择图片类型弹框 相机/相册/取消按钮 点击事件
+  */
+  pictureTypeButtonClicked: function(e) {
+    // console.log(e)
+    let that = this
+    let type = (e.currentTarget.dataset.type)*1
+    switch(type) {
+      case 1: {
+        //相机
+        wx.chooseImage({
+          count: 1,
+          sourceType: ['camera'],
+          success (res) {
+            if (res.tempFilePaths && res.tempFilePaths.length >= 1) {
+              let path = res.tempFilePaths[0]
+              that.gotoPictureEditPage(path)
+            }
+          },
+          fail (res) {
+            console.log('打开相机失败')
+            console.log(res)
+          }
+        })
+        this.setData({
+          showPictureTypeSelect: false
+        })
+        break
+      }
+      case 2: {
+        // 相册
+        this.setData({
+          showPictureTypeSelect: false
+        })
+        wx.chooseImage({
+          count: 1,
+          sourceType: ['album'],
+          success (res) {
+            // console.log(res)
+            if (res.tempFilePaths && res.tempFilePaths.length >= 1) {
+              let path = res.tempFilePaths[0]
+              that.gotoPictureEditPage(path)
+            }
+          },
+          fail (res) {
+            console.log('打开相册失败')
+            console.log(res)
+          }
+        })
+        
+        break
+      }
+      case 3: {
+        //取消
+        this.setData({
+          showPictureTypeSelect: false
+        })
+        break
+      }
+    }
   }
 })

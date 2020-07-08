@@ -595,7 +595,10 @@ Page({
     
 
     var content = e.detail.value
-    console.log(content)
+    // console.log(content)
+    if (content == ' ') {
+      content = ''
+    }
     var task = that.data.task[task_index]
     if (task_type == 1){
       var cs = "task[" + task_index + "].submit_content"
@@ -800,11 +803,15 @@ Page({
 
   reject_for:function(e){
     let that = this
-    console.log(e.detail.value)
+    // console.log(e.detail.value)
+    let value = e.detail.value
+    if (value == ' ') {
+      value = ''
+    }
     that.setData({
-      reject_reason: e.detail.value
+      reject_reason: value
     })
-    if (e.detail.value != ''){
+    if (value != ''){
       that.setData({
         isreject: true
       })

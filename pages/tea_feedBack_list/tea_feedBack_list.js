@@ -270,6 +270,7 @@ Page({
       let typeItem = this.data.typeList[this.data.selectedTypeIndex]
       params.sort_id = typeItem.id
     }
+    // app.ljjw.testAPi('getTeacherFeedbackList', params).then(d=>{
     app.ljjw.getTeacherFeedbackList(params).then(d=>{
       let status = d.data.status
       if (status == 1) {
@@ -814,6 +815,9 @@ Page({
   feedbackDealTextareaInput: function(e) {
     console.log(e)
     let content = e.detail.value
+    if (content == ' ') {
+      content = ''
+    }
     let contentCHange = "dealData.dealContent"
     this.setData({
       [contentCHange]: content

@@ -25,7 +25,10 @@ Page({
   input_title:function(e){
     let that = this
     var title = e.detail.value
-    console.log(title)
+    // console.log(title)
+    if (title == ' ') {
+      title = ''
+    }
     that.setData({
       title : title
     })

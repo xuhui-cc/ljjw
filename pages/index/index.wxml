@@ -8,7 +8,7 @@
       <view class="reject-title">驳回原因</view>
     </view>
     <view class="reject-cont-lay">
-      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='leafor_reason' maxlength="600"></textarea>
+      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='leafor_reason' maxlength="600" value="{{input_reason}}"></textarea>
     </view>
     <view class="reject-sub" style="{{input_reason? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{input_reason?'reject_pass':''}}">确定</view>
   
@@ -64,7 +64,7 @@
       <!-- 考勤页 -->
       <view  wx:if="{{type == 3}}">
         <!-- 考勤日历 -->
-        <calendar bind:dayClicked="dayClicked" bind:datePeriodChange="datePeriodChange" top="{{naviBarHeight + (10/750 * naviBarWidth)}}px" dots="{{dots}}" colors="{{calendarColors}}"></calendar>
+        <calendar bind:dayClicked="dayClicked" bind:datePeriodChange="datePeriodChange" top="{{naviBarHeight + (10/750 * naviBarWidth)}}px" dots="{{dots}}"></calendar>
       
         <block wx:if="{{noPower}}">
           <null_image title="暂无权限" type="2" z_index="-1"></null_image>
@@ -141,7 +141,7 @@
 
         <!-- 已审核 -->
         <view wx:elif="{{aud == 1}}">
-          <block wx:if="{{!leave || !leave == '' || !leave.length == 0}}">
+          <block wx:if="{{!leave || leave == '' || leave.length == 0}}">
             <null_image title="暂无请假内容" type="4" z_index="-1"></null_image>
           </block>
           <block wx:else>
@@ -269,7 +269,7 @@
         </block>
         <!-- 课表为空 -->
         <block wx:else>
-          <image class='course_null' src='../../images/course_null.png'></image>
+          <null_image title="暂无课程安排" type="3" z_index="-1"></null_image>
         </block>
       </view>
 
@@ -332,7 +332,7 @@
 
         <!-- 课表为空 -->
         <view wx:if="{{tea_dayCourse == ''}}">
-          <image class='course_null' src='../../images/Checkon_null.png'></image>
+          <null_image title="暂无考勤内容" type="2" z_index="-1"></null_image>
         </view>
         <!-- 空课表 -->
         

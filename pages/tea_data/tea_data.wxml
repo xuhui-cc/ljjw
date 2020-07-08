@@ -90,7 +90,7 @@
   </view>
 
   <view wx:if="{{!files || files == '' || files.length == 0}}">
-    <image class='file_null_img' src='../../images/file_null.png' mode="aspectFit"></image>
+    <null_image title="暂无班级资料" type="5"></null_image>
   </view>
   <!-- 清晰搜索 -->
 

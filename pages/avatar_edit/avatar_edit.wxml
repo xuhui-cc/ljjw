@@ -12,7 +12,7 @@
   </view>
 
   <block wx:if="{{pageSize}}">
-    <image-cropper id="image-cropper" width="{{pageSize.screenWidth-6}}" height="{{pageSize.screenWidth-6}}" max_width="{{pageSize.screenWidth-6}}" max_height="{{pageSize.screenWidth-6}}" limit_move="{{true}}" imgSrc="{{imagePath}}" disable_ratio="{{true}}" bindload="cropperload" bindimageload="loadimage" bindtapcut="clickcut"></image-cropper>
+    <image-cropper id="image-cropper" width="{{pageSize.screenWidth-6}}" height="{{pageSize.screenWidth-6}}" max_width="{{pageSize.screenWidth-6}}" max_height="{{pageSize.screenWidth-6}}" limit_move="{{true}}" imgSrc="{{imagePath}}" disable_ratio="{{true}}" bindload="cropperload" bindimageload="loadimage" bindtapcut="clickcut" quality="0.5"></image-cropper>
   </block>
 
   <!-- 底部按钮 -->

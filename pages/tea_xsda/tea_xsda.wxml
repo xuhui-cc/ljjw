@@ -19,8 +19,8 @@
       <view wx:else="{{aud == 1}}" class="reject-title">学生概况</view>
     </view>
     <view class="reject-cont-lay">
-      <textarea wx:if="{{aud == 0}}" class="reject-for" placeholder="请输入该学生学情分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition' maxlength="600"></textarea>
-      <textarea wx:else="{{aud == 1}}" class="reject-for" placeholder="请输入该学生概况分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition' maxlength="600"></textarea>
+      <textarea wx:if="{{aud == 0}}" class="reject-for" placeholder="请输入该学生学情分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition' maxlength="600" value="{{input_condition}}"></textarea>
+      <textarea wx:else="{{aud == 1}}" class="reject-for" placeholder="请输入该学生概况分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition' maxlength="600" value="{{input_condition}}"></textarea>
     </view>
     <view class="reject-sub" style="{{input_condition? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{input_condition?'add_submit':''}}">确定</view>
   

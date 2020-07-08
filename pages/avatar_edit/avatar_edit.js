@@ -82,8 +82,8 @@ Page({
     let menuBounding = wx.getMenuButtonBoundingClientRect()
     let naviHeight = menuBounding.bottom + 10
     let statusBarHeight = systemInfo.statusBarHeight
-    let safeareaBottom = systemInfo.windowHeight - systemInfo.safeArea.bottom
-
+    let safeareaBottom = systemInfo.screenHeight - systemInfo.safeArea.bottom
+    console.log("屏幕高度:"+systemInfo.screenHeight+"  safearea底部:"+systemInfo.safeArea.bottom)
     this.setData({
       pageSize: {
         naviHeight: naviHeight,
@@ -151,11 +151,15 @@ Page({
       console.log(res)
       let path = res.url
       let pages = getCurrentPages();
-      if (pages.length >= 2) {
-        let prePage = pages[pages.length-2]
-        prePage.uploadAvatar(path)
-      }
-      that.naviBackClicked()
+      
+      wx.navigateBack({
+        success (res) {
+          if (pages.length >= 2) {
+            let prePage = pages[pages.length-2]
+            prePage.uploadAvatar(path)
+          }
+        },
+      })
       that.submiting = false
     })
   }

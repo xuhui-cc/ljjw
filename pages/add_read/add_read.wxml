@@ -6,7 +6,7 @@
     <text class="my-head">创建每日晨读</text> 
   </view> -->
 
-    <textarea class="read-cont" placeholder="点击输入文字……" bindinput='input_title' maxlength="600"></textarea>
+    <textarea class="read-cont" placeholder="点击输入文字……" bindinput='input_title' maxlength="600" value="{{title}}"></textarea>
 
   <view class="tjzp">添加照片</view>
 
