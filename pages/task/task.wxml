@@ -64,7 +64,7 @@
 
     <!-- 老师或教务显示 -->
     <block wx:if="{{role <= 2}}">
-      <view wx:if="{{add}}">
+      <view wx:if="{{add}}" style="z-index:99; background-color:white; position:absolute;">
         <image class="add-kuang" src="../../images/kuang.png"></image>
         <view data-addtype='{{1}}' bindtap="to_add_read">
         <image class="add_read" src="../../images/add_read.png"></image>
@@ -90,9 +90,9 @@
           </view>
         </view>
         
-        <scroll-view class="csmorningRead_scrollView" scroll-x="true">
+        <scroll-view class="csmorningRead_scrollView" scroll-x="true" enable-flex="true">
           <block wx:for="{{csmorningRead.pics}}" wx:key="img_index" >
-            <image class='read-img' data-xb='{{index}}' bindtap='previewImg' src='{{item}}' style="margin-left:{{index==0?0:30}}rpx"></image>
+            <image class='read-img' data-xb='{{index}}' bindtap='previewImg' src='{{item}}' style="margin-left:{{index==0?0:30}}rpx;"></image>
           </block>
         </scroll-view>
       </view>

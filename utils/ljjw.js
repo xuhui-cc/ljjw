@@ -154,7 +154,7 @@ function jwTeacherClassFiles(params) {
 
 //老师学生档案
 function jwTeacherClassStudents(params) {
-  return fetch.ljjwfetch(URI, 'jwTeacherClassStudents', params, "老师学生档案")
+  return fetch.ljjwfetch(URI, 'jwTeacherClassStudents', params, "老师学生档案", true)
 }
 
 //老师某一天课程
