@@ -49,9 +49,4 @@
 
   <image wx:if="{{mydata == ''}}" class="null_img" src="../../images/rec_null.png"></image>
   <!-- 清晰搜索 -->
-
-
-
-
-
 </view>

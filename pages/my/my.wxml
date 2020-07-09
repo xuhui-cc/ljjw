@@ -9,10 +9,10 @@
     <view class="my-info" style="margin-top:{{naviBarHeight}}px">
       <image class="my-ava" src="../../images/avatar_null.png"></image>
 
-      <view class="state-layout">
+      <!-- <view class="state-layout"> -->
         <!-- <view class="no_login">请登录</view> -->
         <button class="no_login" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">请登录</button>
-      </view>
+      <!-- </view> -->
     </view>
   </view>
 

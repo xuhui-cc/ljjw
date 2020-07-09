@@ -97,7 +97,7 @@
       <!-- 请假页 -->
       <view wx:if="{{type == 1}}">
         <!-- 待审核/已审核 菜单 -->
-        <view class="aud_cs" style="margin-top:{{naviBarHeight}}px;">
+        <view class="aud_cs" style="top:{{naviBarHeight}}px;">
           <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
           <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
         </view>
@@ -105,30 +105,36 @@
           <null_image title="暂无权限" type="4" z_index="-1"></null_image>
         </block>
         <!-- 待审核 -->
-        <view wx:elif="{{aud == 0}}">
+        <block wx:elif="{{aud == 0}}">
           <block wx:if="{{!leave || leave == '' || leave.length == 0}}">
             <null_image title="暂无请假内容" type="4" z_index="-1"></null_image>
           </block>
           <block wx:else>
-            <view class="leave-layout2">
-              <view wx:for="{{leave}}" wx:key="index">
+            <view class="leave-layout2" style="margin-top:{{naviBarHeight + 88/750.0*screenWidth}}px;">
+              <!-- 遍历假条 -->
+              <block wx:for="{{leave}}" wx:key="index">
                 <view class="leave">
-                  <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
+                  <block wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
                     <text class="lea-time">请假时间：{{ask.date}}</text>
-                    <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
+                    <block wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
                       <text class="lea-course">请假课程：{{cs}}</text>
-                    </view>
-                  </view>
+                    </block>
+                  </block>
 
                   <text class="lea-for">请假事由：{{item.reason}}</text>
                   <view class="heng2"></view>
-                  <view class="step">
-                    <image class="gc" src="../../images/gc.png"></image>
-                    <text class="lea-sta">发起</text>
-                    <text class="apply-time">{{item.createtime}}</text>
+                  <view class="verifyStatus" style="height:92rpx;">
+                    <view class="verifyStatus_subView">
+                      <!-- 小圆点 -->
+                      <view class="verifyStatus_circle" style="border:3rpx solid #46bf6a;"></view>
+                      <!-- 审核状态 -->
+                      <view class="verifyStatus_title" style="color:#272727">发起</view>
+                    </view>
+                    <!-- 操作时间 -->
+                    <view class="verifyStatus_time">{{item.createtime}}</view>
                   </view>
                 </view>
-              </view>
+              </block>
             </view>
           </block>
 
@@ -137,7 +143,7 @@
             <image class="add-img" src="../../images/add.png"></image>
             <text class="add-new">新建</text>
           </view>
-        </view>
+        </block>
 
         <!-- 已审核 -->
         <view wx:elif="{{aud == 1}}">
@@ -145,7 +151,7 @@
             <null_image title="暂无请假内容" type="4" z_index="-1"></null_image>
           </block>
           <block wx:else>
-            <view class="leave-layout2">
+            <view class="leave-layout2" style="margin-top:{{naviBarHeight+88/750.0*screenWidth}}px">
               <view wx:for="{{leave}}" wx:key="index" wx:for-key="item_index">
                 <view class="auded-leave">
                   <!-- 超时提醒 -->
@@ -157,7 +163,7 @@
                   <view wx:for="{{item.ask_info}}" wx:key="ask_index" wx:for-item="ask">
                     
                     <!-- 请假时间 & 状态 -->
-                    <view class="hm-flex">
+                    <view class="hm-flex" style="height:85rpx; align-item:center;">
                       <text class="lea-time">请假时间：{{ask.date}}</text>
                       <block  wx:if="{{index == 0}}">
                         <view class="auded-result" style="color:{{item.statusColor}};">{{item.statusTitle}}</view>
@@ -165,9 +171,9 @@
                       
                     </view>
                     <!-- 请假课程 -->
-                    <view wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
+                    <block wx:for="{{ask.cs}}" wx:key="cs_index" wx:for-item="cs">
                       <text class="lea-course">请假课程：{{cs}}</text>
-                    </view>
+                    </block>
                   </view>
                   <text class="lea-for">请假事由：{{item.reason}}</text>
                   <image class="xuheng" src="../../images/xu.png"></image>
@@ -317,16 +323,6 @@
               </view>
               <view wx:else class="notCheckon">未点名</view>
             </view>
-            <!-- <view class="t-info">
-              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">时间</view>
-              <view class="t-cour-time">{{item.classtime}}</view>
-              <view class="t-cour-date" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">教室</view>
-              <view class="t-cour-time">{{item.classroom}}</view>
-            </view>
-            <view class="t-info">
-              <view class="t-cour-cour" style="{{item.teacher_id == uid?'color:rgba(45,193,160,1);':''}}">课程</view>
-              <view class="t-cour-name">{{item.title}}</view>
-            </view> -->
           </view>
         </view>
 
@@ -344,82 +340,78 @@
     <view wx:if="{{role == 2}}">
       <view wx:if="{{type == 1}}">
         
-        <view class="aud_cs" style="margin-top:{{naviBarHeight}}px;">
+        <view class="aud_cs" style="top:{{naviBarHeight}}px;">
           <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">待审核</text>
           <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">已审核</text>
         </view>
 
-        <view wx:if="{{aud == 0 }}" >
-          <!-- 无记录空显示 wx:else=""-->
-          <view wx:if="{{hm_unaud_leave == ''}}">
-            <image class='admin_lea_null' src='../../images/lea_null.png'></image>
-          </view>
+        <block wx:if="{{aud == 0 }}" >
+          <!-- 无记录空显示-->
+          <block wx:if="{{!hm_unaud_leave || hm_unaud_leave == '' || hm_unaud_leave.length==0}}">
+            <null_image title="暂无请假内容" type="4" z_index="-1"></null_image>
+          </block>
           <!-- 教务未审核，做循环 -->
-          <view class="hm-unaud-for">
-            <view  wx:for="{{hm_unaud_leave}}" wx:key="index">
+          <view wx:else class="hm-unaud-for" style="margin-top:{{naviBarHeight+88/750.0*screenWidth}}px;">
+            <block  wx:for="{{hm_unaud_leave}}" wx:key="index">
             
               <!-- 单个未审核样式 -->
               <view class="hm-unaud-layout">
-                <view class="hm-flex">
+                <view class="teacher_leave_unaud_userInfo">
                   <view class="hm-t-name">{{item.realname}}</view>
                   <view class="hm-t-class">{{item.classname}}</view>
                 </view>
-                <view class="hm-un-heng"></view>
-                <!-- 多请假时间循环 -->
-                <view>
-                  
-                  <!-- 一天请多届课循环 -->
-                  <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
-                    <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
-                    <view class="hm-flex">
-                      <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
-                      <image class="hm-un-tava" src="{{course.avatar}}"></image>
-                      <view class="hm-un-tname">{{course.teachername}}老师</view>
+                <!-- 便利请假日期 -->
+                <block wx:for="{{item.courseGroupArray}}" wx:key="course_group_index" wx:for-item="course_group_item" wx:for-index="course_group_index">
+                  <view class="teacher_leave_unaud_date">请假时间：{{course_group_item.date}}</view>
+                  <!-- 便利同一天的课程 -->
+                  <block wx:for="{{course_group_item.array}}" wx:key="course_index" wx:for-index="course_index" wx:for-item="course_item">
+                    <view class="teacher_leave_unaud_courseInfo">
+                      <view class="teacher_leave_unaud_time">请假课程：{{course_item.classtime}}</view>
+                      <image class="teacher_leave_unaud_avatar" src="{{course_item.avatar}}"></image>
+                      <view class="teacher_leave_unaud_name">{{course_item.teachername}}老师</view>
                     </view>
-                    <view class="hm-un-cour">{{course.title}}</view>
-                  </view>
-                  <!-- 一天请多届课循环结束 -->
-                </view>
-                <!-- 多请假时间循环结束 -->
+                    <view class="teacher_leave_unaud_className">{{course_item.title}}</view>
+                  </block>
+                </block>
+                <!-- 请假事由 -->
                 <view class="hm-un-leafor">请假事由：{{item.reason}}</view>
                 <image class="hm-un-xu" src="../../images/xu.png"></image>
-                <view class="hm-flex">
-                  <view style="display:flex;flex-direction:row">
-                    <image class="hm-pro-start" src="../../images/gc.png"></image>
-                    <view class="hm-pro-starttitle">发起</view>
+                <!-- 处理流程 -->
+                <view class="verifyStatus" style="height:92rpx">
+                  <view class="verifyStatus_subView">
+                    <!-- 小圆点 -->
+                    <view class="verifyStatus_circle" style="border:{{'3rpx solid #46bf6a'}}"></view>
+                    <!-- 审核状态 -->
+                    <view class="verifyStatus_title" style="color:{{'#272727'}}">发起</view>
                   </view>
                   
-                  <view class="hm-pro-date">{{item.createtime}}</view>
+                  <view class="verifyStatus_time" style="margin-right:30rpx">{{item.createtime}}</view>
                 </view>
                 <view class="hm-flex">
                   <view wx:if="{{!item.submit}}" class="hm-un-pass" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_pass">通过</view>
                   <view class="hm-un-rejest" wx:if="{{item.submit}}">通过</view>
                   <view class="hm-un-rejest" data-role='{{role}}' data-ask_xb="{{index}}"  bindtap="hm_rejest">驳回</view>
                 </view>
-
-
-
               </view>
               <!-- 单个未审核样式 -->
               <view class="gray"></view>
-          
-            </view>
+            </block>
           </view>
           <!-- 教务未审核，做循环 -->
-        </view>
+        </block>
 
         <!-- 已审核 -->
         <view wx:if="{{aud == 1 }}" >
-          <!-- 无记录空显示 wx:else=""-->
-          <view wx:if="{{hm_aud_leave == ''}}">
-            <image class='admin_lea_null' src='../../images/lea_null.png'></image>
-          </view>
+          <!-- 无记录空显示 -->
+          <block wx:if="{{!hm_aud_leave || hm_aud_leave == '' || hm_aud_leave.length == 0}}">
+            <null_image title="暂无请假内容" type="4" z_index="-1"></null_image>
+          </block>
           <!-- 教务审核，做循环 -->
-          <view wx:else class="hm-unaud-for" style="margin-top:{{naviBarHeight + 104/750*naviBarWidth}}px;">
-            <view wx:for="{{hm_aud_leave}}" wx:key="index">
+          <view wx:else class="hm-unaud-for" style="margin-top:{{naviBarHeight + 88/750*naviBarWidth}}px;">
+            <block wx:for="{{hm_aud_leave}}" wx:key="index">
               <!-- 单个审核样式 -->
               <view class="hm-aud-layout">
-                <!-- 请假信息 -->
+                <!-- 假条作废提示 -->
                 <view wx:if="{{item.status == 5}}" class="nullifyLeaveReason">
                   <image class="wrongNotiImage" src = "../../images/wrongNoti.png"></image>
                   <text class="nullfyLeaveText">因请假课程已下课，该假条禁止操作。</text>
@@ -433,66 +425,62 @@
                   </view>
                   <!-- 请假人班级 -->
                   <view class="teacher_leave_finished_class">{{item.classname}}</view>
-                  <view class="teacher_leave_finished_sub2">
+                  <view class="teacher_leave_finished_sub2" wx:if="{{!item.fold}}">
                     <text class="teacher_leave_finished_leaveTime">请假时间：{{item.riqi}}</text>
-                    <image class="teacher_leave_finished_arrow" src="{{!item.fold ? '../../images/xsj.png' : '../../images/ssj.png'}}" mode="aspectFit"></image>
+                    <image class="teacher_leave_finished_arrow" src="{{'../../images/xsj.png'}}" mode="aspectFit"></image>
                   </view>
                 </view>
                 
                 <!-- 审核信息 -->
                 <view wx:if="{{item.fold}}">
-                <view class="hm-un-heng"></view>
-                <!-- 多请假时间循环 -->
-                <!-- <view ></view> -->
-                <view wx:for="{{item.course}}" wx:key="course_index" wx:for-item="course">
-                  
-                  <!-- 一天请多届课循环 -->
-                  <view>
-                    <view class="hm-un-leadate">请假时间：{{course.riqi}}  </view>
-                    <view class="hm-flex">
-                      <view class="hm-un-leacour">请假课程：{{course.classtime}}</view>
-                      <image class="hm-un-tava" src="{{course.avatar}}"></image>
-                      <view class="hm-un-tname">{{course.teachername}}老师</view>
+                  <!-- 便利请假日期 -->
+                  <block wx:for="{{item.courseGroupArray}}" wx:key="course_group_index" wx:for-item="course_group_item" wx:for-index="course_group_index">
+                    <view class="teacher_leave_unaud_date" style="{{course_group_index==0 ? 'justify-content:space-between; margin-left:24rpx;' : 'margin-left:24rpx;'}}" data-aud_xb="{{index}}" bindtap="aud_fold">
+                      请假时间：{{course_group_item.date}}
+                      <image wx:if="{{course_group_index==0}}" class="teacher_leave_finished_arrow" src="{{'../../images/ssj.png'}}" mode="aspectFit"></image>
                     </view>
-                    <view class="hm-un-cour">{{course.title}}</view>
-                  </view>
-                  <!-- 一天请多届课循环结束 -->
-                </view>
-                <!-- 多请假时间循环结束 -->
-                <view class="hm-unaud-leafor">请假事由：{{item.reason}}</view>
-                <!-- 处理流程 -->
-                <image class="hm-un-xu" src="../../images/xu.png"></image>
-                <block wx:for="{{item.verify_list}}" wx:key="index" wx:for-index="verify_index" wx:for-item="verfiy_item">
-                  <view class="verifyCell" style="{{verfiy_item.type == 4 ? '' : 'height: 105rpx'}}">
-                    <view class="verifyStatus">
-                      <view class="verifyStatus_subView">
-                        <!-- 小圆点 -->
-                        <view class="verifyStatus_circle" style="border:{{verfiy_item.type==4 ? '3rpx solid #f14444' : '3rpx solid #46bf6a'}}"></view>
-                        <!-- 审核状态 -->
-                        <view class="verifyStatus_title" style="color:{{verfiy_item.type==0 ? '#272727' : (verfiy_item.type==4 ? '#f14444' : '#46bf6a')}}">{{verfiy_item.title}}</view>
+                    <!-- 便利同一天的课程 -->
+                    <block wx:for="{{course_group_item.array}}" wx:key="course_index" wx:for-index="course_index" wx:for-item="course_item">
+                      <view class="teacher_leave_unaud_courseInfo">
+                        <view class="teacher_leave_unaud_time" style="margin-left:24rpx">请假课程：{{course_item.classtime}}</view>
+                        <image class="teacher_leave_unaud_avatar" src="{{course_item.avatar}}"></image>
+                        <view class="teacher_leave_unaud_name">{{course_item.teachername}}老师</view>
                       </view>
-                      <!-- 操作时间 -->
-                      <view class="verifyStatus_time">{{verfiy_item.verify_time}}</view>
+                      <view class="teacher_leave_unaud_className" style="margin-left:154rpx; width:512rpx;">{{course_item.title}}</view>
+                    </block>
+                  </block>
+                  
+                  <view class="hm-unaud-leafor" style="margin-left:24rpx; width:642rpx;">请假事由：{{item.reason}}</view>
+                  <!-- 处理流程 -->
+                  <image class="hm-un-xu" src="../../images/xu.png"></image>
+                  <block wx:for="{{item.verify_list}}" wx:key="index" wx:for-index="verify_index" wx:for-item="verfiy_item">
+                    <view class="verifyCell" style="{{verfiy_item.type == 4 ? '' : 'height: 105rpx'}}">
+                      <view class="verifyStatus">
+                        <view class="verifyStatus_subView">
+                          <!-- 小圆点 -->
+                          <view class="verifyStatus_circle" style="border:{{verfiy_item.type==4 ? '3rpx solid #f14444' : '3rpx solid #46bf6a'}}"></view>
+                          <!-- 审核状态 -->
+                          <view class="verifyStatus_title" style="color:{{verfiy_item.type==0 ? '#272727' : (verfiy_item.type==4 ? '#f14444' : '#46bf6a')}}">{{verfiy_item.title}}</view>
+                        </view>
+                        <!-- 操作时间 -->
+                        <view class="verifyStatus_time">{{verfiy_item.verify_time}}</view>
+                      </view>
+                      <!-- 操作人 -->
+                      <view wx:if="{{verify_index != 0}}" class="verify_opretionName">操作人：{{verfiy_item.verify_user}}</view>
+                      <!-- 竖虚线 -->
+                      <view class="verify_xuxian" wx:if="{{verify_index != item.verify_list.length-1}}"></view>
+                      <view class="verfiy_rejectReason" wx:if="{{verfiy_item.type==4}}">驳回原因：{{verfiy_item.reject_reason}}</view>
                     </view>
-                    <!-- 操作人 -->
-                    <view wx:if="{{verify_index != 0}}" class="verify_opretionName">操作人：{{verfiy_item.verify_user}}</view>
-                    <!-- 竖虚线 -->
-                    <view class="verify_xuxian" wx:if="{{verify_index != item.verify_list.length-1}}"></view>
-                    <view class="verfiy_rejectReason" wx:if="{{verfiy_item.type==4}}">驳回原因：{{verfiy_item.reject_reason}}</view>
-                  </view>
-                </block>
+                  </block>
 
+                </view>
+                <!-- 单个审核样式 -->
+                <view class="gray"></view>
               </view>
-            <!-- 单个审核样式 -->
-            <view class="gray"></view>
-          
-            </view>
+            </block>
             <!-- 教务审核，做循环 -->
           </view>
         </view>
-        </view>
-
-
       </view>
     </view>
 
@@ -500,11 +488,11 @@
     <block wx:if="{{role == 3}}">
       <block wx:if="{{type == 1}}">
         <!-- 空页面 -->
-        <view wx:if="{{admin_aud_leave == ''}}">
-          <image class='admin_lea_null' src='../../images/lea_null.png'></image>
-        </view>
+        <block wx:if="{{!admin_aud_leave || admin_aud_leave == '' || admin_aud_leave.length==0}}">
+          <null_image title="暂无请假内容" type="4" z_index="-1"></null_image>
+        </block>
         <!-- 请假列表循环 -->
-        <view class="hm-unaud-for" style="margin-top:{{naviBarHeight}}px">
+        <view wx:else class="hm-unaud-for" style="margin-top:{{naviBarHeight}}px">
           <block wx:for="{{admin_aud_leave}}" wx:key="index">
             <!-- 单个审核样式 -->
             <view class="hm-aud-layout">

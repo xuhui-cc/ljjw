@@ -740,7 +740,8 @@ Page({
       naviBarWidth: naviBarWidth,
       naviBarSelectSub_Height: menuButtonRect.height,
       naviBarSelectSub_Top: menuButtonRect.top,
-      saveBottom: saveBottom
+      saveBottom: saveBottom,
+      screenWidth: systemInfo.screenWidth
     })
   },
 
@@ -1562,19 +1563,50 @@ Page({
         if (d.data.status == 1) {
           // console.log(d)
           var hm_unaud_leave = d.data.data
-          
+          // 假条循环
           for(var i=0;i<hm_unaud_leave.length;i++){
-            // 默认收起
-            hm_unaud_leave[i].submit = false
-            // 老师头像处理
             let leave = hm_unaud_leave[i]
+            // 默认未提交
+            leave.submit = false
+            // 请假课程循环
             if (leave.course && leave.course != '') {
+              var courseDic = {}
               for (var j = 0; j < leave.course.length; j++) {
                 let course = leave.course[j]
+                // 老师头像处理
                 if (!course.avatar || course.avatar.indexOf('http') == -1) {
                   course.avatar = '../../images/avatar_null.png'
                 }
+                // 课程按日期分组
+                let key = course.riqi
+                if (!course.riqi || course.riqi == '') {
+                  key = '未知'
+                }
+                let course_date = courseDic[key]
+                if (course_date) {
+                  let courseArray = course_date.array
+                  courseArray.push(course)
+                  course_date.array = courseArray
+                } else {
+                  course_date = {
+                    array:[course],
+                    date:key
+                  }
+                }
+                courseDic[key] = course_date
               }
+              // 便利按日期分组的课程数组
+              for (let key in courseDic) {
+                var courseArray = courseDic[key].array
+                courseArray.sort((a, b)=>{
+                  return a.classtime - b.classtime
+                })
+              }
+              let courseGroupArray = Object.values(courseDic)
+              courseGroupArray.sort((a,b)=>{
+                return a.date - b.date
+              })
+              leave.courseGroupArray = courseGroupArray
             }
           }
           // 处理分页数据
@@ -1694,14 +1726,44 @@ Page({
               verify_time: leave.createtime
             })
 
-            // 老师头像处理
             if (leave.course && leave.course != '') {
+              var courseDic = {}
               for (var j = 0; j < leave.course.length; j++) {
                 let course = leave.course[j]
+                // 老师头像处理
                 if (!course.avatar || course.avatar.indexOf('http') == -1) {
                   course.avatar = '../../images/avatar_null.png'
                 }
+                // 课程按日期分组
+                let key = course.riqi
+                if (!course.riqi || course.riqi == '') {
+                  key = '未知'
+                }
+                let course_date = courseDic[key]
+                if (course_date) {
+                  let courseArray = course_date.array
+                  courseArray.push(course)
+                  course_date.array = courseArray
+                } else {
+                  course_date = {
+                    array:[course],
+                    date:key
+                  }
+                }
+                courseDic[key] = course_date
               }
+              // 便利按日期分组的课程数组
+              for (let key in courseDic) {
+                var courseArray = courseDic[key].array
+                courseArray.sort((a, b)=>{
+                  return a.classtime - b.classtime
+                })
+              }
+              let courseGroupArray = Object.values(courseDic)
+              courseGroupArray.sort((a,b)=>{
+                return a.date - b.date
+              })
+              leave.courseGroupArray = courseGroupArray
             }
           }
           // 分页数据处理

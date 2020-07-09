@@ -20,13 +20,14 @@ page{
 }
 .aud_cs{
   position: fixed;
-  margin-top: 176rpx;
+  top: 176rpx;
   width:750rpx;
   height:88rpx;
   line-height: 88rpx;
   background:rgba(255,255,255,1);
   opacity:1;
   z-index: 10;
+  border-bottom: 0.5rpx solid #eee;
 }
 .red_layout{
   position: absolute;
@@ -153,6 +154,7 @@ page{
 }
 .nabigation_bar{
   position: fixed;
+  top:0;
   width:750rpx;
   height:176rpx;
   background:linear-gradient(90deg,rgba(20,203,162,1) 0%,rgba(111,238,209,1) 100%);
@@ -482,59 +484,50 @@ page{
   left: 35.5rpx; 
 }
 .leave-layout2{
-  position: absolute; 
-  /* width: 690rpx;
-  margin-left: 30rpx; */
+  width: 100%;
   margin-top: 300rpx;
   padding-bottom: 250rpx;
+  display: flex;
+  flex-direction: column;
 }
 .leave{
   margin-left: 30rpx;
-  margin-bottom: 20rpx;
-  padding-bottom: 20rpx;
   width:690rpx;
-  
   background:rgba(255,255,255,1);
-  opacity:1;
   border-radius:14rpx;
+  margin-top: 16rpx;
+  display: flex;
+  flex-direction: column;
 }
 .lea-time{
-  display: block;
-  padding-left: 30rpx;
-  padding-top: 26rpx;
-  
-  height:37rpx;
+  height: 85rpx;
+  padding-left: 28rpx;
+  padding-top: 2rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
   font-weight:bold;
-  line-height:37rpx;
   color:rgba(39,39,39,1);
-  opacity:1;
+  display: flex;
+  align-items: center;
 }
 .lea-course{
-  display: block;
-  padding-left: 28rpx;
-  padding-top: 24rpx;
-  height:37rpx;
+  margin-left: 28rpx;
+  height:59rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:37rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
+  display: flex;
+  align-items: flex-start;
+  max-width: 634rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .lea-for{
-  display: block;
-  padding-left: 28rpx;
-  padding-top: 22rpx;
-  width:624rpx;
-  height:74rpx;
+  margin-left: 28rpx;
+  width:634rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
   line-height:37rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
+  white-space: pre-wrap;
 }
 .heng2{
   margin-left: 28rpx;
@@ -686,13 +679,12 @@ page{
 }
 .auded-leave{
   margin-left: 30rpx;
-  margin-bottom: 30rpx;
-  padding-bottom: 25rpx;
   width:690rpx;
-  /* height:316rpx; */
   background:rgba(255,255,255,1);
-  opacity:1;
   border-radius:14rpx;
+  display: flex;
+  flex-direction: column;
+  margin-top: 16rpx;
 }
 .auded-result{
   margin-right: 24rpx;
@@ -962,16 +954,13 @@ page{
   /* border-radius: 50%; */
 }
 .hm-t-name{
-  margin-left: 10rpx;
-  margin-top: 24rpx;
-  width:130rpx;
-  height:37rpx;
+  margin-left: 30rpx;
+  max-width:370rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:37rpx;
-  color:rgba(180,180,180,1);
-  opacity:1;
+  color:#272727;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .hm-lea-courinfo-lay{
   display: flex;
@@ -1424,9 +1413,11 @@ page{
 }
 .hm-unaud-layout{
   width:750rpx;
+  margin-top: 16rpx;
   background:rgba(255,255,255,1);
-  opacity:1;
-  
+  border-radius: 14rpx;
+  display: flex;
+  flex-direction: column;
 }
 
 .nullifyLeaveReason {
@@ -1455,31 +1446,15 @@ page{
   justify-content: space-between;
   flex-direction: row;
 }
-.hm-t-name{
-  margin-left: 30rpx;
-  margin-top: 25rpx;
-  width:104rpx;
-  height:37rpx;
-  font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:37rpx;
-  text-align: left;
-  color:rgba(39,39,39,1);
-  opacity:1;
-}
+
 .hm-t-class{
   margin-right: 30rpx;
-  margin-top: 25rpx;
-  width:260rpx;
-  height:37rpx;
+  max-width:370rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:24rpx;
-  text-align: right;
   color:rgba(180,180,180,1);
-  opacity:1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .hm-un-heng{
   margin-top: 25rpx;
@@ -1534,32 +1509,29 @@ page{
 .hm-un-cour{
   margin-left: 161rpx;
   margin-top: 10rpx;
-  width:182rpx;
+  width:500rpx;
   height:37rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:37rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .hm-un-leafor{
-  margin-left: 31rpx;
-  margin-top: 22rpx;
-  width:680rpx;
-  height:74rpx;
+  margin-left: 30rpx;
+  width:690rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
   line-height:37rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
+  display: flex;
+  white-space: pre-wrap;
 }
 .hm-un-xu{
   margin-left: 30rpx;
   margin-top: 30rpx;
   width:690rpx;
-  height:2rpx;
+  height:0rpx;
+  border-bottom: 0.5rpx dashed #e2e2e2;
 }
 .hm-pro-start{
   margin-left: 31rpx;
@@ -1635,11 +1607,11 @@ page{
 .hm-aud-layout{
   margin-left: 30rpx;
   width:690rpx;
-  
   background:rgba(255,255,255,1);
-  opacity:1;
   border-radius:14rpx;
   margin-top: 16rpx;
+  display: flex;
+  flex-direction: column;
 }
 .hm-taud-class{
   margin-left: 270rpx;
@@ -1667,16 +1639,13 @@ page{
   opacity:1;
 }
 .hm-unaud-leafor{
-  margin-left: 31rpx;
-  margin-top: 22rpx;
-  width:624rpx;
-  height:74rpx;
+  margin-left: 30rpx;
+  width:690rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
   line-height:37rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
+  display: flex;
+  white-space: pre-wrap;
 }
 .hm-audpro-date{
   margin-left: 310rpx;
@@ -1880,4 +1849,66 @@ page{
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+.teacher_leave_unaud_userInfo {
+  height: 87rpx;
+  border-bottom: 0.5rpx solid #f1f1f1;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teacher_leave_unaud_date {
+  height: 81rpx;
+  margin-top: 6rpx;
+  margin-left: 30rpx;
+  max-width: 690rpx;
+  display: flex;
+  align-items: center;
+  color: #272727;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.teacher_leave_unaud_courseInfo {
+  width: 100%;
+  height: 42rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.teacher_leave_unaud_time {
+  margin-left: 30rpx;
+  font-size: 26rpx;
+  color: #b4b4b4;
+}
+.teacher_leave_unaud_avatar {
+  margin-left: 34rpx;
+  width: 42rpx;
+  height: 42rpx;
+  border-radius: 50%;
+}
+.teacher_leave_unaud_name {
+  font-size: 26rpx;
+  color: #b4b4b4;
+  margin-left: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.teacher_leave_unaud_className {
+  font-size: 26rpx;
+  color: #b4b4b4;
+  margin-left: 160rpx;
+  width: 560rpx;
+  height: 59rpx;
+  margin-top: 7rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: flex-start;
 }
