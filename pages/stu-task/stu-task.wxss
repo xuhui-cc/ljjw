@@ -149,6 +149,7 @@ page{
   height:88rpx;
   background:rgba(255,255,255,1);
   z-index: 101;
+  border-bottom: 0.5rpx solid #eee;
 }
 .aud{
   margin-left: 163rpx;

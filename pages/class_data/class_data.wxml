@@ -1,14 +1,18 @@
 <view class="container">
 
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
+  <!-- 导航 -->
+  <view class="navigationBar" style="height:{{pageSize.naviHeight}}px">
+    <view class="navigation_content" style="height:{{pageSize.naviContentHeight}}px; margin-top:{{pageSize.statusBarHeight}}px;">
+      <view class="navigation_backView" bindtap="back">
+        <image class="navigation_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <view class="navgation_title">我的收藏</view>
+      <view class="navigation_backView"></view>
     </view>
-    <text class="my-head">我的收藏</text> 
   </view>
 
   <view class="flex">
-    <view class="search-layout">
+    <view class="search-layout" style="margin-top:{{pageSize.naviHeight + 24/750.0*pageSize.screenWidth}}px">
       <image class="search-img" src="../../images/search_w.png"></image>
       <input class="search-input" placeholder="请输入资料标题" bindinput='search_collect'></input>
     </view>

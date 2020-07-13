@@ -160,6 +160,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getPageSize()
     let that = this
     var sid = options.sid
     that.setData({
@@ -387,5 +388,28 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+
+  // -----------------------------------------私有方法------------------------------------
+  /**
+   * 获取页面辅助尺寸
+  */
+  getPageSize: function() {
+    let systemInfo = wx.getSystemInfoSync()
+    let menuBounding = wx.getMenuButtonBoundingClientRect()
+    let naviHeight = menuBounding.bottom + 10
+    let statusBarHeight = systemInfo.statusBarHeight
+    let safeareaBottom = systemInfo.screenHeight - systemInfo.safeArea.bottom
+    console.log("屏幕高度:"+systemInfo.screenHeight+"  safearea底部:"+systemInfo.safeArea.bottom)
+    this.setData({
+      pageSize: {
+        naviHeight: naviHeight,
+        statusBarHeight: statusBarHeight,
+        naviContentHeight: naviHeight - statusBarHeight,
+        safeareaBottom: safeareaBottom,
+        screenWidth: systemInfo.screenWidth,
+      }
+    })
+  },
 })

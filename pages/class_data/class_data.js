@@ -17,6 +17,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getPageSize()
     let that = this
     let nowTime = new Date();
 
@@ -42,11 +43,7 @@ Page({
     return Y + M + D;
   },
 
-  back: function () {
-    wx.navigateBack({
-      delta: 1  // 返回上一级页面。
-    })
-  },
+  
 
   /**
    * 图片显示大图
@@ -239,6 +236,7 @@ Page({
 
   },
 
+  // ----------------------------------------------------私有方法---------------------------------------------
   /**
    * 清除本地保存的文件
   */
@@ -260,6 +258,27 @@ Page({
       fail (res) {
         console.log("文件删除失败"+filePath)
         console.log(res)
+      }
+    })
+  },
+
+  /**
+   * 获取页面辅助尺寸
+  */
+  getPageSize: function() {
+    let systemInfo = wx.getSystemInfoSync()
+    let menuBounding = wx.getMenuButtonBoundingClientRect()
+    let naviHeight = menuBounding.bottom + 10
+    let statusBarHeight = systemInfo.statusBarHeight
+    let safeareaBottom = systemInfo.screenHeight - systemInfo.safeArea.bottom
+    console.log("屏幕高度:"+systemInfo.screenHeight+"  safearea底部:"+systemInfo.safeArea.bottom)
+    this.setData({
+      pageSize: {
+        naviHeight: naviHeight,
+        statusBarHeight: statusBarHeight,
+        naviContentHeight: naviHeight - statusBarHeight,
+        safeareaBottom: safeareaBottom,
+        screenWidth: systemInfo.screenWidth,
       }
     })
   },
@@ -355,5 +374,15 @@ Page({
         })
       }
     })
-  }
+  },
+
+  // --------------------------------------------交互事件-----------------------------------
+  /**
+   * 导航栏 返回按钮 点击事件
+  */
+  back: function () {
+    wx.navigateBack({
+      delta: 1  // 返回上一级页面。
+    })
+  },
 })

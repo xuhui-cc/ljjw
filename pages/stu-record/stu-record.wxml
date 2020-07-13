@@ -1,20 +1,25 @@
 <view class="container">
 
-  <view class="nabigation_bar">
-    <view class="backimg_layout" bindtap="back">
-      <image class='back-img' src='../../images/back_img.png' ></image>
+  <!-- 导航 -->
+  <view class="navigationBar" style="height:{{pageSize.naviHeight}}px">
+    <view class="navigation_content" style="height:{{pageSize.naviContentHeight}}px; margin-top:{{pageSize.statusBarHeight}}px;">
+      <view class="navigation_backView" bindtap="back">
+        <image class="navigation_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <view class="navgation_title">理论测试</view>
+      <view class="navigation_backView"></view>
     </view>
-    <text class="my-head">理论测试</text> 
   </view>
 
   <!-- 成绩分类显示菜单栏 -->
-  <view class="record-bar">
+  <view class="record-bar" style="top:{{pageSize.naviHeight}}px;">
     <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">总分</text>
     <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">行测</text>
     <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">申论</text>
   </view>
   <!-- 成绩分类显示菜单栏 -->
-
+  
+  <view style="margin-top:{{pageSize.naviHeight + 88/750.0*pageSize.screenWidth}}px; height:0; width:100%;"></view>
   <!-- 总分 -->
   <view wx:if="{{aud == 0}}">
 

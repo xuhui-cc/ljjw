@@ -32,41 +32,7 @@ Page({
     app.setTaskItemDot()
   },
 
-  tea_class_picker: function (e) {
-    let that = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    that.setData({
-      tea_class_index: e.detail.value
-    })
-    this.reloadData()
-  },
-
-  stu_class_picker: function (e) {
-    let that = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
-    that.setData({
-      stu_class_index: e.detail.value
-    })
-    var params = {
-      "token": wx.getStorageSync("token"),
-      "uid": wx.getStorageSync("uid"),
-      "class_id": that.data.stu_class[that.data.stu_class_index].class_id
-    }
-    // console.log(params)
-    app.ljjw.jwGetStudentScore(params).then(d => {
-      // console.log(d)
-      if (d.data.status == 1) {
-        // console.log(d.data.data)
-        that.setData({
-          stu_score: d.data.data.list,
-          // stu_class: d.data.data.classes
-        })
-        console.log("学生成绩获取成功")
-      }
-
-
-    })
-  },
+  
 
 
   to_stu_record:function(e){
@@ -255,8 +221,8 @@ Page({
               showNoData = true
             }
             that.setData({
-              stu_score: d.data.data.list,
-              stu_class: d.data.data.classes,
+              stu_score: list,
+              stu_class: classes,
               showNoData: showNoData
             })
             console.log("学生成绩获取成功")
@@ -269,5 +235,38 @@ Page({
         break
       }
     }
-  }
+  },
+
+  // ----------------------------------------交互事件----------------------------------
+  /**
+   * 学生 班级选择框 确定按钮 点击事件
+  */
+  stu_class_picker: function (e) {
+    let that = this
+    let index = e.detail.value
+    if (this.data.stu_class_index == index) {
+      return
+    }
+    console.log('picker发送选择改变，携带值为', index)
+    that.setData({
+      stu_class_index: index
+    })
+    this.reloadData()
+  },
+
+  /**
+   * 老师 班级选择框 确定按钮点击事件
+  */
+  tea_class_picker: function (e) {
+    let that = this
+    let index = e.detail.value
+    if (this.data.tea_class_index == index) {
+      return
+    }
+    console.log('picker发送选择改变，携带值为', index)
+    that.setData({
+      tea_class_index: index
+    })
+    this.reloadData()
+  },
 })
