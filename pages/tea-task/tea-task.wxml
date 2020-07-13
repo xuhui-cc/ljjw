@@ -1,5 +1,5 @@
 <view class="container">
-
+  <!-- 导航 -->
   <view class="nabigation_bar" style="height:{{naviBarHeight}}px">
     <view class="naviBar_contentView" style="height:{{naviBarHeight-stateBarHeight}}px;margin-top:{{stateBarHeight}}px">
       <view class="backimg_layout" bindtap="back">
@@ -10,55 +10,62 @@
     </view>
   </view>
 
-  <view class="ques-layout">
-    <view wx:for="{{task}}" wx:key="task_index" wx:for-index="task_index">
-      <view class='room'></view>
-      <view class="flex">
-        <view class="ques-ori">来自：{{item.teachername}}老师</view>
-        <view class="ques-date">{{item.createtime}}</view>
-      </view>
-      <view class="heng"></view>
+  <view class="ques-layout" style="margin-top:{{naviBarHeight}}px">
+    <!-- 任务遍历 -->
+    <block wx:for="{{task}}" wx:key="task_index" wx:for-index="task_index">
+      <view class='taskCell'>
+        <view class="task_baseInfo">
+          <!-- 老师姓名 -->
+          <view class="ques-ori">来自：{{item.teachername}}老师</view>
+          <!-- 时间 -->
+          <view class="ques-date">{{item.createtime}}</view>
+        </view>
 
-      <!-- 问题循环 -->
-      <view>
-        <view class="flex" data-xb='{{task_index}}' bindtap='fold'>
-          <view wx:if="{{item.type != 4}}" class="ques-title">{{item.subject}}</view>
-          <view wx:if="{{item.type == 4}}" class="ques-title">考勤确认</view>
-          <view wx:if="{{item.fold}}" class="sq">收起</view>
-          <view wx:else="" class="sq">详情</view>
-          <image wx:if="{{item.fold}}" class="xl-img" src="../../images/ssj.png"></image>
-          <image wx:else="" class="xl-img" src="../../images/xsj.png"></image>
+        <view class="task_baseInfo2" data-xb='{{task_index}}' bindtap='fold' style="{{item.fold ? '' : 'border-bottom: 0.5rpx dashed #e2e2e2;'}}">
+          <!-- 任务标题 -->
+          <view class="ques-title">{{item.type == 4 ? '考勤确认' : item.subject}}</view>
+          <!-- 收起/详情 -->
+          <view class="task_fold">
+            <view class="sq">{{item.fold ? '收起' : '详情'}}</view>
+            <image class="xl-img" src="{{item.fold ? '../../images/ssj.png' : '../../images/xsj.png'}}"></image>
+          </view>
         </view>
         
         <view wx:if="{{item.fold}}">
           <!-- 选项式 -->
-          <block wx:if="{{item.type == 2}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="task_detail_index">
-            <view class='selectTask_title'>{{task_detail.title}}</view>
-            <block wx:for="{{task_detail.options}}" wx:for-item="options" wx:for-key="options_index" wx:key="{{options_index}}">
-              <view wx:if="{{options.title && options.title != ''}}" class="selectTask_subtitle">{{options.title}}</view>
-              <view class="optionView">
-                <block wx:for="{{options.list}}" wx:for-index="list_index" wx:for-item="list_item">
-                  <view class="ques-cont">{{list_item.index}}.{{list_item.value}}</view>
-                </block>
-              </view>
+          <block wx:if="{{item.type == 2}}">
+            <!-- 遍历子标题 -->
+            <block wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="task_detail_index">
+              <!-- 子标题 -->
+              <view class='selectTask_title'>{{task_detail.title}}</view>
+              <!-- 遍历题目 -->
+              <block wx:for="{{task_detail.options}}" wx:for-item="options" wx:for-key="options_index" wx:key="{{options_index}}">
+                <!-- 题目 -->
+                <view wx:if="{{options.title && options.title != ''}}" class="selectTask_subtitle">{{options.title}}</view>
+                <view class="optionView">
+                  <!-- 遍历选项 -->
+                  <block wx:for="{{options.list}}" wx:for-index="list_index" wx:for-item="list_item">
+                    <view class="ques-cont">{{list_item.index}}.{{list_item.value}}</view>
+                  </block>
+                </view>
+              </block>
             </block>
           </block>
-          <!-- 选项式 -->
 
           <!-- 字段式 -->
           <block wx:if="{{item.type == 3}}">
+            <!-- 标题 -->
             <view class='ques-cont'>{{item.title}}</view>
+            <!-- 遍历字段分组 -->
             <block wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="task_detail_index">
               <block wx:for="{{task_detail.fieldlist}}" wx:for-item="field" wx:for-index="field_index" wx:key="field_index">
+                <!-- 遍历字段 -->
                 <block wx:for="{{field.lists}}" wx:for-item="list" wx:for-key="fieldlist_index" wx:key="fieldlist_index">
                   <view class='ques-cont'>{{list}}</view>
                 </block>
               </block>
-              
             </block>
           </block>
-          
-          <!-- 字段式 -->
 
           <!-- 考勤式 -->
           <view wx:if="{{item.type == 4}}" wx:for="{{item.task_detail}}" wx:for-item="task_detail" wx:for-key="task_detail_index" wx:key="task_detail_index">
@@ -66,36 +73,31 @@
             <view class='ques-cont'>确认考勤{{task_detail.startdate}}~{{task_detail.enddate}}</view>
             
           </view>
-          <!-- 考勤式 -->
 
           <!-- 普通式 -->
           <view wx:if="{{item.type == 1}}" >
             <view class='ques-cont'>{{item.title}}</view>
-            <view wx:for="{{item.attach}}" wx:for-item="attach" wx:for-key="attach_index" wx:key="{{attach_index}}">
-              <view class='img_flex' data-xb='{{index}}' data-dxb='{{task_index}}' bindtap='previewImg'>
-                <image class='big_img' src='../../images/big.png'></image>
-                <image class='task_img' src='{{attach}}'></image>
-              </view>
+            <view class="ImagecollectionView">
+              <block wx:for="{{item.attach}}" wx:for-item="attach" wx:for-index="attach_index" wx:key="attach_index">
+                <view class='img_flex' data-xb='{{index}}' data-dxb='{{task_index}}' bindtap='previewImg' style="margin-top:{{attach_index > 2 ? 21 : 0}}rpx; margin-left:{{attach_index % 3 == 0 ? 0 : 21}}rpx;">
+                  <image class='big_img' src='../../images/big.png'></image>
+                  <image class='task_img' mode="aspectFill" src='{{attach}}'></image>
+                </view>
+              </block>
             </view>
-            
           </view>
-          <!-- 普通式 -->
 
-          <image class='xu' src='../../images/xu.png'></image>
+          <view class='xu'></view>
         </view>
-        
+        <!-- 完成情况 -->
+        <view class='cs'>
+          <view wx:if="{{item.finished_students}}" class="finish">已完成：</view>
+          <view class="finish-man">{{item.finished_students}}</view>
+          <view wx:if="{{item.notfinished_students}}" class="unfinish">未完成：</view>
+          <view class="finish-man">{{item.notfinished_students}}</view>
+        </view>
       </view>
-      <!-- 问题循环 -->
-      
-    
-      <view class='cs'>
-        <view wx:if="{{item.finished_students}}" class="finish">已完成：</view>
-        <view class="finish-man">{{item.finished_students}}</view>
-        <view wx:if="{{item.notfinished_students}}" class="unfinish">未完成：</view>
-        <view class="finish-man">{{item.notfinished_students}}</view>
-      </view>
-      
-    </view>
+    </block>
   
   
     

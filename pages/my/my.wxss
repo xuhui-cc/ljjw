@@ -394,7 +394,7 @@ page{
 }
 .tea-cla-data{
   margin-left: 14rpx;
-  max-width:200rpx;
+  max-width:350rpx;
   font-size:42rpx;
   font-weight:bold;
   color:rgba(39,39,39,1);

@@ -136,7 +136,7 @@
       <view class="flex_row">
         <image class="img" src="../../images/my_teacher_feedBack.png"></image>
         <view class="tea-shu" style="background:#61B25E;"></view>
-        <view class="tea-cla-data">申请与处理</view>
+        <view class="tea-cla-data">申请与反馈</view>
       </view>
       <view class="flex_row">
         <view class="sectionHeader_dot" wx:if="{{teacherNotDealCount > 0}}">{{teacherNotDealCount > 9 ? '9+' : teacherNotDealCount}}</view>
