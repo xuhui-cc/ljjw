@@ -1,5 +1,5 @@
 // pages/stu-record/stu-record.js
-import * as echarts from '../../ec-canvas/echarts';
+import * as echarts from '../../components/ec-canvas/echarts';
 const app = getApp()
 
 // var dataList = [];

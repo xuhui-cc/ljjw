@@ -65,6 +65,15 @@ App({
     if (!role || role == -1 || role == 3) {
       return
     }
+    if (role == 4) {
+      let stuInfo = wx.getStorageSync('stuinfo')
+      if (stuInfo && stuInfo.ifused == 0) {
+        wx.hideTabBarRedDot({
+          index: 2,
+        })
+        return
+      }
+    }
     let uid = wx.getStorageSync('uid')
     let token = wx.getStorageSync('token')
     let params = {
@@ -136,11 +145,16 @@ App({
             }
           }
         }
-
+        // 判断学生账号可用状态是否改变
         if (role && role == 4) {
           let stuinfo = data.stuinfo
           if (stuinfo) {
             let oldStuInfo = wx.getStorageSync('stuinfo')
+            if (stuinfo.ifused == 0) {
+              wx.hideTabBarRedDot({
+                index: 2,
+              })
+            }
             if (stuinfo.ifused != oldStuInfo.ifused) {
               that.clearLocalInfo()
               return

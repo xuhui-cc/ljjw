@@ -55,7 +55,7 @@
         </block>
         <image wx:elif="{{item.feed_state==4}}" src="../../images/feedBack_dealType_reject.png" class="feedBack_dealType"></image>
         <!-- 反馈内容 -->
-        <view class="feedBack_content" style="{{item.open ? 'flex-wrap: wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center;'}}">问题：{{item.notes}}</view>
+        <view class="feedBack_content" style="{{item.open ? 'white-space: pre-wrap;' : 'text-overflow: -o-ellipsis-lastline; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; align-content: center; white-space: pre-wrap;'}}">问题：{{item.notes}}</view>
         <block wx:if="{{item.open}}">
           <!-- 反馈图片 -->
           <view class="feedBack_stuPicture_collectionView" wx:if="{{item.pics.length != 0}}" style="margin-top: 41rpx; margin-left:30rpx; width:690rpx;">

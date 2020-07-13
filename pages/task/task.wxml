@@ -2,7 +2,7 @@
 
   <!-- 导航栏 -->
   <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
-    <view class="navibar_selecteSub" style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px;">
+    <view class="navibar_selecteSub" wx:if="{{!showNoPower}}" style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px;">
       <block wx:if="{{role <= 2 && tea_class && tea_class != '' && tea_class.length > 0}}">
         <image class="add" src="../../images/add.png" bindtap="add_layout"></image>
         <view class="bar-class" bindtap="showClassPickerView">

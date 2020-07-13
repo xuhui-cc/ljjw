@@ -1,13 +1,12 @@
 <view class="container">
   <!-- 导航栏 -->
   <view class="nabigation_bar" style="height:{{naviBarHeight}}px;">
-    <view class="navibar_selecteSub" style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px;">
+    <view class="navibar_selecteSub" wx:if="{{!noPower}}" style="height:{{naviBarSelectSub_Height}}px;margin-top:{{naviBarSelectSub_Top}}px;">
       <picker mode='selector' wx:if="{{tea_class && tea_class != '' && tea_class.length != 0}}" bindchange="tea_class_picker" range-key="{{'name'}}" value="{{tea_class_index}}" range="{{tea_class}}" > 
         <view class="bar-class">
           {{tea_class[tea_class_index].name}}
           <image wx:if="{{tea_class}}" class="bar-img" src="../../images/wxsj_sizeFit.png" mode="aspectFit"></image>
         </view>
-        
       </picker>
 
       <picker mode='selector' wx:if="{{stu_class && stu_class != '' && stu_class.length != 0}}" bindchange="stu_class_picker" range-key="{{'classname'}}" value="{{stu_class_index}}" range="{{stu_class}}" > 

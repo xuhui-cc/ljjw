@@ -60,6 +60,7 @@ page{
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   color:rgba(39,39,39,1);
+  white-space: pre-wrap;
 }
 
 .noti_showDetail {

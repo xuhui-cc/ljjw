@@ -82,6 +82,7 @@ page{
   font-size: 30rpx;
   color: #272727;
   line-height: 49rpx;
+  white-space: pre-wrap;
 }
 .flex_warp{
   margin-top: 53rpx;
