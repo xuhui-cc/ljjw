@@ -1,17 +1,19 @@
 <view class="container">
 
-  <view class="mask-layout" wx:if="{{hm_rejest}}"></view>
-  <view class="reject-layout" wx:if="{{hm_rejest}}">
-    <image class="reject-close" src="../../images/close.png" bindtap='close'></image>
-    <view class="reject-head">
-      <view class="reject-shu"></view>
-      <view class="reject-title">驳回原因</view>
+  <!-- 请假驳回弹框 -->
+  <view class="mask-layout" wx:if="{{hm_rejest}}">
+    <view class="reject-layout" wx:if="{{hm_rejest}}">
+      <image class="reject-close" src="../../images/close.png" bindtap='close'></image>
+      <view class="reject-head">
+        <view class="reject-shu"></view>
+        <view class="reject-title">驳回原因</view>
+      </view>
+      <view class="reject-cont-lay">
+        <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='leafor_reason' maxlength="600" value="{{input_reason}}" fixed="true"></textarea>
+      </view>
+      <view class="reject-sub" style="{{input_reason? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{input_reason?'reject_pass':''}}">确定</view>
+    
     </view>
-    <view class="reject-cont-lay">
-      <textarea class="reject-for" placeholder="请填写您的驳回原因…" bindinput='leafor_reason' maxlength="600" value="{{input_reason}}"></textarea>
-    </view>
-    <view class="reject-sub" style="{{input_reason? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{input_reason?'reject_pass':''}}">确定</view>
-  
   </view>
 
   <!-- 导航 -->

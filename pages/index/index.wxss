@@ -66,18 +66,18 @@ page{
   height:312rpx;
 }
 .mask-layout{
-  position: absolute;
-  display: block;
-  width:750rpx;
-  height:1624rpx;
-  background:rgba(0,0,0,1);
-  opacity:0.54;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.54);
   z-index: 250;
 }
 .reject-layout{
-  position: absolute;
-  margin-top: 487rpx;
-  margin-left: 86rpx;
   width:578rpx;
   height:659rpx;
   background:rgba(255,255,255,1);

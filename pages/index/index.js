@@ -981,16 +981,58 @@ Page({
           // 流程处理
           for (var j = 0; j < item.verify_list.length; j++) {
             let verify = item.verify_list[j]
-            if (j==0) {
-              verify.title = "教务审核通过"
-              verify.type = 1
-            } else if (j == 1) {
-              if (verify.verify_status == 1) {
-                verify.title = "管理员审核通过"
-                verify.type = 3
-              } else {
-                verify.title = "管理员审核驳回"
-                verify.type = 4
+            switch (verify.verify_type*1) {
+              case 1: {
+                // 教务审批
+                switch (verify.verify_status*1) {
+                  case 1: {
+                    // 通过
+                    verify.title = "教务审核通过"
+                    verify.type = 1
+                    break
+                  }
+                  case 2: {
+                    // 驳回
+                    verify.title = "教务审核驳回"
+                    verify.type = 2
+                    break
+                  }
+                  default: {
+                    verify.title = "教务审核未知状态"
+                    verify.type = -1
+                    break
+                  }
+                }
+                break
+              }
+              case 2: {
+                // 管理员审批
+                switch (verify.verify_status*1) {
+                  case 1: {
+                    // 通过
+                    verify.title = "管理员审核通过"
+                    verify.type = 3
+                    break
+                  }
+                  case 2: {
+                    // 驳回
+                    verify.title = "管理员审核驳回"
+                    verify.type = 4
+                    break
+                  }
+                  default: {
+                    verify.title = "管理员审核未知状态"
+                    verify.type = -1
+                    break
+                  }
+                }
+                break
+              }
+              default: {
+                // 未知流程
+                verify.title = "未知状态"
+                verify.type = -1
+                break
               }
             }
           }
@@ -1469,16 +1511,58 @@ Page({
 
           for (var j = 0; j < leave.verify_list.length; j++) {
             let verify = leave.verify_list[j]
-            if (j==0) {
-              verify.title = "教务审核通过"
-              verify.type = 1
-            } else if (j == 1) {
-              if (verify.verify_status == 1) {
-                verify.title = "管理员审核通过"
-                verify.type = 3
-              } else {
-                verify.title = "管理员审核驳回"
-                verify.type = 4
+            switch (verify.verify_type*1) {
+              case 1: {
+                // 教务审批
+                switch (verify.verify_status*1) {
+                  case 1: {
+                    // 通过
+                    verify.title = "教务审核通过"
+                    verify.type = 1
+                    break
+                  }
+                  case 2: {
+                    // 驳回
+                    verify.title = "教务审核驳回"
+                    verify.type = 2
+                    break
+                  }
+                  default: {
+                    verify.title = "教务审核未知状态"
+                    verify.type = -1
+                    break
+                  }
+                }
+                break
+              }
+              case 2: {
+                // 管理员审批
+                switch (verify.verify_status*1) {
+                  case 1: {
+                    // 通过
+                    verify.title = "管理员审核通过"
+                    verify.type = 3
+                    break
+                  }
+                  case 2: {
+                    // 驳回
+                    verify.title = "管理员审核驳回"
+                    verify.type = 4
+                    break
+                  }
+                  default: {
+                    verify.title = "管理员审核未知状态"
+                    verify.type = -1
+                    break
+                  }
+                }
+                break
+              }
+              default: {
+                // 未知流程
+                verify.title = "未知状态"
+                verify.type = -1
+                break
               }
             }
           }
@@ -1546,6 +1630,18 @@ Page({
 
   /**
    * 教务获取请假列表
+   * 返回值：
+   * verify_list: 审批流程数组
+   *    ask_id：请假申请ID
+   *    verify_type: 审批类型 1-教务审批  2-管理员审批
+   *    verify_status: 审批状态 1-通过  2-驳回
+   *    createuid：审批人uid
+   *    createtime：审批时间 10位时间戳
+   *    reject_reason：驳回原因
+   *    
+   *    自定义：
+   *    title：审核状态 标题
+   *    type: -1-未知状态 0-发起 1-教务审核通过 2-教务审核驳回 3-管理员审核通过 4-管理员审核驳回
   */
   jw_askfor:function(cb){
     let that = this
@@ -1707,16 +1803,58 @@ Page({
             // 审核流程
             for (var j = 0; j < leave.verify_list.length; j++) {
               let verify = leave.verify_list[j]
-              if (j==0) {
-                verify.title = "教务审核通过"
-                verify.type = 1
-              } else if (j == 1) {
-                if (verify.verify_status == 1) {
-                  verify.title = "管理员审核通过"
-                  verify.type = 3
-                } else {
-                  verify.title = "管理员审核驳回"
-                  verify.type = 4
+              switch (verify.verify_type*1) {
+                case 1: {
+                  // 教务审批
+                  switch (verify.verify_status*1) {
+                    case 1: {
+                      // 通过
+                      verify.title = "教务审核通过"
+                      verify.type = 1
+                      break
+                    }
+                    case 2: {
+                      // 驳回
+                      verify.title = "教务审核驳回"
+                      verify.type = 2
+                      break
+                    }
+                    default: {
+                      verify.title = "教务审核未知状态"
+                      verify.type = -1
+                      break
+                    }
+                  }
+                  break
+                }
+                case 2: {
+                  // 管理员审批
+                  switch (verify.verify_status*1) {
+                    case 1: {
+                      // 通过
+                      verify.title = "管理员审核通过"
+                      verify.type = 3
+                      break
+                    }
+                    case 2: {
+                      // 驳回
+                      verify.title = "管理员审核驳回"
+                      verify.type = 4
+                      break
+                    }
+                    default: {
+                      verify.title = "管理员审核未知状态"
+                      verify.type = -1
+                      break
+                    }
+                  }
+                  break
+                }
+                default: {
+                  // 未知流程
+                  verify.title = "未知状态"
+                  verify.type = -1
+                  break
                 }
               }
             }

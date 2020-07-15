@@ -123,6 +123,7 @@ App({
         }
         
         if (role[0] != oldRole) {
+          console.log("角色由 " + oldRole + " 变为 " + role[0] + ", 即将清空数据重新登录")
           that.clearLocalInfo()
           return
         }
@@ -132,6 +133,7 @@ App({
           var class_ids = data.class_ids.split(",")
           var oldClassIds = wx.getStorageSync('class_ids')
           if (class_ids.length != oldClassIds.length) {
+            console.log("关联的班级由 " + oldClassIds.join(",") + " 变为 " + data.class_ids + ", 即将清空数据重新登录")
             that.clearLocalInfo()
             return
           } else {
@@ -155,7 +157,8 @@ App({
                 index: 2,
               })
             }
-            if (stuinfo.ifused != oldStuInfo.ifused) {
+            if (oldStuInfo && oldStuInfo.ifused && stuinfo.ifused != oldStuInfo.ifused) {
+              console.log("学生是否可用状态由 " + oldStuInfo.ifused + " 变为 " + stuinfo.ifused + ", 即将清空数据重新登录")
               that.clearLocalInfo()
               return
             }

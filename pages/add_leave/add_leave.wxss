@@ -1,6 +1,11 @@
 page{
   background: #FBFBFC;
 }
+.longText_omit {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .lea-time-layout{
   display: flex;
   margin-bottom: 6rpx;
@@ -138,38 +143,38 @@ page{
   margin-top: 24rpx;
   display: flex;
   flex-direction: column;
-  width: 530rpx;
+  flex-grow: 1;
 }
 .tobelea-cour-content-list{
   display: flex;
   margin-bottom: 24rpx;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 .tobelea-cour-cont-time{
-  width:200rpx;
-  height:42rpx;
+  max-width:200rpx;
   font-size:30rpx;
-  font-family:PingFang SC;
-  font-weight:400;
   line-height:42rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
 }
 .tobelea-cour-cont-name{
-  /* margin-left: 31rpx; */
-  width:210rpx;
-  height:42rpx;
+  margin-left: 31rpx;
+  max-width:280rpx;
   font-size:30rpx;
-  font-family:PingFang SC;
-  font-weight:400;
   line-height:42rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
 }
 .tobelea-cour-cont-del{
   margin-top: 5rpx;
-  margin-left: 81rpx;
+  margin-right: 39rpx;
   width:31rpx;
   height:31rpx;
+}
+.selected_course_cell_subView {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 .tobelea-cour-content-xu{
   margin-top: 14rpx;
