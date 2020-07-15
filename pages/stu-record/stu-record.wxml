@@ -28,13 +28,13 @@
         <view class="rec-total">总分：</view>
         <view class="rec-total-num">{{score.scores}}</view>
         <view wx:if="{{score.is_first != 1}}">
-          <image wx:if="{{score.score_change >= 0 }}" class="rec-up" src="../../images/up.png"></image>
+          <image wx:if="{{score.score_change >= 0}}" class="rec-up" src="../../images/up.png"></image>
           <image wx:else class="rec-up" src="../../images/down.png"></image>
         </view>
         <view class="rec-rank">排名：</view>
         <view class="rec-total-num">{{score.position}}</view>
         <view wx:if="{{score.is_first != 1}}">
-          <image wx:if="{{score.position_change >= 0 }}" class="rec-up" src="../../images/up.png"></image>
+          <image wx:if="{{score.position_change >= 0}}" class="rec-up" src="../../images/up.png"></image>
           <image wx:else class="rec-up" src="../../images/down.png"></image>
         </view>
       </view>
@@ -86,14 +86,14 @@
         <view class="rec-total">总分：</view>
         <view class="rec-total-num">{{score.scores}}</view>
         <view wx:if="{{score.is_first != 1}}">
-          <image wx:if="{{score.score_change > 0}}" class="rec-up" src="../../images/up.png"></image>
-          <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
+          <image wx:if="{{score.score_change >= 0}}" class="rec-up" src="../../images/up.png"></image>
+          <image wx:else class="rec-up" src="../../images/down.png"></image>
         </view>
         <view class="rec-rank">排名：</view>
         <view class="rec-total-num">{{score.position}}</view>
         <view wx:if="{{score.is_first != 1}}">
-          <image wx:if="{{score.position_change > 0}}" class="rec-up" src="../../images/up.png"></image>
-          <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
+          <image wx:if="{{score.position_change >= 0}}" class="rec-up" src="../../images/up.png"></image>
+          <image wx:else class="rec-up" src="../../images/down.png"></image>
         </view>
       </view>
       <image class="total-xu" src="../../images/xu.png" wx:if="{{score.is_first != 1}}"></image>
@@ -170,14 +170,14 @@
         <view class="rec-total">总分：</view>
         <view class="rec-total-num">{{score.scores}}</view>
         <view wx:if="{{score.is_first != 1}}">
-          <image wx:if="{{score.score_change > 0}}" class="rec-up" src="../../images/up.png"></image>
-          <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
+          <image wx:if="{{score.score_change >= 0}}" class="rec-up" src="../../images/up.png"></image>
+          <image wx:else class="rec-up" src="../../images/down.png"></image>
         </view>
         <view class="rec-rank">排名：</view>
         <view class="rec-total-num">{{score.position}}</view>
         <view wx:if="{{score.is_first != 1}}">
-          <image wx:if="{{score.position_change > 0}}" class="rec-up" src="../../images/up.png"></image>
-          <image wx:else="{{}}" class="rec-up" src="../../images/down.png"></image>
+          <image wx:if="{{score.position_change >= 0}}" class="rec-up" src="../../images/up.png"></image>
+          <image wx:else class="rec-up" src="../../images/down.png"></image>
         </view>
       </view>
       <image class="total-xu" src="../../images/xu.png" wx:if="{{score.is_first != 1}}"></image>
