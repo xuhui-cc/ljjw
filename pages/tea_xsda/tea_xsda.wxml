@@ -1,5 +1,5 @@
 <view class="container">
-
+  <!-- 导航 -->
   <view class="nabigation_bar" style="height:{{naviBarHeight}}px">
     <view class="navibar_contentView" style="height:{{naviBarHeight-stateBarHeight}}px;margin-top:{{stateBarHeight}}px;">
       <view class="backimg_layout" bindtap="back">
@@ -26,19 +26,19 @@
   
   </view>
 
-    <!-- 成绩分类显示菜单栏 -->
+  <!-- 菜单栏 -->
   <view class="record-bar" style="margin-top:{{naviBarHeight}}px">
     <text class="aud {{aud == 0 ? 'active': ''}}" bindtap="aud_select" data-aud="{{0}}">学情</text>
     <text class="aud {{aud == 1 ? 'active': ''}}" bindtap="aud_select" data-aud="{{1}}">概况</text>
     <text class="aud {{aud == 2 ? 'active': ''}}" bindtap="aud_select" data-aud="{{2}}">成绩</text>
   </view>
-  <!-- 成绩分类显示菜单栏 -->
+  
   <view class='interval' style="margin-top:{{naviBarHeight+88/750*naviBarWidth}}px"></view>
 
   <!-- 学情 -->
-  <view wx:if="{{aud == 0}}" class="xq conditionBottom">
+  <view wx:if="{{aud == 0}}" class="xq">
 
-    
+    <!-- 课程选择视图 -->
     <picker mode='selector' bindchange="cates_picker" range-key="{{'name'}}" value="{{cates_index}}" range="{{cates}}" > 
       <view class="cateView">
         <view class="kemu">{{cates[cates_index].name}}</view>
@@ -47,7 +47,7 @@
     </picker>
     
 
-    <view class="cont-layout" wx:if="{{studyinfo && studyinfo != '' && studyinfo.length != 0}}" style="margin-top:11rpx;">
+    <view class="cont-layout conditionBottom" wx:if="{{studyinfo && studyinfo != '' && studyinfo.length != 0}}" style="margin-top:11rpx;">
       <block wx:for="{{studyinfo}}" wx:key="studyinfo_index">
         <view class="condition_contentView">
           <!-- <image class="xu" src="../../images/route2.png"></image> -->
@@ -67,7 +67,9 @@
     
     </view>
 
-    <image wx:else class='null_img' src='../../images/rec_null.png' mode="aspectFit"></image>
+    <block wx:else>
+      <null_image title="暂无内容" type="1"></null_image>
+    </block>
 
     <view wx:if="{{cates[cates_index].com}}" class="add" bindtap='add'>
         <image class="add-img" src="../../images/add.png"></image>
@@ -79,8 +81,8 @@
 
 
   <!-- 概况 -->
-  <view wx:if="{{aud == 1}}" class="xq conditionBottom" >
-    <view class="cont-layout" wx:if="{{condition != ''}}">
+  <view wx:if="{{aud == 1}}" class="xq" >
+    <view class="cont-layout conditionBottom" wx:if="{{condition && condition != '' && condition.length != 0}}">
       <block wx:for="{{condition}}" wx:key="condition_index">
         <view class="condition_contentView">
           <!-- <image class="xu" src="../../images/route2.png"></image> -->
@@ -99,7 +101,9 @@
       </block>
     </view>
 
-    <image wx:else class='null_img' src='../../images/rec_null.png' mode="aspectFit"></image>
+    <block wx:else>
+      <null_image title="暂无内容" type="1"></null_image>
+    </block>
 
     <view class="add" bindtap='add'>
       <image class="add-img" src="../../images/add.png"></image>
@@ -112,8 +116,8 @@
   <!-- 成绩 -->
   <view wx:if="{{aud == 2}}">
     <block wx:if="{{student_score && student_score != '' && student_score.length != 0}}">
-      <view wx:for="{{student_score}}" wx:key="score_index">
-        <view class="rec-layout">
+      <block wx:for="{{student_score}}" wx:key="score_index">
+        <view class="rec-layout" style="margin-top:{{index == 0 ? 0 : 16}}rpx">
           <view data-xb="{{index}}" bindtap='score_fold'>
             <view class="flex">
               <view class="ks-name">{{item.mock_name}}</view>
@@ -191,9 +195,11 @@
           <!-- 下拉展开 -->
           
         </view>
-      </view>
+      </block>
     </block>
-    <image wx:else class='null_img' src='../../images/rec_null.png' mode="aspectFit"></image>
+    <block wx:else>
+      <null_image title="暂无内容" type="1"></null_image>
+    </block>
   </view>
   <!-- 成绩结束 -->
 

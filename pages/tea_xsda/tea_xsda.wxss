@@ -1,5 +1,5 @@
 page{
-  background:white;
+  background:#fbfbfc;
 }
 .nabigation_bar{
   position: fixed;
@@ -192,7 +192,7 @@ page{
 .interval{
   width: 750rpx;
   height: 16rpx;
-  background:rgba(251,251,252,1);
+  /* background:rgba(251,251,252,1); */
 }
 .xq{
   width:750rpx;
@@ -361,10 +361,8 @@ page{
 }
 .rec-layout{
   margin-top: 16rpx;
-  width:750rpx;
-
+  width:100%;
   background:rgba(255,255,255,1);
-  opacity:1;
 }
 .ks-name{
   margin-left: 30rpx;
