@@ -103,6 +103,7 @@ Page({
             console.log(filePath)
 
             that.openFilePath = filePath
+            wx.setStorageSync('openFilePath', filePath)
             wx.openDocument({
               showMenu: true,
               filePath: filePath,
@@ -301,6 +302,7 @@ Page({
       success (res) {
         console.log("文件删除成功" + filePath)
         that.openFilePath = ''
+        wx.removeStorageSync('openFilePath')
       },
       fail (res) {
         console.log("文件删除失败"+filePath)
@@ -349,6 +351,7 @@ Page({
       case 1: {
         // 学生
         request = app.ljjw.jwGetStudentClassFiles(params)
+        // request = app.ljjw.testAPi('jwGetStudentClassFiles', params)
         break
       }
       case 2: {

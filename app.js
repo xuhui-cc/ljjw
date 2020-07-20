@@ -7,7 +7,7 @@ App({
   util: util,
   onLaunch: function () {
     // 展示本地存储能力
-
+    
     let that = this
     // 登录
     wx.login({
@@ -41,6 +41,7 @@ App({
   },
 
   onShow() {
+    this.removeTempFile()
     this.setTaskItemDot()
     this.getMyUserInfo()
   },
@@ -181,6 +182,9 @@ App({
     })
   },
 
+  /**
+   * 清除本地数据
+  */
   clearLocalInfo () {
     wx.clearStorage({
       fail:function(res) {
@@ -188,10 +192,34 @@ App({
       },
       complete: (res) => {
         console.log('清空数据完成，即将跳转至我的')
+        wx.showTabBar({
+          animation: false,
+        })
         wx.switchTab({
           url: '/pages/my/my',
         })
       },
     })
+  },
+
+  /**
+   * 删除缓存文件
+  */
+  removeTempFile () {
+    let tempFilePath = wx.getStorageSync('openFilePath')
+    if (tempFilePath && tempFilePath != '') {
+      let fs = wx.getFileSystemManager()
+      fs.unlink({
+        filePath: tempFilePath,
+        success (res) {
+          console.log("文件删除成功" + tempFilePath)
+          wx.removeStorageSync('openFilePath')
+        },
+        fail (res) {
+          console.log("文件删除失败"+tempFilePath)
+          console.log(res)
+        }
+      })
+    }
   }
 })

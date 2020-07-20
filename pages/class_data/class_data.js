@@ -55,107 +55,6 @@ Page({
     })
   },
 
-
-  open_file:function(e){
-    if (this.loading) {
-      return
-    }
-    
-    let that = this
-    var file_xb = e.currentTarget.dataset.file_xb
-    
-    console.log(file_xb)
-
-    let file = that.data.mydata[file_xb]
-
-    switch (file.formType) {
-      case 0:{
-        // 不支持格式
-        wx.showToast({
-          title: (file.fileurl && file.fileurl != '') ? '不支持该文件格式' : '文件不存在',
-          icon: 'none'
-        })
-        break
-      }
-      case 1:{
-        // 图片
-        let pics = file.fileurl
-        that.previewImage(pics)
-        break
-      }
-      default:{
-        this.loading = true
-        // 其他支持的文件格式
-        let timestamp = Date.parse(new Date()); 
-        // let fileTypeArray = that.data.mydata.files[file_xb].fileurl.split(".")
-        let fileType = file.form
-        let customFilePath = wx.env.USER_DATA_PATH+"/"+timestamp+"."+fileType
-        console.log('得到自定义路径：')
-        console.log(customFilePath)
-        wx.showLoading({
-          title: '资料打开中...',
-        })
-        wx.downloadFile({
-          url: file.fileurl, //仅为示例，并非真实的资源
-          filePath: customFilePath,
-          success(res) {
-            // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-
-            console.log(res)
-            var filePath = res.filePath
-            console.log('返回自定义路径：')
-            console.log(filePath)
-
-            that.openFilePath = filePath
-            wx.openDocument({
-              showMenu: true,
-              filePath: filePath,
-              success: function (res) {
-                console.log('打开文档成功')
-                wx.hideLoading()
-                that.loading = false
-              },
-
-              fail: function (res) {
-                console.log("打开文档失败");
-                console.log(res)
-                wx.hideLoading({
-                  complete: (res) => {
-                    wx.showToast({
-                      title: '文件打开失败',
-                      icon: 'none'
-                    })
-                  },
-                })
-                that.loading = false
-              },
-              complete: function (res) {
-                console.log("complete");
-                console.log(res)
-              }
-
-
-            })
-          },
-          fail: function(res) {
-            console.log('文件下载失败')
-            console.log(res)
-            wx.hideLoading({
-              complete: (res) => {
-                wx.showToast({
-                  title: '文件下载失败',
-                  icon: 'none'
-                })
-              },
-            })
-            that.loading = false
-          }
-        })
-        break
-      }
-    }
-  },
-
   search_collect:function(e){
     let that = this
     console.log(e.detail.value)
@@ -254,6 +153,7 @@ Page({
       success (res) {
         console.log("文件删除成功" + filePath)
         that.openFilePath = ''
+        wx.removeStorageSync('openFilePath')
       },
       fail (res) {
         console.log("文件删除失败"+filePath)
@@ -384,5 +284,109 @@ Page({
     wx.navigateBack({
       delta: 1  // 返回上一级页面。
     })
+  },
+
+  /**
+   * 打开文件
+  */
+  open_file:function(e){
+    if (this.loading) {
+      return
+    }
+    
+    let that = this
+    var file_xb = e.currentTarget.dataset.file_xb
+    
+    console.log(file_xb)
+
+    let file = that.data.mydata[file_xb]
+
+    switch (file.formType) {
+      case 0:{
+        // 不支持格式
+        wx.showToast({
+          title: (file.fileurl && file.fileurl != '') ? '不支持该文件格式' : '文件不存在',
+          icon: 'none'
+        })
+        break
+      }
+      case 1:{
+        // 图片
+        let pics = file.fileurl
+        that.previewImage(pics)
+        break
+      }
+      default:{
+        this.loading = true
+        // 其他支持的文件格式
+        let timestamp = Date.parse(new Date()); 
+        // let fileTypeArray = that.data.mydata.files[file_xb].fileurl.split(".")
+        let fileType = file.form
+        let customFilePath = wx.env.USER_DATA_PATH+"/"+timestamp+"."+fileType
+        console.log('得到自定义路径：')
+        console.log(customFilePath)
+        wx.showLoading({
+          title: '资料打开中...',
+        })
+        wx.downloadFile({
+          url: file.fileurl, //仅为示例，并非真实的资源
+          filePath: customFilePath,
+          success(res) {
+            // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+
+            console.log(res)
+            var filePath = res.filePath
+            console.log('返回自定义路径：')
+            console.log(filePath)
+
+            that.openFilePath = filePath
+            wx.setStorageSync('openFilePath', filePath)
+            wx.openDocument({
+              showMenu: true,
+              filePath: filePath,
+              success: function (res) {
+                console.log('打开文档成功')
+                wx.hideLoading()
+                that.loading = false
+              },
+
+              fail: function (res) {
+                console.log("打开文档失败");
+                console.log(res)
+                wx.hideLoading({
+                  complete: (res) => {
+                    wx.showToast({
+                      title: '文件打开失败',
+                      icon: 'none'
+                    })
+                  },
+                })
+                that.loading = false
+              },
+              complete: function (res) {
+                console.log("complete");
+                console.log(res)
+              }
+
+
+            })
+          },
+          fail: function(res) {
+            console.log('文件下载失败')
+            console.log(res)
+            wx.hideLoading({
+              complete: (res) => {
+                wx.showToast({
+                  title: '文件下载失败',
+                  icon: 'none'
+                })
+              },
+            })
+            that.loading = false
+          }
+        })
+        break
+      }
+    }
   },
 })
