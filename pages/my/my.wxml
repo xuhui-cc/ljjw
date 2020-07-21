@@ -57,35 +57,38 @@
     
     </view>
 
-    <view class="collect-layout" bindtap="to_student_data">
-      <view class="sectionHeader_subLayout">
-        <view class="shu_new"></view>
-        <view class="sectionHeader_title">班级资料</view>
+
+    <view class="class-data" bindtap="to_student_data">
+      <view class="flex_row">
+        <image class="img" src="../../images/class_data.png"></image>
+        <view class="tea-shu" style="background:rgba(128,183,255,1);"></view>
+        <view class="tea-cla-data">班级资料</view>
       </view>
-      <view class="sectionHeader_subLayout">
-        <!-- <view class="sectionHeader_more">更多</view> -->
-        <image class="sectionHeader_arrow" src="../../images/next.png"></image>
+      <view class="flex_row">
+        <image class="img-next" src="../../images/next.png"></image>
       </view>
     </view>
 
-    <view class="collect-layout" bindtap='to_class_data'>
-      <view class="sectionHeader_subLayout">
-        <view class="shu_new"></view>
-        <view class="sectionHeader_title">我的收藏</view>
+    <view class="class-data" bindtap="to_class_data">
+      <view class="flex_row">
+        <image class="img" src="../../images/my_collection_item.png"></image>
+        <view class="tea-shu" style="background:rgba(255,168,72,1);"></view>
+        <view class="tea-cla-data">我的收藏</view>
       </view>
-      <image class="sectionHeader_arrow" src="../../images/next.png"></image>
+      <view class="flex_row">
+        <image class="img-next" src="../../images/next.png"></image>
+      </view>
     </view>
-
-    <view class="collect-layout" bindtap='to_feedBack'>
-      <view class="sectionHeader_subLayout">
-        <view class="shu_new"></view>
-        <view class="sectionHeader_title">申请与反馈</view>
+    <view class="class-data" bindtap="to_feedBack">
+      <view class="flex_row">
+        <image class="img" src="../../images/my_teacher_feedBack.png"></image>
+        <view class="tea-shu" style="background:#61B25E;"></view>
+        <view class="tea-cla-data">申请与反馈</view>
       </view>
-      <view class="sectionHeader_subLayout">
-        <view class="sectionHeader_dot" wx:if="{{!noPower && feedBackNotiCount > 0}}">{{feedBackNotiCount > 9 ? '9+' : feedBackNotiCount}}</view>
-        <image class="sectionHeader_arrow" src="../../images/next.png"></image>
+      <view class="flex_row">
+        <view class="sectionHeader_dot" wx:if="{{teacherNotDealCount > 0}}">{{teacherNotDealCount > 9 ? '9+' : teacherNotDealCount}}</view>
+        <image class="img-next" src="../../images/next.png"></image>
       </view>
-      
     </view>
 
   </view>
