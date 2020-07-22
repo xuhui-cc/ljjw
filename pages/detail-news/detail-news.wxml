@@ -12,8 +12,8 @@
 
   <view class="detailView" style="margin-top:{{naviBarHeight}}px;">
     <view class="nwes-time">{{date}}</view>
-    <view class="news-cont">
-      <rich-text nodes="{{content}}"></rich-text>
+    <view class="news-cont" bindtap="showSpecialString">
+      <text selectable='true'>{{content}}</text>
     </view>
     <view class='flex_warp' wx:if="{{pics && pics != '' && pics.length != 0}}">
       <block wx:for="{{pics}}" wx:key="index">
@@ -21,5 +21,15 @@
       </block> 
       
     </view>
+  </view>
+</view>
+
+<view class="specialStringListBgView" wx:if="{{showSpecialStringList}}" catchtap="closeSpecialStringView">
+  <view class="specailStringList">
+    <block wx:for="{{specialArray}}" wx:key="index">
+      <view class="specialStringCell" catchtap="spectialStringClicked" data-index="{{index}}">
+        {{item.string}}
+      </view>
+    </block>
   </view>
 </view>

@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    // 是否展示特殊字符串列表
+    showSpecialStringList: false,
   },
 
   /**
@@ -16,13 +17,18 @@ Page({
 
     that.setUpNaviSize()
 
-    console.log(options.content)
-    console.log(options.date)
-    console.log(options.pics)
+    // console.log(options.content)
+    // console.log(options.date)
+    // console.log(options.pics)
+
+    let content = options.content
+    let specialArray = this.checkPhone(content)
+    // console.log(phoneArray)
     that.setData({
-      content: options.content,
+      content: content,
       date: options.date,
-      pics: (options.pics && options.pics != '' && options.pics != 'null') ? options.pics.split(",") : []
+      pics: (options.pics && options.pics != '' && options.pics != 'null') ? options.pics.split(",") : [],
+      specialArray: specialArray
     })
 
   },
@@ -96,6 +102,7 @@ Page({
 
   },
 
+  //------------------------------------------------------------------私有方法----------------------------------------------------------
   /**
    * 设置自定义导航栏尺寸
   */
@@ -115,10 +122,75 @@ Page({
   },
 
   /**
-   * 获取页面辅助尺寸
+   * 查找文本中的电话号码
   */
-  // setUpNaviSize: function () {
-  //   let menuButtonRect = wx.getMenuButtonBoundingClientRect()
+  checkPhone: function (text) {
+    var specialArray = []
+    let numberArray = text.match(/((((13[0-9])|(15[^4])|(18[0,1,2,3,5-9])|(17[0-8])|(147))\d{8}))/g);
+    if (numberArray && numberArray != '' && numberArray.length != 0) {
+      for (var i = 0; i < numberArray.length; i++) {
+        let phone = numberArray[i]
+        specialArray.push({
+          string: phone,
+          type: 1, // 1-电话号码
+        })
+      }
+    }
+    let urlArray = text.match(/(((https|http|ftp|rtsp|mms):\/\/)[^\s]+)/g)
+    if (urlArray && urlArray != '' && urlArray.length != 0) {
+      for (var i = 0; i < urlArray.length; i++) {
+        let url = urlArray[i]
+        specialArray.push({
+          string: url,
+          type: 2, // 2-网址
+        })
+      }
+    }
+    return specialArray
+  },
 
-  // }
+  //------------------------------------------------- 交互事件----------------------------------------------------
+  /**
+   * 点击详情文本
+  */
+  showSpecialString: function () {
+    if (!this.data.specialArray || this.data.specialArray == '' || this.data.specialArray.length == 0) {
+      return
+    }
+    this.setData({
+      showSpecialStringList: true
+    })
+  },
+
+  /**
+   * 关闭特殊字符串弹框
+  */
+  closeSpecialStringView: function() {
+    this.setData({
+      showSpecialStringList: false
+    })
+  },
+
+  /**
+   * 特殊字符串单元格 点击事件
+  */
+  spectialStringClicked: function(e) {
+    // console.log(e)
+    let index = e.currentTarget.dataset.index
+    let specticalItem = this.data.specialArray[index]
+    let spacticalString = specticalItem.string
+    switch(specticalItem.type) {
+      case 1: {
+        // 电话号码
+        wx.makePhoneCall({
+          phoneNumber: spacticalString,
+        })
+        break
+      }
+      case 2: {
+        // 网址
+        break
+      }
+    }
+  }
 })
