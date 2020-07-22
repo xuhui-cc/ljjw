@@ -22,13 +22,13 @@ Page({
     // console.log(options.pics)
 
     let content = options.content
-    let specialArray = this.checkPhone(content)
+    // let specialArray = this.checkPhone(content)
     // console.log(phoneArray)
     that.setData({
       content: content,
       date: options.date,
       pics: (options.pics && options.pics != '' && options.pics != 'null') ? options.pics.split(",") : [],
-      specialArray: specialArray
+      // specialArray: specialArray
     })
 
   },
