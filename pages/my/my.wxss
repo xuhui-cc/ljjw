@@ -110,7 +110,7 @@ page{
 .change-state{
   margin-left: 80rpx;
   margin-top: 110rpx;
-  width:144rpx;
+  max-width:300rpx;
   height:33rpx;
   font-size:24rpx;
   font-family:PingFang SC;
@@ -434,4 +434,14 @@ page{
   margin-right: 2rpx;
   color: #2DC1A0;
   font-size: 24rpx;
+}
+
+.baseInfo_View {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
