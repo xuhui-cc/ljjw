@@ -1,0 +1,102 @@
+<!--pages/radioList/radioList.wxml-->
+<!-- 顶部背景 -->
+<view class="top_bg" style="height:{{naviHeight + 308/750.0*screenWidth}}px;"></view>
+
+<!-- 导航 -->
+<view class="navi_content" style="top:{{statusBarHeight}}px; height:{{naviContentHeight}}px">
+  公考广播
+  <view class="navi_back" bindtap="naviBackItemClicked">
+    <image class="navi_backImage" src="../../images/back_img.png"></image>
+  </view>
+</view>
+
+<!-- header -->
+<view class="list_header" style="top:{{naviHeight}}px;">
+  <view class="searchBar">
+    <image class="searchBar_image" src="../../images/searchBar_white.png"></image>
+    <text class="searchBar_placehoulder">请输入资料标题...</text>
+  </view>
+  <view class="row_alignitemCenter_spaceBetween" style="height:91rpx;">
+    <view style="height:100%; display:flex; flex-direction: row;">
+      <text class="search_time">时间筛选</text>
+      <image class="search_time_image" src="../../images/searchtime_open.png"></image>
+    </view>
+    <view class="totalHour">
+      收听时长：共
+      <text class="totalHour_count">32</text>
+      小时
+    </view>
+  </view>
+</view>
+
+<scroll-view class="scrollView" scroll-y="{{true}}" refresher-enabled="{{true}}" bindrefresherrefresh="refreshList" refresher-triggered="{{pullDownRefresh}}" style="height:{{screenHeight - naviHeight - 195/750.0*screenWidth}}px; margin-top:{{naviHeight + 195/750.0*screenWidth}}px">
+  <view class="radioListView" style="padding-bottom:{{safeareaBottom + 10}}px;">
+    <!-- 循环广播列表 -->
+    <block wx:for="{{radioList}}" wx:key="index">
+      <view class="radioCell" style="margin-top:{{index==0 ? 0 : 16}}rpx;" bindtap="radioCellClicked" data-index="{{index}}">
+        <!-- 标题 -->
+        <view class="radioCell_title">
+          <image wx:if="{{item.selected}}" class="radioCell_playing" src="../../images/radio_playing.png"></image>
+          {{item.title}}
+        </view>
+        <!-- 标签 -->
+        <view class="radioCell_flagList">
+          <!-- 标签循环 -->
+          <block wx:for="{{item.flags}}" wx:key="flagIndex" wx:for-index="flagIndex" wx:for-item="flagItem">
+            <view class="flagCell">{{flagItem}}</view>
+          </block>
+        </view>
+        <view class="row_alignitemCenter_spaceBetween" style="height:71rpx; margin-top:4rpx;" catchtap="radioShowDetail" data-index="{{index}}">
+          <!-- 时间 -->
+          <view class="radioCell_time">{{item.pubtime}}</view>
+          <view class="radioCell_showDetailButton">
+            查看详情
+            <image class="radioCell_showDetailArrow" src="../../images/next.png"></image>
+          </view>
+        </view>
+        
+        <!-- 收藏按钮 -->
+        <view class="radioCell_collection" wx:if="{{role == 4}}" catchtap="radioCollectionButtonClciked" data-index="{{index}}">
+          <image class="radioCell_collectionImage" src="{{item.colid != null ? '../../images/radio_collection.png' : '../../images/radio_notCollection.png'}}"></image>
+        </view>
+        <block wx:if="{{item.selected}}">
+          <!-- 进度条 -->
+          <movable-area class="radioProgressView">
+            <view class="radioProgress_bgBar"></view>
+            <view class="radioProgress_playBar" style="width:{{item.currentProgressBarWidth}}rpx;"></view>
+            <movable-view direction="horizontal" class="radioProgress_handle" data-index="{{index}}" bindchange="changeProgress" x="{{item.currentProgressBarWidth/750.0 * screenWidth}}" bindtouchend="changeProgressEnd" bindtouchstart="changeProgressStart" bindtouchcancel="changeProgressEnd">
+              <view class="radioProgress_handlePoint"></view>
+            </movable-view>
+          </movable-area>
+          <view class="radioPlayControl">
+            <!-- 播放时长 -->
+            <view class="radioPlayControl_playTime">{{item.currentTimeStr}}</view>
+            <!-- 播放/暂停按钮 -->
+            <image class="radioPlayControl_play" src="{{item.playing ? '../../images/audio_play.png' : '../../images/audio_pause.png'}}" catchtap="audioPlayButtonClciked" data-index="{{index}}"></image>
+            <!-- 总时长 -->
+            <view class="radioPlayControl_playTime">{{item.totalTime}}</view>
+          </view>
+          <view style="height:20rpx; width:100%;"></view>
+        </block>
+        <view style="height:7rpx; width:100%;"></view>
+      </view>
+    </block>
+  </view>
+</scroll-view>
+
+<!-- 详情弹框 -->
+<view wx:if="{{showAudioDetail}}" class="audioDetail_bg" catchtap="closeAudioDetailView">
+  <view class="audioDetailView" style="height:{{screenHeight * 0.706}}px;" catchtap="detailViewClciked">
+    <!-- 标题 -->
+    <view class="audioDetail_titleView">
+      <image wx:if="{{openDetailRadio.selected}}" class="audioDetail_playing" src="../../images/radio_playing.png"></image>
+      {{openDetailRadio.title}}
+    </view>
+    <scroll-view class="audioDetail_contentScrollView" style="height:{{screenHeight * 0.706 - 158/750.0*screenWidth}}px;" scroll-y="true">
+      <view style="margin-left:30rpx; width:690rpx; padding-bottom:{{safeareaBottom+10}}px;">
+        <!-- 详情 -->
+        <rich-text class="audioDetail_content"  nodes="{{openDetailRadio.content}}"></rich-text>
+      </view>
+    </scroll-view>
+  </view>
+</view>

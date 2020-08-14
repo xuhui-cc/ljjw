@@ -677,7 +677,9 @@ Page({
    * 进入公考广播
   */
   to_radio: function() {
-    
+    wx.navigateTo({
+      url: '../../pages/radioList/radioList',
+    })
   },
   
 })

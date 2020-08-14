@@ -48,13 +48,38 @@ const customFormatTimeByTimestamp = (timestamp, format) => {
     "S": date.getMilliseconds()             //毫秒   
   };
   if (!format) {
-    format = "yyyy-mm-dd hh:ii:ss"
+    format = "yyyy-MM-dd hh:mm:ss"
   }
   if (/(y+)/.test(format)) {
     // date.getFullYear() + ""  转为字符串
     format = format.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length))
   }
   // console.log(format)
+  for (var k in data) {
+    if (new RegExp("(" + k + ")").test(format)) {
+      format = format.replace(RegExp.$1, (RegExp.$1.length === 1) ? (data[k]) : (("00" + data[k]).substring(("" + data[k]).length)))
+    }
+  }
+  return format
+}
+
+const formatTImeBySecond = (seconds, format) => {
+  let hour = parseInt(seconds/3600)
+  let minuts = parseInt((seconds - hour*3600)/60)
+  let second = seconds%60
+  // console.log(hour, minuts, second)
+  var data = {
+    'h+': hour,
+    'mm': minuts,
+    's+': second
+  }
+  if (!format) {
+    format = 'hh:mm:ss'
+  }
+  if (/(h+)/.test(format)) {
+    // date.getFullYear() + ""  转为字符串
+    format = format.replace(RegExp.$1, (RegExp.$1.length === 1) ? hour + '' : (hour > 9 ? hour + '' : "0" + hour))
+  }
   for (var k in data) {
     if (new RegExp("(" + k + ")").test(format)) {
       format = format.replace(RegExp.$1, (RegExp.$1.length === 1) ? (data[k]) : (("00" + data[k]).substring(("" + data[k]).length)))
@@ -79,5 +104,6 @@ module.exports = {
   formatTime: formatTime,
   formatDate: formatDate,
   customFormatTimeByDate: customFormatTimeByDate,
-  customFormatTimeByTimestamp, customFormatTimeByTimestamp
+  customFormatTimeByTimestamp: customFormatTimeByTimestamp,
+  formatTImeBySecond: formatTImeBySecond
 }

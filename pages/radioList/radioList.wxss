@@ -1,0 +1,321 @@
+/* pages/radioList/radioList.wxss */
+page{
+  background-color: #FBFBFC;
+}
+
+.row_alignitemCenter_spaceBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.top_bg {
+  z-index: -1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: linear-gradient(90deg,#14CBA2 0%,#6FEED1 100%);
+  width: 100%;
+  height: 484rpx;
+}
+
+.navi_content {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 34rpx;
+  font-weight: bold;
+}
+
+.navi_back {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100rpx;
+  height: 100%;
+}
+
+.navi_backImage {
+  width: 27.11rpx;
+  height: 27.11rpx;
+  margin-left: 32rpx;
+}
+
+.list_header {
+  height: 195rpx;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchBar {
+  margin-top: 30rpx;
+  margin-left: 30rpx;
+  width: 690rpx;
+  height: 74rpx;
+  border-radius: 37rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.31);
+}
+
+.searchBar_image {
+  width: 29.53rpx;
+  height: 30.93rpx;
+  margin-left: 31rpx;
+}
+
+.searchBar_placehoulder {
+  font-size: 26rpx;
+  color: white;
+  margin-left: 17rpx;
+}
+
+.totalHour {
+  font-size: 28rpx;
+  color: white;
+  margin-right: 39rpx;
+}
+
+.totalHour_count {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.search_time {
+  font-size: 28rpx;
+  color: white;
+  margin-left: 46rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin-top: 27rpx;
+}
+
+.search_time_image {
+  margin-left: 21rpx;
+  width: 17.68rpx;
+  height: 17.68rpx;
+  margin-top: 35rpx;
+}
+
+.scrollView {
+  /* position: fixed;
+  bottom: 0;
+  left: 0; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.radioListView {
+  display: flex;
+  flex-direction: column;
+}
+
+.radioCell {
+  margin-left: 30rpx;
+  width: 690rpx;
+  border-radius: 14rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.radioCell_title {
+  margin-top: 36rpx;
+  margin-left: 34rpx;
+  max-width: 512rpx;
+  color: #272727;
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 50rpx;
+}
+
+.radioCell_playing {
+  width: 25rpx;
+  height: 28rpx;
+}
+
+.radioCell_flagList {
+  margin-left: 20rpx;
+  max-width: 635rpx;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5rpx;
+  flex-wrap: wrap;
+}
+
+.flagCell {
+  height: 42rpx;
+  margin-top: 15rpx;
+  margin-left: 15rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  display: flex;
+  align-items: center;
+  color: #2DC1A0;
+  font-size: 22rpx;
+  background-color: rgba(45, 193, 160, 0.06);
+  border-radius: 7rpx;
+}
+
+.radioCell_time {
+  color: #C6C6C6;
+  font-size: 26rpx;
+  margin-left: 34rpx;
+}
+
+.radioCell_showDetailButton {
+  color: #757575;
+  font-size: 24rpx;
+  margin-right: 26rpx;
+}
+
+.radioCell_showDetailArrow {
+  width: 17.68rpx;
+  height: 17.68rpx;
+  margin-left: 6rpx;
+}
+
+.radioCell_collection {
+  position: absolute;
+  width: 74rpx;
+  height: 74rpx;
+  right: 0rpx;
+  top: 21rpx;
+  display: flex;
+  align-items: center;
+}
+
+.radioCell_collectionImage {
+  width: 36.57rpx;
+  height: 34.88rpx;
+  margin-right: 22rpx;
+}
+
+.radioProgressView {
+  height: 33rpx;
+  margin-left: 14rpx;
+  width: 662rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.radioProgress_bgBar {
+  position: absolute;
+  left: 19rpx;
+  width: 624rpx;
+  height: 4rpx;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: #ECECEC;
+  border-radius: 2rpx;
+}
+
+.radioProgress_playBar {
+  height: 4rpx;
+  border-radius: 2rpx;
+  background-color: #2DC1A0;
+  margin-left: 19rpx;
+  z-index: 1;
+}
+
+.radioProgress_handle {
+  height: 100%;
+  width: 51rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+}
+
+.radioProgress_handlePoint {
+  width: 13rpx;
+  height: 13rpx;
+  background-color: #2DC1A0;
+  border-radius: 50%;
+}
+
+.radioPlayControl {
+  display: flex;
+  flex-direction: row;
+  margin-left: 33rpx;
+  width: 625rpx;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.radioPlayControl_playTime {
+  margin-top: 0rpx;
+  color: #C6C6C6;
+  font-size: 22rpx;
+}
+
+.radioPlayControl_play {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 15rpx;
+}
+
+.audioDetail_bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.54);
+}
+
+.audioDetailView {
+  height: 70.6vh;
+  border-radius: 40rpx 40rpx 0rpx 0rpx;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: white;
+}
+
+.audioDetail_titleView {
+  height: 150rpx;
+  margin-top: 8rpx;
+  color: #272727;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-left: 30rpx;
+  width: 690rpx;
+  display: flex;
+  align-items: center;
+}
+
+.audioDetail_playing{
+  width: 31rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.audioDetail_contentScrollView {
+  width: 100%;
+}
+
+.audioDetail_content {
+  margin-left: 30rpx;
+  width: 690rpx;
+}

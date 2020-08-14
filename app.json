@@ -28,7 +28,8 @@
     "pages/feedBack_list/feedBack_list",
     "pages/feedBack_submit/feedBack_submit",
     "pages/tea_feedBack_list/tea_feedBack_list",
-    "pages/avatar_edit/avatar_edit"
+    "pages/avatar_edit/avatar_edit",
+    "pages/radioList/radioList"
   ],
   "tabBar": {
     "custom": false,
