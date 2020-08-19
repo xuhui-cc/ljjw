@@ -118,7 +118,7 @@
       <view class="datePicker_button" bindtap="datePiackerCloseButtonClciekd">取消</view>
       <view class="datePicker_button" bindtap="datePickerSureButtonClciked">确定</view>
     </view>
-    <picker-view class="pickerView" indicator-style="height: 50px;" bindchange="datePickerChanged" value="{{[datePickerSelectedYear, datePickerSelectedMonth]}}">
+    <picker-view class="pickerView" indicator-style="height: 50px;" bindchange="datePickerChanged" bindpickstart="datePickerScrollStart" bindpickend="datePickerScrollEnd" value="{{[datePickerSelectedYear, datePickerSelectedMonth]}}">
       <picker-view-column>
         <block wx:for="{{datePickerYearList}}" wx:key="index">
           <view class="datePicker_year">{{item}}</view>

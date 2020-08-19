@@ -38,6 +38,9 @@ Page({
   */
   durationTimer: null,
 
+  // 日期选择框 是否正在滚动 0-停止滚动 非0-正在滚动
+  datePickerScrolling: 0,
+
   /**
    * 页面的初始数据
    */
@@ -785,6 +788,20 @@ Page({
   },
 
   /**
+   * 日期选择框 开始滚动
+  */
+  datePickerScrollStart: function() {
+    this.datePickerScrolling += 1
+  },
+
+  /**
+   * 日期选择框 结束滚动
+  */
+  datePickerScrollEnd: function() {
+    this.datePickerScrolling -= 1
+  },
+
+  /**
    * 日期选择框 取消按钮 点击事件
   */
   datePiackerCloseButtonClciekd: function() {
@@ -799,6 +816,9 @@ Page({
    * 日期选择框 确定按钮 点击事件
   */
   datePickerSureButtonClciked: function() {
+    if (this.datePickerScrolling > 0) {
+      return
+    }
     if (this.data.TempDatePickerYearIndex == this.data.datePickerSelectedYear && this.data.TempDatePickerMonthIndex == this.data.datePickerSelectedMonth) {
       this.setData({
         showDatePicker: false

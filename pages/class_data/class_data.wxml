@@ -111,7 +111,7 @@
               <movable-area class="radioProgressView">
                 <view class="radioProgress_bgBar"></view>
                 <view class="radioProgress_playBar" style="width:{{item.currentProgressBarWidth}}rpx;"></view>
-                <movable-view direction="horizontal" class="radioProgress_handle" data-index="{{index}}" bindchange="changeProgress" x="{{item.currentProgressBarWidth/750.0 * pageSzie.screenWidth}}" bindtouchend="changeProgressEnd" bindtouchstart="changeProgressStart" bindtouchcancel="changeProgressEnd">
+                <movable-view direction="horizontal" class="radioProgress_handle" data-index="{{index}}" bindchange="changeProgress" x="{{item.currentProgressBarWidth/750.0 * pageSize.screenWidth}}" bindtouchend="changeProgressEnd" bindtouchstart="changeProgressStart" bindtouchcancel="changeProgressEnd">
                   <view class="radioProgress_handlePoint"></view>
                 </movable-view>
               </movable-area>
