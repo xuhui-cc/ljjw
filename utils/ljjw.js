@@ -372,7 +372,17 @@ function jwGetUserAudioTime(params) {
   return fetch.ljjwfetch(URI, 'jwGetUserAudioTime', params, '获取用户收听音频广播时长')
 }
 
-module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime}
+// 更新音频广播用户收听时长
+function jwUpdateUserAudioTime(params) {
+  return fetch.ljjwfetchpost(URI, 'jwUpdateUserAudioTime', params, '更新音频广播用户收听时长')
+}
+
+// 更新音频收听次数
+function updateAudioPlayCount(params) {
+  return fetch.ljjwfetchpost(URI, 'updateAudioPlayCount', params, '更新音频收听次数')
+}
+
+module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime, jwUpdateUserAudioTime, updateAudioPlayCount}
 
 //测试正式服接口
 function testAPi(api, params) {

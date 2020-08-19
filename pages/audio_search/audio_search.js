@@ -20,11 +20,14 @@ Page({
   // 跳转播放中
   seeking: false,
 
+  // 最终搜索的关键字
+  sureKeyWord: '',
+
   /**
    * 次数计时器
    * 创建时机：点击广播单元格 / 自然播放结束后播放下一个
    * 暂停时机：缓冲中 / 暂停中
-   * 销毁时机：30秒触发回调 / 页面卸载 / 自然播放结束 / 非第一次点击广播单元格 / 音频onStop回调 / 下拉刷新
+   * 销毁时机：30秒触发回调 / 页面卸载 / 自然播放结束 / 非第一次点击广播单元格 / 音频onStop回调 / 下啦刷新
    * 上传数据时机：30s触发回调
   */
   countTimer: null,
@@ -45,7 +48,7 @@ Page({
     // 广播列表
     radioList:[],
 
-    // 是否郑子啊下拉刷新
+    // 是否正在下拉刷新
     pullDownRefresh: false,
 
     // 广播详情弹框
@@ -54,26 +57,9 @@ Page({
     // 选择打开详情的广播
     openDetailRadio: null,
 
-    // 收听小时数
-    listenHour: 0,
+    // 输入的关键字
+    keyword: '',
 
-    // 收听分钟数
-    listenMinute: 0,
-
-    // 是否展示选择时间弹框
-    showDatePicker: false,
-
-    // 日期选择 年份列表
-    datePickerYearList: ['不限时间', '2020'],
-    datePickerMonthList: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-
-    // 日期选择器 选中的年
-    datePickerSelectedYear: 0,
-    datePickerSelectedMonth: 0,
-
-    // 日期选择器 临时过渡 选中的年
-    TempDatePickerYearIndex : 0,
-    TempDatePickerMonthIndex: 0,
   },
 
   /**
@@ -84,10 +70,8 @@ Page({
     this.setData({
       role: wx.getStorageSync('role')
     })
-    this.setDatePickerDate()
 
     this.getAudioList()
-    this.getListenSconds()
   },
 
   /**
@@ -119,9 +103,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    if (this.innerAudioContext) {
-      this.innerAudioContext.pause()
-    }
+
   },
 
   /**
@@ -382,24 +364,6 @@ Page({
     })
   },
 
-  /**
-   * 设置日期选择器数据
-  */
-  setDatePickerDate: function() {
-    let currentYear = (new Date()).getFullYear()
-    if (currentYear > 2020) {
-      let indexYear = 2021
-      let datePickerYearList = this.data.datePickerYearList
-      while(indexYear <= currentYear) {
-        datePickerYearList.push(String(indexYear))
-        indexYear += 1
-      }
-      this.setData({
-        datePickerYearList: datePickerYearList
-      })
-    }
-  },
-
   //---------------------------------------------------接口-------------------------------------------------
   /**
    * 获取音频广播列表
@@ -411,9 +375,8 @@ Page({
       page: this.pageData.page,
       limit: this.pageData.perpage,
     }
-    if (this.data.datePickerSelectedYear != 0) {
-      let month = this.data.datePickerYearList[this.data.datePickerSelectedYear] + '-' + (this.data.datePickerSelectedMonth < 9 ? '0' : '') + this.data.datePickerMonthList[this.data.datePickerSelectedMonth]
-      params.riqi = month
+    if (this.sureKeyWord && this.sureKeyWord != '') {
+      params.keyword = this.sureKeyWord
     }
     let that = this
     app.ljjw.jwGetAudiolist(params).then(d=>{
@@ -492,28 +455,6 @@ Page({
   },
 
   /**
-   * 获取收听时长
-  */
-  getListenSconds: function() {
-    let params = {
-      uid: wx.getStorageSync('uid'),
-      token: wx.getStorageSync('token'),
-    }
-    let that = this
-    app.ljjw.jwGetUserAudioTime(params).then(d=>{
-      if (d.data.status == 1) {
-        let second = d.data.data
-        let hour = parseInt(second/3600)
-        let minute = Math.ceil((second - hour*3600)/60)
-        that.setData({
-          listenHour: hour,
-          listenMinute: minute
-        })
-      }
-    })
-  },
-
-  /**
    * 更新用户收听时长
   */
   updateListenTime: function(second) {
@@ -584,12 +525,12 @@ Page({
   refreshList: function() {
     this.pageData.page = 1
     let that = this
-
     // 销毁音频播放管理对象
     if (this.innerAudioContext) {
       this.innerAudioContext.destroy()
       this.innerAudioContext = null
     }
+
     // 销毁 次数计时器
     if(this.countTimer) {
       this.countTimer.clearTimer()
@@ -764,62 +705,34 @@ Page({
   },
 
   /**
-   * 时间筛选按钮 点击事件
+   * 搜索框 输入回调
   */
-  dateButtonClciked: function() {
+  searchBarInput: function(e) {
+    console.log(e)
+    let keyword = e.detail.value
     this.setData({
-      showDatePicker: true
+      keyword: keyword
     })
   },
 
   /**
-   * 日期选择框 选中值改变
+   * 搜索按钮点击事件
   */
-  datePickerChanged: function(e){
-    let selectedIndex = e.detail.value
-    // console.log(e)
-    this.setData({
-      TempDatePickerYearIndex: selectedIndex[0],
-      TempDatePickerMonthIndex: selectedIndex[1],
-    })
-  },
-
-  /**
-   * 日期选择框 取消按钮 点击事件
-  */
-  datePiackerCloseButtonClciekd: function() {
-    this.setData({
-      TempDatePickerYearIndex: this.data.datePickerSelectedYear,
-      TempDatePickerMonthIndex: this.data.datePickerSelectedMonth,
-      showDatePicker: false
-    })
-  },
-
-  /**
-   * 日期选择框 确定按钮 点击事件
-  */
-  datePickerSureButtonClciked: function() {
-    if (this.data.TempDatePickerYearIndex == this.data.datePickerSelectedYear && this.data.TempDatePickerMonthIndex == this.data.datePickerSelectedMonth) {
-      this.setData({
-        showDatePicker: false
-      })
-      return
-    }
-    this.setData({
-      datePickerSelectedYear: this.data.TempDatePickerYearIndex,
-      datePickerSelectedMonth: this.data.TempDatePickerMonthIndex,
-      showDatePicker: false
-    })
+  searchButtonClciked: function() {
+    this.sureKeyWord = this.data.keyword
     this.pageData.page = 1
     this.getAudioList()
   },
 
   /**
-   * 搜索框 点击事件
+   * 搜索框 清空按钮 点击事件
   */
-  searchBarClciked: function() {
-    wx.navigateTo({
-      url: '../../pages/audio_search/audio_search',
+  searchBarClearButtonClicked: function() {
+    this.setData({
+      keyword: ''
     })
+    this.sureKeyWord = ''
+    this.pageData.page = 1
+    this.getAudioList()
   }
 })

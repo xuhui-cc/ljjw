@@ -48,64 +48,59 @@ page{
 }
 
 .list_header {
-  height: 195rpx;
+  height: 148rpx;
   width: 100%;
   position: fixed;
   left: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .searchBar {
-  margin-top: 30rpx;
-  margin-left: 30rpx;
-  width: 690rpx;
+  width: 594rpx;
   height: 74rpx;
+  margin-left: 30rpx;
+  background-color: #F2F3F7;
   border-radius: 37rpx;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.31);
 }
 
-.searchBar_image {
+.searchBar_img {
   width: 29.53rpx;
   height: 30.93rpx;
   margin-left: 31rpx;
 }
 
-.searchBar_placehoulder {
-  font-size: 26rpx;
-  color: white;
+.searchButton {
+  height: 100%;
+  width: 122rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8B8B8B;
+  font-size: 30rpx;
+}
+
+.searchBar_input {
+  height: 100%;
+  flex-grow: 2;
   margin-left: 17rpx;
+  color: #272727;
+  font-size: 26rpx;
 }
 
-.totalHour {
-  font-size: 28rpx;
-  color: white;
-  margin-right: 39rpx;
+.searchBar_clear {
+  height: 100%;
+  width: 72rpx;
+  display: flex;
+  align-items: center;
 }
 
-.totalHour_count {
-  font-size: 36rpx;
-  font-weight: bold;
-  color: white;
-}
-
-.search_time {
-  font-size: 28rpx;
-  color: white;
-  margin-left: 46rpx;
-  height: 40rpx;
-  line-height: 40rpx;
-  margin-top: 27rpx;
-}
-
-.search_time_image {
-  margin-left: 21rpx;
-  width: 17.68rpx;
-  height: 17.68rpx;
-  margin-top: 35rpx;
+.searchBar_clearImage {
+  margin-left: 11rpx;
+  width: 30rpx;
+  height: 30rpx;
 }
 
 .scrollView {

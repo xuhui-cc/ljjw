@@ -1,10 +1,10 @@
 <!--pages/radioList/radioList.wxml-->
 <!-- 顶部背景 -->
-<view class="top_bg" style="height:{{naviHeight + 308/750.0*screenWidth}}px;"></view>
+<view class="top_bg" style="height:{{naviHeight}}px;"></view>
 
 <!-- 导航 -->
 <view class="navi_content" style="top:{{statusBarHeight}}px; height:{{naviContentHeight}}px">
-  公考广播
+  广播搜索
   <view class="navi_back" bindtap="naviBackItemClicked">
     <image class="navi_backImage" src="../../images/back_img.png"></image>
   </view>
@@ -12,30 +12,17 @@
 
 <!-- header -->
 <view class="list_header" style="top:{{naviHeight}}px;">
-  <view class="searchBar" bindtap="searchBarClciked">
-    <image class="searchBar_image" src="../../images/searchBar_white.png"></image>
-    <text class="searchBar_placehoulder">请输入资料标题...</text>
-  </view>
-  <view class="row_alignitemCenter_spaceBetween" style="height:91rpx;">
-    <view style="height:100%; display:flex; flex-direction: row;" bindtap="dateButtonClciked">
-      <text class="search_time">{{datePickerSelectedYear == 0 ? '时间筛选' : datePickerYearList[datePickerSelectedYear] + '.' + (datePickerSelectedMonth < 9 ? '0' : '') + (datePickerSelectedMonth+1)}}</text>
-      <image class="search_time_image" src="../../images/searchtime_open.png"></image>
-    </view>
-    <view class="totalHour">
-      收听时长：共
-      <block wx:if="{{listenHour > 0}}">
-        <text class="totalHour_count">{{listenHour}}</text>
-        小时
-      </block>
-      <block wx:if="{{listenMinute > 0 || listenHour == 0}}">
-        <text class="totalHour_count">{{listenMinute}}</text>
-        分钟
-      </block>
+  <view class="searchBar row_alignitemCenter_spaceBetween">
+    <image class="searchBar_img" src="../../images/search_w.png"></image>
+    <input class="searchBar_input" placeholder="请输入资料标题..." bindinput="searchBarInput" value="{{keyword}}" confirm-type="search" bindconfirm="searchButtonClciked" />
+    <view class="searchBar_clear" bindtap="searchBarClearButtonClicked">
+      <image class="searchBar_clearImage" src="../../images/searchBar_clear.png"></image>
     </view>
   </view>
+  <view class="searchButton" bindtap="searchButtonClciked">搜索</view>
 </view>
 
-<scroll-view wx:if="{{radioList && radioList != '' && radioList.length != 0}}" class="scrollView" scroll-y="{{true}}" refresher-enabled="{{true}}" bindrefresherrefresh="refreshList" refresher-triggered="{{pullDownRefresh}}" bindscrolltolower="scrollReachBottom" style="height:{{screenHeight - naviHeight - 195/750.0*screenWidth}}px; margin-top:{{naviHeight + 195/750.0*screenWidth}}px">
+<scroll-view wx:if="{{radioList && radioList != '' && radioList.length != 0}}" class="scrollView" scroll-y="{{true}}" refresher-enabled="{{true}}" bindrefresherrefresh="refreshList" refresher-triggered="{{pullDownRefresh}}" bindscrolltolower="scrollReachBottom" style="height:{{screenHeight - naviHeight - 148/750.0*screenWidth}}px; margin-top:{{naviHeight + 148/750.0*screenWidth}}px">
   <view class="radioListView" style="padding-bottom:{{safeareaBottom + 10}}px;">
     <!-- 循环广播列表 -->
     <block wx:for="{{radioList}}" wx:key="index">
@@ -108,27 +95,5 @@
         <rich-text class="audioDetail_content"  nodes="{{openDetailRadio.content}}"></rich-text>
       </view>
     </scroll-view>
-  </view>
-</view>
-
-<!-- 日期弹框 -->
-<view wx:if="{{showDatePicker}}" class="datePicker_bg">
-  <view class="datePickerView">
-    <view class="row_alignitemCenter_spaceBetween" style="height: 90rpx;">
-      <view class="datePicker_button" bindtap="datePiackerCloseButtonClciekd">取消</view>
-      <view class="datePicker_button" bindtap="datePickerSureButtonClciked">确定</view>
-    </view>
-    <picker-view class="pickerView" indicator-style="height: 50px;" bindchange="datePickerChanged" value="{{[datePickerSelectedYear, datePickerSelectedMonth]}}">
-      <picker-view-column>
-        <block wx:for="{{datePickerYearList}}" wx:key="index">
-          <view class="datePicker_year">{{item}}</view>
-        </block>
-      </picker-view-column>
-      <picker-view-column>
-        <block wx:for="{{datePickerMonthList}}" wx:key="index">
-          <view class="datePicker_month" style="color:{{TempDatePickerYearIndex==0 ? '#ffffff' : '#272727'}};">{{item}}</view>
-        </block>
-      </picker-view-column>
-    </picker-view>
   </view>
 </view>

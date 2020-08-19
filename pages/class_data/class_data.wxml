@@ -11,46 +11,145 @@
     </view>
   </view>
 
-  <view class="flex">
-    <view class="search-layout" style="margin-top:{{pageSize.naviHeight + 24/750.0*pageSize.screenWidth}}px">
-      <image class="search-img" src="../../images/search_w.png"></image>
-      <input class="search-input" placeholder="请输入资料标题" bindinput='search_collect'></input>
+  <!-- 菜单 -->
+  <view class="TopMenu" style="top:{{pageSize.naviHeight}}px;">
+    <view class="TopMenu_item" style="margin-left:46.5rpx; color:{{selectedMenuIndex == 0 ? '#2DC1A0' : '#272727'}}; font-weight:{{selectedMenuIndex == 0 ? 'bold' : 'normal'}}" bindtap="topMenuSelected" data-index="0">
+      资料
+      <view wx:if="{{selectedMenuIndex==0}}" class="TopMenu_selectedLine"></view>
+    </view>
+    <view class="TopMenu_item" style="margin-right:46.5rpx; color:{{selectedMenuIndex == 1 ? '#2DC1A0' : '#272727'}}; font-weight:{{selectedMenuIndex == 1 ? 'bold' : 'normal'}}" bindtap="topMenuSelected" data-index="1">
+      音频
+      <view wx:if="{{selectedMenuIndex==1}}" class="TopMenu_selectedLine"></view>
     </view>
   </view>
-
-  <!-- 清晰搜索 -->
-  <view wx:for="{{mydata}}" wx:key="index">
-    <view class="data-layout">
-        <view class="flex">
-          <view class="data-tea">来自：{{item.createuser}}老师</view>
-          <view class="data-date">{{item.col_time}}</view>
-          <view class="flex" data-file_xb="{{index}}" bindtap='cancel_collect'>
-            <image class="class-uncollect" src="../../images/collect.png"></image>
-            <view class="data-collect">已收藏</view>
-          </view>
-          
-        </view>
-
-        <view class="data-heng"></view>
-
-        <view class="flex" bindtap="open_file" data-file_xb="{{index}}">
-          <!-- pdf -->
-          <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image>
-          <!-- doc docx -->
-          <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
-          <!-- ppt pptx -->
-          <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
-          <!-- png jpg jpeg -->
-          <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
-          <view>
-            <view class="data-name">{{item.title}}</view>
-            <view class="data-intro">{{item.intro}}</view>
-          </view>
-        </view>
-
+  <!-- 资料 -->
+  <block wx:if="{{selectedMenuIndex==0}}">
+    <view class="flex">
+      <view class="search-layout" style="margin-top:{{pageSize.naviHeight + 119/750.0*pageSize.screenWidth}}px">
+        <image class="search-img" src="../../images/search_w.png"></image>
+        <input class="search-input" placeholder="请输入资料标题" bindinput='search_collect'></input>
       </view>
-  </view>
+    </view>
 
-  <image wx:if="{{mydata == ''}}" class="null_img" src="../../images/rec_null.png"></image>
-  <!-- 清晰搜索 -->
+    <!-- 清晰搜索 -->
+    <view wx:for="{{mydata}}" wx:key="index">
+      <view class="data-layout">
+          <view class="flex">
+            <view class="data-tea">来自：{{item.createuser}}老师</view>
+            <view class="data-date">{{item.col_time}}</view>
+            <view class="flex" data-file_xb="{{index}}" bindtap='cancel_collect'>
+              <image class="class-uncollect" src="../../images/collect.png"></image>
+              <view class="data-collect">已收藏</view>
+            </view>
+            
+          </view>
+
+          <view class="data-heng"></view>
+
+          <view class="flex" bindtap="open_file" data-file_xb="{{index}}">
+            <!-- pdf -->
+            <image class="pdf" wx:if="{{item.formType == 3}}" src="../../images/pdf.png"></image>
+            <!-- doc docx -->
+            <image class="pdf" wx:elif="{{item.formType == 2}}" src="../../images/doc.png"></image>
+            <!-- ppt pptx -->
+            <image class="pdf" wx:elif="{{item.formType == 4}}" src="../../images/ppt.png"></image>
+            <!-- png jpg jpeg -->
+            <image class="pdf" wx:elif="{{item.formType == 1}}" src="../../images/fileType_image.png"></image>
+            <view>
+              <view class="data-name">{{item.title}}</view>
+              <view class="data-intro">{{item.intro}}</view>
+            </view>
+          </view>
+
+        </view>
+    </view>
+
+    <image wx:if="{{mydata == ''}}" class="null_img" src="../../images/rec_null.png"></image>
+  </block>
+  <!-- 音频 -->
+  <block wx:else>
+    <!-- header -->
+    <view class="list_header" style="top:{{pageSize.naviHeight + 88/750.0*pageSize.screenWidth}}px;">
+      <view class="searchBar row_alignitemCenter_spaceBetween">
+        <image class="searchBar_img" src="../../images/search_w.png"></image>
+        <input class="searchBar_input" placeholder="请输入资料标题..." bindinput="searchBarInput" value="{{keyword}}" confirm-type="search" bindconfirm="searchButtonClciked" />
+      </view>
+    </view>
+
+    <scroll-view wx:if="{{radioList && radioList != '' && radioList.length != 0}}" class="scrollView" scroll-y="{{true}}" style="height:{{pageSize.screenHeight - pageSize.naviHeight - 218/750.0 * pageSize.screenWidth}}px; margin-top:{{pageSize.naviHeight + 218/750.0*pageSize.screenWidth}}px">
+      <view class="radioListView" style="padding-bottom:{{pageSize.safeareaBottom + 10}}px;">
+        <!-- 循环广播列表 -->
+        <block wx:for="{{radioList}}" wx:key="index">
+          <view class="radioCell" style="margin-top:{{index==0 ? 0 : 16}}rpx;" bindtap="radioCellClicked" data-index="{{index}}">
+            <!-- 标题 -->
+            <view class="radioCell_title">
+              <image wx:if="{{item.selected}}" class="radioCell_playing" src="../../images/radio_playing.png"></image>
+              {{item.title}}
+            </view>
+            <!-- 标签 -->
+            <view class="radioCell_flagList">
+              <!-- 标签循环 -->
+              <block wx:for="{{item.flags}}" wx:key="flagIndex" wx:for-index="flagIndex" wx:for-item="flagItem">
+                <view class="flagCell">{{flagItem}}</view>
+              </block>
+            </view>
+            <view class="row_alignitemCenter_spaceBetween" style="height:71rpx; margin-top:4rpx;" catchtap="radioShowDetail" data-index="{{index}}">
+              <!-- 时间 -->
+              <view class="radioCell_time">{{item.pubtime}}</view>
+              <view class="radioCell_showDetailButton">
+                查看详情
+                <image class="radioCell_showDetailArrow" src="../../images/next.png"></image>
+              </view>
+            </view>
+            
+            <!-- 收藏按钮 -->
+            <view class="radioCell_collection" wx:if="{{role == 4}}" catchtap="radioCollectionButtonClciked" data-index="{{index}}">
+              <image class="radioCell_collectionImage" src="{{item.colid != null ? '../../images/radio_collection.png' : '../../images/radio_notCollection.png'}}"></image>
+            </view>
+            <block wx:if="{{item.selected}}">
+              <!-- 进度条 -->
+              <movable-area class="radioProgressView">
+                <view class="radioProgress_bgBar"></view>
+                <view class="radioProgress_playBar" style="width:{{item.currentProgressBarWidth}}rpx;"></view>
+                <movable-view direction="horizontal" class="radioProgress_handle" data-index="{{index}}" bindchange="changeProgress" x="{{item.currentProgressBarWidth/750.0 * pageSzie.screenWidth}}" bindtouchend="changeProgressEnd" bindtouchstart="changeProgressStart" bindtouchcancel="changeProgressEnd">
+                  <view class="radioProgress_handlePoint"></view>
+                </movable-view>
+              </movable-area>
+              <view class="radioPlayControl">
+                <!-- 播放时长 -->
+                <view class="radioPlayControl_playTime">{{item.currentTimeStr}}</view>
+                <!-- 播放/暂停按钮 -->
+                <image class="radioPlayControl_play" src="{{item.playing ? '../../images/audio_play.png' : '../../images/audio_pause.png'}}" catchtap="audioPlayButtonClciked" data-index="{{index}}"></image>
+                <!-- 总时长 -->
+                <view class="radioPlayControl_playTime">{{item.totalTime}}</view>
+              </view>
+              <view style="height:20rpx; width:100%;"></view>
+            </block>
+            <view style="height:7rpx; width:100%;"></view>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+
+    <block wx:else>
+      <null_image title="搜索结果为空" type="8"></null_image>
+    </block>
+
+    <!-- 详情弹框 -->
+    <view wx:if="{{showAudioDetail}}" class="audioDetail_bg" catchtap="closeAudioDetailView">
+      <view class="audioDetailView" style="height:{{pageSize.screenHeight * 0.706}}px;" catchtap="detailViewClciked">
+        <!-- 标题 -->
+        <view class="audioDetail_titleView">
+          <image wx:if="{{openDetailRadio.selected}}" class="audioDetail_playing" src="../../images/radio_playing.png"></image>
+          {{openDetailRadio.title}}
+        </view>
+        <scroll-view class="audioDetail_contentScrollView" style="height:{{pageSize.screenHeight * 0.706 - 158/750.0 * pageSize.screenWidth}}px;" scroll-y="true">
+          <view style="margin-left:30rpx; width:690rpx; padding-bottom:{{pageSize.safeareaBottom+10}}px;">
+            <!-- 详情 -->
+            <rich-text class="audioDetail_content"  nodes="{{openDetailRadio.content}}"></rich-text>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+  </block>
 </view>

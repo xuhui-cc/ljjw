@@ -1,6 +1,12 @@
 page{
   background: rgba(251,251,252,1)
 }
+.row_alignitemCenter_spaceBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .navigationBar {
   position: fixed;
   width:750rpx;
@@ -38,6 +44,43 @@ page{
   font-size: 34rpx;
   font-weight: bold;
 }
+
+.TopMenu {
+  height: 88rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 99;
+  left: 0;
+  background-color: white;
+}
+
+.TopMenu_item {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #272727;
+  font-size: 32rpx;
+  font-weight: normal;
+  position: relative;
+}
+
+.TopMenu_selectedLine {
+  position: absolute;
+  bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  height: 4rpx;
+  width: 26rpx;
+  border-radius: 2rpx;
+  background-color: #2DC1A0;
+}
+
 .my-head{
   /* margin-left: 341rpx; */
   margin-top: 108rpx;
@@ -231,4 +274,317 @@ page{
   margin-top: 350rpx;
   width:321rpx;
   height:318rpx;
+}
+
+
+
+
+
+
+
+.list_header {
+  height: 130rpx;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.searchBar {
+  width: 690rpx;
+  height: 74rpx;
+  margin-left: 30rpx;
+  background-color: #F2F3F7;
+  border-radius: 37rpx;
+}
+
+.searchBar_img {
+  width: 29.53rpx;
+  height: 30.93rpx;
+  margin-left: 31rpx;
+}
+
+.searchBar_input {
+  height: 100%;
+  margin-left: 18rpx;
+  width: 582rpx;
+  color: #272727;
+  font-size: 26rpx;
+}
+
+.scrollView {
+  /* position: fixed;
+  bottom: 0;
+  left: 0; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.radioListView {
+  display: flex;
+  flex-direction: column;
+}
+
+.radioCell {
+  margin-left: 30rpx;
+  width: 690rpx;
+  border-radius: 14rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.radioCell_title {
+  margin-top: 36rpx;
+  margin-left: 34rpx;
+  max-width: 512rpx;
+  color: #272727;
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 50rpx;
+}
+
+.radioCell_playing {
+  width: 25rpx;
+  height: 28rpx;
+}
+
+.radioCell_flagList {
+  margin-left: 20rpx;
+  max-width: 635rpx;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5rpx;
+  flex-wrap: wrap;
+}
+
+.flagCell {
+  height: 42rpx;
+  margin-top: 15rpx;
+  margin-left: 15rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  display: flex;
+  align-items: center;
+  color: #2DC1A0;
+  font-size: 22rpx;
+  background-color: rgba(45, 193, 160, 0.06);
+  border-radius: 7rpx;
+}
+
+.radioCell_time {
+  color: #C6C6C6;
+  font-size: 26rpx;
+  margin-left: 34rpx;
+}
+
+.radioCell_showDetailButton {
+  color: #757575;
+  font-size: 24rpx;
+  margin-right: 26rpx;
+}
+
+.radioCell_showDetailArrow {
+  width: 17.68rpx;
+  height: 17.68rpx;
+  margin-left: 6rpx;
+}
+
+.radioCell_collection {
+  position: absolute;
+  width: 74rpx;
+  height: 74rpx;
+  right: 0rpx;
+  top: 21rpx;
+  display: flex;
+  align-items: center;
+}
+
+.radioCell_collectionImage {
+  width: 36.57rpx;
+  height: 34.88rpx;
+  margin-right: 22rpx;
+}
+
+.radioProgressView {
+  height: 33rpx;
+  margin-left: 14rpx;
+  width: 662rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.radioProgress_bgBar {
+  position: absolute;
+  left: 19rpx;
+  width: 624rpx;
+  height: 4rpx;
+  margin-top: auto;
+  margin-bottom: auto;
+  background-color: #ECECEC;
+  border-radius: 2rpx;
+}
+
+.radioProgress_playBar {
+  height: 4rpx;
+  border-radius: 2rpx;
+  background-color: #2DC1A0;
+  margin-left: 19rpx;
+  z-index: 1;
+}
+
+.radioProgress_handle {
+  height: 100%;
+  width: 51rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+}
+
+.radioProgress_handlePoint {
+  width: 13rpx;
+  height: 13rpx;
+  background-color: #2DC1A0;
+  border-radius: 50%;
+}
+
+.radioPlayControl {
+  display: flex;
+  flex-direction: row;
+  margin-left: 33rpx;
+  width: 625rpx;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.radioPlayControl_playTime {
+  margin-top: 0rpx;
+  color: #C6C6C6;
+  font-size: 22rpx;
+}
+
+.radioPlayControl_play {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 15rpx;
+}
+
+.audioDetail_bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.54);
+}
+
+.audioDetailView {
+  height: 70.6vh;
+  border-radius: 40rpx 40rpx 0rpx 0rpx;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: white;
+}
+
+.audioDetail_titleView {
+  height: 150rpx;
+  margin-top: 8rpx;
+  color: #272727;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-left: 30rpx;
+  width: 690rpx;
+  display: flex;
+  align-items: center;
+}
+
+.audioDetail_playing{
+  width: 31rpx;
+  height: 32rpx;
+  margin-right: 16rpx;
+}
+
+.audioDetail_contentScrollView {
+  width: 100%;
+}
+
+.audioDetail_content {
+  margin-left: 30rpx;
+  width: 690rpx;
+}
+
+.datePicker_bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.54);
+  z-index: 102;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.datePickerView {
+  height: 500rpx;
+  width: 100%;
+  border-radius: 30rpx 30rpx 0rpx 0rpx;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.datePicker_button {
+  height: 100%;
+  width: 150rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #14CBA2;
+  font-size: 32rpx;
+}
+
+.pickerView {
+  height: 300rpx;
+  width: 100%;
+  /* margin-top: 100rpx; */
+}
+
+.datePicker_year {
+  color: #272727;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 50px;
+  margin-right: 30rpx;
+  line-height: 50px; 
+  text-align: center;
+}
+
+.datePicker_month {
+  color: #272727;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 50px;
+  margin-left: 30rpx;
+  line-height: 50px; 
+  text-align: center;
 }

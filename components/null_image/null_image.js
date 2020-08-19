@@ -16,6 +16,7 @@ Component({
      * 5，暂无资料
      * 6，暂无任务内容
      * 7，该班级暂无学员
+     * 8, 暂无广播
     */
     type: {
       type: Number,
@@ -46,7 +47,9 @@ Component({
       // 暂无任务内容
       6: '../../components/null_image/images_null/null_task.png',
       // 该班级暂无学员
-      7: '../../components/null_image/images_null/null_student.png'
+      7: '../../components/null_image/images_null/null_student.png',
+      // 暂无广播
+      8: '../../components/null_image/images_null/null_audio.png'
     }
   },
 
