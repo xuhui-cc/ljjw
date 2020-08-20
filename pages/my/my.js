@@ -677,6 +677,14 @@ Page({
    * 进入公考广播
   */
   to_radio: function() {
+    let stuinfo = wx.getStorageSync('stuinfo')
+    if (!stuinfo || !stuinfo.checked || stuinfo.checked == 0 || !stuinfo.ifused || stuinfo.ifused == 0) {
+      wx.showToast({
+        title: '暂无权限',
+        icon: 'none'
+      })
+      return
+    }
     wx.navigateTo({
       url: '../../pages/radioList/radioList',
     })

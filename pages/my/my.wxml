@@ -53,7 +53,7 @@
         <view class="change-state" style="margin-right:2rpx;">基础信息查看</view>
         <image class="to-change" style="margin-right:33rpx;" src="../../images/next.png"></image>
       </view>
-      <view wx:elif="{{mydata.status_text == '离校' && mydata.ifused == 0}}" class="baseInfo_View" bindtap="to_stu_info" data-type="2">
+      <view wx:elif="{{mydata.status_text == '离校' && mydata.ifused == 0}}" class="baseInfo_View" bindtap="to_stu_info" data-type="3">
         <view class="change-state" style="margin-right:2rpx;">基础信息重新提交</view>
         <image class="to-change" style="margin-right:33rpx;" src="../../images/next.png"></image>
       </view>

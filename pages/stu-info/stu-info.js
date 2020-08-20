@@ -16,6 +16,9 @@ Page({
 
     // 是否展示选择图片类型弹框
     showPictureTypeSelect: false,
+
+    // 导航栏标题
+    naviTitle: '完善基础信息'
   },
 
   /**
@@ -63,47 +66,31 @@ Page({
 
     })
 
-    if(that.data.type == 2){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
+    switch(that.data.type*1) {
+      case 0:
+      case 1: {
+        // 完善基础信息
+        this.setData({
+          naviTitle: '完善基础信息'
+        })
+        break
       }
-      console.log(params)
-      app.ljjw.jwGetStudentMainPage(params).then(d => {
-        if (d.data.status == 1) {
-          console.log(d.data.data)
-          for(var i=0;i<that.data.stu_class.length;i++){
-            // console.log(d.data.data.classes[0].id)
-            if (d.data.data.classes[0].class_id == that.data.stu_class[i].id){
-              that.setData({
-                stu_class_index: i
-              })
-            }
-          }
-          that.setData({
-            madata: d.data.data,
-            avatar: d.data.data.avatar,
-            input_name: d.data.data.realname,
-            // input_phone: d.data.data.phone,
-            sex_index: d.data.data.sex,
-            input_school: d.data.data.graduate_school,
-            input_major: d.data.data.subject,
-            input_email: d.data.data.email,
-            graduation_time: that.timestampToTime(d.data.data.graduate_time)
-            // input_name: d.data.data.avatar,
-            // input_name: d.data.data.avatar,
-            // input_name: d.data.data.avatar,
-
-
-
-          })
-
-          that.chargeCanSubmit()
-          console.log("我的主页接口获取成功")
-        }
-
-
-      })
+      case 2: {
+        // 修改基础信息
+        this.setData({
+          naviTitle: '修改基础信息'
+        })
+        this.getBaseInfo()
+        break
+      }
+      case 3: {
+        // 重新提交基础信息
+        this.setData({
+          naviTitle: '重新提交基础信息'
+        })
+        this.getBaseInfo()
+        break
+      }
     }
   },
 
@@ -438,6 +425,47 @@ Page({
           success: (res) => {},
         })
       }
+    })
+  },
+
+  /**
+   * 获取基础信息
+  */
+  getBaseInfo: function() {
+    var params = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
+    }
+    let that = this
+    app.ljjw.jwGetStudentMainPage(params).then(d => {
+      if (d.data.status == 1) {
+        if (that.data.type == 2) {
+          for(var i=0;i<that.data.stu_class.length;i++){
+            if (d.data.data.classes[0].class_id == that.data.stu_class[i].id){
+              that.setData({
+                stu_class_index: i
+              })
+            }
+          }
+        }
+        
+        that.setData({
+          madata: d.data.data,
+          avatar: d.data.data.avatar,
+          input_name: d.data.data.realname,
+          // input_phone: d.data.data.phone,
+          sex_index: d.data.data.sex,
+          input_school: d.data.data.graduate_school,
+          input_major: d.data.data.subject,
+          input_email: d.data.data.email,
+          graduation_time: that.timestampToTime(d.data.data.graduate_time)
+        })
+
+        that.chargeCanSubmit()
+        console.log("我的主页接口获取成功")
+      }
+
+
     })
   },
 
