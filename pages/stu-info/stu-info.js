@@ -256,19 +256,22 @@ Page({
   onShow: function () {
     let that = this
     // if(that.data.type == 0){
-      var input_school = wx.getStorageSync("input_school")
-      if (input_school) {
-        input_school = input_school.split(' ').join('')
-        that.setData({
-          input_school: input_school
-        })
-        that.chargeCanSubmit()
+      if(this.data.type != 3) {
+        var input_school = wx.getStorageSync("input_school")
+        if (input_school) {
+          input_school = input_school.split(' ').join('')
+          that.setData({
+            input_school: input_school
+          })
+          that.chargeCanSubmit()
+        }
+        else {
+          that.setData({
+            input_school: input_school
+          })
+        }
       }
-      else {
-        that.setData({
-          input_school: input_school
-        })
-      }
+      
     // }
     
   },

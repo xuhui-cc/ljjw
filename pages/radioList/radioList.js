@@ -132,24 +132,13 @@ Page({
    */
   onUnload: function () {
     // 销毁 音频播放管理对象
-    if (this.innerAudioContext) {
-      this.innerAudioContext.destroy()
-    }
+    this.clearAudioContent()
+
     // 销毁 音频收听次数 计时器
-    if (this.countTimer) {
-      this.countTimer.clearTimer()
-      this.countTimer = null
-    }
+    this.clearCountTimer()
 
     // 销毁 收听时长计时器 并上传时长
-    if (this.durationTimer) {
-      let duration = this.durationTimer.second
-      this.durationTimer.clearTimer()
-      this.durationTimer = null
-      if (duration > 0) {
-        this.updateListenTime(duration)
-      }
-    }
+    this.clearDurationTimer()
   },
 
   /**
@@ -198,9 +187,9 @@ Page({
    * 创建播放管理对象
   */
   setInnerAudioControl: function(url) {
-    if (this.innerAudioContext) {
-      this.innerAudioContext.destroy()
-    }
+    // 销毁之前的音频播放管理对象
+    this.clearAudioContent()
+
     let radio = this.data.radioList[this.radioSelectedIndex]
     this.innerAudioContext = wx.createInnerAudioContext()
     this.innerAudioContext.autoplay = true
@@ -274,20 +263,10 @@ Page({
     this.innerAudioContext.onStop(function(){
       console.log('音频停止')
       // 销毁音频播放次数 计时器
-      if (that.countTimer) {
-        that.countTimer.clearTimer()
-        that.countTimer = null
-      }
+      that.clearCountTimer()
 
       // 销毁收听时长计时器 并上传时长
-      if (that.durationTimer) {
-        let duration = that.durationTimer.second
-        that.durationTimer.clearTimer()
-        that.durationTimer = null
-        if (duration > 0) {
-          that.updateListenTime(duration)
-        }
-      }
+      that.clearDurationTimer()
     })
     this.innerAudioContext.onWaiting(function() {
       console.log('缓冲中')
@@ -313,75 +292,12 @@ Page({
       }
 
       // 暂停 销毁收听时长 计时器 并 上传收听时长
-      if (that.durationTimer) {
-        let duration = that.durationTimer.second
-        that.durationTimer.clearTimer()
-        that.durationTimer = null
-        if(duration > 0) {
-          that.updateListenTime(duration)
-        }
-      }
+      that.clearDurationTimer()
     })
     this.innerAudioContext.onEnded(function(){
       console.log('播放至自然结束')
 
-      let radio = that.data.radioList[that.radioSelectedIndex]
-      radio.currentTime = 0
-      radio.currentTimeStr = '00:00:00'
-      radio.currentProgressBarWidth = 0
-      radio.playing = false
-      radio.readyPlay = false
-      radio.selected = false
-      let radioStr = 'radioList['+that.radioSelectedIndex+']'
-
-      that.innerAudioContext.destroy()
-      that.innerAudioContext = null
-
-      // 关闭音频播放次数 计时器
-      if(that.countTimer) {
-        that.countTimer.clearTimer()
-        that.countTimer = null
-      }
-
-      // 销毁 收听时长计时器 并上传时长
-      if (that.durationTimer) {
-        let duration = that.durationTimer.second
-        that.durationTimer.clearTimer()
-        that.durationTimer = null
-        if (duration > 0) {
-          that.updateListenTime(duration)
-        }
-      }
-
-      if (that.radioSelectedIndex == that.data.radioList.length -1) {
-        // 最后一个
-        that.setData({
-          [radioStr]: radio
-        })
-        that.radioSelectedIndex = null
-      } else {
-        // 不是最后一个
-        let newIndex = that.radioSelectedIndex + 1
-        let newSelectedRadio = that.data.radioList[newIndex]
-        newSelectedRadio.selected = true
-        newSelectedRadio.readyPlay = false
-        newSelectedRadio.playing = false
-        let newAudioStr = 'radioList['+newIndex+']'
-
-        that.setData({
-          [radioStr]: radio,
-          [newAudioStr]: newSelectedRadio
-        })
-        that.radioSelectedIndex = newIndex
-        that.setInnerAudioControl(newSelectedRadio.audiourl)
-
-        // 打开音频播放次数 计时器
-        that.countTimer = new Timer()
-        that.countTimer.startTimer(30, function(){
-          that.updateAudioListenCount()
-          that.countTimer = null
-        })
-      }
+      that.playNext()
     })
   },
 
@@ -400,6 +316,94 @@ Page({
       this.setData({
         datePickerYearList: datePickerYearList
       })
+    }
+  },
+
+  /**
+   * 播放下一个
+  */
+  playNext: function() {
+    let that = this
+    let radio = that.data.radioList[that.radioSelectedIndex]
+    radio.currentTime = 0
+    radio.currentTimeStr = '00:00:00'
+    radio.currentProgressBarWidth = 0
+    radio.playing = false
+    radio.readyPlay = false
+    radio.selected = false
+    let radioStr = 'radioList['+that.radioSelectedIndex+']'
+
+    // 销毁音频播放管理对象
+    that.clearAudioContent()
+
+    // 关闭音频播放次数 计时器
+    that.clearCountTimer()
+
+    // 销毁 收听时长计时器 并上传时长
+    that.clearDurationTimer()
+
+    if (that.radioSelectedIndex == that.data.radioList.length -1) {
+      // 最后一个
+      that.setData({
+        [radioStr]: radio
+      })
+      that.radioSelectedIndex = null
+    } else {
+      // 不是最后一个
+      let newIndex = that.radioSelectedIndex + 1
+      let newSelectedRadio = that.data.radioList[newIndex]
+      newSelectedRadio.selected = true
+      newSelectedRadio.readyPlay = false
+      newSelectedRadio.playing = false
+      let newAudioStr = 'radioList['+newIndex+']'
+
+      that.setData({
+        [radioStr]: radio,
+        [newAudioStr]: newSelectedRadio
+      })
+      that.radioSelectedIndex = newIndex
+      that.setInnerAudioControl(newSelectedRadio.audiourl)
+
+      // 打开音频播放次数 计时器
+      that.countTimer = new Timer()
+      that.countTimer.startTimer(30, function(){
+        that.updateAudioListenCount()
+        that.countTimer = null
+      })
+    }
+  },
+
+  /**
+   * 销毁音频播放管理对象
+  */
+  clearAudioContent: function () {
+    if (this.innerAudioContext) {
+      this.innerAudioContext.destroy()
+      this.innerAudioContext = null
+    }
+  },
+
+  /**
+   * 销毁 播放次数 计时器
+  */
+  clearCountTimer: function() {
+    if(this.countTimer) {
+      this.countTimer.clearTimer()
+      this.countTimer = null
+    }
+  },
+
+  /**
+   * 销毁 收听时长计时器 并上传时长
+  */
+  clearDurationTimer: function() {
+    if (this.durationTimer) {
+      let duration = this.durationTimer.second
+      this.durationTimer.clearTimer()
+      this.durationTimer = null
+      if (duration > 0) {
+        this.updateListenTime(duration)
+      }
     }
   },
 
@@ -536,6 +540,9 @@ Page({
    * 更新音频收听次数
   */
   updateAudioListenCount: function() {
+    if (this.data.role != 4) {
+      return
+    }
     let audio = this.data.radioList[this.radioSelectedIndex]
     let params = {
       uid: wx.getStorageSync('uid'),
@@ -589,24 +596,12 @@ Page({
     let that = this
 
     // 销毁音频播放管理对象
-    if (this.innerAudioContext) {
-      this.innerAudioContext.destroy()
-      this.innerAudioContext = null
-    }
+    this.clearAudioContent()
     // 销毁 次数计时器
-    if(this.countTimer) {
-      this.countTimer.clearTimer()
-      this.countTimer = null
-    }
+    this.clearCountTimer()
     // 销毁 时长计时器 并上传时长
-    if (this.durationTimer) {
-      let duration = this.durationTimer.second
-      this.durationTimer.clearTimer()
-      this.durationTimer = null
-      if (duration > 0) {
-        this.updateListenTime(duration)
-      }
-    }
+    this.clearDurationTimer()
+
     this.radioSelectedIndex =null
     this.getAudioList(function(success){
       that.setData({
@@ -644,18 +639,11 @@ Page({
         return
       }
       // 销毁 音频管理对象
-      this.innerAudioContext.destroy()
-      this.innerAudioContext = null
+      this.clearAudioContent()
 
       // 销毁 收听时长计时器 并上传时长
-      if (this.durationTimer) {
-        let duration = this.durationTimer.second
-        this.durationTimer.clearTimer()
-        this.durationTimer = null
-        if (duration > 0) {
-          this.updateListenTime(duration)
-        }
-      }
+      this.clearDurationTimer()
+
       audio.selected = true
       audio.readyPlay = false
       audio.playing = false
@@ -682,10 +670,8 @@ Page({
       this.setInnerAudioControl(audio.audiourl)
     }
     // 关闭音频播放次数 计时器
-    if (this.countTimer) {
-      this.countTimer.clearTimer()
-      this.countTimer = null
-    }
+    this.clearCountTimer()
+
     // 打开新的 音频播放次数计时器
     this.countTimer = new Timer()
     this.countTimer.startTimer(30, function(){
@@ -711,7 +697,7 @@ Page({
     
     let currentTime = Math.ceil(moveX * radio.duration/611)
     radio.currentTime = currentTime
-    
+    console.log('拖动进度条至：', currentTime, 's')
     let radioMoveXStr = 'radioList['+index+']'
     this.setData({
       [radioMoveXStr]: radio
@@ -724,8 +710,15 @@ Page({
   changeProgressEnd: function(e) {
     console.log('拖动结束', e)
     let radio = this.data.radioList[this.radioSelectedIndex]
-    this.innerAudioContext.seek(radio.currentTime)
-    this.innerAudioContext.play()
+    if (radio.currentTime < radio.duration) {
+      // 不是结束
+      this.innerAudioContext.seek(radio.currentTime)
+      this.innerAudioContext.play()
+    } else {
+      // 拖到结束
+      this.playNext()
+    }
+    
     // radio.playing = false
     // radio.readyPlay = false
     // this.setInnerAudioControl(radio.audiourl)
