@@ -7,14 +7,21 @@ Page({
    */
   data: {
     img: [],
-    imgs: []
+    imgs: [],
+    showContent:false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getPageSize()
+    let role = wx.getStorageSync('role')
+    if (role && role != 4) {
+      this.setData({
+        showContent: true
+      })
+    }
   },
   back: function () {
     wx.navigateBack({
@@ -209,5 +216,37 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  //------------------------------------------------私有方法----------------------------------------------
+  /**
+   * 获取页面辅助尺寸
+  */
+  getPageSize: function() {
+    let systemInfo = wx.getSystemInfoSync()
+    let menuBounding = wx.getMenuButtonBoundingClientRect()
+    let naviHeight = menuBounding.bottom + 10
+    let statusBarHeight = systemInfo.statusBarHeight
+    let safeareaBottom = systemInfo.windowHeight - systemInfo.safeArea.bottom
+
+    this.setData({
+      pageSize: {
+        naviHeight: naviHeight,
+        statusBarHeight: statusBarHeight,
+        naviContentHeight: naviHeight - statusBarHeight,
+        safeareaBottom: safeareaBottom,
+        screenWidth: systemInfo.screenWidth
+      }
+    })
+  },
+
+  // ------------------------------------------------------交互事件-----------------------------------------------
+  /**
+   * 导航栏返回按钮 点击事件
+  */
+  naviBackClicked: function() {
+    wx.navigateBack({
+      delta: 0,
+    })
   }
 })

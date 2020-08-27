@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "新建消息通知"
+  "usingComponents": {
+    "null_image": "../../components/null_image/null_image"
+  },
+  "navigationStyle": "custom"
 }

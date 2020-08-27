@@ -3,7 +3,7 @@
   height: 286rpx;
   background: rgb(149, 102, 211);
 } */
-.nabigation_bar{
+.navigationBar {
   position: fixed;
   width:750rpx;
   height:176rpx;
@@ -11,6 +11,34 @@
   opacity:1;
   display: flex;
   z-index: 100;
+}
+
+.navigation_content {
+  width: 750rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigation_backView {
+  width: 100rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.navigation_backImage {
+  width: 27.11rpx;
+  height: 27.11rpx;
+  margin-left: 32rpx;
+}
+
+.navgation_title {
+  color: white;
+  font-size: 34rpx;
+  font-weight: bold;
 }
 .my-head{
   /* margin-left: 341rpx; */

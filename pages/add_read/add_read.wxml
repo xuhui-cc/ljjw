@@ -6,27 +6,32 @@
     <text class="my-head">创建每日晨读</text> 
   </view> -->
 
-    <textarea class="read-cont" placeholder="点击输入文字……" bindinput='input_title' maxlength="600" value="{{title}}"></textarea>
-
-  <view class="tjzp">添加照片</view>
-
-  
-  <view class='flex'>
-    <view wx:for="{{imgs}}" wx:key="index">
-      <image class="del-img" data-xb='{{index}}' bindtap='del_img' src="../../images/gdel.png"></image>
-      <image class="image-img" src="{{item}}"></image>
+  <view class="navigationBar" style="height:{{pageSize.naviHeight}}px">
+    <view class="navigation_content" style="height:{{pageSize.naviContentHeight}}px; margin-top:{{pageSize.statusBarHeight}}px;">
+      <view class="navigation_backView" bindtap="naviBackClicked">
+        <image class="navigation_backImage" src="../../images/back_img.png"></image>
+      </view>
+      <view class="navgation_title">{{showContent ? '新建每日晨读' : '每日晨读'}}</view>
+      <view class="navigation_backView"></view>
     </view>
-    <image wx:if="{{imgs.length < 3}}" class='insert' src='../../images/insert_img.png' bindtap='chooseImg'></image>
   </view>
 
-  <view class='submit' style="{{submit?'background:rgba(45,193,160,1);':''}}" bindtap="{{submit?'submit':''}}">提交</view>
-  
+  <block wx:if="{{showContent}}">
+    <textarea class="read-cont" placeholder="点击输入文字……" bindinput='input_title' maxlength="600" value="{{title}}" style="margin-top:{{pageSize.naviHeight+10}}px;"></textarea>
+    <view class="tjzp">添加照片</view>
 
+    <view class='flex'>
+      <view wx:for="{{imgs}}" wx:key="index">
+        <image class="del-img" data-xb='{{index}}' bindtap='del_img' src="../../images/gdel.png"></image>
+        <image class="image-img" src="{{item}}"></image>
+      </view>
+      <image wx:if="{{imgs.length < 3}}" class='insert' src='../../images/insert_img.png' bindtap='chooseImg'></image>
+    </view>
 
-
-
-
-
-
-<!-- container -->
+    <view class='submit' style="{{submit?'background:rgba(45,193,160,1);':''}}" bindtap="{{submit?'submit':''}}">提交</view>
+  </block>
+  <block wx:else>
+    <null_image title="暂无内容" type="1"></null_image>
+  </block>
 </view>
+
