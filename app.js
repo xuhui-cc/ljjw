@@ -37,7 +37,10 @@ App({
       }
     })
 
-    
+    wx.setInnerAudioOption({
+      mixWithOther: false,
+      obeyMuteSwitch: false,
+    })
   },
 
   onShow() {
