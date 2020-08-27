@@ -225,7 +225,7 @@ Page({
         "email": that.data.input_email,
         "class_id": that.data.stu_class[that.data.stu_class_index].id,
         "sex": that.data.sex_index,
-        
+        type: this.data.type == 3 ? '2' : '1',
       }
       // console.log(params)
       // console.log(that.data.input_school + "that.data.input_school")

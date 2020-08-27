@@ -35,7 +35,7 @@
         </view>
       </view>
 
-      <view wx:if="{{mydata.status_text == '基础信息审核中' || mydata.checked == 2}}" class="baseInfo_View" bindtap="to_stu_info" data-type="2">
+      <view wx:if="{{mydata.status_text == '基础信息审核中' || mydata.checked == 2}}" class="baseInfo_View" bindtap="to_stu_info" data-type="{{mydata.ifused != null && mydata.ifused == 0 ? '3' : '2'}}">
         <view class="change-state" style="margin-right:2rpx;">修改信息</view>
         <image class="to-change" style="margin-right:33rpx;" src="../../images/next.png"></image>
       </view>
