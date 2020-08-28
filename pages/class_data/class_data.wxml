@@ -96,7 +96,7 @@
             <view class="row_alignitemCenter_spaceBetween" style="height:71rpx; margin-top:4rpx;" catchtap="radioShowDetail" data-index="{{index}}">
               <!-- 时间 -->
               <view class="radioCell_time">{{item.pubtime}}</view>
-              <view class="radioCell_showDetailButton">
+              <view wx:if="{{item.content && item.content != ''}}" class="radioCell_showDetailButton">
                 查看详情
                 <image class="radioCell_showDetailArrow" src="../../images/next.png"></image>
               </view>
@@ -146,7 +146,7 @@
         <scroll-view class="audioDetail_contentScrollView" style="height:{{pageSize.screenHeight * 0.706 - 158/750.0 * pageSize.screenWidth}}px;" scroll-y="true">
           <view style="margin-left:30rpx; width:690rpx; padding-bottom:{{pageSize.safeareaBottom+10}}px;">
             <!-- 详情 -->
-            <rich-text class="audioDetail_content"  nodes="{{openDetailRadio.content}}"></rich-text>
+            <rich-text class="audioDetail_content"  nodes="{{openDetailRadio.content}}" space="nbsp"></rich-text>
           </view>
         </scroll-view>
       </view>

@@ -41,6 +41,9 @@ Page({
   */
   durationTimer: null,
 
+  // 是否保持屏幕常亮
+  keepScreenOn: false,
+
   /**
    * 页面的初始数据
    */
@@ -103,7 +106,23 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    if (this.innerAudioContext) {
+      this.innerAudioContext.pause()
+    }
+    
+    if (this.keepScreenOn) {
+      let that = this
+      wx.setKeepScreenOn({
+        keepScreenOn: false,
+        success (res) {
+          console.log('关闭屏幕常亮成功')
+          that.keepScreenOn = false
+        },
+        fail (res) {
+          console.log('关闭屏幕敞亮失败：\n', res)
+        }
+      })
+    }
   },
 
   /**
@@ -198,6 +217,21 @@ Page({
     this.innerAudioContext.onCanplay(function(){
       // 进入可以播放状态
       console.log('进入可播放状态')
+
+      // 设置为不熄屏模式
+      if (!that.keepScreenOn) {
+        wx.setKeepScreenOn({
+          keepScreenOn: true,
+          success (res) {
+            console.log('打开屏幕常亮成功')
+            that.keepScreenOn = true
+          },
+          fail (res) {
+            console.log('打开屏幕常亮失败:\n', res)
+          }
+        })
+      }
+
       let radio = that.data.radioList[that.radioSelectedIndex]
       if (radio.readyPlay) {
         return
@@ -336,8 +370,24 @@ Page({
   */
   clearAudioContent: function () {
     if (this.innerAudioContext) {
+      console.log('销毁音频播放管理对象')
       this.innerAudioContext.destroy()
       this.innerAudioContext = null
+
+      let that = this
+      // 取消设置不熄屏模式
+      if (this.keepScreenOn) {
+        wx.setKeepScreenOn({
+          keepScreenOn: false,
+          success (res) {
+            console.log('关闭屏幕常亮成功')
+            that.keepScreenOn = false
+          },
+          fail(res) {
+            console.log('关闭屏幕常亮失败：\n', res)
+          }
+        })
+      }
     }
   },
 
@@ -383,44 +433,53 @@ Page({
     app.ljjw.jwGetAudiolist(params).then(d=>{
       if (d.data.status == 1) {
         let radioList = d.data.data
-        for(var i = 0; i< radioList.length; i++) {
-          let radio = radioList[i]
-          // 将标签由字符串拆分为数组
-          radio.flags = radio.tags && radio.tags != '' ? radio.tags.split(',') : []
-          // 默认未选中
-          radio.selected = false
-          // 发布时间
-          radio.pubtime = app.util.customFormatTimeByTimestamp(radio.createtime*1000, 'yyyy.MM.dd  hh:mm')
-          // 修正内容图片
-          while (radio.content.indexOf('<img src')>-1) {
-            radio.content = radio.content.replace('<img src', '<img style="max-width:100%;" src')
+        if (radioList && radioList != '') {
+          for(var i = 0; i< radioList.length; i++) {
+            let radio = radioList[i]
+            // 将标签由字符串拆分为数组
+            radio.flags = radio.tags && radio.tags != '' ? radio.tags.split(',') : []
+            // 默认未选中
+            radio.selected = false
+            // 发布时间
+            radio.pubtime = app.util.customFormatTimeByTimestamp(radio.createtime*1000, 'yyyy.MM.dd  hh:mm')
+            // 修正内容图片
+            while (radio.content.indexOf('<img src')>-1) {
+              radio.content = radio.content.replace('<img src', '<img style="max-width:100%;" src')
+            }
+            // 默认播放进度
+            radio.currentTime = 0 // 单位s
+            radio.currentTimeStr = '00:00:00'
+            radio.currentProgressBarWidth = 0 // 单位rps
+            radio.totalTime = '00:00:00'
+            radio.duration = 0 // 单位s
+            radio.playing = false
+            radio.readyPlay = false
           }
-          // 默认播放进度
-          radio.currentTime = 0 // 单位s
-          radio.currentTimeStr = '00:00:00'
-          radio.currentProgressBarWidth = 0 // 单位rps
-          radio.totalTime = '00:00:00'
-          radio.duration = 0 // 单位s
-          radio.playing = false
-          radio.readyPlay = false
-        }
-        // 判断是否可以加载下一页
-        if (!radioList || radioList == '' || radioList.length < that.pageData.perpage) {
-          that.pageData.canLoadNextPage = false
+          // 判断是否可以加载下一页
+          if (!radioList || radioList == '' || radioList.length < that.pageData.perpage) {
+            that.pageData.canLoadNextPage = false
+          } else {
+            that.pageData.canLoadNextPage = true
+          }
+          // 处理分页数据
+          let newList = []
+          if (that.pageData.page == 1) {
+            newList = radioList
+          } else {
+            newList = that.data.radioList.concat(radioList)
+          }
+          that.setData({
+            radioList: newList
+          })
+          typeof cb == "function" && cb(true)
         } else {
-          that.pageData.canLoadNextPage = true
+          if (that.pageData.page == 1) {
+            that.setData({
+              radioList: []
+            })
+          }
+          typeof cb == "function" && cb(false)
         }
-        // 处理分页数据
-        let newList = []
-        if (that.pageData.page == 1) {
-          newList = radioList
-        } else {
-          newList = that.data.radioList.concat(radioList)
-        }
-        that.setData({
-          radioList: newList
-        })
-        typeof cb == "function" && cb(true)
       } else {
         if (that.pageData.page == 1) {
           that.setData({
@@ -507,6 +566,9 @@ Page({
     // console.log(e)
     let index = e.currentTarget.dataset.index
     let radio = this.data.radioList[index]
+    if (!radio.content || radio.content == '') {
+      return
+    }
     this.setData({
       showAudioDetail: true,
       openDetailRadio: radio

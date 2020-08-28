@@ -67,6 +67,9 @@ Page({
   */
   durationTimer: null,
 
+  // 是否保持屏幕常亮
+  keepScreenOn: false,
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -173,7 +176,22 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    if (this.innerAudioContext) {
+      this.innerAudioContext.pause()
+    }
+    if (this.keepScreenOn) {
+      let that = this
+      wx.setKeepScreenOn({
+        keepScreenOn: false,
+        success (res) {
+          console.log('关闭屏幕常亮成功')
+          that.keepScreenOn = false
+        },
+        fail (res) {
+          console.log('关闭屏幕敞亮失败：\n', res)
+        }
+      })
+    }
   },
 
   /**
@@ -297,6 +315,21 @@ Page({
     this.innerAudioContext.onCanplay(function(){
       // 进入可以播放状态
       console.log('进入可播放状态')
+
+      // 设置为不熄屏模式
+      if (!that.keepScreenOn) {
+        wx.setKeepScreenOn({
+          keepScreenOn: true,
+          success (res) {
+            console.log('打开屏幕常亮成功')
+            that.keepScreenOn = true
+          },
+          fail (res) {
+            console.log('打开屏幕常亮失败:\n', res)
+          }
+        })
+      }
+
       let radio = that.data.radioList[that.radioSelectedIndex]
       if (radio.readyPlay) {
         return
@@ -435,8 +468,23 @@ Page({
   */
   clearAudioContent: function () {
     if (this.innerAudioContext) {
+      console.log('销毁音频播放管理对象')
       this.innerAudioContext.destroy()
       this.innerAudioContext = null
+      let that = this
+      // 取消设置不熄屏模式
+      if (this.keepScreenOn) {
+        wx.setKeepScreenOn({
+          keepScreenOn: false,
+          success (res) {
+            console.log('关闭屏幕常亮成功')
+            that.keepScreenOn = false
+          },
+          fail(res) {
+            console.log('关闭屏幕常亮失败：\n', res)
+          }
+        })
+      }
     }
   },
 
@@ -856,6 +904,9 @@ Page({
     // console.log(e)
     let index = e.currentTarget.dataset.index
     let radio = this.data.radioList[index]
+    if (!radio.content || radio.content == '') {
+      return
+    }
     this.setData({
       showAudioDetail: true,
       openDetailRadio: radio
