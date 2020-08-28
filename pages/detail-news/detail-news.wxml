@@ -13,7 +13,8 @@
   <view class="detailView" style="margin-top:{{naviBarHeight}}px;">
     <view class="nwes-time">{{date}}</view>
     <view class="news-cont" bindtap="showSpecialString">
-      <text selectable='true'>{{content}}</text>
+      <!-- <text selectable='true'>{{content}}</text> -->
+      <rich-text selectable='true' nodes="{{content}}" space="nbsp"></rich-text>
     </view>
     <view class='flex_warp' wx:if="{{pics && pics != '' && pics.length != 0}}">
       <block wx:for="{{pics}}" wx:key="index">

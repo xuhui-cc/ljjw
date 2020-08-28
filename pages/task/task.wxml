@@ -133,7 +133,8 @@
               <view class="messageState" hidden="{{item.isread == 0 ? false : true}}"></view>
               <view class="message-date" style="margin-left:{{item.isread == 0 ? 15 : 31}}rpx;">{{item.createtime}}</view>
             </view>
-            <view class="message-cont">{{item.content}}</view>
+            <view class="message-cont">{{item.content_clear}}</view>
+            <!-- <rich-text class="message-cont" nodes="{{item.content}}"></rich-text> -->
             <view class="noti_showDetail">
               <text class="noti_showDetail_text" style="color:{{item.isread == 0 ? '#2dc1a0' : '#b4b4b4'}}">详情</text>
               <image class="more-img" src="../../images/next.png"></image>

@@ -108,11 +108,13 @@ Page({
   to_detail_news: function (e) {
     let that = this
     var xb = e.currentTarget.dataset.xb
-    console.log(xb)
-    console.log(that.data.message[xb])
+    let noti = this.data.message[xb]
     this.readNoti(xb)
     wx.navigateTo({
-      url: '../../pages/detail-news/detail-news?content=' + that.data.message[xb].content + '&date=' + that.data.message[xb].createtime + '&pics=' + that.data.message[xb].pics,
+      url: '../../pages/detail-news/detail-news',
+      success (res) {
+        res.eventChannel.emit('newsDetailData', noti)
+      }
     })
     
   },

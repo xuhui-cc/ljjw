@@ -17,20 +17,17 @@ Page({
 
     that.setUpNaviSize()
 
-    // console.log(options.content)
-    // console.log(options.date)
-    // console.log(options.pics)
-
-    let content = options.content
-    // let specialArray = this.checkPhone(content)
-    // console.log(phoneArray)
-    that.setData({
-      content: content,
-      date: options.date,
-      pics: (options.pics && options.pics != '' && options.pics != 'null') ? options.pics.split(",") : [],
-      // specialArray: specialArray
+    
+    let eventChannel = this.getOpenerEventChannel()
+    eventChannel.on('newsDetailData', function(noti) {
+      that.setData({
+        content: noti.content,
+        date: noti.createtime,
+        pics: (noti.pics && noti.pics != '' && noti.pics != 'null') ? noti.pics.split(",") : [],
+        // specialArray: specialArray
+      })
+      
     })
-
   },
 
   previewImg: function (e) {
@@ -78,7 +75,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    let eventChannel = this.getOpenerEventChannel()
+    eventChannel.off('newsDetailData')
   },
 
   /**

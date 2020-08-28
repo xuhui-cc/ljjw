@@ -118,11 +118,22 @@ Page({
           if (status == 1) {
             var data = d.data.data
             var newMessages = data.messages
+            for(var i = 0; i < newMessages.length; i++) {
+              let noti = newMessages[i]
+              noti.content2 = noti.content
+              
+              while(noti.content2.indexOf('&nbsp;') != -1) {
+                noti.content2.replace('&nbsp;', '')
+              }
+            }
+            // 是否可以加载下一页
             if (newMessages.length < that.pageData.perpage) {
               that.pageData.canLoadNextPage = false
             } else {
               that.pageData.canLoadNextPage = true
             }
+
+            // 分页数据处理
             if (page > 1) {
               newMessages = that.data.notiList.concat(newMessages)
             }
@@ -240,7 +251,10 @@ Page({
     let noti = this.data.notiList[index]
     this.readNoti(index)
     wx.navigateTo({
-      url: '../../pages/detail-news/detail-news?content=' + noti.content + '&date=' + noti.createtime + '&pics=' + noti.pics,
+      url: '../../pages/detail-news/detail-news',
+      success (res) {
+        res.eventChannel.emit('newsDetailData', noti)
+      }
     })
   }
 })
