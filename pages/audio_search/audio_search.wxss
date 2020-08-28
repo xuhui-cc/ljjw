@@ -130,7 +130,7 @@ page{
 .radioCell_title {
   margin-top: 36rpx;
   margin-left: 34rpx;
-  max-width: 512rpx;
+  max-width: 553rpx;
   color: #272727;
   font-size: 32rpx;
   font-weight: bold;
