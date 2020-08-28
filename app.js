@@ -74,7 +74,7 @@ App({
     }
     if (role == 4) {
       let stuInfo = wx.getStorageSync('stuinfo')
-      if (stuInfo && (stuInfo.ifused == 0 || stuInfo.checked == 0)) {
+      if (!stuInfo || stuInfo == '' || (stuInfo.ifused == 0 || stuInfo.checked == 0)) {
         wx.hideTabBarRedDot({
           index: 2,
         })
