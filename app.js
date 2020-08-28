@@ -67,11 +67,14 @@ App({
   setTaskItemDot () {
     let role = wx.getStorageSync('role')
     if (!role || role == -1 || role == 3) {
+      wx.hideTabBarRedDot({
+        index: 2,
+      })
       return
     }
     if (role == 4) {
       let stuInfo = wx.getStorageSync('stuinfo')
-      if (stuInfo && stuInfo.ifused == 0) {
+      if (stuInfo && (stuInfo.ifused == 0 || stuInfo.checked == 0)) {
         wx.hideTabBarRedDot({
           index: 2,
         })
