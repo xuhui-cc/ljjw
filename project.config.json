@@ -1,242 +1,242 @@
 {
-	"description": "项目配置文件",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": false,
-		"es6": true,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": true,
-		"scopeDataCheck": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": false,
-		"packNpmManually": false,
-		"packNpmRelationList": []
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.9.4",
-	"appid": "wxba50621d195d7de3",
-	"projectname": "TabBar",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 24,
-			"list": [
-				{
-					"id": -1,
-					"name": "pages/add_leave/add_leave",
-					"pathName": "pages/add_leave/add_leave",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/call-roll/call-roll",
-					"pathName": "pages/call-roll/call-roll",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/t_stuwork/t_stuwork",
-					"pathName": "pages/t_stuwork/t_stuwork",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/record/record",
-					"pathName": "pages/record/record",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/stu-record/stu-record",
-					"pathName": "pages/stu-record/stu-record",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tea-record/tea-record",
-					"pathName": "pages/tea-record/tea-record",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/my/my",
-					"pathName": "pages/my/my",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/stu-info/stu-info",
-					"pathName": "pages/stu-info/stu-info",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/class_data/class_data",
-					"pathName": "pages/class_data/class_data",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tea_data/tea_data",
-					"pathName": "pages/tea_data/tea_data",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tea_sinfo/tea_sinfo",
-					"pathName": "pages/tea_sinfo/tea_sinfo",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tea_sjcxx/tea_sjcxx",
-					"pathName": "pages/tea_sjcxx/tea_sjcxx",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tea_xsda/tea_xsda",
-					"pathName": "pages/tea_xsda/tea_xsda",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/task/task",
-					"pathName": "pages/task/task",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/add_read/add_read",
-					"pathName": "pages/add_read/add_read",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/stu-task/stu-task",
-					"pathName": "pages/stu-task/stu-task",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tea-task/tea-task",
-					"pathName": "pages/tea-task/tea-task",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/detail-news/detail-news",
-					"pathName": "pages/detail-news/detail-news",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/stu-rearch/stu-rearch",
-					"pathName": "pages/stu-rearch/stu-rearch",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/tea_sinfo/tea_sinfo",
-					"pathName": "pages/tea_sinfo/tea_sinfo",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "index",
-					"pathName": "pages/index/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/graduation_school/graduation_school",
-					"pathName": "pages/graduation_school/graduation_school",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "/stu_mornread",
-					"pathName": "pages/stu_mornread/stu_mornread",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/index/index",
-					"pathName": "pages/index/index",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "add_message",
-					"pathName": "pages/add_message/add_message",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": []
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.9.4",
+  "appid": "wxba50621d195d7de3",
+  "projectname": "TabBar",
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": 24,
+      "list": [
+        {
+          "id": -1,
+          "name": "pages/add_leave/add_leave",
+          "pathName": "pages/add_leave/add_leave",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/call-roll/call-roll",
+          "pathName": "pages/call-roll/call-roll",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/t_stuwork/t_stuwork",
+          "pathName": "pages/t_stuwork/t_stuwork",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/record/record",
+          "pathName": "pages/record/record",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/stu-record/stu-record",
+          "pathName": "pages/stu-record/stu-record",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tea-record/tea-record",
+          "pathName": "pages/tea-record/tea-record",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/my/my",
+          "pathName": "pages/my/my",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/stu-info/stu-info",
+          "pathName": "pages/stu-info/stu-info",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/class_data/class_data",
+          "pathName": "pages/class_data/class_data",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tea_data/tea_data",
+          "pathName": "pages/tea_data/tea_data",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tea_sinfo/tea_sinfo",
+          "pathName": "pages/tea_sinfo/tea_sinfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tea_sjcxx/tea_sjcxx",
+          "pathName": "pages/tea_sjcxx/tea_sjcxx",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tea_xsda/tea_xsda",
+          "pathName": "pages/tea_xsda/tea_xsda",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/task/task",
+          "pathName": "pages/task/task",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/add_read/add_read",
+          "pathName": "pages/add_read/add_read",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/stu-task/stu-task",
+          "pathName": "pages/stu-task/stu-task",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tea-task/tea-task",
+          "pathName": "pages/tea-task/tea-task",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/detail-news/detail-news",
+          "pathName": "pages/detail-news/detail-news",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/stu-rearch/stu-rearch",
+          "pathName": "pages/stu-rearch/stu-rearch",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/tea_sinfo/tea_sinfo",
+          "pathName": "pages/tea_sinfo/tea_sinfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/graduation_school/graduation_school",
+          "pathName": "pages/graduation_school/graduation_school",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "/stu_mornread",
+          "pathName": "pages/stu_mornread/stu_mornread",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "add_message",
+          "pathName": "pages/add_message/add_message",
+          "scene": null
+        }
+      ]
+    }
+  }
 }

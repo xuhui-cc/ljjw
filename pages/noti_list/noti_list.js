@@ -118,14 +118,7 @@ Page({
           if (status == 1) {
             var data = d.data.data
             var newMessages = data.messages
-            for(var i = 0; i < newMessages.length; i++) {
-              let noti = newMessages[i]
-              noti.content2 = noti.content
-              
-              while(noti.content2.indexOf('&nbsp;') != -1) {
-                noti.content2.replace('&nbsp;', '')
-              }
-            }
+
             // 是否可以加载下一页
             if (newMessages.length < that.pageData.perpage) {
               that.pageData.canLoadNextPage = false

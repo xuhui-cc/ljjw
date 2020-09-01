@@ -1,10 +1,10 @@
-const URI = 'http://cs.szgk.cn/apiv2.php'    //测试接口
+// const URI = 'http://cs.szgk.cn/apiv2.php'    //测试接口
 
-// const URI = 'https://www.szgk.cn/apiv2.php'    //正式接口
+const URI = 'https://www.szgk.cn/apiv2.php'    //正式接口
 
-const uploadFileURI = 'http://cs.szgk.cn/apiv2.php?' // 测试上传文件接口
+// const uploadFileURI = 'http://cs.szgk.cn/apiv2.php?' // 测试上传文件接口
 
-// const uploadFileURI = 'https://szgk.cn/apiv2.php?' // 正式上传文件接口
+const uploadFileURI = 'https://szgk.cn/apiv2.php?' // 正式上传文件接口
 
 /**
  * 获取上传文件URI
