@@ -120,6 +120,9 @@ Page({
           console.log("选择日期的课表接口获取成功")
         }
         else{
+          that.setData({
+            dayCourse: []
+          })
           wx.showToast({
             title: '选择日期没课哦',
             icon:"none",
