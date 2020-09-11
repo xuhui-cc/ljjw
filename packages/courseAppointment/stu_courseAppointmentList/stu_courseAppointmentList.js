@@ -118,5 +118,27 @@ Page({
     this.setData({
       selectedMenuIndex: index
     })
+  },
+
+  /**
+   * 导航栏 返回按钮 点击事件
+  */
+  naviBackItemClciked : function() {
+    wx.navigateBack()
+  },
+
+  /**
+   * 查看简介按钮 点击事件
+  */
+  showIntroButtonClciked: function(e) {
+    let courseIndex = e.currentTarget.dataset.courseindex
+    let appointmentIndex = e.currentTarget.dataset.appointmentindex
+    let appointment = this.data.apponintmentList[courseIndex].subList[appointmentIndex]
+    wx.navigateTo({
+      url: '/packages/courseAppointment_detail/courseAppointment_detail',
+      success (res) {
+        res.eventChannel.emit('showCourseIntro', {url: 'http://www.baidu.com'})
+      }
+    })
   }
 })

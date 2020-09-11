@@ -36,7 +36,9 @@
     {
       "root": "packages/courseAppointment",
       "pages": [
-        "stu_courseAppointmentList/stu_courseAppointmentList"
+        "stu_courseAppointmentList/stu_courseAppointmentList",
+        "courseAppointment_detail/courseAppointment_detail",
+        "add_courseAppointment/add_courseAppointment"
       ],
       "name": "courseAppointment"
     }

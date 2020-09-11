@@ -1,0 +1,3 @@
+<!--packages/courseAppointment_detail/courseAppointment_detail.wxml-->
+<web-view src="{{url}}"></web-view>
+<view class="bottomButton">去预约</view>

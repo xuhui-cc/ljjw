@@ -1,0 +1,11 @@
+/* packages/courseAppointment_detail/courseAppointment_detail.wxss */
+.bottomButton {
+  z-index: 9998;
+  position: fixed;
+  bottom: 43rpx;
+  left: 30rpx;
+  width: 690rpx;
+  height: 90rpx;
+  background-color: #14CBA2;
+  border-radius: 45rpx;
+}
