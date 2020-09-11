@@ -695,5 +695,19 @@ Page({
       url: '../../pages/radioList/radioList',
     })
   },
+
+  /**
+   * 进入课程预约
+  */
+  to_courseAppointment: function() {
+    if(this.data.role == 4) {
+      // 学生
+      wx.navigateTo({
+        url: '/packages/courseAppointment/stu_courseAppointmentList/stu_courseAppointmentList',
+      })
+    } else {
+      // 非学生
+    }
+  }
   
 })

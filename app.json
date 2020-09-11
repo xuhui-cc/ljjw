@@ -32,6 +32,15 @@
     "pages/radioList/radioList",
     "pages/audio_search/audio_search"
   ],
+  "subPackages": [
+    {
+      "root": "packages/courseAppointment",
+      "pages": [
+        "stu_courseAppointmentList/stu_courseAppointmentList"
+      ],
+      "name": "courseAppointment"
+    }
+  ],
   "tabBar": {
     "custom": false,
     "color": "#b4b4b4",

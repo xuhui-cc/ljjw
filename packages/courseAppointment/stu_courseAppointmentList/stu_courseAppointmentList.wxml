@@ -1,0 +1,33 @@
+<!--pages/courseAppointment/stu_courseAppointmentList/stu_courseAppointmentList.wxml-->
+<view class="navi" style="height:{{naviHeight}}px;">
+  <view class="navi_content" style="height:{{naviContentHeight}}px; margin-top:{{statusBarHeight}}px;">
+    <view class="navi_back">
+      <image src="/images/back_img.png" class="navi_back_img"></image>
+    </view>
+    <view class="{{selectedMenuIndex==0 ? 'navi_control_selected' : 'navi_concrol'}}" style="margin-left:15rpx;" bindtap="topMenuClicked" data-index="0">课程预约</view>
+    <view class="{{selectedMenuIndex==1 ? 'navi_control_selected' : 'navi_concrol'}}" style="margin-left:32rpx;" bindtap="topMenuClicked" data-index="1">我的预约</view>
+  </view>
+</view>
+
+<view class="contentView" style="margin-top:{{naviHeight}}px; padding-bottom:{{safeArarBottom+10}}px;">
+  <block wx:if="{{selectedMenuIndex==0}}">
+    <!-- 遍历预约课程 -->
+    <block wx:for="{{apponintmentList}}" wx:key="index">
+      <view class="sectionHeader">
+        <view class="sectionCircle"></view>
+        <view class="sectionTitle">{{item.title}}</view>
+      </view>
+      <!-- 遍历课程 期 -->
+      <block wx:if="{{item.subList && item.subList != ''}}" wx:for="{{item.subList}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="subIndex">
+        <view class="appointmentCell" style="margin-top:{{subIndex==0 ? 0 : 16}}rpx;">
+          <view class="appointmentTitle">10.20  第二期</view>
+          <view class="flex_row_alimenterCenter">
+            <view class="courseIntroButton">查看简介</view>
+            <view class="appointmentButton">去预约</view>
+          </view>
+        </view>
+      </block>
+    </block>
+  </block>
+</view>
+
