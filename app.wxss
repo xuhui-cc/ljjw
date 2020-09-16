@@ -4,3 +4,20 @@
   display: flex;
   flex-direction: column;
 } 
+
+.flex_row_alimenterCenter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.flex_row_alimenterCenter_spaceBetween {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.oneLine {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

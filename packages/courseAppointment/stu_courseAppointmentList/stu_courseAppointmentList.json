@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "alertView" : "/components/alertView/alertView"
+  },
   "navigationStyle": "custom"
 }

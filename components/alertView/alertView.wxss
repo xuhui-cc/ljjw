@@ -1,0 +1,87 @@
+/* components/alertView/alertView.wxss */
+.alertView_bg {
+  background-color: rgba(0, 0, 0, 0.54);
+  position: fixed;
+  z-index: 110;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alertView {
+  width: 631rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  background-color: white;
+  border-radius: 14rpx;
+}
+
+.alertView_title {
+  height: 48rpx;
+  margin-top: 62rpx;
+  max-width: 523rpx;
+  color: #272727;
+  font-size: 34rpx;
+  font-weight: bold;
+}
+
+.alertView_textareaBg {
+  background-color: #F6F6F6;
+  border-radius: 14rpx;
+  margin-top: 46rpx;
+  width: 523rpx;
+  height: 296rpx;
+}
+
+.alertView_textarea {
+  margin-left: 29rpx;
+  width: 465rpx;
+  margin-top: 32rpx;
+  height: 232rpx;
+  color: #272727;
+  font-size: 28rpx;
+}
+
+.alertView_textArea_placehoulder {
+  color: #B4B4B4;
+  font-size: 28rpx;
+}
+
+.buttonView {
+  margin-top: 75rpx;
+  height: 144rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.sureButton {
+  width: 219rpx;
+  height: 66rpx;
+  border-radius: 34rpx;
+  border: 2rpx solid #CBCBCB;
+  color: #CBCBCB;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancelButton {
+  width: 219rpx;
+  height: 66rpx;
+  border-radius: 34rpx;
+  border: 2rpx solid #2DC1A0;
+  color: #2DC1A0;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 46rpx;
+}

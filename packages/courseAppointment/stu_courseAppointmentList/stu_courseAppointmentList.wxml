@@ -10,6 +10,7 @@
 </view>
 
 <view class="contentView" style="margin-top:{{naviHeight}}px; padding-bottom:{{safeArarBottom+10}}px;">
+  <!-- 课程预约 -->
   <block wx:if="{{selectedMenuIndex==0}}">
     <!-- 遍历预约课程 -->
     <block wx:for="{{apponintmentList}}" wx:key="index">
@@ -23,11 +24,84 @@
           <view class="appointmentTitle">10.20  第二期</view>
           <view class="flex_row_alimenterCenter">
             <view class="courseIntroButton" bindtap="showIntroButtonClciked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">查看简介</view>
-            <view class="appointmentButton">去预约</view>
+            <view class="appointmentButton" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">去预约</view>
           </view>
         </view>
       </block>
     </block>
   </block>
+  <!-- 我的预约 -->
+  <block wx:else>
+    <!-- 遍历我的预约 -->
+    <block wx:for="{{myAppointmentList}}" wx:key="index">
+      <view class="myAppointmentCell" style="margin-top:{{index==0 ? 0 : 16}}rpx;">
+        <view class="myAppointment_titleView">
+          <view class="myAppointment_titleImage"></view>
+          <view class="myAppointment_title oneLine">2020事业单位   9.20 第一期</view>
+        </view>
+        <!-- 遍历处理流程 -->
+        <block wx:for="{{item.subList}}" wx:for-index="subIndex" wx:for-item="subItem" wx:key="subIndex">
+          <view class="myAppointment_processCell">
+            <view class="myAppointment_processLine" wx:if="{{subIndex != item.subList.length - 1}}"></view>
+            <view class="flex_row_alimenterCenter_spaceBetween">
+              <view class="flex_row_alimenterCenter">
+                <!-- 角色 -->
+                <view class="{{subItem.isMe ? 'myAppointment_role_me' : 'myAppointment_role_teacher'}}">{{subItem.isMe ? '我' : '师'}}</view>
+                <!-- 审核时间 -->
+                <view class="myAppointment_processTime">{{subItem.timeStr}}</view>
+              </view>
+              <!-- 流程状态 -->
+              <view class="myAppointment_processStatus" style="color:#46BF6A;">{{!subItem.isMe ? '已通过' : ''}}</view>
+            </view>
+            <view class="flex_row_alimenterCenter" style="margin-top:16rpx;">
+              <view class="myAppointment_processSubTitle">{{subItem.isMe ? (subIndex==0 ? '课程预约：' : '课程预约修改：') : '审核人：'}}</view>
+              <!-- 预约的课程/审核人 -->
+              <view class="myAppointment_processSubValue oneLine" style="font-weight:{{subItem.isMe ? 'bold' : 'normal'}}">{{subItem.isMe ? subItem.title : subItem.dealName}}</view>
+            </view>
+            <!-- 备注 -->
+            <view class="myAppointment_note" wx:if="{{subItem.note && subItem.note != '' && subIndex != 0}}">{{'备注：' + subItem.note}}</view>
+            <view style="width: 100%; height: 56rpx;"></view>
+          </view>
+        </block>
+        <!-- 状态 -->
+        <image class="myAppointment_status" src="./resource/appointment_appointmenting.png"></image>
+        <view class="bottomButtonView">
+          <!-- 取消预约按钮 -->
+          <view class="cancelButton" wx:if="{{index == 0}}" bindtap="cancelButtonClicked" data-index="{{index}}">取消预约</view>
+          <!-- 修改预约按钮 -->
+          <view class="changeButton" bindtap="appointmentChangeButtonClicked" data-index="{{index}}">修改预约</view>
+        </view>
+      </view>
+    </block>
+  </block>
 </view>
+
+<!-- 提交的课程预约备注信息 弹框 -->
+<view class="infoDetailView_bg" wx:if="{{infoDetail}}">
+  <view class="infoDetailView">
+    <scroll-view scroll-y="true" class="infoDetailView_scrollView">
+      <view class="flex_row_alimenterCenter" style="margin-top:0rpx;">
+        <view class="infoDetailView_itemView"></view>
+        <view class="infoDetailView_key">课程：</view>
+      </view>
+      <view class="infoDetailView_value">2020事业单位   9.20 第一期</view>
+      <view class="flex_row_alimenterCenter" style="margin-top:35rpx;">
+        <view class="infoDetailView_itemView"></view>
+        <view class="infoDetailView_key">姓名：</view>
+      </view>
+      <view class="infoDetailView_value">韩涛</view>
+      <view class="flex_row_alimenterCenter" style="margin-top:35rpx;">
+        <view class="infoDetailView_itemView"></view>
+        <view class="infoDetailView_key">岗位：</view>
+      </view>
+      <view class="infoDetailView_value">这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。这里是岗位信息，这里是岗位信息，这里是岗位信息，这里是岗位信息。</view>
+    </scroll-view>
+    <view class="infoDetailView_close">
+      <image src="/images/close.png" style="width:37rpx; height:37rpx;" bindtap="infoDetailCloseButtonClciked"></image>
+    </view>
+  </view>
+</view>
+
+<!-- 取消确认弹框 -->
+<alertView wx:if="{{cancelAppointment}}" title="确认取消本次课程预约？" showTextarea="{{true}}" placehoulder="（选填）请填写原因..." textareaImportment="{{false}}" bind:sure="cancelViewSure" bind:close="cancelViewClose"></alertView>
 

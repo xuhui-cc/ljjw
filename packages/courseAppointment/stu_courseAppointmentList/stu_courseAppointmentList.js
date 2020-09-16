@@ -19,6 +19,63 @@ Page({
         subList:[1,2,3]
       }
     ],
+
+    // 我的预约列表
+    myAppointmentList: [
+      {
+        title:'2020事业单位',
+        subList:[
+          {
+            timeStr: '提交时间：2020.9.20  15:35',
+            title: '2020事业单位  10.20 第二期',
+            isMe: true,
+            note: '这里是备注信息，这里是备注信息。'
+          },
+          {
+            timeStr: '审核时间：2020.9.20  15:35',
+            dealName: '陈文锦',
+            isMe: false,
+            note: '这里是���注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息。'
+          },
+          {
+            timeStr: '提交时间：2020.9.20  15:35',
+            title: '2020事业单位  10.20 第二期',
+            isMe: true,
+            note: '这里是备注信息，这里是备注信息。'
+          }
+        ],
+      },
+      {
+        title:'2020事业单位',
+        subList:[
+          {
+            timeStr: '提交时间：2020.9.20  15:35',
+            title: '2020事业单位  10.20 第二期',
+            isMe: true,
+            note: '这里是备注信息，这里是备注信息。'
+          },
+          {
+            timeStr: '审核时间：2020.9.20  15:35',
+            dealName: '陈文锦',
+            isMe: false,
+            note: '这里是���注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息，这里是备注信息。',
+            dealName: '陈文锦'
+          },
+          {
+            timeStr: '提交时间：2020.9.20  15:35',
+            title: '2020事业单位  10.20 第二期',
+            isMe: true,
+            note: '这里是备注信息，这里是备注信息。'
+          }
+        ]
+      }
+    ],
+
+    // 是否展示预约备注弹框
+    infoDetail: null,
+
+    // 将要取消的预约
+    cancelAppointment: null,
   },
 
   /**
@@ -139,6 +196,75 @@ Page({
       success (res) {
         res.eventChannel.emit('showCourseIntro', {url: 'http://www.baidu.com'})
       }
+    })
+  },
+
+  /**
+   * 去预约按钮 点击事件
+  */
+  appointmentButtonClicked: function(e) {
+    let courseIndex = e.currentTarget.dataset.courseindex
+    let appointmentIndex = e.currentTarget.dataset.appointmentindex
+    let course = this.data.apponintmentList[courseIndex]
+    let appointment = course.subList[appointmentIndex]
+    wx.navigateTo({
+      url: '/packages/courseAppointment/add_courseAppointment/add_courseAppointment',
+      success (res) {
+        res.eventChannel.emit('toAppointmentCourse', {type: 1, course: course, appointment: appointmentIndex})
+      }
+    })
+  },
+
+  /**
+   * 预约申请 备注弹框 关闭按钮 点击事件
+  */
+  infoDetailCloseButtonClciked: function() {
+    this.setData({
+      infoDetail: null,
+    })
+  },
+
+  /**
+   * 修改预约按钮 点击事件
+  */
+  appointmentChangeButtonClicked: function(e) {
+    let index = e.currentTarget.dataset.index
+    // let course = 
+    wx.navigateTo({
+      url: '/packages/courseAppointment/add_courseAppointment/add_courseAppointment',
+      success (res){
+        res.eventChannel.emit('toAppointmentCourse', {type: 2})
+      }
+    })
+  },
+
+  /**
+   * 取消按钮 点击事件
+  */
+  cancelButtonClicked: function(e) {
+    let index = e.currentTarget.dataset.index
+    this.setData({
+      cancelAppointment: {}
+    })
+  },
+
+  /**
+   * 取消弹框 确认事件
+  */
+  cancelViewSure: function(e) {
+    let content = e.detail.content
+    console.log(e)
+    this.setData({
+      cancelAppointment: null
+    })
+  },
+
+  /**
+   * 取消弹框 关闭
+  */
+  cancelViewClose: function() {
+    this.setData({
+      cancelAppointment: null
     })
   }
 })

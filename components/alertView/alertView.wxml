@@ -1,0 +1,13 @@
+<!--components/alertView/alertView.wxml-->
+<view class="alertView_bg" catchtap="closeWindow">
+  <view class="alertView" catchtap="alertViewClicked">
+    <view class="alertView_title" style="{{titleStyle ? titleStyle : ''}}">{{title}}</view>
+    <view wx:if="{{showTextarea}}" class="alertView_textareaBg">
+      <textarea class="alertView_textarea" value="{{textareaValue}}" placeholder="{{placehoulder}}" placeholder-style="{{placehoulderStyle}}" maxlength="600" bindinput="alertViewTextareaChange"></textarea>
+    </view>
+    <view class="buttonView">
+      <view class="{{showCancelButton ? 'sureButton' : 'cancelButton'}}" style="{{sureButtonStyle ? sureButtonStyle : ''}}" catchtap="sureButtonClciked">{{sureButtonTitle}}</view>
+      <view class="cancelButton" wx:if="{{showCancelButton}}" style="{{cancelButtonStyle ? cancelButtonStyle : ''}}" catchtap="closeWindow">{{cancelButtonTitle}}</view>
+    </view>
+  </view>
+</view>

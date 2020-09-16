@@ -1,2 +1,53 @@
 <!--packages/courseAppointment/add_courseAppointment/add_courseAppointment.wxml-->
+<view class="navi" style="height:{{naviHeight}}px;">
+  <view class="navi_content" style="height:{{naviContentHeight}}px; margin-top:{{statusBarHeight}}px;">
+    <view class="navi_back" bindtap="naviBackItemClciked">
+      <image src="/images/back_img.png" class="navi_back_img"></image>
+    </view>
+    <view class="navi_title">{{title}}</view>
+  </view>
+</view>
+
+<view class="contentView" style="margin-top:{{naviHeight}}px; padding-bottom:{{safeArarBottom + 133/750.0*screenWidth}}px;">
+  <!-- 课程 -->
+  <view class="infoItem" wx:if="{{type==2}}" bindtap="appointmentItemClciked">
+    <view class="itemTitle" style="margin-left:29rpx">课程：</view>
+    <view class="flex_row_alimenterCenter">
+      <view class="itemValue" style="margin-right:7rpx">2020事业单位   9.20 第一期</view>
+      <image src="/images/next.png" style="width:21rpx; height:21rpx; margin-right:30rpx;"></image>
+    </view>
+  </view>
+  <!-- 姓名 -->
+  <view class="infoItem">
+    <view class="flex_row_alimenterCenter">
+      <view class="itemImage">*</view>
+      <view class="itemTitle" style="margin-left:10rpx">姓名：</view>
+    </view>
+    <input type="text" value="{{name}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" bindinput="nameInputChange"></input>
+  </view>
+  <!-- 岗位 -->
+  <view class="infoItem">
+    <view class="flex_row_alimenterCenter">
+      <view class="itemImage">*</view>
+      <view class="itemTitle" style="margin-left:10rpx">岗位：</view>
+    </view>
+    <view></view>
+  </view>
+  <view class="textArea_View">
+    <view class="textArea_bg">
+      <textarea class="textarea" value="{{wordStation}}" placeholder="请输入岗位..." placeholder-class="textArea_placehoulder" maxlength="600" bindinput="wordTextareaChange"></textarea>
+    </view>
+  </view>
+  <!-- 进面线 -->
+  <view class="infoItem">
+    <view class="itemTitle" style="margin-left:29rpx">进面线：</view>
+    <input type="number" value="{{score}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" bindinput="scoreInputChange"></input>
+  </view>
+</view>
+
+<!-- 提交按钮 -->
+<view class="{{canSubmit ? 'submitButton_can' : 'submitButton_gray'}}" bindtap="submitButtonClciked">提交</view>
+
+<!-- 课程 期列表视图 -->
+<actionSheet wx:if="{{showAppointmentListView}}" list="{{appointmentTitleList}}" title="{{appointmentListTitle}}" bind:optionClick="appointmentListOptionClciked" bind:close="appointmentListViewClose"></actionSheet>
 

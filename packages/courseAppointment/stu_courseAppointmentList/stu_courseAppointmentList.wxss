@@ -138,3 +138,227 @@ page{
   color: #BBBBBB;
   font-size: 24rpx;
 }
+
+.myAppointmentCell {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.myAppointment_titleView {
+  margin-top: 7rpx;
+  height: 109rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.myAppointment_titleImage {
+  margin-left: 30rpx;
+  width: 11rpx;
+  height: 11rpx;
+  border-radius: 50%;
+  border: 4rpx solid #14CBA2;
+}
+
+.myAppointment_title {
+  color: #272727;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-left: 20rpx;
+  max-width: 566rpx;
+}
+
+.myAppointment_status {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120rpx;
+  height: 120rpx;
+}
+
+.myAppointment_processCell {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.myAppointment_role_me {
+  background-color: #F3A913;
+  border-radius: 13rpx;
+  margin-left: 30rpx;
+  width: 43rpx;
+  height: 43rpx;
+  color: white;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.myAppointment_role_teacher {
+  background-color: #46A1FB;
+  border-radius: 13rpx;
+  margin-left: 30rpx;
+  width: 43rpx;
+  height: 43rpx;
+  color: white;
+  font-size: 26rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.myAppointment_processTime {
+  margin-left: 20rpx;
+  color: #272727;
+  font-size: 28rpx;
+  max-width: 530rpx;
+}
+
+.myAppointment_processStatus {
+  margin-right: 30rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.myAppointment_processSubTitle {
+  height: 40rpx;
+  margin-left: 93rpx;
+  color: #272727;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+}
+
+.myAppointment_processSubValue {
+  color: #272727;
+  font-size: 28rpx;
+  max-width: 375rpx;
+}
+
+.myAppointment_note {
+  margin-left: 93rpx;
+  width: 627rpx;
+  color: #B4B4B4;
+  margin-top: 26rpx;
+  font-size: 26rpx;
+}
+
+.myAppointment_processLine {
+  position: absolute;
+  width: 49rpx;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-right: 3rpx dashed #C5C5C5;
+}
+
+.bottomButtonView {
+  height: 127rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.cancelButton {
+  width: 322rpx;
+  height: 78rpx;
+  border: 2rpx solid #FF5D5D;
+  border-radius: 40rpx;
+  color: #FF5D5D;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.changeButton {
+  width: 322rpx;
+  height: 78rpx;
+  border: 2rpx solid #2DC1A0;
+  border-radius: 40rpx;
+  color: #2DC1A0;
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 38rpx;
+}
+
+.infoDetailView_bg {
+  background-color: rgba(0, 0, 0, 0.54);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoDetailView {
+  background-color: white;
+  width: 661rpx;
+  height: 550rpx;
+  border-radius: 14rpx;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.infoDetailView_scrollView {
+  width: 100%;
+  height: 402rpx;
+  margin-top: 75rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.infoDetailView_itemView {
+  margin-left: 48rpx;
+  width: 5rpx;
+  height: 13rpx;
+  border-radius: 2.5rpx;
+  background-color: #2DC1A0;
+}
+
+.infoDetailView_key {
+  margin-left: 18rpx;
+  height: 42rpx;
+  display: flex;
+  align-items: center;
+  color: #272727;
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.infoDetailView_value {
+  margin-top: 10rpx;
+  margin-left: 71rpx;
+  max-width: 539rpx;
+  line-height: 45rpx;
+  color: #272727;
+  font-size: 28rpx;
+}
+
+.infoDetailView_close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 95rpx;
+  width: 99rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
