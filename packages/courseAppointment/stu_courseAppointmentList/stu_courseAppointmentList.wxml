@@ -12,21 +12,29 @@
 <view class="contentView" style="margin-top:{{naviHeight}}px; padding-bottom:{{safeArarBottom+10}}px;">
   <!-- 课程预约 -->
   <block wx:if="{{selectedMenuIndex==0}}">
-    <!-- 遍历预约课程 -->
-    <block wx:for="{{apponintmentList}}" wx:key="index">
-      <view class="sectionHeader">
-        <view class="sectionCircle"></view>
-        <view class="sectionTitle">{{item.title}}</view>
-      </view>
-      <!-- 遍历课程 期 -->
-      <block wx:if="{{item.subList && item.subList != ''}}" wx:for="{{item.subList}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="subIndex">
-        <view class="appointmentCell" style="margin-top:{{subIndex==0 ? 0 : 16}}rpx;">
-          <view class="appointmentTitle">10.20  第二期</view>
-          <view class="flex_row_alimenterCenter">
-            <view class="courseIntroButton" bindtap="showIntroButtonClciked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">查看简介</view>
-            <view class="appointmentButton" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">去预约</view>
-          </view>
+    <!-- 空页面 -->
+    <block wx:if="{{!apponintmentList || apponintmentList == '' || apponintmentList.length == 0}}">
+      <null_image type="1"></null_image>
+    </block>
+    <block wx:else>
+      <!-- 遍历预约课程 -->
+      <block wx:for="{{apponintmentList}}" wx:key="index">
+        <view class="sectionHeader">
+          <view class="sectionCircle"></view>
+          <view class="sectionTitle">{{item.title}}</view>
         </view>
+        <!-- 遍历课程 期 -->
+        <block wx:if="{{item.cateData && item.cateData != ''}}" wx:for="{{item.cateData}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="subIndex">
+          <view class="appointmentCell" style="margin-top:{{subIndex==0 ? 0 : 16}}rpx;">
+            <view class="appointmentTitle">{{subItem.title}}</view>
+            <view class="flex_row_alimenterCenter">
+              <view class="courseIntroButton" bindtap="showIntroButtonClciked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">查看简介</view>
+              <view wx:if="{{subItem.user_yueke_state == 1}}" class="appointmentButton" style="background-color:rgba(70, 161, 251, 0.11); color:#46A1FB;" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">审核中</view>
+              <view wx:elif="{{subItem.user_yueke_state == 2}}" class="appointmentButton" style="background-color:rgba(20, 203, 162, 0.11); color:#2DC1A0;" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">已预约</view>
+              <view wx:else class="appointmentButton" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">去预约</view>
+            </view>
+          </view>
+        </block>
       </block>
     </block>
   </block>
@@ -40,9 +48,9 @@
           <view class="myAppointment_title oneLine">2020事业单位   9.20 第一期</view>
         </view>
         <!-- 遍历处理流程 -->
-        <block wx:for="{{item.subList}}" wx:for-index="subIndex" wx:for-item="subItem" wx:key="subIndex">
+        <block wx:for="{{item.cateData}}" wx:for-index="subIndex" wx:for-item="subItem" wx:key="subIndex">
           <view class="myAppointment_processCell">
-            <view class="myAppointment_processLine" wx:if="{{subIndex != item.subList.length - 1}}"></view>
+            <view class="myAppointment_processLine" wx:if="{{subIndex != item.cateData.length - 1}}"></view>
             <view class="flex_row_alimenterCenter_spaceBetween">
               <view class="flex_row_alimenterCenter">
                 <!-- 角色 -->

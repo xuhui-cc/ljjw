@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "alertView" : "/components/alertView/alertView"
+    "alertView" : "/components/alertView/alertView",
+    "null_image": "/components/null_image/null_image"
   },
   "navigationStyle": "custom"
 }

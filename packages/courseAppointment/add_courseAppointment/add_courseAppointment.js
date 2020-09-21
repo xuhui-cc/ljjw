@@ -1,15 +1,31 @@
 // packages/courseAppointment/add_courseAppointment/add_courseAppointment.js
+let app = getApp()
 Page({
+
+  // 一级id
+  first_id: null,
+
+  // 二级id
+  second_id: null,
 
   /**
    * 页面的初始数据
    */
   data: {
     // 导航栏标题（课程+期）
-    title: '2020事业单位  9.20第一期',
+    title: '',
 
     // 类型 1-提交课程预约信息 2-修改课程预约信息
     type: 1,
+
+    /**
+     * 动态内容类型列表
+     * title：条目标题
+     * text_type: 1-单行文本 2-多行文本
+     * required： 1-必填  2-非必填
+     * value: 自定义参数 值
+    */
+    itemList: [],
 
     // 是否可以提交
     canSubmit: false,
@@ -44,8 +60,15 @@ Page({
     eventChannel.on('toAppointmentCourse', function(data){
       let type = data.type
       that.setData({
-        type: type
+        type: type,
+        title: data.title
       })
+      that.first_id = data.first_id
+      that.second_id = data.second_id
+      if (type == 1) {
+        // 初次提交预约
+        that.getAppointmentItemList()
+      }
     })
   },
 
@@ -122,12 +145,74 @@ Page({
    * 判断是否可以提交
   */
   canSubmitStatusChange: function() {
-    let canSubmit = false
-    if (this.data.name && this.data.name != '' && this.data.wordStation && this.data.wordStation != '') {
-      canSubmit = true
+    let canSubmit = true
+    if (!this.data.itemList || this.data.itemList.length == 0) {
+      canSubmit = false
+    }
+    for (var i = 0; i < this.data.itemList.length; i++) {
+      let item = this.data.itemList[i]
+      if (item.required == 1 && (!item.value || item.value == '')) {
+        canSubmit = false
+        break
+      }
     }
     this.setData({
       canSubmit: canSubmit
+    })
+  },
+
+  // -----------------------------------------------接口----------------------------------------------
+  /**
+   * 获取预约条目列表
+  */
+  getAppointmentItemList: function() {
+    let param = {
+      token: wx.getStorageSync('token'),
+      id: this.first_id,
+    }
+    let that = this
+    app.ljjw.getCourseAppointmentItemList(param).then(d=>{
+      if (d.data.status == 1) {
+        let itemList = d.data.data
+        if (!itemList || itemList == '') {
+          itemList = []
+        }
+        that.setData({
+          itemList: itemList
+        })
+      }
+    })
+  },
+
+  /**
+   * 提交预约
+  */
+  submitAppointment: function() {
+    let valueArray = []
+    for (var i = 0; i < this.data.itemList.length; i++) {
+      let item = this.data.itemList[i]
+      if (item.value && item.value != '') {
+        valueArray.push({id: item.id, value: item.value})
+      }
+    }
+    let valueStr = JSON.stringify(valueArray)
+    let stuinfo = wx.getStorageSync('stuinfo')
+    let params = {
+      token: wx.getStorageSync('token'),
+      cate_id: this.second_id,
+      stu_id: stuinfo.id,
+      data: valueStr,
+    }
+    app.ljjw.submitCourseAppointment(params).then(d=>{
+      if (d.data.status == 1) {
+        wx.showToast({
+          title: '提交成功',
+          icon: 'none'
+        })
+        wx.navigateBack({
+          delta: 0,
+        })
+      }
     })
   },
 
@@ -140,46 +225,37 @@ Page({
   },
 
   /**
-   * 姓名输入框 输入
+   * input输入框 输入
   */
-  nameInputChange: function (e) {
+  inputValueChange: function (e) {
     let value = e.detail.value
     if (value == ' ') {
       value = ''
     }
+    // console.log(e)
+    let index = e.currentTarget.dataset.index
+    let itemValueStr = 'itemList['+index+'].value'
     this.setData({
-      name: value
+      [itemValueStr]: value
     })
     this.canSubmitStatusChange()
   },
 
-  /**
-   * 岗位输入框 输入
-  */
-  wordTextareaChange: function(e) {
+  textareaValueChange: function (e) {
     let value = e.detail.value
     if (value == ' ') {
       value = ''
     }
+    // console.log(e)
+    let index = e.currentTarget.dataset.index
+    let itemValueStr = 'itemList['+index+'].value'
     this.setData({
-      wordStation: value
+      [itemValueStr]: value
     })
+
     this.canSubmitStatusChange()
   },
 
-  /**
-   * 进面线输入框 输入
-  */
-  scoreInputChange: function(e) {
-    let value = e.detail.value
-    if (value == ' ') {
-      value = ''
-    }
-    this.setData({
-      score: value
-    })
-    this.canSubmitStatusChange()
-  },
 
   /**
    * 提交按钮 点击事件
@@ -188,7 +264,7 @@ Page({
     if (!this.data.canSubmit) {
       return
     }
-    wx.navigateBack()
+    this.submitAppointment()
   },
 
   /**

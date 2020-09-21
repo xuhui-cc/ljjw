@@ -1,10 +1,9 @@
-const URI = 'http://cs.szgk.cn/apiv2.php'    //测试接口
+const Base_URI = 'http://cs.szgk.cn' // 测试
+// const Base_URI = 'https://www.szgk.cn' // 测试
 
-// const URI = 'https://www.szgk.cn/apiv2.php'    //正式接口
+const URI = Base_URI + '/apiv2.php'    //接口
 
-const uploadFileURI = 'http://cs.szgk.cn/apiv2.php?' // 测试上传文件接口
-
-// const uploadFileURI = 'https://szgk.cn/apiv2.php?' // 正式上传文件接口
+const uploadFileURI = Base_URI + '/apiv2.php?' // 上传文件接口
 
 /**
  * 获取上传文件URI
@@ -382,7 +381,32 @@ function updateAudioPlayCount(params) {
   return fetch.ljjwfetchpost(URI, 'updateAudioPlayCount', params, '更新音频收听次数')
 }
 
-module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime, jwUpdateUserAudioTime, updateAudioPlayCount}
+// 课程预约列表
+function courseAppointmentList(params) {
+  return fetch.ljjwfetch(URI, 'jwGetyuekeList', params, '课程预约列表', true)
+}
+
+// 课程预约 简介 h5
+function courseAppointmentDetail_h5(cate_id) {
+  return Base_URI + '/jwyueke/h5yuekedetail?cate_id=' + cate_id
+}
+
+// 获取约课内容条目列表
+function getCourseAppointmentItemList(params) {
+  return fetch.ljjwfetch(URI, 'jwGetYueketype', params, '获取约课内容条目列表', true)
+}
+
+// 提交约课
+function submitCourseAppointment(params) {
+  return fetch.ljjwfetchpost(URI, 'jwStuSubmitYueke', params, '提交约课', true, '提交中')
+}
+
+// 我的课程预约列表
+function myCourseAppointmentList(params) {
+  return fetch.ljjwfetch(URI, 'jwStuYuekeBmlist', params, '我的课程预约列表', true)
+}
+
+module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime, jwUpdateUserAudioTime, updateAudioPlayCount, courseAppointmentList, courseAppointmentDetail_h5, getCourseAppointmentItemList, submitCourseAppointment, myCourseAppointmentList}
 
 //测试正式服接口
 function testAPi(api, params) {

@@ -1,5 +1,15 @@
 // pages/courseAppointment/stu_courseAppointmentList/stu_courseAppointmentList.js
+let app = getApp()
 Page({
+
+  /**
+   * 分页数据
+  */
+  pageData: {
+    page: 1,
+    perpage: 10,
+    canLoadNextPage: false
+  },
 
   /**
    * 页面的初始数据
@@ -8,19 +18,22 @@ Page({
     // 选中的顶部菜单索引
     selectedMenuIndex: 0,
 
-    // 课程预约列表
-    apponintmentList: [
-      {
-        title:'2020事业单位',
-        subList:[1,2,3]
-      },
-      {
-        title:'2020事业单位',
-        subList:[1,2,3]
-      }
-    ],
+    /**
+     * 课程预约列表
+     * cateData: 二级列表
+     *     user_yueke_state: 当前用户约课状态 0-未约课 1-审核中 2-已约课 & 取消申请中
+    */
+    apponintmentList: [],
 
-    // 我的预约列表
+    /**
+     * 我的预约列表
+     * addtime：提交时间 10位时间戳
+     * state：状态 1-审核中 2-审核通过 3-驳回 4-申请取消 5-已取消
+     * cate_title：二级标题
+     * title：一级标题
+     * state_list: 状态列表
+     * update_list: 修改后 子类的报名信息 及 状态列表
+    */
     myAppointmentList: [
       {
         title:'2020事业单位',
@@ -96,7 +109,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.pageData.page = 1
+    if (this.data.selectedMenuIndex == 0) {
+      this.getAppointmentList()
+    } else {
+      this.getMyCourseAppointmentList()
+    }
   },
 
   /**
@@ -159,9 +177,64 @@ Page({
    * 获取课程预约列表
   */
   getAppointmentList: function() {
+    let stuinfo = wx.getStorageSync('stuinfo')
+    let params = {
+      token: wx.getStorageSync('token'),
+      stu_id: stuinfo.id,
+      limit: this.pageData.perpage,
+      page: this.pageData.page
+    }
+    let that = this
+    app.ljjw.courseAppointmentList(params).then(d=>{
+      if (d.data.status == 1) {
+        let appointmentList = d.data.data
+        // for (var i = 0; i < appointmentList.length; i++) {
 
+        // }
+        // 分页数据处理
+        let newList = []
+        if (that.pageData.page == 1) {
+          newList = appointmentList
+        } else {
+          newList = that.data.apponintmentList.concat(appointmentList)
+        }
+        // 判断是否可以加载下一页
+        if (appointmentList.length < that.pageData.perpage) {
+          that.pageData.canLoadNextPage = false
+        } else {
+          that.pageData.canLoadNextPage = true
+        }
+        that.setData({
+          apponintmentList: newList
+        })
+      } else {
+        if (that.pageData.page == 1) {
+          that.setData({
+            apponintmentList: []
+          })
+        }
+      }
+    })
   },
 
+  /**
+   * 获取我的课程预约列表
+  */
+  getMyCourseAppointmentList: function() {
+    let stuinfo = wx.getStorageSync('stuinfo')
+    let params = {
+      token: wx.getStorageSync('token'),
+      stu_id: stuinfo.id,
+      page: this.pageData.page,
+      limit: this.pageData.perpage,
+    }
+    app.ljjw.myCourseAppointmentList(params).then(d=>{
+      if (d.data.status == 1) {
+        let appointmentList = d.data.data
+
+      }
+    })
+  },
 
   //----------------------------------------------------交互事件--------------------------------------------------
   /**
@@ -175,6 +248,12 @@ Page({
     this.setData({
       selectedMenuIndex: index
     })
+    this.pageData.page = 1
+    if (index == 0) {
+      this.getAppointmentList()
+    } else {
+      this.getMyCourseAppointmentList()
+    }
   },
 
   /**
@@ -190,11 +269,14 @@ Page({
   showIntroButtonClciked: function(e) {
     let courseIndex = e.currentTarget.dataset.courseindex
     let appointmentIndex = e.currentTarget.dataset.appointmentindex
-    let appointment = this.data.apponintmentList[courseIndex].subList[appointmentIndex]
+    let appointment = this.data.apponintmentList[courseIndex].cateData[appointmentIndex]
     wx.navigateTo({
-      url: '/packages/courseAppointment_detail/courseAppointment_detail',
+      url: '/packages/courseAppointment/courseAppointment_detail/courseAppointment_detail',
       success (res) {
-        res.eventChannel.emit('showCourseIntro', {url: 'http://www.baidu.com'})
+        res.eventChannel.emit('showCourseIntro', {url: app.ljjw.courseAppointmentDetail_h5(appointment.id)})
+      },
+      fail (res) {
+        console.log(res)
       }
     })
   },
@@ -206,11 +288,14 @@ Page({
     let courseIndex = e.currentTarget.dataset.courseindex
     let appointmentIndex = e.currentTarget.dataset.appointmentindex
     let course = this.data.apponintmentList[courseIndex]
-    let appointment = course.subList[appointmentIndex]
+    let appointment = course.cateData[appointmentIndex]
+    if(appointment.user_yueke_state != 0) {
+      return
+    }
     wx.navigateTo({
       url: '/packages/courseAppointment/add_courseAppointment/add_courseAppointment',
       success (res) {
-        res.eventChannel.emit('toAppointmentCourse', {type: 1, course: course, appointment: appointmentIndex})
+        res.eventChannel.emit('toAppointmentCourse', {type: 1, first_id: course.id, second_id: appointment.id, title: course.title + ' ' + appointment.title})
       }
     })
   },

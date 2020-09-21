@@ -9,40 +9,30 @@
 </view>
 
 <view class="contentView" style="margin-top:{{naviHeight}}px; padding-bottom:{{safeArarBottom + 133/750.0*screenWidth}}px;">
-  <!-- 课程 -->
-  <view class="infoItem" wx:if="{{type==2}}" bindtap="appointmentItemClciked">
+   <!-- 课程 -->
+   <view class="infoItem" wx:if="{{type==2}}" bindtap="appointmentItemClciked">
     <view class="itemTitle" style="margin-left:29rpx">课程：</view>
     <view class="flex_row_alimenterCenter">
       <view class="itemValue" style="margin-right:7rpx">2020事业单位   9.20 第一期</view>
       <image src="/images/next.png" style="width:21rpx; height:21rpx; margin-right:30rpx;"></image>
     </view>
   </view>
-  <!-- 姓名 -->
-  <view class="infoItem">
-    <view class="flex_row_alimenterCenter">
-      <view class="itemImage">*</view>
-      <view class="itemTitle" style="margin-left:10rpx">姓名：</view>
+  <!-- 遍历条目类型列表 -->
+  <block wx:for="{{itemList}}" wx:key="index">
+    <view class="infoItem">
+      <view class="flex_row_alimenterCenter">
+        <view wx:if="{{item.required == 1}}" class="itemImage">*</view>
+        <view class="itemTitle" style="margin-left:{{item.required == 1 ? 10 : 29}}rpx;">{{item.title}}：</view>
+      </view>
+      <input wx:if="{{item.text_type == 1}}" type="text" value="{{item.value}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" data-index="{{index}}" bindinput="inputValueChange"></input>
     </view>
-    <input type="text" value="{{name}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" bindinput="nameInputChange"></input>
-  </view>
-  <!-- 岗位 -->
-  <view class="infoItem">
-    <view class="flex_row_alimenterCenter">
-      <view class="itemImage">*</view>
-      <view class="itemTitle" style="margin-left:10rpx">岗位：</view>
+    <!-- 多行文本 -->
+    <view wx:if="{{item.text_type == 2}}" class="textArea_View">
+      <view class="textArea_bg">
+        <textarea class="textarea" value="{{item.value}}" placeholder="请输入{{item.title}}..." placeholder-class="textArea_placehoulder" maxlength="600" bindinput="textareaValueChange"></textarea>
+      </view>
     </view>
-    <view></view>
-  </view>
-  <view class="textArea_View">
-    <view class="textArea_bg">
-      <textarea class="textarea" value="{{wordStation}}" placeholder="请输入岗位..." placeholder-class="textArea_placehoulder" maxlength="600" bindinput="wordTextareaChange"></textarea>
-    </view>
-  </view>
-  <!-- 进面线 -->
-  <view class="infoItem">
-    <view class="itemTitle" style="margin-left:29rpx">进面线：</view>
-    <input type="number" value="{{score}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" bindinput="scoreInputChange"></input>
-  </view>
+  </block>
 </view>
 
 <!-- 提交按钮 -->
