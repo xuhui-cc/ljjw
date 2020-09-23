@@ -42,7 +42,7 @@ Component({
      * textarea 是否必填
     */
     textareaImportment: {
-      type: String,
+      type: Boolean,
       value: true
     },
     /**

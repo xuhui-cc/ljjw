@@ -1,4 +1,4 @@
-/* pages/courseAppointment/stu_courseAppointmentList/stu_courseAppointmentList.wxss */
+/* packages/teacher_courseAppointment/tea_courseAppointmentList/tea_courseAppointmentList.wxss */
 page{
   background-color: #FBFBFC;
 }
@@ -63,6 +63,19 @@ page{
   height: 53rpx;
   color: white;
   font-size: 32rpx;
+}
+
+.redCount {
+  width: 42rpx;
+  height: 30rpx;
+  border-radius: 15rpx;
+  background-color: #F14444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22rpx;
+  margin-bottom: 40rpx;
 }
 
 .contentView {
@@ -148,27 +161,46 @@ page{
 }
 
 .myAppointment_titleView {
-  margin-top: 7rpx;
-  height: 109rpx;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 61rpx;
+}
+
+.myAppointment_titlePerson {
+  margin-top: 39rpx;
+  height: 45rpx;
+  margin-left: 30rpx;
+  max-width: 600rpx;
+  color: #272727;
+  font-size: 32rpx;
+  font-weight: bold;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.myAppointment_titleImage {
+.myAppointment_titlePerson_state {
+  margin-top: 19rpx;
+  height: 40rpx;
   margin-left: 30rpx;
-  width: 11rpx;
-  height: 11rpx;
-  border-radius: 50%;
-  border: 4rpx solid #14CBA2;
+  max-width: 600rpx;
+  color: #272727;
+  font-size: 28rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .myAppointment_title {
+  margin-top: 17rpx;
+  height: 40rpx;
+  margin-left: 30rpx;
+  max-width: 690rpx;
   color: #272727;
-  font-size: 32rpx;
-  font-weight: bold;
-  margin-left: 20rpx;
-  max-width: 566rpx;
+  font-size: 28rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .myAppointment_status {
@@ -279,8 +311,8 @@ page{
   justify-content: center;
 }
 
-.cancelButton {
-  width: 322rpx;
+.rejectButton {
+  width: 311rpx;
   height: 78rpx;
   border: 2rpx solid #FF5D5D;
   border-radius: 40rpx;
@@ -291,12 +323,13 @@ page{
   justify-content: center;
 }
 
-.changeButton {
-  width: 322rpx;
-  height: 78rpx;
+.passButton {
+  width: 311rpx;
+  height: 80rpx;
   border: 2rpx solid #2DC1A0;
+  background-color: #2DC1A0;
   border-radius: 40rpx;
-  color: #2DC1A0;
+  color: white;
   font-size: 32rpx;
   display: flex;
   align-items: center;

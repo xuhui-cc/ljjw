@@ -1,4 +1,4 @@
-// pages/courseAppointment/stu_courseAppointmentList/stu_courseAppointmentList.js
+// packages/teacher_courseAppointment/tea_courseAppointmentList/tea_courseAppointmentList.js
 let app = getApp()
 Page({
 
@@ -10,7 +10,6 @@ Page({
     perpage: 10,
     canLoadNextPage: false
   },
-
   /**
    * 页面的初始数据
    */
@@ -19,28 +18,35 @@ Page({
     selectedMenuIndex: 0,
 
     /**
-     * 课程预约列表
-     * cateData: 二级列表
-     *     user_yueke_state: 当前用户约课状态 0-未约课 1-审核中 2-已约课 & 取消申请中
+     * 待审核列表
+     * addtime：提交时间 10位时间戳
+     * state：状态 1-待审核 2-已审核通过 3-已驳回  4-取消申请  5-已取消
+     * realname：申请人姓名
+     * name：申请人昵称
+     * phone：申请人手机号
+     * checked：学生基础信息审核状态 1-通过审核
+     * yk_title：一级标题
+     * cate_title：二级标题
+     * update_list: 流程列表
     */
     apponintmentList: [],
 
     /**
-     * 我的预约列表
-     * addtime：提交时间 10位时间戳
-     * state：状态 1-审核中 2-审核通过 3-驳回 4-申请取消 5-已取消
-     * cate_title：二级标题
-     * title：一级标题
-     * update_list: 修改后 子类的报名信息 及 状态列表
-     *     type: 1 学生提交的 2 老师审核通过 3 老师驳回 4学生重新提交 5学生申请取消  6老师审核取消通过 7老师审核取消驳回
+     * 预约详情列表
     */
-    myAppointmentList: [],
+    appointmentDetailList: [],
 
     // 是否展示预约备注弹框
     infoDetail: null,
 
-    // 将要取消的预约
-    cancelAppointment: null,
+    // 待审核数量
+    waitCount: 0,
+
+    // 将要驳回的预约申请
+    rejectAppointment: null,
+
+    // 将要通过的预约申请
+    passAppointment: null,
   },
 
   /**
@@ -61,11 +67,15 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    // 获取小红点数量
+    this.teacherGetCourseAppointmentCount()
+
     this.pageData.page = 1
     if (this.data.selectedMenuIndex == 0) {
-      this.getAppointmentList()
+      // 待审核
+      this.getWaitDealList()
     } else {
-      this.getMyCourseAppointmentList()
+      this.getAppointmentDetail()
     }
   },
 
@@ -89,15 +99,15 @@ Page({
   onPullDownRefresh: function () {
     this.pageData.page = 1
     if (this.data.selectedMenuIndex == 0) {
-      // 课程预约
-      this.getAppointmentList(function(success){
+      // 待审核
+      this.getWaitDealList(function(success){
         wx.stopPullDownRefresh({
           success: (res) => {},
         })
       })
     } else {
-      // 我的预约
-      this.getMyCourseAppointmentList(function(success){
+      // 预约详情
+      this.getAppointmentDetail(function(success){
         wx.stopPullDownRefresh({
           success: (res) => {},
         })
@@ -114,17 +124,17 @@ Page({
     }
     let oldPage = this.pageData.page
     this.pageData.page += 1
-    let that = this
+    let taht = this
     if (this.data.selectedMenuIndex == 0) {
-      // 课程预约
-      this.getAppointmentList(function(success){
+      // 待审核
+      this.getWaitDealList(function(success){
         if (!success) {
           that.pageData.page = oldPage
         }
       })
     } else {
-      // 我的预约
-      this.getMyCourseAppointmentList(function(success){
+      // 预约详情
+      this.getAppointmentDetail(function(success){
         if (!success) {
           that.pageData.page = oldPage
         }
@@ -139,7 +149,7 @@ Page({
 
   },
 
-  // ---------------------------------------------私有方法------------------------------------------------
+    // ---------------------------------------------私有方法------------------------------------------------
   /**
    * 获取系统辅助尺寸
   */
@@ -159,72 +169,42 @@ Page({
     })
   },
 
-  //-----------------------------------------------------接口-----------------------------------------------------
+  //--------------------------------------------------------------接口--------------------------------------------------
   /**
-   * 获取课程预约列表
+   * 老师获取 课程预约模块小红点数量
   */
-  getAppointmentList: function(callback) {
+  teacherGetCourseAppointmentCount: function() {
     let params = {
       token: wx.getStorageSync('token'),
-      uid: wx.getStorageSync('uid'),
-      limit: this.pageData.perpage,
-      page: this.pageData.page
+      teacher_id: wx.getStorageSync('uid')
     }
     let that = this
-    app.ljjw.courseAppointmentList(params).then(d=>{
+    app.ljjw.teacherGetCourseAppointmentRedCount(params).then(d=>{
       if (d.data.status == 1) {
-        let appointmentList = d.data.data
-        for (var i = 0; i < appointmentList.length; i++) {
-          let appointment = appointmentList[i]
-          appointment.canJoin = true
-          for (var j = 0; i < appointment.cateData.length; j++) {
-            let cate = appointment.cateData[j]
-            if (cate.user_yueke_state == 1 || cate.user_yueke_state == 2) {
-              appointment.canJoin = false
-              break
-            }
-          }
-        }
-        // 分页数据处理
-        let newList = []
-        if (that.pageData.page == 1) {
-          newList = appointmentList
-        } else {
-          newList = that.data.apponintmentList.concat(appointmentList)
-        }
-        // 判断是否可以加载下一页
-        if (appointmentList.length < that.pageData.perpage) {
-          that.pageData.canLoadNextPage = false
-        } else {
-          that.pageData.canLoadNextPage = true
-        }
+        let count = d.data.data.count
         that.setData({
-          apponintmentList: newList
+          waitCount: count
         })
-        typeof callback == 'function' && callback(true)
       } else {
-        if (that.pageData.page == 1) {
-          that.setData({
-            apponintmentList: []
-          })
-        }
-        typeof callback == 'function' && callback(false)
+        that.setData({
+          waitCount: 0
+        })
       }
     })
   },
 
   /**
-   * 获取我的课程预约列表
+   * 老师获取待审核列表
   */
-  getMyCourseAppointmentList: function(callback) {
+  getWaitDealList: function(callback) {
     let params = {
       token: wx.getStorageSync('token'),
-      uid: wx.getStorageSync('uid'),
+      teach_id: wx.getStorageSync('uid'),
       page: this.pageData.page,
-      limit: this.pageData.perpage,
+      limit: this.pageData.perpage
     }
     let that = this
-    app.ljjw.myCourseAppointmentList(params).then(d=>{
+    app.ljjw.teacherGetCourseAppointmentList(params).then(d=>{
       if (d.data.status == 1) {
         let appointmentList = d.data.data
         for (var i = 0; i < appointmentList.length; i++) {
@@ -262,16 +242,16 @@ Page({
             switch(process.type * 1) {
               case 1: {
                 // 学生初次提交
-                process.isMe = true
+                process.isStu = true
                 process.status_text = ''
                 process.timeStr = '提交时间：' + process.timeStr
                 process.subTitle_key = '课程预约：'
-                process.subTitle_value = process.title + '  '+process.cate_title
+                process.subTitle_value = process.yk_title + '  '+process.cate_title
                 break
               }
               case 2: {
                 // 老师审核通过
-                process.isMe = false
+                process.isStu = false
                 process.status_text = '已通过'
                 process.status_color = '#46BF6A'
                 process.timeStr = '审核时间：' + process.timeStr
@@ -281,7 +261,7 @@ Page({
               }
               case 3: {
                 // 老师审核驳回
-                process.isMe = false
+                process.isStu = false
                 process.status_text = '已驳回'
                 process.status_color = '#F14444'
                 process.timeStr = '审核时间：' + process.timeStr
@@ -291,23 +271,23 @@ Page({
               }
               case 4: {
                 // 学生重新提交
-                process.isMe = true
+                process.isStu = true
                 process.status_text = ''
                 process.timeStr = '提交时间：' + process.timeStr
                 process.subTitle_key = '课程预约修改：'
-                process.subTitle_value = process.title + '  '+process.cate_title
+                process.subTitle_value = process.yk_title + '  '+process.cate_title
                 break
               }
               case 5: {
                 // 学生申请取消
-                process.isMe = true
+                process.isStu = true
                 process.status_text = ''
                 process.timeStr = '取消时间：' + process.timeStr
                 break
               }
               case 6: {
                 // 老师审核取消通过
-                process.isMe = false
+                process.isStu = false
                 process.status_text = '已取消'
                 process.status_color = '#CFCFCF'
                 process.timeStr = '审核时间：' + process.timeStr
@@ -317,7 +297,7 @@ Page({
               }
               case 7: {
                 // 老师审核取消驳回
-                process.isMe = false
+                process.isStu = false
                 process.status_text = '已驳回'
                 process.status_color = '#F14444'
                 process.timeStr = '审核时间：' + process.timeStr
@@ -332,21 +312,21 @@ Page({
         if (that.pageData.page == 1) {
           newList = appointmentList
         } else {
-          newList = that.data.myAppointmentList.concat(appointmentList)
+          newList = that.data.apponintmentList.concat(newList)
         }
-        if(appointmentList.length < that.pageData.perpage) {
+        if (appointmentList.length < that.pageData.perpage) {
           that.pageData.canLoadNextPage = false
         } else {
           that.pageData.canLoadNextPage = true
         }
         that.setData({
-          myAppointmentList: newList
+          apponintmentList: newList
         })
         typeof callback == 'function' && callback(true)
       } else {
         if (that.pageData.page == 1) {
           that.setData({
-            myAppointmentList: []
+            apponintmentList: []
           })
         }
         typeof callback == 'function' && callback(false)
@@ -355,22 +335,42 @@ Page({
   },
 
   /**
-   * 取消申请
+   * 老师 获取预约详情
   */
-  cancelAppointment: function(content, callback) {
+  getAppointmentDetail: function(callBack){
     let params = {
       token: wx.getStorageSync('token'),
-      bm_id: this.data.cancelAppointment.id
-    }
-    if (content && content != '') {
-      params.handle_remark = content
+      teach_id: wx.getStorageSync('uid'),
+      page: this.pageData.page,
+      limit: this.pageData.perpage
     }
     let that = this
-    app.ljjw.cancelCourseAppointment(params).then(d=>{
+    app.ljjw.teacherGetCourseAppointmentAnalysis(params).then(d=>{
       if (d.data.status == 1) {
-        typeof callback == 'function' && callback(true)
+        let infoList = d.data.data
+        // 分页数据处理
+        let newList = []
+        if (that.pageData.page == 1) {
+          newList = infoList
+        } else {
+          newList = that.data.appointmentDetailList.concat(infoList)
+        }
+        if (infoList.length < that.pageData.perpage) {
+          that.pageData.canLoadNextPage = false
+        } else {
+          that.pageData.canLoadNextPage = true
+        }
+        that.setData({
+          appointmentDetailList: newList
+        })
+        typeof callBack == 'function' && callBack(true) 
       } else {
-        typeof callback == 'function' && callback(false)
+        if (that.pageData.page == 1) {
+          that.setData({
+            appointmentDetailList: []
+          })
+        }
+        typeof callBack == 'function' && callBack(false) 
       }
     })
   },
@@ -394,6 +394,27 @@ Page({
     })
   },
 
+  /**
+   * 老师审批
+   * state: 2-通过 3-驳回
+  */
+  courseAppointmentDeal: function(state, bm_id, callback) {
+    let params = {
+      token: wx.getStorageSync('token'),
+      teach_id: wx.getStorageSync('uid'),
+      state: state,
+      bm_id: bm_id
+    }
+    let that = this
+    app.ljjw.teacherDealCourseAppointment(params).then(d=>{
+      if (d.data.status == 1) {
+        typeof callback == 'function' && callback(true)
+      } else {
+        typeof callback == 'function' && callback(false)
+      }
+    })
+  },
+
   //----------------------------------------------------交互事件--------------------------------------------------
   /**
    * 顶部菜单 点击事件
@@ -408,9 +429,9 @@ Page({
     })
     this.pageData.page = 1
     if (index == 0) {
-      this.getAppointmentList()
+      this.getWaitDealList()
     } else {
-      this.getMyCourseAppointmentList()
+      this.getAppointmentDetail()
     }
   },
 
@@ -422,40 +443,14 @@ Page({
   },
 
   /**
-   * 查看简介按钮 点击事件
+   * 查看备注信息 按钮 点击事件
   */
-  showIntroButtonClciked: function(e) {
-    let courseIndex = e.currentTarget.dataset.courseindex
-    let appointmentIndex = e.currentTarget.dataset.appointmentindex
-    let appointment = this.data.apponintmentList[courseIndex].cateData[appointmentIndex]
-    wx.navigateTo({
-      url: '/packages/courseAppointment/courseAppointment_detail/courseAppointment_detail',
-      success (res) {
-        res.eventChannel.emit('showCourseIntro', {url: app.ljjw.courseAppointmentDetail_h5(appointment.id)})
-      },
-      fail (res) {
-        console.log(res)
-      }
-    })
-  },
-
-  /**
-   * 去预约按钮 点击事件
-  */
-  appointmentButtonClicked: function(e) {
-    let courseIndex = e.currentTarget.dataset.courseindex
-    let appointmentIndex = e.currentTarget.dataset.appointmentindex
-    let course = this.data.apponintmentList[courseIndex]
-    let appointment = course.cateData[appointmentIndex]
-    if(appointment.user_yueke_state != 0) {
-      return
-    }
-    wx.navigateTo({
-      url: '/packages/courseAppointment/add_courseAppointment/add_courseAppointment',
-      success (res) {
-        res.eventChannel.emit('toAppointmentCourse', {type: 1, first_id: course.id, second_id: appointment.id, title: course.title + ' ' + appointment.title})
-      }
-    })
+  showProcessDetail: function(e) {
+    let index = e.currentTarget.dataset.index
+    let subIndex = e.currentTarget.dataset.subindex
+    let appointment = this.data.apponintmentList[index]
+    let process = appointment.update_list[subIndex]
+    this.getAppointmentDetailInfo(process)
   },
 
   /**
@@ -468,65 +463,72 @@ Page({
   },
 
   /**
-   * 修改预约按钮 点击事件
+   * 驳回按钮 点击事件
   */
-  appointmentChangeButtonClicked: function(e) {
+  rejectButtonClicked: function(e) {
     let index = e.currentTarget.dataset.index
-    let appointment = this.data.myAppointmentList[index]
-    wx.navigateTo({
-      url: '/packages/courseAppointment/add_courseAppointment/add_courseAppointment',
-      success (res){
-        res.eventChannel.emit('toAppointmentCourse', {type: 2, appointment_id: appointment.id, title: '课程预约修改'})
-      }
-    })
-  },
-
-  /**
-   * 取消按钮 点击事件
-  */
-  cancelButtonClicked: function(e) {
-    let index = e.currentTarget.dataset.index
-    let appointment = this.data.myAppointmentList[index]
+    let appointment = this.data.apponintmentList[index]
     this.setData({
-      cancelAppointment: appointment
+      rejectAppointment: appointment
     })
   },
 
   /**
-   * 取消弹框 确认事件
+   * 驳回弹框 确认按钮点击事件
   */
-  cancelViewSure: function(e) {
-    let content = e.detail.content
-    // console.log(e)
-    let that = this
-    this.cancelAppointment(content, function(success){
+  rejectViewSure: function() {
+    this.courseAppointmentDeal(3, this.data.rejectAppointment.id, function(success){
       if (success) {
+        that.data.apponintmentList.remove(that.data.rejectAppointment)
         that.setData({
-          cancelAppointment: null
+          appointmentList: that.data.apponintmentList,
+          rejectAppointment: null
         })
-        that.pageData.page = 1
-        that.getMyCourseAppointmentList()
       }
     })
   },
 
   /**
-   * 取消弹框 关闭
+   * 驳回弹框 关闭事件
   */
-  cancelViewClose: function() {
+  rejectViewClose: function() {
     this.setData({
-      cancelAppointment: null
+      rejectAppointment: null
     })
   },
 
   /**
-   * 查看备注信息 按钮 点击事件
+   * 通过按钮 点击事件
   */
-  showProcessDetail: function(e) {
+  passButtonClicked: function(e) {
     let index = e.currentTarget.dataset.index
-    let subIndex = e.currentTarget.dataset.subindex
-    let appointment = this.data.myAppointmentList[index]
-    let process = appointment.update_list[subIndex]
-    this.getAppointmentDetailInfo(process)
+    let appointment = this.data.apponintmentList[index]
+    this.setData({
+      passAppointment: appointment
+    })
+  },
+
+  /**
+   * 通过确认弹框 确认按钮 点击事件
+  */
+  passViewSure: function() {
+    this.courseAppointmentDeal(2, this.data.passAppointment.id, function(success){
+      if (success) {
+        that.data.apponintmentList.remove(that.data.passAppointment)
+        that.setData({
+          appointmentList: that.data.apponintmentList,
+          passAppointment: null
+        })
+      }
+    })
+  },
+
+  /**
+   * 通过确认弹框 关闭事件
+  */
+  passViewClose: function() {
+    this.setData({
+      passAppointment: null
+    })
   },
 })

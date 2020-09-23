@@ -1,11 +1,13 @@
-<!--pages/courseAppointment/stu_courseAppointmentList/stu_courseAppointmentList.wxml-->
+<!--packages/teacher_courseAppointment/tea_courseAppointmentList/tea_courseAppointmentList.wxml-->
 <view class="navi" style="height:{{naviHeight}}px;">
   <view class="navi_content" style="height:{{naviContentHeight}}px; margin-top:{{statusBarHeight}}px;">
     <view class="navi_back" bindtap="naviBackItemClciked">
       <image src="/images/back_img.png" class="navi_back_img"></image>
     </view>
-    <view class="{{selectedMenuIndex==0 ? 'navi_control_selected' : 'navi_concrol'}}" style="margin-left:15rpx;" bindtap="topMenuClicked" data-index="0">课程预约</view>
-    <view class="{{selectedMenuIndex==1 ? 'navi_control_selected' : 'navi_concrol'}}" style="margin-left:32rpx;" bindtap="topMenuClicked" data-index="1">我的预约</view>
+    <view class="{{selectedMenuIndex==0 ? 'navi_control_selected' : 'navi_concrol'}}" style="margin-left:15rpx;" bindtap="topMenuClicked" data-index="0">待审核
+      <view class="redCount" wx:if="{{waitCount > 0}}">{{waitCount > 9 ? '9+' : waitCount}}</view>
+    </view>
+    <view class="{{selectedMenuIndex==1 ? 'navi_control_selected' : 'navi_concrol'}}" style="margin-left:32rpx;" bindtap="topMenuClicked" data-index="1">预约详情</view>
   </view>
 </view>
 
@@ -17,40 +19,13 @@
       <null_image type="1"></null_image>
     </block>
     <block wx:else>
-      <!-- 遍历预约课程 -->
-      <block wx:for="{{apponintmentList}}" wx:key="index">
-        <view class="sectionHeader">
-          <view class="sectionCircle"></view>
-          <view class="sectionTitle">{{item.title}}</view>
-        </view>
-        <!-- 遍历课程 期 -->
-        <block wx:if="{{item.cateData && item.cateData != ''}}" wx:for="{{item.cateData}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="subIndex">
-          <view class="appointmentCell" style="margin-top:{{subIndex==0 ? 0 : 16}}rpx;">
-            <view class="appointmentTitle">{{subItem.title}}</view>
-            <view class="flex_row_alimenterCenter">
-              <view class="courseIntroButton" bindtap="showIntroButtonClciked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">查看简介</view>
-              <view wx:if="{{subItem.user_yueke_state == 1}}" class="appointmentButton" style="background-color:rgba(70, 161, 251, 0.11); color:#46A1FB;" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">审核中</view>
-              <view wx:elif="{{subItem.user_yueke_state == 2}}" class="appointmentButton" style="background-color:rgba(20, 203, 162, 0.11); color:#2DC1A0;" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">已预约</view>
-              <view wx:elif="{{item.canJoin}}" class="appointmentButton" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">去预约</view>
-            </view>
-          </view>
-        </block>
-      </block>
-    </block>
-  </block>
-  <!-- 我的预约 -->
-  <block wx:else>
-    <!-- 空页面 -->
-    <block wx:if="{{!myAppointmentList || myAppointmentList == '' || myAppointmentList.length == 0}}">
-      <null_image type="1"></null_image>
-    </block>
-    <block wx:else>
       <!-- 遍历我的预约 -->
-      <block wx:for="{{myAppointmentList}}" wx:key="index">
+      <block wx:for="{{apponintmentList}}" wx:key="index">
         <view class="myAppointmentCell" style="margin-top:{{index==0 ? 0 : 16}}rpx;">
           <view class="myAppointment_titleView">
-            <view class="myAppointment_titleImage"></view>
-            <view class="myAppointment_title oneLine">{{item.title + '   ' + item.cate_title}}</view>
+            <view class="myAppointment_titlePerson oneLine">{{(item.realname ? item.realname : item.name) + '（' + item.phone + '）'}}</view>
+            <view class="myAppointment_titlePerson_state oneLine">学员状态：未提交信息</view>
+            <view class="myAppointment_title oneLine">课程预约：{{item.yk_title + '   ' + item.cate_title}}</view>
           </view>
           <!-- 遍历处理流程 -->
           <block wx:for="{{item.update_list}}" wx:for-index="subIndex" wx:for-item="subItem" wx:key="subIndex">
@@ -59,7 +34,7 @@
               <view class="flex_row_alimenterCenter_spaceBetween">
                 <view class="flex_row_alimenterCenter">
                   <!-- 角色 -->
-                  <view class="{{subItem.isMe ? 'myAppointment_role_me' : 'myAppointment_role_teacher'}}">{{subItem.isMe ? '我' : '师'}}</view>
+                  <view class="{{subItem.isStu ? 'myAppointment_role_me' : 'myAppointment_role_teacher'}}">{{subItem.isStu ? '学' : '师'}}</view>
                   <!-- 审核时间 -->
                   <view class="myAppointment_processTime">{{subItem.timeStr}}</view>
                 </view>
@@ -69,7 +44,7 @@
               <view wx:if="{{subItem.type != 5}}" class="flex_row_alimenterCenter" style="margin-top:16rpx;">
                 <view class="myAppointment_processSubTitle">{{subItem.subTitle_key}}</view>
                 <!-- 预约的课程/审核人 -->
-                <view class="myAppointment_processSubValue oneLine" style="font-weight:{{subItem.isMe ? 'bold' : 'normal'}}">{{subItem.subTitle_value}}</view>
+                <view class="myAppointment_processSubValue oneLine" style="font-weight:{{subItem.isStu ? 'bold' : 'normal'}}">{{subItem.subTitle_value}}</view>
               </view>
               <block wx:if="{{subItem.type == 1 || subItem.type == 4}}">
                 <!-- 查看备注信息 -->
@@ -88,15 +63,19 @@
           </block>
           <!-- 状态 -->
           <image class="myAppointment_status" src="{{item.status_img}}"></image>
-          <view wx:if="{{item.state != 5}}" class="bottomButtonView">
-            <!-- 取消预约按钮 -->
-            <view class="cancelButton" wx:if="{{item.state == 1 || item.state == 2}}" bindtap="cancelButtonClicked" data-index="{{index}}">取消预约</view>
-            <!-- 修改预约按钮 -->
-            <view class="changeButton" wx:if="{{item.state != 4 || item.state != 5}}" bindtap="appointmentChangeButtonClicked" data-index="{{index}}">修改预约</view>
+          <view class="bottomButtonView">
+            <!-- 驳回按钮 -->
+            <view class="rejectButton" bindtap="rejectButtonClicked" data-index="{{index}}">驳回</view>
+            <!-- 通过按钮 -->
+            <view class="passButton" bindtap="passButtonClicked" data-index="{{index}}">通过</view>
           </view>
         </view>
       </block>
     </block>
+  </block>
+  <!-- 我的预约 -->
+  <block wx:else>
+    
   </block>
 </view>
 
@@ -118,6 +97,8 @@
   </view>
 </view>
 
-<!-- 取消确认弹框 -->
-<alertView wx:if="{{cancelAppointment}}" title="确认取消本次课程预约？" showTextarea="{{true}}" placehoulder="（选填）请填写原因..." textareaImportment="{{false}}" bind:sure="cancelViewSure" bind:close="cancelViewClose"></alertView>
+<!-- 驳回确认弹框 -->
+<alertView wx:if="{{rejectAppointment}}" title="确认驳回该课程预约？" showTextarea="{{true}}" placehoulder="请填写原因..." textareaImportment="{{true}}" bind:sure="rejectViewSure" bind:close="rejectViewClose"></alertView>
 
+<!-- 通过确认弹框 -->
+<alertView wx:if="{{passAppointment}}" title="确认通过该课程预约？" showTextarea="{{true}}" placehoulder="（选填）请填写原因..." textareaImportment="{{false}}" bind:sure="passViewSure" bind:close="passViewClose"></alertView>

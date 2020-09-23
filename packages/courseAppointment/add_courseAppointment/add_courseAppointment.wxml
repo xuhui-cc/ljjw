@@ -13,7 +13,7 @@
    <view class="infoItem" wx:if="{{type==2}}" bindtap="appointmentItemClciked">
     <view class="itemTitle" style="margin-left:29rpx">课程：</view>
     <view class="flex_row_alimenterCenter">
-      <view class="itemValue" style="margin-right:7rpx">2020事业单位   9.20 第一期</view>
+      <view class="itemValue" style="margin-right:7rpx">{{appointmentSelectedCateIndex == null ? oldCateTilte : appointmentTitleList[appointmentSelectedCateIndex].yk_title + '  ' + appointmentTitleList[appointmentSelectedCateIndex].cate_title}}</view>
       <image src="/images/next.png" style="width:21rpx; height:21rpx; margin-right:30rpx;"></image>
     </view>
   </view>
@@ -39,5 +39,5 @@
 <view class="{{canSubmit ? 'submitButton_can' : 'submitButton_gray'}}" bindtap="submitButtonClciked">提交</view>
 
 <!-- 课程 期列表视图 -->
-<actionSheet wx:if="{{showAppointmentListView}}" list="{{appointmentTitleList}}" title="{{appointmentListTitle}}" bind:optionClick="appointmentListOptionClciked" bind:close="appointmentListViewClose"></actionSheet>
+<actionSheet wx:if="{{showAppointmentListView}}" list="{{appointmentTitleList}}" list_key="cate_title" title="{{appointmentListTitle}}" bind:optionClick="appointmentListOptionClciked" bind:close="appointmentListViewClose"></actionSheet>
 

@@ -21,6 +21,9 @@ Page({
     // 老师未处理问题反馈数量
     teacherNotDealCount: 0,
 
+    // 课程预约模块数量
+    courseAppointmentCount: 0,
+
     // 是否无权限
     noPower: false
   },
@@ -316,8 +319,10 @@ Page({
     // 获取问题反馈消息数
     if(this.data.role == 4) {
       this.studentGetFeedBackNotiCount()
+      this.studentGetCourseAppointmentCount()
     } else {
       this.teacherGetFeedBackNotiCount()
+      this.teacherGetCourseAppointmentCount()
     }
   },
 
@@ -581,27 +586,72 @@ Page({
   /**
    * 获取老师待处理反馈数量
   */
- teacherGetFeedBackNotiCount: function () {
-  let that = this
-  let prarms = {
-    "token": wx.getStorageSync("token"),
-    "uid": wx.getStorageSync("uid"),
-  }
-  app.ljjw.getTeacherUnreadCount(prarms).then(d=>{
-    let status = d.data.status
-    if (status == 1) {
-      let data = d.data.data
-
-      that.setData({
-        teacherNotDealCount: data
-      })
-    } else {
-      that.setData({
-        teacherNotDealCount: 0
-      })
+  teacherGetFeedBackNotiCount: function () {
+    let that = this
+    let prarms = {
+      "token": wx.getStorageSync("token"),
+      "uid": wx.getStorageSync("uid"),
     }
-  })
-},
+    app.ljjw.getTeacherUnreadCount(prarms).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        let data = d.data.data
+
+        that.setData({
+          teacherNotDealCount: data
+        })
+      } else {
+        that.setData({
+          teacherNotDealCount: 0
+        })
+      }
+    })
+  },
+
+  /**
+   * 学生获取 课程预约小红点数量
+  */
+  studentGetCourseAppointmentCount: function() {
+    let params ={
+      token: wx.getStorageSync('token')
+    }
+    let that = this
+    app.ljjw.studentGetCourseAppointmentRedCount(params).then(d=>{
+      if (d.data.status == 1) {
+        let count = d.data.data
+        that.setData({
+          courseAppointmentCount: count
+        })
+      } else {
+        that.setData({
+          courseAppointmentCount: 0
+        })
+      }
+    })
+  },
+
+  /**
+   * 老师获取 课程预约模块小红点数量
+  */
+  teacherGetCourseAppointmentCount: function() {
+    let params = {
+      token: wx.getStorageSync('token'),
+      teacher_id: wx.getStorageSync('uid')
+    }
+    let that = this
+    app.ljjw.teacherGetCourseAppointmentRedCount(params).then(d=>{
+      if (d.data.status == 1) {
+        let count = d.data.data.count
+        that.setData({
+          courseAppointmentCount: count
+        })
+      } else {
+        that.setData({
+          courseAppointmentCount: 0
+        })
+      }
+    })
+  },
 
   // ------------------------------------------事件-------------------------------------
   /**
@@ -707,7 +757,10 @@ Page({
       })
     } else {
       // 非学生
+      wx.navigateTo({
+        url: '/packages/teacher_courseAppointment/tea_courseAppointmentList/tea_courseAppointmentList',
+      })
     }
-  }
+  },
   
 })

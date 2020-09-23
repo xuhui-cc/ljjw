@@ -41,6 +41,13 @@
         "add_courseAppointment/add_courseAppointment"
       ],
       "name": "courseAppointment"
+    },
+    {
+      "root": "packages/teacher_courseAppointment",
+      "pages": [
+        "tea_courseAppointmentList/tea_courseAppointmentList"
+      ],
+      "name": "teacher_courseAppointment"
     }
   ],
   "tabBar": {

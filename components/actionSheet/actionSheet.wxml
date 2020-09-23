@@ -4,7 +4,7 @@
     <view class="titleView" wx:if="{{title && title != ''}}" style="height: {{titleHeight}}rpx; {{titleStyle ? titleStyle : ''}}">{{title}}</view>
     <scroll-view scroll-y="true" class="listScrollView" style="height:{{(height ? height : defoultHeight) - titleHeight - 0.5 - safeAreaBottom}}rpx; margin-top:{{title && title != '' ? 0 : 30}}rpx;">
       <block wx:for="{{list}}" wx:key="index">
-        <view class="optionView" style="height:{{lineHeight}}rpx; {{lineContentStyle ? lineContentStyle : ''}}" catchtap="optionViewClikced" data-index="{{index}}">{{item}}</view>
+        <view class="optionView" style="height:{{lineHeight}}rpx; {{lineContentStyle ? lineContentStyle : ''}}" catchtap="optionViewClikced" data-index="{{index}}">{{list_key && list_key != '' ? item[list_key] : item}}</view>
       </block>
     </scroll-view>
   </view>
