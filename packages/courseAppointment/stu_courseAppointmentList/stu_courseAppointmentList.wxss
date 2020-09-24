@@ -65,6 +65,19 @@ page{
   font-size: 32rpx;
 }
 
+.redCount {
+  width: 42rpx;
+  height: 30rpx;
+  border-radius: 15rpx;
+  background-color: #F14444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22rpx;
+  margin-bottom: 40rpx;
+}
+
 .contentView {
   display: flex;
   flex-direction: column;

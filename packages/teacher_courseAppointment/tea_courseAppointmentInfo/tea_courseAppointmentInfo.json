@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "null_image": "/components/null_image/null_image"
+  },
+  "navigationStyle": "custom"
+}

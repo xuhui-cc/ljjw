@@ -21,7 +21,7 @@ Page({
     /**
      * 课程预约列表
      * cateData: 二级列表
-     *     user_yueke_state: 当前用户约课状态 0-未约课 1-审核中 2-已约课 & 取消申请中
+     *     user_yueke_state: 当前用户约课状态 0-未约课 1-审核中 2-审核通过 3-驳回 4-申请取消 5-已取消
     */
     apponintmentList: [],
 
@@ -41,6 +41,9 @@ Page({
 
     // 将要取消的预约
     cancelAppointment: null,
+
+    // 小红点数量
+    redCount: 0,
   },
 
   /**
@@ -67,6 +70,7 @@ Page({
     } else {
       this.getMyCourseAppointmentList()
     }
+    this.studentGetCourseAppointmentCount()
   },
 
   /**
@@ -161,6 +165,28 @@ Page({
 
   //-----------------------------------------------------接口-----------------------------------------------------
   /**
+   * 学生获取 课程预约小红点数量
+  */
+  studentGetCourseAppointmentCount: function() {
+    let params ={
+      token: wx.getStorageSync('token')
+    }
+    let that = this
+    app.ljjw.studentGetCourseAppointmentRedCount(params).then(d=>{
+      if (d.data.status == 1) {
+        let count = d.data.data
+        that.setData({
+          redCount: count
+        })
+      } else {
+        that.setData({
+          redCount: 0
+        })
+      }
+    })
+  },
+  
+  /**
    * 获取课程预约列表
   */
   getAppointmentList: function(callback) {
@@ -177,9 +203,9 @@ Page({
         for (var i = 0; i < appointmentList.length; i++) {
           let appointment = appointmentList[i]
           appointment.canJoin = true
-          for (var j = 0; i < appointment.cateData.length; j++) {
+          for (var j = 0; j < appointment.cateData.length; j++) {
             let cate = appointment.cateData[j]
-            if (cate.user_yueke_state == 1 || cate.user_yueke_state == 2) {
+            if (cate.user_yueke_state == 1 || cate.user_yueke_state == 2 || cate.user_yueke_state == 3 || cate.user_yueke_state == 4) {
               appointment.canJoin = false
               break
             }
@@ -198,6 +224,7 @@ Page({
         } else {
           that.pageData.canLoadNextPage = true
         }
+        
         that.setData({
           apponintmentList: newList
         })
@@ -340,7 +367,8 @@ Page({
           that.pageData.canLoadNextPage = true
         }
         that.setData({
-          myAppointmentList: newList
+          myAppointmentList: newList,
+          redCount: 0
         })
         typeof callback == 'function' && callback(true)
       } else {

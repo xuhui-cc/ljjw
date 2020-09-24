@@ -24,7 +24,7 @@
         <view class="myAppointmentCell" style="margin-top:{{index==0 ? 0 : 16}}rpx;">
           <view class="myAppointment_titleView">
             <view class="myAppointment_titlePerson oneLine">{{(item.realname ? item.realname : item.name) + '（' + item.phone + '）'}}</view>
-            <view class="myAppointment_titlePerson_state oneLine">学员状态：未提交信息</view>
+            <view class="myAppointment_titlePerson_state oneLine">学员状态：{{item.user_status}}</view>
             <view class="myAppointment_title oneLine">课程预约：{{item.yk_title + '   ' + item.cate_title}}</view>
           </view>
           <!-- 遍历处理流程 -->
@@ -39,7 +39,7 @@
                   <view class="myAppointment_processTime">{{subItem.timeStr}}</view>
                 </view>
                 <!-- 流程状态 -->
-                <view class="myAppointment_processStatus" style="{{subItem.status_color}}">{{subItem.status_text}}</view>
+                <view class="myAppointment_processStatus" style="color:{{subItem.status_color}};">{{subItem.status_text}}</view>
               </view>
               <view wx:if="{{subItem.type != 5}}" class="flex_row_alimenterCenter" style="margin-top:16rpx;">
                 <view class="myAppointment_processSubTitle">{{subItem.subTitle_key}}</view>
@@ -73,9 +73,56 @@
       </block>
     </block>
   </block>
-  <!-- 我的预约 -->
+  <!-- 预约详情 -->
   <block wx:else>
-    
+    <!-- 空页面 -->
+    <block wx:if="{{!appointmentDetailList || appointmentDetailList == '' || appointmentDetailList.length == 0}}">
+      <null_image type="1"></null_image>
+    </block>
+    <block wx:else>
+      <!-- 遍历一级数组 -->
+      <block wx:for="{{appointmentDetailList}}" wx:key="index">
+        <view class="detailInfoCell">
+          <view class="flex_row_alimenterCenter">
+            <view class="detailInfo_headerCircle"></view>
+            <!-- 一级标题 -->
+            <view class="detailInfo_headerTitle">{{item.title}}</view>
+          </view>
+          <!-- 遍历二级数组 -->
+          <block wx:for="{{item.cate_data}}" wx:key="subIndex" wx:for-index="subIndex" wx:for-item="subItem">
+            <view class="cateDetailCell" style="margin-top:{{subIndex==0 ? 0 : 16}}rpx;">
+              <view class="cateDetailCell_infoView">
+                <view class="cateDetailCell_title oneLine">{{subItem.title}}</view>
+                <view wx:if="{{subItem.people_type == 1}}" class="cateDetailCell_subtitle">
+                  预约人数限制：
+                  <text class="cateDetailCell_subtitle_Count">{{subItem.peoples}}</text>
+                  人
+                </view>
+                <view wx:else class="cateDetailCell_subtitle">不限制预约人数</view>
+                <view class="flex_row_alimenterCenter" style="margin-left:35rpx; margin-top:16rpx; height:37rpx;">
+                  <view class="cateDetailCell_point"></view>
+                  <view class="cateDetailCell_subtitle">
+                    已预约：
+                    <text class="cateDetailCell_subtitle_Count">{{subItem.yiyuyue_total}}</text>
+                    人
+                  </view>
+                </view>
+                <view class="flex_row_alimenterCenter" style="margin-left:35rpx; margin-top:3rpx; height:37rpx;">
+                  <view class="cateDetailCell_point"></view>
+                  <view class="cateDetailCell_subtitle">
+                    审核中：
+                    <text class="cateDetailCell_subtitle_Count">{{subItem.shenhe_total}}</text>
+                    人
+                  </view>
+                </view>
+              </view>
+              <view class="cateDetailCell_showInfoButton" bindtap="showCateDetail" data-index="{{index}}" data-subindex="{{subIndex}}">查看简介</view>
+              <view class="cateDetailCell_appointmentDetailButton" bindtap="infoButtonClicked" data-index="{{index}}" data-subindex="{{subIndex}}">预约详情</view>
+            </view>
+          </block>
+        </view>
+      </block>
+    </block>
   </block>
 </view>
 
@@ -98,7 +145,7 @@
 </view>
 
 <!-- 驳回确认弹框 -->
-<alertView wx:if="{{rejectAppointment}}" title="确认驳回该课程预约？" showTextarea="{{true}}" placehoulder="请填写原因..." textareaImportment="{{true}}" bind:sure="rejectViewSure" bind:close="rejectViewClose"></alertView>
+<alertView wx:if="{{rejectAppointmentIndex != null}}" title="确认驳回该课程预约？" showTextarea="{{true}}" placehoulder="请填写原因..." textareaImportment="{{true}}" bind:sure="rejectViewSure" bind:close="rejectViewClose"></alertView>
 
 <!-- 通过确认弹框 -->
-<alertView wx:if="{{passAppointment}}" title="确认通过该课程预约？" showTextarea="{{true}}" placehoulder="（选填）请填写原因..." textareaImportment="{{false}}" bind:sure="passViewSure" bind:close="passViewClose"></alertView>
+<alertView wx:if="{{passAppointmentIndex != null}}" title="确认通过该课程预约？" showTextarea="{{true}}" placehoulder="（选填）请填写原因..." textareaImportment="{{false}}" bind:sure="passViewSure" bind:close="passViewClose"></alertView>

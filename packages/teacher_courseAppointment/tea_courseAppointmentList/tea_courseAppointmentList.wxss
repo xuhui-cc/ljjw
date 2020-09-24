@@ -337,6 +337,113 @@ page{
   margin-left: 38rpx;
 }
 
+.detailInfoCell {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rpx;
+}
+
+.detailInfo_headerCircle {
+  margin-left: 30rpx;
+  width: 11rpx;
+  height: 11rpx;
+  border-radius: 50%;
+  border: 4rpx solid #14CBA2
+}
+
+.detailInfo_headerTitle {
+  margin-left: 20rpx;
+  height: 103rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #272727;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.cateDetailCell {
+  margin-left: 30rpx;
+  width: 690rpx;
+  height: 243rpx;
+  border-radius: 14rpx;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cateDetailCell_infoView {
+  width: 345rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cateDetailCell_showInfoButton {
+  width: 142rpx;
+  height: 54rpx;
+  border-radius: 28rpx;
+  border: 2rpx solid #F2F2F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #BBBBBB;
+  font-size: 24rpx;
+}
+
+.cateDetailCell_appointmentDetailButton {
+  margin-left: 28rpx;
+  width: 142rpx;
+  height: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2DC1A0;
+  font-size: 24rpx;
+  color: white;
+  border-radius: 28rpx;
+}
+
+.cateDetailCell_title {
+  margin-left: 35rpx;
+  margin-top: 32rpx;
+  height: 42rpx;
+  max-width: 310rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #272727;
+  font-size: 30rpx;
+}
+
+.cateDetailCell_subtitle {
+  height: 37rpx;
+  margin-left: 35rpx;
+  margin-top: 8rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #AEAEAE;
+  font-size: 26rpx;
+}
+
+.cateDetailCell_subtitle_Count {
+  color: #14CBA2;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
+.cateDetailCell_point {
+  background-color: #2DC1A0;
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+}
+
+
+
 .infoDetailView_bg {
   background-color: rgba(0, 0, 0, 0.54);
   position: fixed;

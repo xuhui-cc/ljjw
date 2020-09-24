@@ -1,0 +1,107 @@
+<!--packages/teacher_courseAppointment/tea_courseAppointmentInfo/tea_courseAppointmentInfo.wxml-->
+<view class="navi" style="height:{{naviBarHeight}}px;">
+  <view class="navi_content" style="height:{{naviBarContentHeight}}px; margin-top:{{statusBarHeight}}px;">
+    <view class="navi_back" bindtap="naviBackItemClciked">
+      <image src="/images/back_img.png" class="navi_back_img"></image>
+    </view>
+    <view class="navi_title">{{title}}</view>
+  </view>
+</view>
+
+<block wx:if="{{!dataarr || dataarr=='' || dataarr.length == 0}}">
+  <null_image title="暂无预约学员" type="7"></null_image>
+</block>
+  
+<block wx:else>
+  <!-- 左侧列表内容部分 -->
+  <scroll-view class="content" enable-back-to-top scroll-into-view="{{toView}}" scroll-y="true" scroll-with-animation="true" bindscroll="onPageScroll" style="margin-top:{{naviBarHeight}}px; height:{{contentHeight}}px; padding-bottom:{{safeAreaBottom + 133.0/750*screenWidth}}px"> 
+    <view class="tablehHeaderView">
+      <view class="tablehHeader_circle"></view>
+      <view class="tablehHeader_title">
+        当前预约人数：
+        <text class="tablehHeader_count">{{total_count}}</text>
+        人
+      </view>
+    </view>
+    <view wx:for="{{dataarr}}" wx:for-item="group" wx:key="groupName" wx:for-index="cs" id="{{ 'inToView'+cs}}" data-id='{{group.id}}'> 
+      <!-- 字母 分组头 -->
+      <view class="address_top" style="margin-top:{{cs==0 ? 13 : 0}}rpx;">{{group.groupName}}</view> 
+      <block wx:for="{{group.users}}" wx:for-item="item" wx:key="brandId">
+        <view class="studentCell" bindtap="studentCellClicked" data-group_index="{{cs}}" data-user_index="{{index}}">
+          <image src="{{item.avatar}}" class="student_avatar"></image>
+          <view class="student_info">
+            <view class="student_name">{{item.stu_name}}</view>
+            <view class="flex_row_alimenterCenter" style="height:100%; margin-right:96rpx; color:#BBBBBB; font-size:24rpx;">
+             查看详情
+             <image src="/images/next.png" style="margin-left:16rpx; width:13rpx; height:13rpx;"></image>
+            </view>
+          </view>
+        </view>
+      </block> 
+    </view> 
+  </scroll-view> 
+  <!-- 右侧字母导航 -->
+  <view class="orientation_region"> 
+    <block wx:for="{{dataarr}}"  wx:key="groupName"> 
+      <view class="orientation_city  {{isActive==index? 'active':'' }}" bindtap="scrollToViewFn" data-id="{{index}}" >
+        {{item.groupName}}
+      </view> 
+    </block> 
+  </view>
+
+  <!-- 复制按钮 -->
+  <view class="copyButton" style="bottom:{{safeAreaBottom + 43.0/750*screenWidth}}px;" bindtap="copyButtonClicked">
+    <view style="display:flex; flex-direction: row; align-items: center;">
+      <image src="./resource/copy_button.png" style="height:32rpx; width:32rpx;"></image>
+      <text style="margin-left:22rpx; color:white; font-size:32rpx;">复制</text>
+    </view>
+  </view>
+</block>
+
+<!-- 流程弹框 -->
+<view wx:if="{{processList}}" class="processView_bg">
+  <view class="processView">
+    <view class="processView_status">预约成功</view>
+    <scroll-view scroll-y="true" class="processScrollView" enable-flex="true">
+      <view style="width:100%; display:flex; flex-direction:column;">
+        <!-- 遍历处理流程 -->
+        <block wx:for="{{processList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+          <view class="myAppointment_processCell">
+            <view class="myAppointment_processLine" wx:if="{{index != processList.length - 1}}"></view>
+            <view class="flex_row_alimenterCenter_spaceBetween">
+              <view class="flex_row_alimenterCenter">
+                <!-- 角色 -->
+                <view class="{{item.isStu ? 'myAppointment_role_me' : 'myAppointment_role_teacher'}}">{{item.isStu ? '学' : '师'}}</view>
+                <!-- 审核时间 -->
+                <view class="myAppointment_processTime">{{item.timeStr}}</view>
+              </view>
+              <!-- 流程状态 -->
+              <view class="myAppointment_processStatus" style="color:{{item.status_color}};">{{item.status_text}}</view>
+            </view>
+            <view wx:if="{{item.type != 5}}" class="flex_row_alimenterCenter" style="margin-top:16rpx;">
+              <view class="myAppointment_processSubTitle">{{item.subTitle_key}}</view>
+              <!-- 预约的课程/审核人 -->
+              <view class="myAppointment_processSubValue oneLine" style="font-weight:{{item.isStu ? 'bold' : 'normal'}}">{{item.subTitle_value}}</view>
+            </view>
+            <block wx:if="{{item.type == 1 || item.type == 4}}">
+              <!-- 查看备注信息 -->
+              <view class="showProcessDetailView" bindtap="showProcessDetail" data-index="{{index}}" data-subindex="{{index}}">
+                查看备注信息
+                <image src="/images/next.png" style="width: 13rpx; height: 13rpx; margin-left:20rpx;"></image>
+              </view>
+              <view style="width: 100%; height: 32rpx;"></view>
+            </block>
+            <block wx:else>
+              <!-- 备注 -->
+              <view class="myAppointment_note" wx:if="{{item.handle_remark && item.handle_remark != ''}}">{{'备注：' + item.handle_remark}}</view>
+              <view style="width: 100%; height: 56rpx;"></view>
+            </block>
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+    <view class="processCloseView" bindtap="processViewCloseButtonClciked">
+      <image src="/images/close.png" style="width:37rpx; height:37rpx;"></image>
+    </view>
+  </view>
+</view>

@@ -45,7 +45,8 @@
     {
       "root": "packages/teacher_courseAppointment",
       "pages": [
-        "tea_courseAppointmentList/tea_courseAppointmentList"
+        "tea_courseAppointmentList/tea_courseAppointmentList",
+        "tea_courseAppointmentInfo/tea_courseAppointmentInfo"
       ],
       "name": "teacher_courseAppointment"
     }
