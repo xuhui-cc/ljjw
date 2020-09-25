@@ -27,6 +27,7 @@ Page({
      * text_type: 1-单行文本 2-多行文本
      * required： 1-必填  2-非必填
      * value: 自定义参数 值
+     * change: 不返回或者0可以修改 1-不可修改
     */
     itemList: [],
 

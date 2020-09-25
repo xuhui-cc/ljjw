@@ -28,7 +28,18 @@
         <!-- 遍历课程 期 -->
         <block wx:if="{{item.cateData && item.cateData != ''}}" wx:for="{{item.cateData}}" wx:for-item="subItem" wx:for-index="subIndex" wx:key="subIndex">
           <view class="appointmentCell" style="margin-top:{{subIndex==0 ? 0 : 16}}rpx;">
-            <view class="appointmentTitle">{{subItem.title}}</view>
+            <view style="width:383rpx; height:100%; display:flex; flex-direction: row; align-items: center;">
+              <view style="width:100%; display:flex; flex-direction: column;">
+                <view class="appointmentTitle">{{subItem.title}}</view>
+                <view class="appointmentSubTitle" wx:if="{{subItem.people_type == 1}}">
+                  预约人数限制：
+                  <text class="appointmentSubTitle_count">{{subItem.peoples}}</text>
+                  人
+                </view>
+                <view wx:else class="appointmentSubTitle">不限制预约人数</view>
+                <view class="appointmentSubTitle" wx:if="{{subItem.full}}">已约满</view>
+              </view>
+            </view>
             <view class="flex_row_alimenterCenter">
               <view class="courseIntroButton" bindtap="showIntroButtonClciked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">查看简介</view>
               <view wx:if="{{subItem.user_yueke_state == 1}}" class="appointmentButton" style="background-color:rgba(70, 161, 251, 0.11); color:#46A1FB;">审核中</view>

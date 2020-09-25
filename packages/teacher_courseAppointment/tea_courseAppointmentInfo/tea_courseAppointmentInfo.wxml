@@ -65,7 +65,7 @@
     <scroll-view scroll-y="true" class="processScrollView" enable-flex="true">
       <view style="width:100%; display:flex; flex-direction:column;">
         <!-- 遍历处理流程 -->
-        <block wx:for="{{processList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+        <block wx:for="{{processList}}" wx:key="index">
           <view class="myAppointment_processCell">
             <view class="myAppointment_processLine" wx:if="{{index != processList.length - 1}}"></view>
             <view class="flex_row_alimenterCenter_spaceBetween">
@@ -85,7 +85,7 @@
             </view>
             <block wx:if="{{item.type == 1 || item.type == 4}}">
               <!-- 查看备注信息 -->
-              <view class="showProcessDetailView" bindtap="showProcessDetail" data-index="{{index}}" data-subindex="{{index}}">
+              <view class="showProcessDetailView" bindtap="showProcessDetail" data-index="{{index}}">
                 查看备注信息
                 <image src="/images/next.png" style="width: 13rpx; height: 13rpx; margin-left:20rpx;"></image>
               </view>
@@ -102,6 +102,25 @@
     </scroll-view>
     <view class="processCloseView" bindtap="processViewCloseButtonClciked">
       <image src="/images/close.png" style="width:37rpx; height:37rpx;"></image>
+    </view>
+  </view>
+</view>
+
+
+<!-- 提交的课程预约备注信息 弹框 -->
+<view class="infoDetailView_bg" wx:if="{{infoDetail}}">
+  <view class="infoDetailView">
+    <scroll-view scroll-y="true" class="infoDetailView_scrollView">
+      <block wx:for="{{infoDetail}}" wx:key="index">
+        <view class="flex_row_alimenterCenter" style="margin-top:35rpx;">
+          <view class="infoDetailView_itemView"></view>
+          <view class="infoDetailView_key">{{item.title}}：</view>
+        </view>
+        <view class="infoDetailView_value">{{item.value}}</view>
+      </block>
+    </scroll-view>
+    <view class="infoDetailView_close">
+      <image src="/images/close.png" style="width:37rpx; height:37rpx;" bindtap="infoDetailCloseButtonClciked"></image>
     </view>
   </view>
 </view>

@@ -27,7 +27,10 @@ Page({
     headerTopArray:[],
 
     // 将展示的流程数组
-    processList: null
+    processList: null,
+
+    // 流程备注信息
+    infoDetail: null,
   },
 
   /**
@@ -286,6 +289,25 @@ Page({
     })
   },
 
+  /**
+   * 获取提交信息详情
+  */
+  getAppointmentDetailInfo: function(process){
+    let params ={
+      token: wx.getStorageSync('token'),
+      process_id: process.id
+    }
+    let that = this
+    app.ljjw.getCourseAppointmentDetailInfo(params).then(d=>{
+      if (d.data.status == 1) {
+        let infoDetail = d.data.data
+        that.setData({
+          infoDetail: infoDetail
+        })
+      }
+    })
+  },
+
   //-------------------------------------------交互事件------------------------------------
   /**
    * 导航栏 返回item 点击事件
@@ -337,5 +359,24 @@ Page({
     this.setData({
       processList: null
     })
-  }
+  },
+
+
+  /**
+   *审核流程 查看备注信息 点击事件
+  */
+  showProcessDetail: function(e) {
+    let index = e.currentTarget.dataset.index
+    let process = this.data.processList[index]
+    this.getAppointmentDetailInfo(process)
+  },
+
+  /**
+   * 预约申请 备注弹框 关闭按钮 点击事件
+  */
+  infoDetailCloseButtonClciked: function() {
+    this.setData({
+      infoDetail: null,
+    })
+  },
 })

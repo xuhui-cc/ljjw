@@ -22,6 +22,9 @@ Page({
      * 课程预约列表
      * cateData: 二级列表
      *     user_yueke_state: 当前用户约课状态 0-未约课 1-审核中 2-审核通过 3-驳回 4-申请取消 5-已取消
+     *     peoples: 限制预约人数
+     *     people_type：0-不限制人数  1-限制人数
+     *     yueke_total： 已预约人数
     */
     apponintmentList: [],
 
@@ -205,7 +208,12 @@ Page({
           appointment.canJoin = true
           for (var j = 0; j < appointment.cateData.length; j++) {
             let cate = appointment.cateData[j]
-            if (cate.user_yueke_state == 1 || cate.user_yueke_state == 2 || cate.user_yueke_state == 3 || cate.user_yueke_state == 4) {
+            if (cate.people_type == 1 && cate.yueke_total >= cate.peoples) {
+              cate.full = true
+            } else {
+              cate.full = false
+            }
+            if (cate.user_yueke_state == 1 || cate.user_yueke_state == 2 || cate.user_yueke_state == 3 || cate.user_yueke_state == 4 || cate.full) {
               appointment.canJoin = false
               break
             }

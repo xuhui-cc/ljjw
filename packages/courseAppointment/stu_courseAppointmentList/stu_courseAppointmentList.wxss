@@ -126,6 +126,23 @@ page{
   max-width: 340rpx;
 }
 
+.appointmentSubTitle {
+  color: #AEAEAE;
+  font-size: 26rpx;
+  margin-top: 8rpx;
+  height: 37rpx;
+  margin-left: 35rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.appointmentSubTitle_count {
+  color: #14CBA2;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+
 .appointmentButton {
   background-color: #14CBA2;
   height: 56rpx;

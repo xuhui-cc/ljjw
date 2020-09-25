@@ -24,12 +24,12 @@
         <view wx:if="{{item.required == 1}}" class="itemImage">*</view>
         <view class="itemTitle" style="margin-left:{{item.required == 1 ? 10 : 29}}rpx;">{{item.title}}：</view>
       </view>
-      <input wx:if="{{item.text_type == 1}}" type="text" value="{{item.value}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" data-index="{{index}}" bindinput="inputValueChange"></input>
+      <input wx:if="{{item.text_type == 1}}" type="text" value="{{item.value}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" disabled="{{item.change == 1}}" data-index="{{index}}" bindinput="inputValueChange"></input>
     </view>
     <!-- 多行文本 -->
     <view wx:if="{{item.text_type == 2}}" class="textArea_View">
       <view class="textArea_bg">
-        <textarea class="textarea" value="{{item.value}}" placeholder="请输入{{item.title}}..." placeholder-class="textArea_placehoulder" maxlength="600" bindinput="textareaValueChange"></textarea>
+        <textarea class="textarea" value="{{item.value}}" placeholder="请输入{{item.title}}..." placeholder-class="textArea_placehoulder" maxlength="600" disabled="{{item.change == 1}}" bindinput="textareaValueChange"></textarea>
       </view>
     </view>
   </block>
