@@ -199,6 +199,7 @@ Page({
         that.setData({
           itemList: itemList
         })
+        that.canSubmitStatusChange()
       }
     })
   },

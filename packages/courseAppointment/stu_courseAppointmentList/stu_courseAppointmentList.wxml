@@ -41,11 +41,14 @@
               </view>
             </view>
             <view class="flex_row_alimenterCenter">
+              <!-- 产看简介按钮 -->
               <view class="courseIntroButton" bindtap="showIntroButtonClciked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">查看简介</view>
-              <view wx:if="{{subItem.user_yueke_state == 1}}" class="appointmentButton" style="background-color:rgba(70, 161, 251, 0.11); color:#46A1FB;">审核中</view>
-              <view wx:elif="{{subItem.user_yueke_state == 2 || subItem.user_yueke_state == 4}}" class="appointmentButton" style="background-color:rgba(20, 203, 162, 0.11); color:#2DC1A0;">已预约</view>
-              <view wx:elif="{{subItem.user_yueke_state == 3}}" class="appointmentButton" style="background-color:#F14444; color:white;">已驳回</view>
-              <view wx:elif="{{item.canJoin}}" class="appointmentButton" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">去预约</view>
+              <block wx:if="{{!subItem.full}}">
+                <view wx:if="{{subItem.user_yueke_state == 1}}" class="appointmentButton" style="background-color:rgba(70, 161, 251, 0.11); color:#46A1FB;">审核中</view>
+                <view wx:elif="{{subItem.user_yueke_state == 2 || subItem.user_yueke_state == 4}}" class="appointmentButton" style="background-color:rgba(20, 203, 162, 0.11); color:#2DC1A0;">已预约</view>
+                <view wx:elif="{{subItem.user_yueke_state == 3}}" class="appointmentButton" style="background-color:#F14444; color:white;">已驳回</view>
+                <view wx:elif="{{item.canJoin}}" class="appointmentButton" bindtap="appointmentButtonClicked" data-courseIndex="{{index}}" data-appointmentIndex="{{subIndex}}">去预约</view>
+              </block>
             </view>
           </view>
         </block>

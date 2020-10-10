@@ -25,6 +25,7 @@ Page({
      *     peoples: 限制预约人数
      *     people_type：0-不限制人数  1-限制人数
      *     yueke_total： 已预约人数
+     *     status：1-开启  0-关闭
     */
     apponintmentList: [],
 
@@ -203,9 +204,11 @@ Page({
     app.ljjw.courseAppointmentList(params).then(d=>{
       if (d.data.status == 1) {
         let appointmentList = d.data.data
+        let openAppointment = []
         for (var i = 0; i < appointmentList.length; i++) {
           let appointment = appointmentList[i]
           appointment.canJoin = true
+          let openCateList = []
           for (var j = 0; j < appointment.cateData.length; j++) {
             let cate = appointment.cateData[j]
             if (cate.people_type == 1 && cate.yueke_total >= cate.peoples) {
@@ -213,12 +216,19 @@ Page({
             } else {
               cate.full = false
             }
-            if (cate.user_yueke_state == 1 || cate.user_yueke_state == 2 || cate.user_yueke_state == 3 || cate.user_yueke_state == 4 || cate.full) {
+            if (cate.user_yueke_state == 1 || cate.user_yueke_state == 2 || cate.user_yueke_state == 3 || cate.user_yueke_state == 4) {
               appointment.canJoin = false
-              break
+            }
+            if (cate.status == 1) {
+              openCateList.push(cate)
             }
           }
+          if (openCateList.length != 0) {
+            appointment.cateData = openCateList
+            openAppointment.push(appointment)
+          }
         }
+        appointmentList = openAppointment
         // 分页数据处理
         let newList = []
         if (that.pageData.page == 1) {

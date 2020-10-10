@@ -222,7 +222,7 @@ Page({
               process.status_text = ''
               process.timeStr = '提交时间：' + process.timeStr
               process.subTitle_key = '课程预约：'
-              process.subTitle_value = process.yk_title + '  '+process.cate_title
+              process.subTitle_value = process.title + '  '+process.cate_title
               break
             }
             case 2: {
@@ -251,7 +251,7 @@ Page({
               process.status_text = ''
               process.timeStr = '提交时间：' + process.timeStr
               process.subTitle_key = '课程预约修改：'
-              process.subTitle_value = process.yk_title + '  '+process.cate_title
+              process.subTitle_value = process.title + '  '+process.cate_title
               break
             }
             case 5: {
@@ -338,7 +338,19 @@ Page({
    * 复制按钮 点击事件
   */
   copyButtonClicked: function() {
+    let copyStr = this.data.title + '\n当前预约人数：' + this.data.total_count + '人' + '\n学员姓名：'
+    for (var i = 0; i < this.data.studentList.length; i++) {
+      let student = this.data.studentList[i]
+      if (i == 0) {
+        copyStr += student.stu_name
+      } else {
+        copyStr += '、'+student.stu_name
+      }
+    }
 
+    wx.setClipboardData({
+      data: copyStr,
+    })
   },
 
   /**
