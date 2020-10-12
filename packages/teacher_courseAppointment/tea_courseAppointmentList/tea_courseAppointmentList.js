@@ -32,6 +32,7 @@ Page({
      * yk_title：一级标题
      * cate_title：二级标题
      * update_list: 流程列表
+     * checked_str：学生状态字符串
     */
     apponintmentList: [],
 

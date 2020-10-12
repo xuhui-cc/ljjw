@@ -105,7 +105,7 @@
           </block>
           <!-- 状态 -->
           <image class="myAppointment_status" src="{{item.status_img}}"></image>
-          <view wx:if="{{item.state != 4 && item.state != 5}}" class="bottomButtonView">
+          <view wx:if="{{item.state != 4 && item.state != 5 && item.yk_status == 1}}" class="bottomButtonView">
             <!-- 取消预约按钮 -->
             <view class="cancelButton" wx:if="{{item.state == 1 || item.state == 2}}" bindtap="cancelButtonClicked" data-index="{{index}}">取消预约</view>
             <!-- 修改预约按钮 -->

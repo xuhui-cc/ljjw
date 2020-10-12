@@ -24,7 +24,7 @@
         <view class="myAppointmentCell" style="margin-top:{{index==0 ? 0 : 16}}rpx;">
           <view class="myAppointment_titleView">
             <view class="myAppointment_titlePerson oneLine">{{(item.realname ? item.realname : item.name) + '（' + item.phone + '）'}}</view>
-            <view class="myAppointment_titlePerson_state oneLine">学员状态：{{item.user_status}}</view>
+            <view class="myAppointment_titlePerson_state oneLine">学员状态：{{item.checked_str}}</view>
             <view class="myAppointment_title oneLine">课程预约：{{item.yk_title + '   ' + item.cate_title}}</view>
           </view>
           <!-- 遍历处理流程 -->
