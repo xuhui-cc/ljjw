@@ -423,12 +423,15 @@ Page({
    * 老师审批
    * state: 2-通过 3-驳回
   */
-  courseAppointmentDeal: function(state, bm_id, callback) {
+  courseAppointmentDeal: function(state, bm_id, remark, callback) {
     let params = {
       token: wx.getStorageSync('token'),
       teacher_id: wx.getStorageSync('uid'),
       state: state,
-      bm_id: bm_id
+      bm_id: bm_id,
+    }
+    if(remark && remark != '') {
+      params.remark = remark
     }
     let that = this
     app.ljjw.teacherDealCourseAppointment(params).then(d=>{
@@ -501,10 +504,11 @@ Page({
   /**
    * 驳回弹框 确认按钮点击事件
   */
-  rejectViewSure: function() {
+  rejectViewSure: function(e) {
     if (this.submiting) {
       return
     }
+    let content = e.detail.content
     this.submiting = false
     let that = this
     let rejectAppointment = this.data.apponintmentList[this.data.rejectAppointmentIndex]
@@ -512,7 +516,7 @@ Page({
     if (rejectAppointment == 4) {
       status = 2
     }
-    this.courseAppointmentDeal(status, rejectAppointment.id, function(success){
+    this.courseAppointmentDeal(status, rejectAppointment.id, content, function(success){
       if (success) {
         that.data.apponintmentList.splice(that.data.rejectAppointmentIndex, 1)
         that.setData({
@@ -549,10 +553,11 @@ Page({
   /**
    * 通过确认弹框 确认按钮 点击事件
   */
-  passViewSure: function() {
+  passViewSure: function(e) {
     if (this.submiting) {
       return
     }
+    let content = e.detail.content
     this.submiting = false
     let that = this
     let passAppointment = this.data.apponintmentList[this.data.passAppointmentIndex]
@@ -560,7 +565,7 @@ Page({
     if (passAppointment.state == 4) {
       status = 5
     }
-    this.courseAppointmentDeal(status, passAppointment.id, function(success){
+    this.courseAppointmentDeal(status, passAppointment.id, content, function(success){
       if (success) {
         that.data.apponintmentList.splice(that.data.passAppointmentIndex, 1)
         that.setData({
