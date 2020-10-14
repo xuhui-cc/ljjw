@@ -577,4 +577,18 @@ Page({
     let process = appointment.update_list[subIndex]
     this.getAppointmentDetailInfo(process)
   },
+
+  /**
+   * 预约提交页面提交成功后 返回该页面前触发
+  */
+  appointmentSubmitSuccess: function() {
+    if (1 == this.data.selectedMenuIndex) {
+      return
+    }
+    this.setData({
+      selectedMenuIndex: 1
+    })
+    this.pageData.page = 1
+    this.getMyCourseAppointmentList()
+  },
 })

@@ -224,12 +224,19 @@ Page({
     }
     app.ljjw.submitCourseAppointment(params).then(d=>{
       if (d.data.status == 1) {
-        wx.showToast({
-          title: '提交成功',
-          icon: 'none'
-        })
+        
+        let pages = getCurrentPages()
+        if (pages.length >= 2) {
+          let lastPage = pages[pages.length - 2]
+          lastPage.appointmentSubmitSuccess()
+        }
         wx.navigateBack({
-          delta: 0,
+          success(res) {
+            wx.showToast({
+              title: '课程预约提交成功！',
+              icon: 'none'
+            })
+          }
         })
       }
     })

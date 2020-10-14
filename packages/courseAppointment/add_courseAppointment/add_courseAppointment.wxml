@@ -29,7 +29,7 @@
     <!-- 多行文本 -->
     <view wx:if="{{item.text_type == 2}}" class="textArea_View">
       <view class="textArea_bg">
-        <textarea class="textarea" value="{{item.value}}" placeholder="请输入{{item.title}}..." placeholder-class="textArea_placehoulder" maxlength="600" disabled="{{item.change == 1}}" bindinput="textareaValueChange"></textarea>
+        <textarea class="textarea" value="{{item.value}}" placeholder="请输入{{item.title}}..." placeholder-class="textArea_placehoulder" maxlength="600" disabled="{{item.change == 1}}" bindinput="textareaValueChange" data-index="{{index}}"></textarea>
       </view>
     </view>
   </block>
