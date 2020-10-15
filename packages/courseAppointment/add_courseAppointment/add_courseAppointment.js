@@ -57,6 +57,9 @@ Page({
 
     // 选中的期 为null代表未选择
     appointmentSelectedCateIndex: null,
+
+    // 预约须知
+    notice: null,
   },
 
   /**
@@ -212,7 +215,7 @@ Page({
     for (var i = 0; i < this.data.itemList.length; i++) {
       let item = this.data.itemList[i]
       if (item.value && item.value != '') {
-        valueArray.push({id: item.id, value: item.value})
+        valueArray.push({id: item.type_id, value: item.value})
       }
     }
     let valueStr = JSON.stringify(valueArray)
@@ -278,7 +281,7 @@ Page({
     for (var i = 0; i < this.data.itemList.length; i++) {
       let item = this.data.itemList[i]
       if (item.value && item.value != '') {
-        valueArray.push({id: item.id, value: item.value})
+        valueArray.push({id: item.type_id, value: item.value})
       }
     }
     let valueStr = JSON.stringify(valueArray)
@@ -320,6 +323,15 @@ Page({
     })
   },
 
+  /**
+   * 获取期 预约须知
+  */
+  getCateNotice: function(cate_id) {
+    let that = this
+    that.setData({
+      notice: '      各位同学，为了确保您的权益，请您认真阅读下面细则<br/>      1.该课程授课时间为9月15和9月20日两期，各位同学需要根据个人时间自由选择；<br/>      2.课程最迟可以在开课前20小时内修改，一旦开课不予调整；<br/>      3.因为个人原因产生的缺课、请假等情况不予补课；<br/>      4.如出现其他情况，请联系报考老师（QQ123456）及时沟通。<br/>      1.该课程授课时间为9月15和9月20日两期，各位同学需要根据个人时间自由选择；<br/>      2.课程最迟可以在开课前20小时内修改，一旦开课不予调整；<br/>      3.因为个人原因产生的缺课、请假等情况不予补课；<br/>      4.如出现其他情况，请联系报考老师（QQ123456）及时沟通。'
+    })
+  },
   // ----------------------------------------------交互事件-------------------------------------------
   /**
    * 导航栏 返回按钮 点击事件
@@ -371,12 +383,14 @@ Page({
     if (!this.data.canSubmit) {
       return
     }
+    let cate_id = ''
     if (this.data.type == 1) {
-      this.submitAppointment()
+      cate_id = this.second_id
     } else if (this.data.type == 2) { 
-      this.submitChange()
+      let selected_cate = this.data.appointmentTitleList[this.data.appointmentSelectedCateIndex]
+      cate_id = selected_cate.cate_id
     }
-    
+    this.getCateNotice(cate_id)
   },
 
   /**
@@ -416,5 +430,25 @@ Page({
     this.setData({
       showAppointmentListView: false
     })
-  }
+  },
+
+  /**
+   * 课程预约须知弹框 关闭按钮 点击事件
+  */
+  noticeViewCloseButtonClicked: function() {
+    this.setData({
+      notice: null
+    })
+  },
+
+  /**
+   * 课程预约须知弹框 确认并提交按钮 点击事件
+  */
+  noticeViewSureButtonClciked: function() {
+    if (this.data.type == 1) {
+      this.submitAppointment()
+    } else if (this.data.type == 2) { 
+      this.submitChange()
+    }
+  },
 })

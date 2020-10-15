@@ -190,6 +190,7 @@ page{
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .noticeView_sureButton {
@@ -210,5 +211,17 @@ page{
   margin-top: 25rpx;
   width: 576rpx;
   height: 565rpx;
+  line-height: 50rpx;
+}
+
+.noticeView_close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 99rpx;
+  height: 95rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 

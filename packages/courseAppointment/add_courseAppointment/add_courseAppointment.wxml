@@ -42,14 +42,17 @@
 <actionSheet wx:if="{{showAppointmentListView}}" list="{{appointmentTitleList}}" list_key="cate_title" title="{{appointmentListTitle}}" bind:optionClick="appointmentListOptionClciked" bind:close="appointmentListViewClose"></actionSheet>
 
 <!-- 预约须知弹框 -->
-<view class="noticeView_bg" wx:if="{{true}}">
+<view class="noticeView_bg" wx:if="{{notice != null}}">
   <view class="noticeView_center">
     <view class="noticeView">
       <image src="./resource/courseAppointment_notice.png" style="width:343rpx; height:124rpx; margin-top:41rpx;"></image>
       <scroll-view scroll-y="true" class="notice_scrollView">
-        <rich-text style="width:576rpx;" nodes="      各位同学，为了确保您的权益，请您认真阅读下面细则"></rich-text>
+        <rich-text style="width:576rpx;" nodes="{{notice}}" space="nbsp"></rich-text>
       </scroll-view>
+      <view class="noticeView_close" catchtap="noticeViewCloseButtonClicked">
+        <image src="./resource/noticeView_close.png" style="width:37rpx; height:37rpx;"></image>
+      </view>
     </view>
-    <view class="noticeView_sureButton">确认并提交</view>
+    <view class="noticeView_sureButton" catchtap="noticeViewSureButtonClciked">确认并提交</view>
   </view>
 </view>
