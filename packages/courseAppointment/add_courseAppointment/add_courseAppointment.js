@@ -212,7 +212,7 @@ Page({
     for (var i = 0; i < this.data.itemList.length; i++) {
       let item = this.data.itemList[i]
       if (item.value && item.value != '') {
-        valueArray.push({id: item.id, value: item.value})
+        valueArray.push({id: item.type_id, value: item.value})
       }
     }
     let valueStr = JSON.stringify(valueArray)
@@ -278,7 +278,7 @@ Page({
     for (var i = 0; i < this.data.itemList.length; i++) {
       let item = this.data.itemList[i]
       if (item.value && item.value != '') {
-        valueArray.push({id: item.id, value: item.value})
+        valueArray.push({id: item.type_id, value: item.value})
       }
     }
     let valueStr = JSON.stringify(valueArray)
