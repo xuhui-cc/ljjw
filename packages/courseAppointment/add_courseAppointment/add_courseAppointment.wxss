@@ -206,4 +206,9 @@ page{
   justify-content: center;
 }
 
+.notice_scrollView {
+  margin-top: 25rpx;
+  width: 576rpx;
+  height: 565rpx;
+}
 
