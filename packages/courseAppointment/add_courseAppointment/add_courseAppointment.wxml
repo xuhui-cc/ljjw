@@ -41,3 +41,13 @@
 <!-- 课程 期列表视图 -->
 <actionSheet wx:if="{{showAppointmentListView}}" list="{{appointmentTitleList}}" list_key="cate_title" title="{{appointmentListTitle}}" bind:optionClick="appointmentListOptionClciked" bind:close="appointmentListViewClose"></actionSheet>
 
+<!-- 预约须知弹框 -->
+<view class="noticeView_bg" wx:if="{{false}}">
+  <view class="noticeView_center">
+    <view class="noticeView">
+      <image src="./resource/courseAppointment_notice.png" style="width:343rpx; height:124rpx; margin-top:41rpx;"></image>
+      <!-- <scroll-view scroll-y="true" class="notice_"></scroll-view> -->
+    </view>
+    <view class="noticeView_sureButton">确认并提交</view>
+  </view>
+</view>

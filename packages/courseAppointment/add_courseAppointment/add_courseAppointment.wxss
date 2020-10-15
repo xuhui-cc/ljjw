@@ -159,3 +159,51 @@ page{
   display: flex;
   align-items: flex-end;
 }
+
+
+
+.noticeView_bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.54);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 101;
+}
+
+.noticeView_center {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.noticeView {
+  width: 661rpx;
+  height: 804rpx;
+  background-color: white;
+  border-radius: 14rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.noticeView_sureButton {
+  margin-top: 56rpx;
+  width: 330rpx;
+  height: 90rpx;
+  border-radius: 45rpx;
+  background-color: #0BEBB9;
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
