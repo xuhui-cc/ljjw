@@ -233,14 +233,7 @@ Page({
           let lastPage = pages[pages.length - 2]
           lastPage.appointmentSubmitSuccess()
         }
-        wx.navigateBack({
-          success(res) {
-            wx.showToast({
-              title: '课程预约提交成功！',
-              icon: 'none'
-            })
-          }
-        })
+        wx.navigateBack()
       }
     })
   },
