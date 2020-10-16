@@ -11,6 +11,9 @@ Page({
     canLoadNextPage: false
   },
 
+  // 在onshow时是否需要刷新页面
+  refreshData: true,
+
   /**
    * 页面的初始数据
    */
@@ -70,13 +73,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.pageData.page = 1
-    if (this.data.selectedMenuIndex == 0) {
-      this.getAppointmentList()
-    } else {
-      this.getMyCourseAppointmentList()
+    if (this.refreshData) {
+      this.pageData.page = 1
+      if (this.data.selectedMenuIndex == 0) {
+        this.getAppointmentList()
+      } else {
+        this.getMyCourseAppointmentList()
+      }
+      this.studentGetCourseAppointmentCount()
     }
-    this.studentGetCourseAppointmentCount()
+    this.refreshData = true
   },
 
   /**
@@ -582,13 +588,25 @@ Page({
    * 预约提交页面提交成功后 返回该页面前触发
   */
   appointmentSubmitSuccess: function() {
+    this.refreshData = false
     if (1 == this.data.selectedMenuIndex) {
+      wx.showToast({
+        title: '课程预约提交成功！',
+        icon: 'success',
+        duration: 2000,
+      })
       return
     }
     this.setData({
       selectedMenuIndex: 1
     })
     this.pageData.page = 1
-    this.getMyCourseAppointmentList()
+    this.getMyCourseAppointmentList(function(success){
+      wx.showToast({
+        title: '课程预约提交成功！',
+        icon: 'success',
+        duration: 2000,
+      })
+    })
   },
 })
