@@ -321,8 +321,17 @@ Page({
   */
   getCateNotice: function(cate_id) {
     let that = this
-    that.setData({
-      notice: '      各位同学，为了确保您的权益，请您认真阅读下面细则<br/>      1.该课程授课时间为9月15和9月20日两期，各位同学需要根据个人时间自由选择；<br/>      2.课程最迟可以在开课前20小时内修改，一旦开课不予调整；<br/>      3.因为个人原因产生的缺课、请假等情况不予补课；<br/>      4.如出现其他情况，请联系报考老师（QQ123456）及时沟通。<br/>      1.该课程授课时间为9月15和9月20日两期，各位同学需要根据个人时间自由选择；<br/>      2.课程最迟可以在开课前20小时内修改，一旦开课不予调整；<br/>      3.因为个人原因产生的缺课、请假等情况不予补课；<br/>      4.如出现其他情况，请联系报考老师（QQ123456）及时沟通。'
+    let params = {
+      cate_id: cate_id,
+      token: wx.getStorageSync('token')
+    }
+    app.ljjw.getCourseAppointmentNotice(params).then(d=>{
+      if (d.data.status == 1) {
+        let notice = d.data.data.notice
+        that.setData({
+          notice: notice
+        })
+      }
     })
   },
   // ----------------------------------------------交互事件-------------------------------------------
