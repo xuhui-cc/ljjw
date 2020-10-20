@@ -59,63 +59,6 @@
       </view>
     
     </view>
-
-
-    <view class="class-data" bindtap="to_student_data">
-      <view class="flex_row">
-        <image class="img" src="../../images/class_data.png"></image>
-        <view class="tea-shu" style="background:rgba(128,183,255,1);"></view>
-        <view class="tea-cla-data">班级资料</view>
-      </view>
-      <view class="flex_row">
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
-
-    <view class="class-data" bindtap="to_radio">
-      <view class="flex_row">
-        <image class="img" src="../../images/my_radio.png"></image>
-        <view class="tea-shu" style="background:#FFCB51;"></view>
-        <view class="tea-cla-data">公考广播</view>
-      </view>
-      <view class="flex_row">
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
-
-    <view class="class-data" bindtap="to_class_data">
-      <view class="flex_row">
-        <image class="img" src="../../images/my_collection_item.png"></image>
-        <view class="tea-shu" style="background:rgba(255,168,72,1);"></view>
-        <view class="tea-cla-data">我的收藏</view>
-      </view>
-      <view class="flex_row">
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
-    <view class="class-data" bindtap="to_feedBack">
-      <view class="flex_row">
-        <image class="img" src="../../images/my_teacher_feedBack.png"></image>
-        <view class="tea-shu" style="background:#61B25E;"></view>
-        <view class="tea-cla-data">申请与反馈</view>
-      </view>
-      <view class="flex_row">
-        <view class="sectionHeader_dot" wx:if="{{teacherNotDealCount > 0}}">{{teacherNotDealCount > 9 ? '9+' : teacherNotDealCount}}</view>
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
-    <view class="class-data" bindtap="to_courseAppointment">
-      <view class="flex_row">
-        <image class="img" src="../../images/my_courseAppointment_item.png"></image>
-        <view class="tea-shu" style="background:#61B25E;"></view>
-        <view class="tea-cla-data">课程预约</view>
-      </view>
-      <view class="flex_row">
-        <view class="sectionHeader_dot" wx:if="{{courseAppointmentCount > 0}}">{{courseAppointmentCount > 9 ? '9+' : courseAppointmentCount}}</view>
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
-
   </view>
   <!-- 非学生 -->
 
@@ -136,65 +79,17 @@
 
       </view>
     </view>
+  </view>
 
-    <view wx:if="{{role > 0 && role < 3}}">
-      <view class="class-data" bindtap="to_tea_data">
-        <view class="flex_row">
-          <image class="img" src="../../images/class_data.png"></image>
-          <view class="tea-shu" style="background:rgba(128,183,255,1);"></view>
-          <view class="tea-cla-data">班级资料</view>
-        </view>
-        <view class="flex_row">
-          <image class="img-next" src="../../images/next.png"></image>
-        </view>
+  <!-- 功能条目 -->
+  <view class="itemsView" wx:if="{{items && items.length != 0}}">
+    <block wx:for="{{items}}" wx:key="index">
+      <view class="itemCell" style="margin-top:{{index > 2 ? 17 : 0}}rpx; margin-left:{{index%3==0 ? 8 : 0}}rpx;" bindtap="{{item.action}}">
+        <image src="{{item.icon}}" style="width:135rpx; height:135rpx; margin-top:44rpx"></image>
+        <text class="itemTitle oneLine">{{item.title}}</text>
+        <view class="itemCountView" wx:if="{{item.count && item.count != 0}}">{{item.count}}</view>
       </view>
-
-      <view class="class-data" bindtap="to_tea_sinfo">
-        <view class="flex_row">
-          <image class="img" src="../../images/stu_data.png"></image>
-          <view class="tea-shu" style="background:rgba(255,168,72,1);"></view>
-          <view class="tea-cla-data">学生档案</view>
-        </view>
-        <view class="flex_row">
-          <image class="img-next" src="../../images/next.png"></image>
-        </view>
-      </view>
-    </view>
-    
-    <view class="class-data" bindtap="to_radio">
-      <view class="flex_row">
-        <image class="img" src="../../images/my_radio.png"></image>
-        <view class="tea-shu" style="background:#FFCB51;"></view>
-        <view class="tea-cla-data">公考广播</view>
-      </view>
-      <view class="flex_row">
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
-
-    <view class="class-data" bindtap="to_tea_feedBack">
-      <view class="flex_row">
-        <image class="img" src="../../images/my_teacher_feedBack.png"></image>
-        <view class="tea-shu" style="background:#61B25E;"></view>
-        <view class="tea-cla-data">申请与反馈</view>
-      </view>
-      <view class="flex_row">
-        <view class="sectionHeader_dot" wx:if="{{teacherNotDealCount > 0}}">{{teacherNotDealCount > 9 ? '9+' : teacherNotDealCount}}</view>
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
-
-    <view class="class-data" bindtap="to_courseAppointment">
-      <view class="flex_row">
-        <image class="img" src="../../images/my_courseAppointment_item.png"></image>
-        <view class="tea-shu" style="background:#61B25E;"></view>
-        <view class="tea-cla-data">课程预约</view>
-      </view>
-      <view class="flex_row">
-        <view class="sectionHeader_dot" wx:if="{{courseAppointmentCount > 0}}">{{courseAppointmentCount > 9 ? '9+' : courseAppointmentCount}}</view>
-        <image class="img-next" src="../../images/next.png"></image>
-      </view>
-    </view>
+    </block>
   </view>
 <!-- container -->
 </view>

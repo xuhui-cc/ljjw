@@ -50,7 +50,7 @@ page{
 }
 
 .infoItem {
-  height: 90rpx;
+  min-height: 90rpx;
   margin-top: 16rpx;
   background-color: white;
   display: flex;
@@ -70,6 +70,9 @@ page{
   font-size: 30rpx;
   font-weight: bold;
   color: #272727;
+  max-width: 305rpx;
+  margin-top: 23rpx;
+  margin-bottom: 23rpx;
 }
 
 .itemValue {
@@ -77,8 +80,10 @@ page{
   font-size: 28rpx;
   color: #272727;
   height: 100%;
-  width: 530rpx;
+  width: 317rpx;
   text-align: right;
+  margin-top: 25rpx;
+  margin-bottom: 25rpx;
 }
 
 .itemValue_placehoulder {

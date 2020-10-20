@@ -25,7 +25,10 @@ Page({
     courseAppointmentCount: 0,
 
     // 是否无权限
-    noPower: false
+    noPower: false,
+
+    // 展示的功能条目
+    items: [],
   },
 
   /**
@@ -324,6 +327,8 @@ Page({
       this.teacherGetFeedBackNotiCount()
       this.teacherGetCourseAppointmentCount()
     }
+
+    this.setUpItems()
   },
 
   /**
@@ -426,6 +431,141 @@ Page({
         }
       })
     }
+  },
+
+  //-----------------------------------------------------私有方法---------------------------------------------
+  /**
+   * 设置显示的条目
+  */
+  setUpItems: function() {
+    let items = []
+    switch(this.data.role*1) {
+      case 1:{
+        // 老师
+        items = [
+          {
+            title: '班级资料',
+            icon: './resource/item_classResource.png',
+            action: 'to_tea_data'
+          },
+          {
+            title: '公考广播',
+            icon: './resource/item_noti.png',
+            action: 'to_radio'
+          },
+          {
+            title: '学生档案',
+            icon: './resource/item_studentData.png',
+            action: 'to_tea_sinfo'
+          },
+          {
+            title: '反馈处理',
+            icon: './resource/item_feedback.png',
+            action: 'to_tea_feedBack',
+            count: this.data.teacherNotDealCount > 9 ? '9+' : this.data.teacherNotDealCount
+          },
+          {
+            title: '课程预约',
+            icon: './resource/item_courseAppointment.png',
+            action: 'to_courseAppointment',
+            count: this.data.courseAppointmentCount > 9 ? '9+' : this.data.courseAppointmentCount
+          }
+        ]
+        break
+      }
+      case 2: {
+        // 教务
+        items = [
+          {
+            title: '班级资料',
+            icon: './resource/item_classResource.png',
+            action: 'to_tea_data'
+          },
+          {
+            title: '公考广播',
+            icon: './resource/item_noti.png',
+            action: 'to_radio'
+          },
+          {
+            title: '学生档案',
+            icon: './resource/item_studentData.png',
+            action: 'to_tea_sinfo'
+          },
+          {
+            title: '反馈处理',
+            icon: './resource/item_feedback.png',
+            action: 'to_tea_feedBack',
+            count: this.data.teacherNotDealCount > 9 ? '9+' : this.data.teacherNotDealCount
+          },
+          {
+            title: '课程预约',
+            icon: './resource/item_courseAppointment.png',
+            action: 'to_courseAppointment',
+            count: this.data.courseAppointmentCount > 9 ? '9+' : this.data.courseAppointmentCount
+          }
+        ]
+        break
+      }
+      case 3: {
+        // 管理员
+        items = [
+          {
+            title: '公考广播',
+            icon: './resource/item_noti.png',
+            action: 'to_radio'
+          },
+          {
+            title: '反馈处理',
+            icon: './resource/item_feedback.png',
+            action: 'to_tea_feedBack',
+            count: this.data.teacherNotDealCount > 9 ? '9+' : this.data.teacherNotDealCount
+          },
+          {
+            title: '课程预约',
+            icon: './resource/item_courseAppointment.png',
+            action: 'to_courseAppointment',
+            count: this.data.courseAppointmentCount > 9 ? '9+' : this.data.courseAppointmentCount
+          }
+        ]
+        break
+      }
+      case 4: {
+        // 学生
+        items = [
+          {
+            title: '我的收藏',
+            icon: './resource/item_ myCollection.png',
+            action: 'to_class_data'
+          },
+          {
+            title: '班级资料',
+            icon: './resource/item_classResource.png',
+            action: 'to_student_data'
+          },
+          {
+            title: '公考广播',
+            icon: './resource/item_noti.png',
+            action: 'to_radio'
+          },
+          {
+            title: '申请与反馈',
+            icon: './resource/item_feedback.png',
+            action: 'to_feedBack',
+            count: this.data.teacherNotDealCount > 9 ? '9+' : this.data.teacherNotDealCount
+          },
+          {
+            title: '课程预约',
+            icon: './resource/item_courseAppointment.png',
+            action: 'to_courseAppointment',
+            count: this.data.courseAppointmentCount > 9 ? '9+' : this.data.courseAppointmentCount
+          }
+        ]
+        break
+      }
+    }
+    this.setData({
+      items: items
+    })
   },
 
   /**
@@ -580,6 +720,7 @@ Page({
           feedBackNotiCount: 0
         })
       }
+      that.setUpItems()
     })
   },
 
@@ -605,6 +746,7 @@ Page({
           teacherNotDealCount: 0
         })
       }
+      that.setUpItems()
     })
   },
 
@@ -627,6 +769,7 @@ Page({
           courseAppointmentCount: 0
         })
       }
+      that.setUpItems()
     })
   },
 
@@ -650,6 +793,7 @@ Page({
           courseAppointmentCount: 0
         })
       }
+      that.setUpItems()
     })
   },
 
