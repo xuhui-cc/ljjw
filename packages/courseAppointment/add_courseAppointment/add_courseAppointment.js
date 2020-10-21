@@ -328,6 +328,9 @@ Page({
     app.ljjw.getCourseAppointmentNotice(params).then(d=>{
       if (d.data.status == 1) {
         let notice = d.data.data.notice
+        let replaceStr = "<img style=\"max-width:100%\""
+        notice = notice.replace(/<img /i, replaceStr)
+        console.log(notice)
         that.setData({
           notice: notice
         })

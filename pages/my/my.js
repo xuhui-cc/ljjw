@@ -534,7 +534,7 @@ Page({
         items = [
           {
             title: '我的收藏',
-            icon: './resource/item_ myCollection.png',
+            icon: './resource/item_myCollection.png',
             action: 'to_class_data'
           },
           {
