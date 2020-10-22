@@ -20,8 +20,9 @@ Page({
     
     let eventChannel = this.getOpenerEventChannel()
     eventChannel.on('newsDetailData', function(noti) {
+      let content = noti.content.replace(/<img /g, "<img style=\"max-width:100%;\" ")
       that.setData({
-        content: noti.content,
+        content: content,
         date: noti.createtime,
         pics: (noti.pics && noti.pics != '' && noti.pics != 'null') ? noti.pics.split(",") : [],
         // specialArray: specialArray
