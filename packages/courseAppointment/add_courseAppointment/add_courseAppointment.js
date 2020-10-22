@@ -329,7 +329,7 @@ Page({
       if (d.data.status == 1) {
         let notice = d.data.data.notice
         let replaceStr = "<img style=\"max-width:100%\""
-        notice = notice.replace(/<img /i, replaceStr)
+        notice = notice.replace(/<img /g, replaceStr)
         console.log(notice)
         that.setData({
           notice: notice
