@@ -523,6 +523,10 @@ Page({
           apponintmentList: that.data.apponintmentList,
           rejectAppointmentIndex: null
         })
+        if(that.data.appointmentDetailList.length == 0) {
+          that.pageData.page = 1
+          that.getWaitDealList()
+        }
         // 获取小红点数量
         that.teacherGetCourseAppointmentCount()
       }
@@ -572,6 +576,10 @@ Page({
           apponintmentList: that.data.apponintmentList,
           passAppointmentIndex: null
         })
+        if(that.data.appointmentDetailList.length == 0) {
+          that.pageData.page = 1
+          that.getWaitDealList()
+        }
         // 获取小红点数量
         that.teacherGetCourseAppointmentCount()
       }
