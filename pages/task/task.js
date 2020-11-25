@@ -7,6 +7,22 @@ Page({
 
   isClassPickerScrollStart: false,
   isClassPickerScrollEnd: false,
+
+
+  // 订阅消息模版列表
+  tmplList: [
+    {
+      mobanID: 'oThZxl4EBVE2ivwEx8HSRPo0WOVF-krqGkmU224AubQ',
+      title: '上课时间',
+      icon: './resource/orderAuthIcon2.png'
+    },
+    {
+      mobanID: 'r6__flLPw6zHbF4YDEXPag4m-tr5RY0h8RiPZLkYHy4',
+      title: '到离校',
+      icon: './resource/orderAuthIcon3.png'
+    }
+  ],
+
   /**
    * 页面的初始数据
    */
@@ -20,7 +36,23 @@ Page({
     showNoData: true, // 是否展示无数据页面
     showClassPicker: false, // 是否展示班级选择器
     showTopClassDot: false, // 是否在导航栏班级 展示小红点
-    showNoPower: false // 是否无权限
+    showNoPower: false, // 是否无权限
+
+    // 授权未打开的订阅消息模版
+    selectedTmplModel: null,
+
+    // 是否展示引导授权订阅消息弹框
+    orderAuthSettingShow: false,
+    // 订阅消息弹框标题
+    orderAuthTitle: null,
+    // 订阅消息弹框副标题
+    orderAuthSubtitle: null,
+    // 订阅消息弹框图表
+    orderAuthIconPath: null,
+
+
+    // 是否展示订阅授权更改教程页
+    orderAuthProcessViewShow: false,
   },
 
   /**
@@ -107,16 +139,19 @@ Page({
 
   to_detail_news: function (e) {
     let that = this
-    var xb = e.currentTarget.dataset.xb
-    let noti = this.data.message[xb]
-    this.readNoti(xb)
-    wx.navigateTo({
-      url: '../../pages/detail-news/detail-news',
-      success (res) {
-        res.eventChannel.emit('newsDetailData', noti)
+    this.orderNoti(function(authSuccess, next){
+      if (next) {
+        var xb = e.currentTarget.dataset.xb
+        let noti = that.data.message[xb]
+        that.readNoti(xb)
+        wx.navigateTo({
+          url: '../../pages/detail-news/detail-news',
+          success (res) {
+            res.eventChannel.emit('newsDetailData', noti)
+          }
+        })
       }
     })
-    
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -181,11 +216,14 @@ Page({
   */
   setUpNaviSize: function () {
     var menuButtonRect = wx.getMenuButtonBoundingClientRect()
+    let systemInfo = wx.getSystemInfoSync()
     let naviBarHeight = menuButtonRect.bottom+10
+    let windowHeight = systemInfo.windowHeight * 750 / systemInfo.screenWidth
     this.setData ({
       naviBarHeight: naviBarHeight,
       naviBarSelectSub_Height: menuButtonRect.height,
-      naviBarSelectSub_Top: menuButtonRect.top
+      naviBarSelectSub_Top: menuButtonRect.top,
+      windowHeight: windowHeight
     })
   },
 
@@ -223,6 +261,149 @@ Page({
         showNoData: role == 3 ? true : this.data.showNoData,
         showNoPower: showNoPower
       })
+    }
+  },
+
+  /**
+   * 订阅消息处理
+  */
+  orderNoti: function(callback) {
+    // 只有学生才开启订阅消息
+    if (this.data.role != 4) {
+      typeof callback == "function" && callback(false, true)
+      return
+    }
+
+    let that = this
+    wx.showLoading({
+      title: '加载中',
+    })
+    // 获取订阅消息授权信息
+    wx.getSetting({
+      withSubscriptions: true,
+      success(res) {
+        console.log('获取订阅消息授权信息成功：')
+        console.log(res)
+        let subscriptionsSetting = res.subscriptionsSetting
+        if (subscriptionsSetting.itemSettings) {
+          // 用户已选择过
+          wx.hideLoading({
+            success: () => {
+              if(subscriptionsSetting.mainSwitch) {
+                // 订阅消息开关 open
+                var rejectCount = 0
+                var rejectTempModel = null
+                for (var i = 0; i < that.tmplList.length; i++) {
+                  let tempModel = that.tmplList[i]
+                  let authResult = subscriptionsSetting.itemSettings[tempModel.mobanID]
+                  if (!authResult || authResult == 'reject') {
+                    rejectCount += 1
+                    rejectTempModel = tempModel
+                  }
+                }
+                switch(rejectCount) {
+                  case 0: {
+                    // 开个都打开
+                    that.setData({
+                      selectedTmplModel: null
+                    })
+                    typeof callback == "function" && callback(true, true)
+                    break
+                  }
+                  case 1: {
+                    // 打开了一个
+                    that.setData({
+                      selectedTmplModel: rejectTempModel
+                    })
+                    that.showSettingOrderNotiView(2, rejectTempModel, callback)
+                    break
+                  }
+                  case 2: {
+                    // 两个都关闭
+                    that.setData({
+                      selectedTmplModel: null
+                    })
+                    that.showSettingOrderNotiView(1, null, callback)
+                    break
+                  }
+                }
+              } else {
+                // 订阅消息开关 close
+                that.showSettingOrderNotiView(1, null, callback)
+              }
+            },
+          })
+        } else {
+          // 用户未选择过
+          let templIds = []
+          for (var i = 0; i < that.tmplList.length; i++) {
+            let templModel = that.tmplList[i]
+            templIds.push(templModel.mobanID)
+          }
+          // 请求订阅消息权限
+          wx.requestSubscribeMessage({
+            tmplIds: templIds,
+            success(res2){
+              console.log("用户授权订阅消息权限成功")
+              console.log(res2)
+              wx.hideLoading({
+                success: (res) => {
+                  typeof callback == "function" && callback(true, true)
+                },
+              })
+            },
+            fail(res2) {
+              console.log("用户授权订阅消息权限失败")
+              console.log(res2)
+              wx.hideLoading({
+                success: () => {
+                  typeof callback == "function" && callback(false, true)
+                },
+              })
+            }
+          })
+        }
+      },
+      fail(res) {
+        console.log("获取订阅消息授权信息失败：")
+        console.log(res)
+        wx.hideLoading({
+          success: () => {
+            typeof callback == "function" && callback(false, true)
+          },
+        })
+      }
+    })
+  },
+
+  /**
+   * 展示引导用户授权订阅消息弹框
+   * type: 1-都没授权  2-有一个没授权
+  */
+  showSettingOrderNotiView: function(type, rejectModel, callback) {
+    let orderNotiAuthSettingShowed = wx.getStorageSync('orderNotiAuthSettingShowed')
+    if (orderNotiAuthSettingShowed) {
+      // 已经展示过授权引导
+      typeof callback == "function" && callback(true, true)
+    } else{
+      // 未展示过授权引导
+      wx.setStorageSync('orderNotiAuthSettingShowed', true)
+      typeof callback == "function" && callback(true, false)
+      if (type == 1) {
+        this.setData({
+          orderAuthSettingShow: true,
+          orderAuthTitle: '小程序',
+          orderAuthSubtitle: '上课时间、到离校通知实时掌控',
+          orderAuthIconPath: './resource/orderAuthIcon1.png'
+        })
+      } else {
+        this.setData({
+          orderAuthSettingShow: true,
+          orderAuthTitle: rejectModel.title,
+          orderAuthSubtitle: '可能会错过重要通知',
+          orderAuthIconPath: rejectModel.icon
+        })
+      }
     }
   },
 
@@ -438,8 +619,13 @@ Page({
    * 历史消息 点击事件
   */
   showNotiList: function(e) {
-    wx.navigateTo({
-      url: '../../pages/noti_list/noti_list?class_id='+ (this.data.role == 4 ? this.data.stu_class[this.data.stu_class_index].class_id : this.data.tea_class[this.data.tea_class_index].id),
+    let that = this
+    this.orderNoti(function(authSuccess, next){
+      if (next) {
+        wx.navigateTo({
+          url: '../../pages/noti_list/noti_list?class_id='+ (that.data.role == 4 ? that.data.stu_class[that.data.stu_class_index].class_id : that.data.tea_class[that.data.tea_class_index].id),
+        })
+      }
     })
   },
 
@@ -504,6 +690,54 @@ Page({
         })
       }
     })
-  }
+  },
 
+
+  /**
+   * 引导授权订阅消息弹框 下次开启按钮 点击事件
+  */
+  orderAuthSettingCancelButtonClicked: function() {
+    this.setData({
+      orderAuthIconPath: null,
+      orderAuthSubtitle: null,
+      orderAuthTitle: null,
+      orderAuthSettingShow: false,
+    })
+  },
+
+
+  /**
+   * 引导授权订阅消息弹框 去开启按钮 点击事件
+  */
+  orderAuthSettingOpenButtonClicked: function() {
+    this.orderAuthSettingCancelButtonClicked()
+    if(wx.openSetting) {
+      // 微信版本7.0.9及以上
+      wx.openSetting({
+        withSubscriptions: true,
+        success(res) {
+          console.log('打开小程序设置页')
+          console.log(res)
+        },
+        fail(res) {
+          console.log('打开小程序设置页失败')
+          console.log(res)
+        }
+      })
+    } else {
+      // 微信版本7.0.9以下
+      this.setData({
+        orderAuthProcessViewShow: true
+      })
+    }
+  },
+
+  /**
+   * 订阅消息授权流程弹框 关闭
+  */
+  orderAuthProcessViewClose: function() {
+    this.setData({
+      orderAuthProcessViewShow: false
+    })
+  },
 })

@@ -153,3 +153,23 @@
 
 <!-- container -->
 </view>
+
+
+<!-- 引导授权订阅消息弹框 -->
+<view class="orderAuthSettingView_bg" wx:if="{{orderAuthSettingShow}}">
+  <view class="orderAuthSettingView">
+    <image class="orderAuthSettingView_icon" src="{{orderAuthIconPath}}"></image>
+    <text class="orderAuthSettingView_title">{{'您还没有开启\n' + orderAuthTitle + '消息推送哦'}}</text>
+    <text class="orderAuthSettingView_subtitle">{{orderAuthSubtitle}}</text>
+    <view class="flex_row_alignItemCenter" style="height:68rpx; top:558rpx; position:absolute; width:100%; left:0;">
+        <view class="orderAuthSettingView_cancelButton" bindtap="orderAuthSettingCancelButtonClicked">下次开启</view>
+        <view class="orderAuthSettingView_openButton" bindtap="orderAuthSettingOpenButtonClicked">去开启</view>
+      </view>
+  </view>
+</view>
+
+
+<!-- 微信版本低于7.0.9时设置订阅消息授权流程 -->
+<view class="orderAuthSettingView_bg" wx:if="{{orderAuthProcessViewShow}}">
+  <image class="orderAuthProcessView" style="height:{{windowHeight > 1243 ? 1243 : windowHeight}}" src="./resource/orderAuthProcess.png" mode="aspectFit" bindtap="orderAuthProcessViewClose"></image>
+</view>
