@@ -187,7 +187,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    if (this.data.orderAuthSettingShow) {
+      this.orderAuthSettingCancelButtonClicked()
+    } else if (this.data.orderAuthProcessViewShow) {
+      this.orderAuthProcessViewClose()
+    }
   },
 
   /**
@@ -274,6 +278,12 @@ Page({
       return
     }
 
+    // 一次生命周期只授权提示一次
+    if(app.globalData.authOrderShowed) {
+      typeof callback == "function" && callback(false, true)
+      return
+    }
+    
     let that = this
     wx.showLoading({
       title: '加载中',
@@ -285,56 +295,91 @@ Page({
         console.log('获取订阅消息授权信息成功：')
         console.log(res)
         let subscriptionsSetting = res.subscriptionsSetting
-        if (subscriptionsSetting.itemSettings) {
-          // 用户已选择过
-          wx.hideLoading({
-            success: () => {
-              if(subscriptionsSetting.mainSwitch) {
-                // 订阅消息开关 open
-                var rejectCount = 0
-                var rejectTempModel = null
-                for (var i = 0; i < that.tmplList.length; i++) {
-                  let tempModel = that.tmplList[i]
-                  let authResult = subscriptionsSetting.itemSettings[tempModel.mobanID]
-                  if (!authResult || authResult == 'reject') {
-                    rejectCount += 1
-                    rejectTempModel = tempModel
+        if (subscriptionsSetting) {
+          // 微信7.0.9以上版本
+          if (subscriptionsSetting.itemSettings) {
+            // 用户已选择过
+            app.globalData.authOrderShowed = true
+            wx.hideLoading({
+              success: () => {
+                if(subscriptionsSetting.mainSwitch) {
+                  // 订阅消息开关 open
+                  var rejectCount = 0
+                  var rejectTempModel = null
+                  for (var i = 0; i < that.tmplList.length; i++) {
+                    let tempModel = that.tmplList[i]
+                    let authResult = subscriptionsSetting.itemSettings[tempModel.mobanID]
+                    if (!authResult || authResult == 'reject') {
+                      rejectCount += 1
+                      rejectTempModel = tempModel
+                    }
                   }
+                  switch(rejectCount) {
+                    case 0: {
+                      // 开个都打开
+                      that.setData({
+                        selectedTmplModel: null
+                      })
+                      typeof callback == "function" && callback(true, true)
+                      break
+                    }
+                    case 1: {
+                      // 打开了一个
+                      that.setData({
+                        selectedTmplModel: rejectTempModel
+                      })
+                      that.showSettingOrderNotiView(2, rejectTempModel, callback)
+                      break
+                    }
+                    case 2: {
+                      // 两个都关闭
+                      that.setData({
+                        selectedTmplModel: null
+                      })
+                      that.showSettingOrderNotiView(1, null, callback)
+                      break
+                    }
+                  }
+                } else {
+                  // 订阅消息开关 close
+                  that.showSettingOrderNotiView(1, null, callback)
                 }
-                switch(rejectCount) {
-                  case 0: {
-                    // 开个都打开
-                    that.setData({
-                      selectedTmplModel: null
-                    })
+              },
+            })
+          } else {
+            // 用户未选择过
+            let templIds = []
+            for (var i = 0; i < that.tmplList.length; i++) {
+              let templModel = that.tmplList[i]
+              templIds.push(templModel.mobanID)
+            }
+            // 请求订阅消息权限
+            wx.requestSubscribeMessage({
+              tmplIds: templIds,
+              success(res2){
+                console.log("用户授权订阅消息权限成功")
+                console.log(res2)
+                app.globalData.authOrderShowed = true
+                wx.hideLoading({
+                  success: (res) => {
                     typeof callback == "function" && callback(true, true)
-                    break
-                  }
-                  case 1: {
-                    // 打开了一个
-                    that.setData({
-                      selectedTmplModel: rejectTempModel
-                    })
-                    that.showSettingOrderNotiView(2, rejectTempModel, callback)
-                    break
-                  }
-                  case 2: {
-                    // 两个都关闭
-                    that.setData({
-                      selectedTmplModel: null
-                    })
-                    that.showSettingOrderNotiView(1, null, callback)
-                    break
-                  }
-                }
-              } else {
-                // 订阅消息开关 close
-                that.showSettingOrderNotiView(1, null, callback)
+                  },
+                })
+              },
+              fail(res2) {
+                console.log("用户授权订阅消息权限失败/用户点击取消")
+                console.log(res2)
+                app.globalData.authOrderShowed = true
+                wx.hideLoading({
+                  success: () => {
+                    typeof callback == "function" && callback(false, true)
+                  },
+                })
               }
-            },
-          })
+            })
+          }
         } else {
-          // 用户未选择过
+          // 微信7.0.9以下
           let templIds = []
           for (var i = 0; i < that.tmplList.length; i++) {
             let templModel = that.tmplList[i]
@@ -346,15 +391,52 @@ Page({
             success(res2){
               console.log("用户授权订阅消息权限成功")
               console.log(res2)
+              app.globalData.authOrderShowed = true
               wx.hideLoading({
-                success: (res) => {
-                  typeof callback == "function" && callback(true, true)
+                success: () => {
+                  var rejectCount = 0
+                  var rejectTempModel = null
+                  for (var i = 0; i < that.tmplList.length; i++) {
+                    let tempModel = that.tmplList[i]
+                    let authResult = res2[tempModel.mobanID]
+                    if (!authResult || authResult == 'reject') {
+                      rejectCount += 1
+                      rejectTempModel = tempModel
+                    }
+                  }
+                  switch(rejectCount) {
+                    case 0: {
+                      // 开个都打开
+                      that.setData({
+                        selectedTmplModel: null
+                      })
+                      typeof callback == "function" && callback(true, true)
+                      break
+                    }
+                    case 1: {
+                      // 打开了一个
+                      that.setData({
+                        selectedTmplModel: rejectTempModel
+                      })
+                      that.showSettingOrderNotiView(2, rejectTempModel, callback)
+                      break
+                    }
+                    case 2: {
+                      // 两个都关闭
+                      that.setData({
+                        selectedTmplModel: null
+                      })
+                      that.showSettingOrderNotiView(1, null, callback)
+                      break
+                    }
+                  }
                 },
               })
             },
             fail(res2) {
               console.log("用户授权订阅消息权限失败")
               console.log(res2)
+              app.globalData.authOrderShowed = true
               wx.hideLoading({
                 success: () => {
                   typeof callback == "function" && callback(false, true)

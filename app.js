@@ -53,6 +53,7 @@ App({
   globalData: {
     userInfo: null,
     wxLoginCode: null,
+    authOrderShowed: false,
   },
 
   // 微信登录code
