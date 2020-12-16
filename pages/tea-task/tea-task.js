@@ -36,79 +36,29 @@ Page({
         // console.log(d.data.data)
 
         var data = d.data.data
-
-        for(var i=0;i<data.length;i++){
-          var task = data[i]
-
-          task.finished_students = task.finished_students.join("、")
-          task.notfinished_students = task.notfinished_students.join("、")
-          task.fold = false
-
-          if (task.type == 1){
-            // 普通任务
-            if (task.attach != '') {
-              task.attach = task.attach.split(",")
+        for (var i = 0; i < data.length; i++) {
+          let task = data[i]
+          var finished_name = ''
+          for (var j = 0; j < task.finished_students.length; j++) {
+            let student = task.finished_students[j]
+            if (finished_name == '') {
+              finished_name = student.realname
             } else {
-              task.attach = []
+              finished_name += ', ' + student.realname
             }
-            
-          } else if (task.type == 2) {
-            // 选项任务
-
-            var titles = []
-            if (task.title && task.title != '') {
-              titles = task.title.split(",")
-            }
-
-            for (var j= 0; j < task.task_detail.length; j++) {
-              var taskDetail = task.task_detail[j]
-              
-              // 标题
-              if (titles.length > j) {
-                var title = titles[j]
-                if (titles.length > 1) {
-                  title = (j+1)+". "+title
-                }
-                taskDetail.title = title
-              }
-
-              var childTitles = []
-              if (taskDetail.child_title && taskDetail.child_title != '') {
-                childTitles = taskDetail.child_title.split(",")
-              }
-              
-              for (var k = 0; k < taskDetail.options.length; k++) {
-                var option = taskDetail.options[k]
-
-                // 子标题
-                if (childTitles.length > k) {
-                  var subtitle = childTitles[k]
-                  if (childTitles.length > 1) {
-                    subtitle = "("+(k+1)+") "+subtitle
-                  }
-                  option.title = subtitle
-                }
-                
-                // 选项
-                var values = Object.values(option.lists)
-                var list = []
-                for (var w=0; w < values.length; w++) {
-                  var value = {
-                    index: String.fromCharCode(65 + w),
-                    value: values[w]
-                  }
-                  list.push(value)
-                }
-                option.list = list
-              }
-            }
-          } else if (task.type == 3) {
-            // 字段任务
-
           }
-          
+          task.finished_name = finished_name
+          var notFinished_name = ''
+          for (var j = 0; j < task.notfinished_students.length; j++) {
+            let student = task.notfinished_students[j]
+            if (notFinished_name == '') {
+              notFinished_name = student.realname
+            } else {
+              notFinished_name += ', ' + student.realname
+            }
+          }
+          task.notFinished_name = notFinished_name
         }
-
         that.setData({
           task: data
         })

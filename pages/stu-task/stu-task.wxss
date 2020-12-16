@@ -1,37 +1,33 @@
 page{
   background: rgba(251,251,252,1)
 }
-/* .nabigation_bar{
-  
-  width:750rpx;
-  height:176rpx;
-  background:linear-gradient(90deg,rgba(20,203,162,1) 0%,rgba(111,238,209,1) 100%);
-  opacity:1;
+
+.twoLine {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oneLine {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flex_row_itemsCenter {
   display: flex;
-  z-index: 200;
+  flex-direction: row;
+  align-items: center;
 }
-.my-head{
-  position: fixed;
-  margin-left: 341rpx;
-  margin-top: 108rpx;
-  width:530rpx;
-  height:48rpx;
-  font-size:34rpx;
-  font-family:PingFang SC;
-  font-weight:bold;
-  line-height:48rpx;
-  text-align: center;
-  color:rgba(255,255,255,1);
-  opacity:1;
+.flex_row_itemsCenter_spaceBetween {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
-.back-img{
-  position: fixed;
-  margin-left: 30rpx;
-  margin-top: 120rpx;
-  margin-right: 57rpx;
-  width: 27rpx;
-  height: 27rpx;
-} */
+
 .img_null{
   margin-top: 423rpx;
   margin-left: 238rpx;
@@ -235,7 +231,7 @@ page{
   opacity:1;
 }
 .cs_layout{
-  margin-top: 104rpx;
+  margin-top: 88rpx;
 }
 .flex{
   display: flex;
@@ -652,4 +648,47 @@ page{
   line-height:42rpx;
   color:rgba(39,39,39,1);
   opacity:1;
+}
+
+
+
+
+.taskCell {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.taskCell_topView {
+  margin-left: 30rpx;
+  width: 690rpx;
+  border-bottom: 0.5rpx solid #F1F1F1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 26rpx;
+}
+
+.taskCell_title {
+  margin-top: 30rpx;
+  width: 100%;
+  color: #000000;
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 50rpx;
+}
+
+.taskCell_finishButton {
+  width: 311rpx;
+  height: 80rpx;
+  margin-top: 50rpx;
+  border-radius: 40rpx;
+  background-color: #2DC1A0;
+  color: white;
+  font-size: 32rpx;
+  margin-left: 220rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50rpx;
 }

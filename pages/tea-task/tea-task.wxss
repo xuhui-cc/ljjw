@@ -1,6 +1,33 @@
 page{
   background: rgba(251,251,252,1)
 }
+
+.twoLine {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.oneLine {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flex_row_itemsCenter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.flex_row_itemsCenter_spaceBetween {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .nabigation_bar{
   position: fixed;
   width:750rpx;
@@ -164,7 +191,7 @@ page{
 }
 .taskCell{
   margin-top: 16rpx;
-  widows: 100%;
+  width: 100%;
   background: white;
   display: flex;
   flex-direction: column;
@@ -230,3 +257,27 @@ page{
   flex-wrap: wrap;
 }
 
+.taskCell {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.taskCell_topView {
+  margin-left: 30rpx;
+  width: 690rpx;
+  border-bottom: 0.5rpx solid #F1F1F1;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 26rpx;
+}
+
+.taskCell_title {
+  margin-top: 30rpx;
+  width: 100%;
+  color: #000000;
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 50rpx;
+}

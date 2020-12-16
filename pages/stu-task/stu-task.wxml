@@ -16,193 +16,61 @@
   <!-- 待完成 -->
   <view wx:if="{{finish == 0}}" class="cs_layout">
     <block wx:for="{{task}}" wx:key="id" wx:for-index="task_index">
-    
-      <!-- type==1 普通式 -->
-      <block wx:if="{{item.type == 1}}">
-        <view class="ques-layout">
-          <view class="ques_header">
-            <view class="ques_header_name">来自：{{item.pubname}}老师</view>
-            <view class="ques_header_time">{{item.pubtime}}</view>
-          </view>
-          <view class="ques_header_bottomLine"></view>
-          <!-- 问题循环 -->
-          <view>
-            <view class="task1_head">{{item.subject}}</view>
-            <view class="task1_title">{{item.title}}</view>
-            <!-- attach图片 -->
-            <view wx:if="{{item.attach != ''}}" class="image_listview_layout">
-              <view class="{{attach_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{item.attach}}" wx:key="*this" wx:for-item="attach_item" wx:for-index="attach_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-attachindex="{{attach_index}}" data-type="1">
-                <image class='big_img' src='../../images/big.png'></image>
-                <image class="task1_img" src="{{attach_item}}" mode="aspectFill"></image>
-              </view>
-              <!-- <view wx:if="{{item.attach.length < 3}}" class="{{item.attach.length==1?'img_layout1':'img_layout'}}"></view>
-              <view wx:if="{{item.attach.length < 2}}" class="img_layout"></view> -->
-            </view>
-            
-            <!-- 回答textArea -->
-            <view class="remark-layout">
-              <textarea class="remark" placeholder="点击输入文字......" placeholder-class="remark-placehoulder" data-task_type="{{1}}"  data-task_index="{{task_index}}" bindinput="type1_content" value="{{item.submit_content}}" maxlength="600"></textarea>
-            </view>
 
-            <!-- 添加照片 -->
-            <block wx:if="{{item.has_pics > 0}}">
-              <view class="add">添加照片</view>
-              <view class="add_img_layout">
-                <view wx:for="{{item.task_detail.imgs}}" wx:key="img_index" wx:for-index="image_index">
-                  <image class="del-img" data-xb='{{image_index}}' data-task_index="{{task_index}}" bindtap='del_img1' src="../../images/gdel.png"></image>
-                  <image class="add_img" src="{{item}}" bindtap="previewAttachImage" mode="aspectFill" data-taskindex="{{task_index}}" data-imageindex="{{image_index}}" data-type="2"></image>
-                </view>
-                    
-                <image wx:if="{{item.task_detail.imgs.length < 6 }}"  data-task_index="{{task_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
-              </view>
-            </block>
+      <view class="taskCell" style="margin-top:{{task_index == 0 ? 9 : 20}}rpx;">
+        <!-- 普通任务 -->
+        <block wx:if="{{item.type ==1}}">
+          <view class="taskCell_topView">
+            <!-- 任务标题 -->
+            <text class="taskCell_title twoLine">{{item.title}}</text>
+            <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
+              <!-- 发布人姓名 -->
+              <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text>
+              <!-- 发布时间 -->
+              <text style="color:#B4B4B4; font-size:26rpx;">{{item.operate_date}}</text>
+            </view>
           </view>
-          <!-- 提交按钮 -->
-          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="{{item.submit?'submit':''}}" data-task_index="{{task_index}}">提交</view>
-        </view>
-      </block>
-      <!-- type==1 普通式 -->
-
-      <!-- type==2 选项式 -->
-      <block wx:if="{{item.type == 2}}">
-        <view class="ques-layout">
-          <view class="ques_header">
-            <view class="ques_header_name">来自：{{item.pubname}}老师</view>
-            <view class="ques_header_time">{{item.pubtime}}</view>
-          </view>
-          <view class="ques_header_bottomLine"></view>
-          
-          <!-- 标题循环 -->
-          <block wx:for="{{item.task_detail}}" wx:key="id"  wx:for-item="task_detail" wx:for-index="task_detail_index">
-            <!-- 标题 -->
-            <view class="task2_title">{{task_detail.title}}</view>
-            <!-- 子标题循环 -->
-            <block wx:for="{{task_detail.options}}" wx:key="options_index"  wx:for-item="options" wx:for-index="options_index">
-              <!-- 子标题 -->
-              <view class="ques-title" wx:if="{{task_detail.child_title && task_detail.child_title != ''}}">{{options.title}}</view>
-              <view class="optionView_layout">
-                <!-- 选项循环 -->
-                <block wx:for="{{options.list}}" wx:key="list_index"  wx:for-item="list" wx:for-index="list_index">
-                  <!-- 选项 -->
-                  <view class="option_layout" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}" data-list_index="{{list_index}}" bindtap="select">
-                    <view class="optionText" style="{{list.select?'color:rgba(45,193,160,1);':''}}">{{list.option}}.</view>
-                    <view class="optionText" style="{{list.select?'color:rgba(45,193,160,1);':''}}">{{list.item}}</view>
-                  </view>
-                </block>
-              </view>
-              <!-- 子标题备注 -->
-              <view wx:if="{{task_detail.option_type == 2 || task_detail.option_type == 4}}" class="remark-layout">
-                <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}"  placeholder="说点什么吧……" placeholder-class="remark-placehoulder" data-task_type="{{2}}" bindinput="type1_content" value="{{options.submit_content}}" maxlength="600"></textarea>
-              </view>
-              <!-- 子标题 添加照片 -->
-              <view wx:if="{{task_detail.option_type >=3}}" class="add">添加照片</view>
-              <view wx:if="{{task_detail.option_type >=3}}" class="add_img_layout">
-                <view wx:for="{{options.imgs}}" wx:key="img_index">
-                  <image class="del-img" data-xb='{{index}}' data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}"  bindtap='del_img' src="../../images/gdel.png"></image>
-                  <image class="add_img" src="{{item}}" mode="aspectFill" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-optionindex="{{options_index}}" data-imageindex="{{index}}" data-type="3"></image>
-                </view>
-                
-                <image wx:if="{{options.imgs.length < 6 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{options_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
-              </view>
-            </block>
+          <!-- 题目遍历 -->
+          <block wx:for="{{item.question}}" wx:key="questionIndex" wx:for-index="questionIndex" wx:for-item="questionItem">
+            <text class="oneLine" style="margin-left:30rpx; width:690rpx; margin-top:30rpx; color:#585858; font-size:28rpx;">{{questionIndex+1}}. {{questionItem.question_title}}</text>
           </block>
-          <!-- 提交按钮 -->
-          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="{{item.submit?'submit':''}}" data-task_index="{{task_index}}">提交</view>
-        </view>
-      </block>
-      <!-- type==2 选项式 -->
-
-      <!-- type==3 字段式 -->
-      <block wx:if="{{item.type == 3}}">
-        <view class="ques-layout">
-          <view class="ques_header">
-            <view class="ques_header_name">来自：{{item.pubname}}老师</view>
-            <view class="ques_header_time">{{item.pubtime}}</view>
+          <view class="taskCell_finishButton" catchtap="finishButtonClciked" data-index="{{task_index}}">去完成</view>
+        </block>
+        <!-- type==4 考勤确认 -->
+        <view wx:if="{{item.type==4}}">
+          <view class="taskCell_topView">
+            <!-- 任务标题 -->
+            <text class="taskCell_title twoLine">{{item.tasktitle}}</text>
+            <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
+              <!-- 发布人姓名 -->
+              <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text>
+              <!-- 发布时间 -->
+              <text style="color:#B4B4B4; font-size:26rpx;">{{item.operate_date}}</text>
+            </view>
           </view>
-          <view class="ques_header_bottomLine"></view>
-
-          <!-- 标题 -->
-          <view class="task2_title">{{item.title}}</view>
-            <!-- 问题循环 -->
-            <block wx:for="{{item.task_detail}}" wx:key="id" wx:for-index="task_detail_index" wx:for-item="task_detail">
-              <block wx:for="{{task_detail.fieldlist}}" wx:key="fieldlist_index" wx:for-index="fieldlist_index" wx:for-item="fieldlist">
-                <view class="type3_layout">
-                  <!-- 字段循环 -->
-                  <block wx:for="{{fieldlist.lists}}" wx:key="lists_index"  wx:for-item="lists" wx:for-index="list_index">
-                    <view class="ans-layout">
-                      <!-- 字段名 -->
-                      <view class="ques-cont">{{lists.item}}：</view>
-                      <!-- 输入框 -->
-                      <input class="ans_input" placeholder="请填写" placeholder-class="ziduanInput_placehoulder" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-fieldlist_index="{{fieldlist_index}}" data-list_index="{{list_index}}" bindinput="type3_content" value="{{lists.content}}"></input>
-                    </view>
-                    <view class="ans_heng"></view>
-                  </block>
-                  <!-- 备注 -->
-                  <view class="remark-layout" wx:if="{{task_detail.field_type == 2 || task_detail.field_type == 4}}">
-                    <textarea class="remark" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-fieldlist_index="{{fieldlist_index}}"  placeholder="说点什么吧……" data-task_type="{{3}}" value="{{type1_content}}" bindinput="type1_content" value="{{fieldlist.submit_content}}" maxlength="600"></textarea>
-                  </view>
-                  <!-- 添加照片 -->
-                  <block wx:if="{{task_detail.field_type >=3}}">
-                    <view class="add">添加照片</view>
-                    <view class="add_img_layout">
-                      <view wx:for="{{fieldlist.imgs}}" wx:key="img_index">
-                        <image class="del-img" data-xb='{{index}}' data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{fieldlist_index}}" bindtap='del_img' src="../../images/gdel.png"></image>
-                        <image class="add_img" src="{{item}}" mode="aspectFill" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-fieldlistindex="{{fieldlist_index}}" data-imageindex="{{index}}" data-type="4"></image>
-                      </view>
-                      
-                      <image wx:if="{{fieldlist.imgs.length < 6 }}" data-task_detail_index="{{task_detail_index}}" data-task_index="{{task_index}}" data-options_index="{{fieldlist_index}}" class='add_img' src='../../images/insert_img.png' bindtap='chooseImg'></image>
-                    </view>
-                  </block>
-                </view>
-              </block>
-            </block>
-          <!-- 提交按钮 -->
-          <view class="ques-sub" style="{{item.submit?'background:rgba(45,193,160,1);':'background:rgba(222,222,222,1);'}}" bindtap="{{item.submit?'submit':''}}" data-task_index="{{task_index}}">提交</view>
-        </view>
-      </block>
-      <!-- type==3 字段式 -->
-
-      <!-- type==4 考勤确认 -->
-      <view wx:if="{{item.type == 4}}">
-        <view class="ques-layout">
-          <view class="flex">
-            <view class="ques-ori">来自：{{item.pubname}}老师</view>
-            <view class="ques-date">{{item.pubtime}}</view>
-          </view>
-          <view class="heng"></view>
-          <view class="task1_title">{{item.tasktitle}}</view>
           <!-- 问题循环 -->
-          <view wx:for="{{item.task_detail}}" wx:key="task_detail_index" wx:for-item="task_detail">
-            
+          <view wx:for="{{item.task_detail}}" wx:key="task_detail_index" wx:for-item="task_detail_item">
             <view class="flex">
-              <view class="riqi">{{task_detail.classdate}}</view>
+              <view class="riqi">{{task_detail_item.classdate}}</view>
               <view class="cs_for">
-                <view wx:for="{{task_detail.cs}}" wx:key="cs_index" wx:for-item="cs">
-                  <view class="flex_wrap">
-                    <view class="course_time">{{cs[0]}}</view>
-                    <image wx:if="{{cs[1] == 0}}" class="stu_img" src="../../images/yes.png"></image>
-                    <view wx:if="{{cs[1] == 1}}" class="stu_condition" style="color:rgba(255,152,83,1);">迟到</view>
-                    <view wx:if="{{cs[1] == 2}}" class="stu_condition" style="color:#F86478;">旷课</view>
-                    <view wx:if="{{cs[1] == 3}}" class="stu_condition" style="color:rgba(70,161,251,1);">请假</view>
-                    <view wx:if="{{cs[1] == 4}}" class="stu_condition" style="color:rgba(154,100,248,1);">离校</view>
-                    
-                  </view>
+                <view class="flex_wrap">
+                  <view class="course_time">{{task_detail_item.classtime}}</view>
+                  <image wx:if="{{task_detail_item.check_status == 0}}" class="stu_img" src="../../images/yes.png"></image>
+                  <view wx:if="{{task_detail_item.check_status == 1}}" class="stu_condition" style="color:rgba(255,152,83,1);">迟到</view>
+                  <view wx:if="{{task_detail_item.check_status == 2}}" class="stu_condition" style="color:#F86478;">旷课</view>
+                  <view wx:if="{{task_detail_item.check_status == 3}}" class="stu_condition" style="color:rgba(70,161,251,1);">请假</view>
+                  <view wx:if="{{task_detail_item.check_status == 4}}" class="stu_condition" style="color:rgba(154,100,248,1);">离校</view>
                 </view>
               </view>
-              
             </view>
-            
           </view>
           <!-- 问题循环 -->
-          <view class="flex">
+          <view class="flex" style="margin-bottom:50rpx;">
             <view class="type4_submit" data-task_index="{{task_index}}" bindtap="type4_submit">确定</view>
             <view class="type4_reject" data-task_index="{{task_index}}" bindtap="type4_reject">驳回</view>
           </view>
         </view>
       </view>
-      <!-- type==4 考勤确认 -->
-
-
     </block>
 
     <view wx:if="{{task == ''}}">
@@ -235,134 +103,29 @@
 
     <!-- 问题循环 -->
     <view wx:for="{{task}}" wx:key="index" wx:for-index="task_index">
-
-      <!-- type==1 普通式 -->
-      <view wx:if="{{item.type == 1}}">
-        <view class="ques-layout">
-          <view class="ques_header">
-            <view class="ques_header_name">来自：{{item.pubname}}老师</view>
-            <view class="ques_header_time">{{item.pubtime}}</view>
-          </view>
-          <view class="ques_header_bottomLine"></view>
-          
-          <view>
-            <view class="task1_head">{{item.subject}}</view>
-            <view class="task1_title">{{item.title}}</view>
-            <!-- attach图片 -->
-            <view wx:if="{{item.attach != ''}}" class="image_listview_layout">
-              <view class="{{attach_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{item.attach}}" wx:key="*this" wx:for-item="attach_item" wx:for-index="attach_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-attachindex="{{attach_index}}" data-type="1">
-                <image class='big_img' src='../../images/big.png'></image>
-                <image class="task1_img" src="{{attach_item}}" mode="aspectFill"></image>
-              </view>
-              <!-- <view wx:if="{{item.attach.length < 3}}" class="{{item.attach.length==1?'img_layout1':'img_layout'}}"></view>
-              <view wx:if="{{item.attach.length < 2}}" class="img_layout"></view> -->
-            </view>
-            <!-- 回答内容 -->
-            <view class="remark-layout-finished">
-              <view class="remark-finished">{{item.task_detail.finished_info.memo}}</view>
-            </view>
-            <!-- 学生上传图片 -->
-            <view wx:if="{{item.task_detail.imgs != ''}}" class="image_listview_layout">
-              <view class="{{img_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{item.task_detail.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-imageindex="{{img_index}}" data-type="2">
-                <image class="task1_img" src="{{imgItem}}" mode="aspectFill"></image>
-              </view>
-              <!-- <view wx:if="{{item.task_detail.imgs.length < 3}}" class="{{item.task_detail.imgs.length==1?'img_layout1':'img_layout'}}"></view>
-              <view wx:if="{{item.task_detail.imgs.length < 2}}" class="img_layout"></view> -->
+      <!-- webView任务 -->
+      <block wx:if="{{item.type != 4}}">
+        <view class="taskCell">
+          <view class="taskCell_topView">
+            <!-- 任务标题 -->
+            <text class="taskCell_title twoLine">{{item.title}}</text>
+            <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
+              <!-- 发布人姓名 -->
+              <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text>
+              <!-- 发布时间 -->
+              <text style="color:#B4B4B4; font-size:26rpx;">{{item.operate_date}}</text>
             </view>
           </view>
-          <!-- 问题循环 -->
-          
-        </view>
-      </view>
-      <!-- type==1 普通式 -->
-
-      <!-- type==2 选项式 -->
-      <view wx:if="{{item.type == 2}}">
-        <view class="ques-layout">
-          <view class="ques_header">
-            <view class="ques_header_name">来自：{{item.pubname}}老师</view>
-            <view class="ques_header_time">{{item.pubtime}}</view>
-          </view>
-          <view class="ques_header_bottomLine"></view>
-          
-          <!-- 标题循环 -->
-          <block wx:for="{{item.task_detail}}" wx:key="task_detail_index"  wx:for-item="task_detail" wx:for-index="task_detail_index">
-            <!-- 标题 -->
-            <view class="task2_title">{{task_detail.title}}</view>
-            <!-- 子标题循环 -->
-            <block wx:for="{{task_detail.options}}" wx:key="options_index"  wx:for-item="options" wx:for-index="options_index">
-              <!-- 子标题 -->
-              <view class="ques-title" wx:if="{{task_detail.child_title && task_detail.child_title != ''}}">{{options.title}}</view>
-              <view class="optionView_layout">
-                <!-- 选项循环 -->
-                <view wx:for="{{options.list}}" wx:key="list_index"  wx:for-item="list" wx:for-index="list_index">
-                  <!-- 选项 -->
-                  <view class="option_layout">
-                    <view class="optionText" style="{{list.select?'color:rgba(45,193,160,1);':''}}">{{list.option}}.</view>
-                    <view class="optionText" style="{{list.select?'color:rgba(45,193,160,1);':''}}">{{list.item}}</view>
-                  </view>
-                </view>
-              </view>
-              <!-- 子标题备注 -->
-              <view wx:if="{{options.memo }}" class="remark-layout-finished">
-                <view class="remark-finished">{{options.memo}}</view>
-              </view>
-              <!-- 子标题 学生上传图片 -->
-              <view wx:if="{{options.imgs != ''}}" class="image_listview_layout">
-                <view class="{{img_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{options.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-optionindex="{{options_index}}" data-imageindex="{{img_index}}" data-type="3">
-                  <image class="task1_img" src="{{imgItem}}" mode="aspectFill"></image>
-                </view>
-                <!-- <view wx:if="{{options.imgs.length < 3}}" class="{{options.imgs.length==1?'img_layout1':'img_layout'}}"></view>
-                <view wx:if="{{options.imgs.length < 2}}" class="img_layout"></view> -->
-              </view>
-            </block>
+          <!-- 题目遍历 -->
+          <block wx:for="{{item.question}}" wx:key="questionIndex" wx:for-index="questionIndex" wx:for-item="questionItem">
+            <text class="oneLine" style="margin-left:30rpx; width:690rpx; margin-top:30rpx; color:#585858; font-size:28rpx;">{{questionIndex+1}}. {{questionItem.question_title}}</text>
           </block>
-        </view>
-      </view>
-      <!-- type==2 选项式 -->
-
-      <!-- type==3 字段式 -->
-      <view wx:if="{{item.type == 3}}">
-        <view class="ques-layout">
-          <view class="ques_header">
-            <view class="ques_header_name">来自：{{item.pubname}}老师</view>
-            <view class="ques_header_time">{{item.pubtime}}</view>
+          <view class="flex_row_itemsCenter" style="justify-content: flex-end; height:99rpx; width:100%;" catchtap="showTaskDetail" data-index="{{task_index}}">
+            <text style="color:#B4B4B4; font-size:26rpx; margin-right:14rpx;">查看详情</text>
+            <image src="./resource/arrow_right.png" style="width:15.63rpx; height:15.63rpx; margin-right:37rpx;"></image>
           </view>
-          <view class="ques_header_bottomLine"></view>
-
-          <!-- 标题 -->
-          <view class="task2_title">{{item.title}}</view>
-           <!-- 问题循环 -->
-          <block wx:for="{{item.task_detail}}" wx:key="task_detail_index" wx:for-index="task_detail_index" wx:for-item="task_detail">
-            <block wx:for="{{task_detail.fieldlist}}" wx:key="fieldlist_index" wx:for-index="fieldlist_index" wx:for-item="fieldlist">
-              <view class="type3_layout">
-                <block wx:for="{{fieldlist.lists}}" wx:key="lists_index"  wx:for-item="lists" wx:for-index="list_index">
-                  <view class="ans-layout">
-                    <!-- 字段 -->
-                    <view class="ques-cont">{{lists.item}}：</view>
-                    <!-- 回答 -->
-                    <view class="ans_input">{{lists.content}}</view>
-                  </view>
-                  <view class="ans_heng"></view>
-                </block>
-                <!-- 备注 -->
-                <view class="remark-layout-finished" wx:if="{{fieldlist.memo && fieldlist.memo != ''}}">
-                  <view class="remark-finished">{{fieldlist.memo}}</view>
-                </view>
-                <!-- 图片 -->
-                <view wx:if="{{fieldlist.imgs != ''}}" class="image_listview_layout">
-                  <view class="{{img_index%3==1?'img_layout1':'img_layout'}}" wx:for="{{fieldlist.imgs}}" wx:key="*this" wx:for-item="imgItem" wx:for-index="img_index" bindtap="previewAttachImage" data-taskindex="{{task_index}}" data-taskdetailindex="{{task_detail_index}}" data-fieldlistindex="{{fieldlist_index}}" data-imageindex="{{img_index}}" data-type="4">
-                    <image class="task1_img" src="{{imgItem}}" mode="aspectFill"></image>
-                  </view>
-                  <!-- <view wx:if="{{fieldlist.imgs.length < 3}}" class="{{fieldlist.imgs.length==1?'img_layout1':'img_layout'}}"></view>
-                  <view wx:if="{{fieldlist.imgs.length < 2}}" class="img_layout"></view> -->
-                </view>
-              </view>
-            </block>
-          </block>
         </view>
-      </view>
-      <!-- type==3 字段式 -->
+      </block>
 
       <!-- type==4 考勤确认 -->
       <view wx:if="{{item.type == 4}}">

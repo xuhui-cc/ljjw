@@ -49,6 +49,13 @@
         "tea_courseAppointmentInfo/tea_courseAppointmentInfo"
       ],
       "name": "teacher_courseAppointment"
+    },
+    {
+      "root": "packages/common",
+      "pages": [
+        "webView/webView"
+      ],
+      "name": "common"
     }
   ],
   "tabBar": {

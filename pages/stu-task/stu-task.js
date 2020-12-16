@@ -6,7 +6,7 @@ Page({
    * 分页数据
   */
   pageData: {
-    perpage: 5,
+    perpage: 10,
     page: 1,
     canLoadNextPage: true,
   },
@@ -29,8 +29,8 @@ Page({
     that.setData({
       class_id : class_id
     })
-    this.pageData.page = 1
-    that.un_task()
+    // this.pageData.page = 1
+    // that.un_task()
   },
 
   back: function () {
@@ -121,126 +121,13 @@ Page({
 
       if (status == 1) {
         let newData = d.data.data
-        let newData1 = d.data.data
         for (var i = 0; i < newData.length; i++) {
           var item = newData[i]
           item.submit = false
 
-          if (item.title) {
-            item.title = item.title.split(",")
-          }
-
           switch (item.type*1) {
-            case 1: {
-              // 普通任务
-              var imgs = []
-              item.task_detail = {}
-              item.task_detail.imgs = imgs
-              if (item.attach != '') {
-                item.attach = item.attach.split(',')
-                // if (item.attach.length > 3) {
-                //   item.attach.splice(3, item.attach.length-3)
-                // }
-              }
-              
-              break
-            }
-            case 2: {
-              // 选项任务
-              for (var n = 0; n < item.title.length; n++) {
-                var taskDetail = item.task_detail[n]
-                taskDetail.title = item.title[n]
-                if (item.title.length > 1) {
-                  taskDetail.title = (n+1)+". "+taskDetail.title
-                }
-              }
-  
-              for (var j = 0; j < item.task_detail.length; j++) {
-                var taskDetail = item.task_detail[j]
-                if (taskDetail.child_title != null) {
-                  taskDetail.child_title = taskDetail.child_title.split(",")
-  
-                  for (var n = 0; n < taskDetail.child_title.length; n++) {
-                    var subtitle = taskDetail.child_title[n]
-                    if (taskDetail.child_title.length > 1) {
-                      subtitle = "("+(n+1)+") "+subtitle
-                    }
-                    taskDetail.options[n].title = subtitle
-                  }
-  
-                }
-                for(var k=0;k<taskDetail.options.length;k++){
-                  var option = taskDetail.options[k]
-                  var arr = []
-  
-                  for (let n in option.lists) {
-  
-                    arr.push(option.lists[n]);
-                    // console.log(arr)
-                    option.list = arr
-                  }
-                  option.imgs = []
-
-                  for (var n = 0; n < option.list.length; n++) {
-                    var list_item = option.list[n]
-                    var new_list_item = {}
-                    new_list_item.item = list_item
-                    new_list_item.option = String.fromCharCode(65 + n)
-                    new_list_item.select = false
-                    option.list[n] = new_list_item
-                  }
-  
-                }
-  
-              }
-              break
-            }
-            case 3: {
-              // 字段任务
-              for (var n = 0; n < item.title.length; n++) {
-                item.task_detail[n].title = item.title[n]
-              }
-              for (var j = 0; j < item.task_detail.length; j++) {
-                var taskDetail = item.task_detail[j]
-                for (var k = 0; k < taskDetail.fieldlist.length;k++){
-                  var fileListItem = taskDetail.fieldlist[k]
-                  var imgs = []
-                  fileListItem.imgs = imgs
-  
-                  for (var n = 0; n < fileListItem.lists.length; n++) {
-                    var fileListItem_listItem = fileListItem.lists[n]
-                    var new_fileListItem_listItem = {}
-                    new_fileListItem_listItem.item = fileListItem_listItem
-                    new_fileListItem_listItem.content = ''
-                    fileListItem.lists[n] = new_fileListItem_listItem
-                  }
-  
-                }
-  
-              }
-              break
-            }
             case 4: {
               // 考勤任务
-              for (var j = 0; j < item.task_detail.length; j++) {
-                var taskDetail = item.task_detail[j]
-                taskDetail.cs = []
-                var classdate = taskDetail.classdate
-  
-                for (var k = 0; k < newData1[i].task_detail.length; k++) {
-                  // if (that.data.leave[i].add_arr[k].date == '')
-  
-                  if (classdate == newData1[i].task_detail[k].classdate) {
-                    taskDetail.cs.push([newData1[i].task_detail[k].classtime, newData1[i].task_detail[k].check_status])
-                  }
-                  else {
-  
-  
-                  }
-                }
-              }
-  
-              
               for (var j = 0; j < item.task_detail.length; j++) {
                 var taskDetail = item.task_detail[j]
                 // for (var k = 0; k < that.data.task[i].task_detail[j].cs.length; k++) {
@@ -257,10 +144,8 @@ Page({
           }
         }
         var data = newData
-        var data1 = newData1
         if (that.pageData.page != 1) {
           data = that.data.task.concat(newData)
-          data1 = that.data.task1.concat(newData1)
         }
         if (newData.length < that.pageData.perpage) {
           that.pageData.canLoadNextPage = false
@@ -270,16 +155,19 @@ Page({
         // console.log(d.data.data)
         that.setData({
           task: data,
-          task1: data1
         })
         typeof cb == "function" && cb(true, "加载成功")
         console.log("学生任务列表获取成功")
       }
       else{
-        that.setData({
-          task: ''
-        })
-        typeof cb == "function" && cb(false, d.msg ? d.msg: "加载失败")
+        if(that.pageData.page == 1) {
+          that.setData({
+            task: []
+          })
+          that.pageData.canLoadNextPage = false
+        }
+        
+        typeof cb == "function" && cb(false, d.data.msg ? d.data.msg: "加载失败")
         that.pageData.canLoadNextPage = false
       }
       wx.stopPullDownRefresh({
@@ -309,7 +197,6 @@ Page({
 
       if (status == 1) {
         var newData = d.data.data
-        var newData1 = d.data.data
 
         // console.log(d.data.data + "d.data.data")
         for (var i = 0; i < newData.length; i++) {
@@ -319,139 +206,6 @@ Page({
           }
         
           switch (item.type*1) {
-            case 1: {
-              // 普通任务
-              var imgs = []
-            
-              if (item.task_detail != ''){
-                item.task_detail.imgs = item.task_detail.finished_info.pics.split(",")
-              }else{
-                item.task_detail = {}
-                item.task_detail.imgs = imgs
-              }
-
-              if (item.attach != '') {
-                item.attach = item.attach.split(',')
-                if (item.attach.length > 3) {
-                  item.attach.splice(3, item.attach.length-3)
-                }
-              }
-
-              break;
-            }
-            case 2: {
-              // 选项任务
-               // 标题拆分
-              for (var n = 0; n < item.title.length; n++) {
-                item.task_detail[n].title = item.title[n]
-              }
-                  
-              for (var j = 0; j < item.task_detail.length; j++) {
-                var taskDetail = item.task_detail[j]
-                // 子标题拆分
-                if (taskDetail.child_title != null) {
-                  taskDetail.child_title = taskDetail.child_title.split(",")
-  
-                  for (var n = 0; n < taskDetail.child_title.length; n++) {
-                    taskDetail.options[n].title = taskDetail.child_title[n]
-                  }
-                }
-  
-                let answers = taskDetail.finished_info.answers
-                if (answers && answers != '') {
-                  taskDetail.finished_info.answers = answers.split(",")
-                } else {
-                  taskDetail.finished_info.answers = []
-                }
-                
-                let memo = taskDetail.finished_info.memo
-                if (memo && memo != '') {
-                  taskDetail.finished_info.memo = memo.split("|")
-                } else {
-                  taskDetail.finished_info.memo = []
-                }
-                
-                let attach = taskDetail.finished_info.attach
-                if (attach && attach != '') {
-                  taskDetail.finished_info.attach = attach.split("|")
-                } else {
-                  taskDetail.finished_info.attach = []
-                }
-  
-                for (var k = 0; k < taskDetail.options.length; k++) {
-                  
-                  var option = taskDetail.options[k]
-
-                  if (taskDetail.finished_info.answers.length > k) {
-                    let answer = taskDetail.finished_info.answers[k]
-                    option.answer = answer
-                  }
-                  
-                  option.imgs = []
-                  option.list = Object.values(option.lists)
-
-                  if (taskDetail.finished_info.attach && taskDetail.finished_info.attach != '' && taskDetail.finished_info.attach.length > k && taskDetail.finished_info.attach[k] != ""){
-
-                    option.imgs = taskDetail.finished_info.attach[k].split(",")
-                    // console.log(option.imgs)
-                  }
-                  
-                  for (var n = 0; n < option.list.length; n++) {
-                    var optionListItem = option.list[n]
-                    var newOptionListItem = {}
-                    newOptionListItem.item = optionListItem
-                    newOptionListItem.option = String.fromCharCode(65 + n)
-                    newOptionListItem.select = false
-                    option.list[n] = newOptionListItem
-  
-                    // for (var m = 0; m < taskDetail.finished_info.answers.length;m++){
-                    //   let answer = taskDetail.finished_info.answers[m]
-                      if (newOptionListItem.option == option.answer){
-                        newOptionListItem.select = true
-                      }
-                    // }
-  
-                    for (var m = 0; m < taskDetail.finished_info.memo.length; m++) {
-                      if(k == m){
-                        option.memo = taskDetail.finished_info.memo[m]
-                      }
-                    }
-                  }
-                }
-              }
-              break
-            }
-            case 3: {
-              // 字段任务
-              for (var n = 0; n < item.title.length; n++) {
-                item.task_detail[n].title = item.title[n]
-              }
-  
-              for (var j = 0; j < item.task_detail.length; j++) {
-                var taskDetail = item.task_detail[j]
-  
-                let answers = taskDetail.finished_info.answers.split(",")
-                let imgsList = taskDetail.finished_info.attach.split(",")
-  
-                for (var k = 0; k < taskDetail.fieldlist.length; k++) {
-  
-                  var arr = []
-                  var fileListItem = taskDetail.fieldlist[k]
-
-                  fileListItem.imgs = imgsList
-                  fileListItem.memo = taskDetail.finished_info.memo
-
-                  for (var n = 0; n < fileListItem.lists.length; n++) {
-                    var fileListItemListItem = fileListItem.lists[n]
-                    var newListItem = {}
-                    newListItem.item = fileListItemListItem
-                    newListItem.content = answers[n]
-                    fileListItem.lists[n] = newListItem
-                  }
-                }
-              }
-              break
-            }
             case 4: {
               // 考勤任务
               for (var j = 0; j < item.task_detail.length; j++) {
@@ -490,17 +244,13 @@ Page({
         }
 
         var data = []
-        var data1 = []
         if (that.pageData.page == 1) {
           data = newData
-          data1 = newData1
         } else {
           data = that.data.task.concat(newData)
-          data1 = that.data.task1.concat(newData1)
         }
         that.setData({
           task: data,
-          task1: data1
         })
 
         typeof cb == "function" && cb(true, "加载成功")
@@ -829,9 +579,8 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "tid": that.data.task[task_index].id,
+      "tid": that.data.task[task_index].paperID,
       "type": 1,
-      
     }
     console.log(params)
     app.ljjw.jwStudentCheckonVerify(params).then(d => {
@@ -855,7 +604,7 @@ Page({
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
-      "tid": that.data.task[that.data.task_index].id,
+      "tid": that.data.task[that.data.task_index].paperID,
       "type": 2,
       "reason": that.data.reject_reason
     }
@@ -1018,7 +767,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
+    if (this.data.finish == 0) {
+      // 待完成
+      this.pageData.page = 1
+      this.un_task()
+    }
   },
 
   /**
@@ -1062,10 +816,10 @@ Page({
         this.un_task(function (success, msg) {
           if (!success) {
             that.pageData.page = oldPage
-            wx.showToast({
-              title: msg,
-              icon: 'none'
-            })
+            // wx.showToast({
+            //   title: msg,
+            //   icon: 'none'
+            // })
           }
         })
       } else {
@@ -1357,4 +1111,38 @@ Page({
       }
     })
   },
+
+  /**
+   * 完成按钮 点击事件
+  */
+  finishButtonClciked: function(e) {
+    let index = e.currentTarget.dataset.index
+    let task = this.data.task[index]
+    let stuinfo = wx.getStorageSync('stuinfo')
+    let parperUrl = app.ljjw.getTaskDetailH5("1", stuinfo.id, task.paperID, this.data.class_id)
+    console.log('试卷地址：', parperUrl)
+    wx.navigateTo({
+      url: '/packages/common/webView/webView',
+      success(res){
+        res.eventChannel.emit('webView', {url: parperUrl})
+      }
+    })
+  },
+
+  /**
+   * 已完成任务 查看详情 点击事件
+  */
+  showTaskDetail: function(e) {
+    let index = e.currentTarget.dataset.index
+    let task = this.data.task[index]
+    let stuinfo = wx.getStorageSync('stuinfo')
+    let parperUrl = app.ljjw.getTaskDetailH5("2", stuinfo.id, task.paperID, this.data.class_id)
+    console.log('试卷地址：', parperUrl)
+    wx.navigateTo({
+      url: '/packages/common/webView/webView',
+      success(res){
+        res.eventChannel.emit('webView', {url: parperUrl})
+      }
+    })
+  }
 })
