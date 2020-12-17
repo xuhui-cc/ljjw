@@ -25,10 +25,11 @@ Page({
   look_stu_datail:function(e){
     let that = this
     var askfor_xb = e.currentTarget.dataset.askfor_xb
+    let leaveInfo = that.data.askforleave[askfor_xb]
     console.log(askfor_xb)
     that.setData({
-      askforleave_info: that.data.askforleave[askfor_xb].askforleave_info,
-      askforleave_avatar: that.data.askforleave[askfor_xb].avatar,
+      askforleave_info: leaveInfo.askforleave_info,
+      askforleave_avatar: leaveInfo.avatar,
       stu_detail: true
     })
   },
@@ -251,6 +252,7 @@ Page({
         if (askforleave_num != 0) {
           for (var i = 0; i < checkData.askforleave.length; i++) {
             let student = checkData.askforleave[i]
+            student.askforleave_info.date = app.util.customFormatTimeByTimestamp(checkData.riqi*1000, 'yyyy-MM-dd')
             // 处理学生头像
             if (!student.avatar || student.avatar.indexOf('http') == -1) {
               student.avatar = '../../images/avatar_null.png'

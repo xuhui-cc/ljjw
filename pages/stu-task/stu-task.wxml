@@ -105,7 +105,7 @@
     <view wx:for="{{task}}" wx:key="index" wx:for-index="task_index">
       <!-- webView任务 -->
       <block wx:if="{{item.type != 4}}">
-        <view class="taskCell">
+        <view class="taskCell" style="margin-top:20rpx;">
           <view class="taskCell_topView">
             <!-- 任务标题 -->
             <text class="taskCell_title twoLine">{{item.title}}</text>
@@ -129,10 +129,10 @@
 
       <!-- type==4 考勤确认 -->
       <view wx:if="{{item.type == 4}}">
-        <view class="ques-layout">
+        <view class="ques-layout" style="margin-top:20rpx;">
           <view class="flex">
-            <view class="ques-ori">来自：{{item.pubname}}老师</view>
-            <view class="ques-date">{{item.pubtime}}</view>
+            <view class="ques-ori">来自：{{item.name}}老师</view>
+            <view class="ques-date">{{item.operate_date}}</view>
           </view>
           <image wx:if="{{item.ck_finished.verify_status == 1}}" class="work_img" src="../../images/yes_work.png"></image>
           <image wx:if="{{item.ck_finished.verify_status == 2}}" class="work_img" src="../../images/reject_work.png"></image>
@@ -156,7 +156,6 @@
                     <view wx:if="{{cs[1] == 2}}" class="stu_condition" style="color:#F86478;">旷课</view>
                     <view wx:if="{{cs[1] == 3}}" class="stu_condition" style="color:rgba(70,161,251,1);">请假</view>
                     <view wx:if="{{cs[1] == 4}}" class="stu_condition" style="color:rgba(154,100,248,1);">离校</view>
-                      
                   </view>
                 </view>
               </view>

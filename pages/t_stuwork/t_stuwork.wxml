@@ -146,14 +146,16 @@
             <view class="pro-ope">操作人：{{askforleave_info.verify_list[0].verify_name}}</view>
             <view class="start-time2">{{askforleave_info.verify_list[0].createtime}}</view>
           </view>
-          <image wx:if="{{askforleave_info.verify_list[0] != ''}}" class="pro-img" src="../../images/route.png"></image>
-          <view class="mask-head" wx:if="{{askforleave_info.verify_list[1] != ''}}">
-            <image class="mask-cir" src="../../images/gc.png"></image>
-            <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 1}}" style='color:rgba(70,191,106,1);'>管理员审核通过</view>
-            <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 2}}" style='color:rgba(241,68,68,1);'>管理员审核驳回</view>
-            <view class="pro-ope">操作人：{{askforleave_info.verify_list[1].verify_name}}</view>
-            <view class="end-time">{{askforleave_info.verify_list[1].createtime}}</view>
-          </view>
+          <block wx:if="{{askforleave_info.verify_list.length > 1}}">
+            <image class="pro-img" src="../../images/route.png"></image>
+            <view class="mask-head">
+              <image class="mask-cir" src="../../images/gc.png"></image>
+              <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 1}}" style='color:rgba(70,191,106,1);'>管理员审核通过</view>
+              <view class="pro-end" wx:if="{{askforleave_info.verify_list[1].verify_status == 2}}" style='color:rgba(241,68,68,1);'>管理员审核驳回</view>
+              <view class="pro-ope">操作人：{{askforleave_info.verify_list[1].verify_name}}</view>
+              <view class="end-time">{{askforleave_info.verify_list[1].createtime}}</view>
+            </view>
+          </block>
         </view>
         
       </view>

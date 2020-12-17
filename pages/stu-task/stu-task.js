@@ -201,9 +201,6 @@ Page({
         // console.log(d.data.data + "d.data.data")
         for (var i = 0; i < newData.length; i++) {
           var item = newData[i]
-          if (item.title) {
-            item.title = item.title.split(",")
-          }
         
           switch (item.type*1) {
             case 4: {
