@@ -59,7 +59,7 @@
           <view class="stu-suit-head">请假({{askforleave_num}}人)：</view>
         </view>
         <view hidden="{{!section_header_dic.askforleave_header.flex}}" class="section_placehoulder"></view>
-        <view class="stu-suit">
+        <view class="stu-suit" style="margin-left:16rpx; width:734rpx;">
           <view wx:for="{{askforleave}}" wx:key="askforleave_index">
             <view class="stu-info-layout" data-askfor_xb='{{index}}' bindtap="look_stu_datail">
               <image class="stu-avatar" src="{{item.avatar}}"></image>

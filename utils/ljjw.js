@@ -1,5 +1,5 @@
-// const Base_URI = 'http://cs.szgk.cn' // 测试
-const Base_URI = 'https://www.szgk.cn' // 测试
+const Base_URI = 'http://cs.szgk.cn' // 测试
+// const Base_URI = 'https://www.szgk.cn' // 测试
 
 const URI = Base_URI + '/apiv2.php'    //接口
 
