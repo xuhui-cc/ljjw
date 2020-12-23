@@ -18,7 +18,10 @@ Page({
     showPictureTypeSelect: false,
 
     // 导航栏标题
-    naviTitle: '完善基础信息'
+    naviTitle: '完善基础信息',
+
+    // 被驳回原因 type为3时获取
+    rejectReason: '',
   },
 
   /**
@@ -88,6 +91,7 @@ Page({
         this.setData({
           naviTitle: '重新提交基础信息'
         })
+        this.getRejectRenson()
         this.getBaseInfo()
         break
       }
@@ -469,6 +473,26 @@ Page({
       }
 
 
+    })
+  },
+
+  /**
+   * 获取驳回原因
+  */
+  getRejectRenson: function() {
+    let userinfo = wx.getStorageSync('userInfo')
+    let params = {
+      token: wx.getStorageSync('token'),
+      uid: userinfo.uid
+    }
+    let that = this
+    app.ljjw.jwGetRejection(params).then(d=>{
+      if (d.data.status == 1) {
+        let reason = d.data.data.rejection
+        that.setData({
+          rejectReason: reason
+        })
+      }
     })
   },
 

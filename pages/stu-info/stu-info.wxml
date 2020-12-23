@@ -11,109 +11,115 @@
     </view>
   </view>
 
-  <view style="margin-top:{{pageSize.naviHeight}}px;">
+  <view class="contentView" style="margin-top:{{pageSize.naviHeight}}px;">
+    <view wx:if="{{rejectReason}}" class="rejectReasonView">
+      <image style="width:22.55rpx; height:22.55rpx; margin-left:23rpx;" src="./resource/warning.png"></image>
+      <text class="rejectReason_content">{{rejectReason}}</text>
+    </view>
+    <view>
+      <view class="flex">
+        <view class="shu"></view>
+        <view class="info-tltle">我的头像</view>
+        <image wx:if="{{avatar}}" class='avatar' src='{{avatar}}' bindtap="chooseImg"></image>
+        <view wx:else="" class="flex1" bindtap="chooseImg">
+          <view class="tip" wx:if="{{!avatar}}">请选择</view>
+          <image class='avatar' src='{{avatar}}' wx:else=""></image>
+          <image class="select" src="../../images/next.png"></image>
+        </view>
+      </view>
+      
+      <!-- <view class="tip">请选择</view>
+      <image class="select" src="../../images/next.png"></image> -->
+    </view>
+
     <view class="flex">
       <view class="shu"></view>
-      <view class="info-tltle">我的头像</view>
-      <image wx:if="{{avatar}}" class='avatar' src='{{avatar}}' bindtap="chooseImg"></image>
-      <view wx:else="" class="flex1" bindtap="chooseImg">
-        <view class="tip" wx:if="{{!avatar}}">请选择</view>
-        <image class='avatar' src='{{avatar}}' wx:else=""></image>
-        <image class="select" src="../../images/next.png"></image>
-      </view>
+      <view class="info-tltle">姓名</view>
+      
+      <!-- <view wx:if="{{type == 3}}" class="tip">{{input_name}}</view> -->
+      <input class="tip" placeholder="请填写" bindinput='input_name' value="{{input_name}}"></input>
+      <!-- <image class="select" src="../../images/next.png"></image> -->
     </view>
-    
-    <!-- <view class="tip">请选择</view>
-    <image class="select" src="../../images/next.png"></image> -->
-  </view>
 
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">姓名</view>
-    
-    <!-- <view wx:if="{{type == 3}}" class="tip">{{input_name}}</view> -->
-    <input class="tip" placeholder="请填写" bindinput='input_name' value="{{input_name}}"></input>
-    <!-- <image class="select" src="../../images/next.png"></image> -->
-  </view>
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">电话</view>
+      <!-- <input class="tip" placeholder="请填写" bindinput='input_phone' type="number" value="{{input_phone}}"></input> -->
+      <view class="tip">{{phone}}</view>
+      <!-- <image class="select" src="../../images/next.png"></image> -->
+    </view>
 
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">电话</view>
-    <!-- <input class="tip" placeholder="请填写" bindinput='input_phone' type="number" value="{{input_phone}}"></input> -->
-    <view class="tip">{{phone}}</view>
-    <!-- <image class="select" src="../../images/next.png"></image> -->
-  </view>
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">性别</view>
+      <!-- <view wx:if="{{type == 3}}" class="tip">{{sex[sex_index]}}</view> -->
+      <!-- <block wx:else> -->
+        <picker bindchange="sex_picker" value="{{sex_index}}" range="{{sex}}">
+          <view class="tip">
+            {{sex[sex_index]}}
+          </view>
+        </picker>
+        <picker bindchange="sex_picker" value="{{sex_index}}" range="{{sex}}">
+          <image class="select" src="../../images/next.png"></image>
+        </picker>
+      <!-- </block> -->
+    </view>
 
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">性别</view>
-    <!-- <view wx:if="{{type == 3}}" class="tip">{{sex[sex_index]}}</view> -->
-    <!-- <block wx:else> -->
-      <picker bindchange="sex_picker" value="{{sex_index}}" range="{{sex}}">
-        <view class="tip">
-          {{sex[sex_index]}}
-        </view>
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">毕业院校</view>
+      <!-- <input class="tip" placeholder="请填写" bindinput='input_school' ></input> -->
+      <!-- <view wx:if="{{type == 3}}" class="tip">{{input_school}}</view> -->
+      <view class="tip" bindtap='to_graduation_school'>{{input_school}}</view>
+      <!-- <image class="select" src="../../images/next.png"></image> -->
+    </view>
+
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">毕业时间</view>
+
+      <!-- <view wx:if="{{type == 3}}" class="tip">{{graduation_time}}</view> -->
+      <!-- <block wx:else> -->
+        <picker mode="date" fields="month" :value="{{graduation_time}}"   bindchange="graduation_time">
+          <view class="tip">{{graduation_time}}</view>
+        </picker>
+
+        <picker mode="date" fields="month" :value="{{graduation_time}}"   bindchange="graduation_time">
+          <image class="select" src="../../images/next.png"></image>
+        </picker>
+      <!-- </block> -->
+    </view>
+
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">专业</view>
+      <!-- <view wx:if="{{type == 3}}" class="tip">{{input_major}}</view> -->
+      <input class="tip" placeholder="请填写" bindinput='input_major' value="{{input_major}}"></input>
+      <!-- <image class="select" src="../../images/next.png"></image> -->
+    </view>
+
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">邮箱</view>
+      <!-- <view wx:if="{{type == 3}}" class="tip">{{input_email}}</view> -->
+      <input class="tip" placeholder="请填写" bindinput='input_email' value="{{input_email}}"></input>
+      <!-- <image class="select" src="../../images/next.png"></image> -->
+    </view>
+
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">班级</view>
+      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index == -1 ? 0 : stu_class_index}}" range="{{stu_class}}" >
+        <view class='tip' wx:if="{{stu_class_index == -1}}">请选择</view>
+        <view class="tip" wx:else="">{{stu_class[stu_class_index].name}}</view>
       </picker>
-      <picker bindchange="sex_picker" value="{{sex_index}}" range="{{sex}}">
+      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index == -1 ? 0 : stu_class_index}}" range="{{stu_class}}" >
         <image class="select" src="../../images/next.png"></image>
       </picker>
-    <!-- </block> -->
+    </view>
+
+    <view class='submit' bindtap="submit" style="{{issubmit ? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}">提交</view>
   </view>
-
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">毕业院校</view>
-    <!-- <input class="tip" placeholder="请填写" bindinput='input_school' ></input> -->
-    <!-- <view wx:if="{{type == 3}}" class="tip">{{input_school}}</view> -->
-    <view class="tip" bindtap='to_graduation_school'>{{input_school}}</view>
-    <!-- <image class="select" src="../../images/next.png"></image> -->
-  </view>
-
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">毕业时间</view>
-
-    <!-- <view wx:if="{{type == 3}}" class="tip">{{graduation_time}}</view> -->
-    <!-- <block wx:else> -->
-      <picker mode="date" fields="month" :value="{{graduation_time}}"   bindchange="graduation_time">
-        <view class="tip">{{graduation_time}}</view>
-      </picker>
-
-      <picker mode="date" fields="month" :value="{{graduation_time}}"   bindchange="graduation_time">
-        <image class="select" src="../../images/next.png"></image>
-      </picker>
-    <!-- </block> -->
-  </view>
-
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">专业</view>
-    <!-- <view wx:if="{{type == 3}}" class="tip">{{input_major}}</view> -->
-    <input class="tip" placeholder="请填写" bindinput='input_major' value="{{input_major}}"></input>
-    <!-- <image class="select" src="../../images/next.png"></image> -->
-  </view>
-
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">邮箱</view>
-    <!-- <view wx:if="{{type == 3}}" class="tip">{{input_email}}</view> -->
-    <input class="tip" placeholder="请填写" bindinput='input_email' value="{{input_email}}"></input>
-    <!-- <image class="select" src="../../images/next.png"></image> -->
-  </view>
-
-  <view class="flex">
-    <view class="shu"></view>
-    <view class="info-tltle">班级</view>
-    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index == -1 ? 0 : stu_class_index}}" range="{{stu_class}}" >
-      <view class='tip' wx:if="{{stu_class_index == -1}}">请选择</view>
-      <view class="tip" wx:else="">{{stu_class[stu_class_index].name}}</view>
-    </picker>
-    <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index == -1 ? 0 : stu_class_index}}" range="{{stu_class}}" >
-      <image class="select" src="../../images/next.png"></image>
-    </picker>
-  </view>
-
-  <view class='submit' bindtap="submit" style="{{issubmit ? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}">提交</view>
 </view>
 
 

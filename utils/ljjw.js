@@ -481,7 +481,24 @@ function getTaskDetailH5(type, stu_id, parperID, classID) {
   return Base_URI + '/jwpaper/xcxh5?paperID=' + parperID + '&stu_id=' + stu_id + '&type=' + type +'&classID=' + classID
 }
 
-module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime, jwUpdateUserAudioTime, updateAudioPlayCount, courseAppointmentList, courseAppointmentDetail_h5, getCourseAppointmentItemList, submitCourseAppointment, myCourseAppointmentList, cancelCourseAppointment, getCourseAppointmentDetailInfo, getNewCourseAppointmentDetail, submitChangeCourseAppointment, checkAppointmentCateCanUse, studentGetCourseAppointmentRedCount, teacherGetCourseAppointmentRedCount, teacherGetCourseAppointmentList, teacherGetCourseAppointmentAnalysis, teacherDealCourseAppointment, teacherGetCourseAppointmentStudentList, getAppointmentProcessListByID, getCourseAppointmentNotice, getTaskDetailH5}
+/**
+ * 老师端 修改学情/概况
+*/
+function jwUpdateStudyInfo(params) {
+  return fetch.ljjwfetchpost(URI, 'jwUpdateStudyInfo', params, '老师端 修改学情/概况', true, '修改中')
+}
+
+// 老师端 删除学情/概况
+function jwDeleteStudy(params) {
+  return fetch.ljjwfetchpost(URI, 'jwDeleteStudy', params, '老师端 删除学情/概况', true, '删除中')
+}
+
+// 获取基础信息被驳回原因
+function jwGetRejection(params) {
+  return fetch.ljjwfetch(URI, 'jwGetRejection', params, '获取基础信息被驳回原因')
+}
+
+module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime, jwUpdateUserAudioTime, updateAudioPlayCount, courseAppointmentList, courseAppointmentDetail_h5, getCourseAppointmentItemList, submitCourseAppointment, myCourseAppointmentList, cancelCourseAppointment, getCourseAppointmentDetailInfo, getNewCourseAppointmentDetail, submitChangeCourseAppointment, checkAppointmentCateCanUse, studentGetCourseAppointmentRedCount, teacherGetCourseAppointmentRedCount, teacherGetCourseAppointmentList, teacherGetCourseAppointmentAnalysis, teacherDealCourseAppointment, teacherGetCourseAppointmentStudentList, getAppointmentProcessListByID, getCourseAppointmentNotice, getTaskDetailH5, jwUpdateStudyInfo, jwDeleteStudy, jwGetRejection}
 
 //测试正式服接口
 function testAPi(api, params) {

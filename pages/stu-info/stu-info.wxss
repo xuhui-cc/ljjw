@@ -165,3 +165,29 @@ page{
   align-items: center;
   justify-content: center;
 }
+
+.contentView {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 50rpx;
+}
+
+.rejectReasonView {
+  width: 100%;
+  min-height: 70rpx;
+  background-color: rgba(241,68,68,0.08);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.rejectReason_content {
+  width: 658rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  margin-left: 16rpx;
+  color: #F14444;
+  font-size: 22rpx;
+  line-height: 30rpx;
+}

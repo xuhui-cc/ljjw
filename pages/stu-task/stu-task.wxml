@@ -23,11 +23,12 @@
           <view class="taskCell_topView">
             <!-- 任务标题 -->
             <text class="taskCell_title twoLine">{{item.title}}</text>
-            <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
-              <!-- 发布人姓名 -->
-              <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text>
+            <view class="flex_row_itemsCenter_spaceBetween" style="height:77rpx; margin-top:0rpx; width:100%;">
               <!-- 发布时间 -->
               <text style="color:#B4B4B4; font-size:26rpx;">{{item.operate_date}}</text>
+              <!-- 发布人姓名 -->
+              <!-- <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text> -->
+              <view wx:if="{{item.anonymous == 1}}" class="anonymousView">匿名任务</view>
             </view>
           </view>
           <!-- 题目遍历 -->

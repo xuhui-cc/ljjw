@@ -13,6 +13,10 @@ Page({
     cates_index:0,
     add_mask:false,
     isfold:true,
+
+    moreActionViewTop: null,
+    showMoreActionIndex: null,
+    showMoreActionView: false,
   },
 
   /**
@@ -117,6 +121,12 @@ Page({
 
       })
       console.log("我是学生档案学情")
+    }
+  },
+
+  onPageScroll: function() {
+    if (this.data.showMoreActionIndex != null) {
+      this.closeMoreActionView()
     }
   },
 
@@ -225,19 +235,7 @@ Page({
     }
   },
 
-  add:function(){
-    let that = this
-    that.setData({
-      add_mask:true
-    })
-  },
-
-  close:function(){
-    let that = this
-    that.setData({
-      add_mask: false
-    })
-  },
+  
 
   input_condition:function(e){
     let that = this
@@ -251,6 +249,8 @@ Page({
 
     })
   },
+
+  
 
   add_submit:function(){
     if (this.dataSubmiting) {
@@ -564,4 +564,242 @@ Page({
       stateBarHeight: systemInfo.statusBarHeight
     })
   },
+
+  //-------------------------------------------私有方法---------------------------------------------------
+  /**
+   * 展示新增弹框
+  */
+  add:function(){
+    let that = this
+    that.setData({
+      add_mask:true
+    })
+  },
+
+  /**
+   * 关闭新增视图
+  */
+  close:function(){
+    let that = this
+    that.setData({
+      add_mask: false,
+      input_condition: '',
+      showMoreActionIndex: null,
+    })
+  },
+
+  /**
+   * 关闭更多功能按钮视图
+  */
+  closeMoreActionView: function() {
+    this.setData({
+      moreActionViewTop: null,
+      showMoreActionView: false,
+    })
+  },
+  //----------------------------------------------接口-------------------------------------------------------
+  /**
+   * 修改学情/概况
+  */
+  updateStudyInfo: function() {
+    if (this.dataSubmiting) {
+      return
+    }
+    this.dataSubmiting = true
+    let userinfo = wx.getStorageSync('userInfo')
+    let content = this.data.input_condition
+    let params = {
+      uid: userinfo.uid,
+      token: wx.getStorageSync('token'),
+      cate_id: this.data.cates[this.data.cates_index].id,
+      studyId: this.data.aud == 0 ? this.data.studyinfo[this.data.showMoreActionIndex].id : this.data.condition[this.data.showMoreActionIndex].id,
+      type: this.data.aud == 0 ? '1' : '2',
+      memo: content
+    }
+    let that = this
+    app.ljjw.jwUpdateStudyInfo(params).then(d=>{
+      if (d.data.status == 1) {
+        let memoStr = ''
+        if (that.data.aud == 0) {
+          // 学情
+          memoStr = 'studyinfo[' + that.data.showMoreActionIndex + '].memo' 
+        } else if(that.data.aud == 1) {
+          // 概况
+          memoStr = 'condition[' + that.data.showMoreActionIndex + '].memo'
+        }
+        that.setData({
+          [memoStr]: content
+        })
+        that.close()
+      }
+      that.dataSubmiting = false
+    })
+  },
+
+  /**
+   * 删除 学情/概况 接口
+  */
+  deleteStudyInfo: function() {
+    let userinfo = wx.getStorageSync('userInfo')
+    let params = {
+      studyId: this.data.aud == 0 ? this.data.studyinfo[this.data.showMoreActionIndex].id : this.data.condition[this.data.showMoreActionIndex].id,
+      token: wx.getStorageSync('token'),
+      uid: userinfo.uid
+    }
+    let that = this
+    app.ljjw.jwDeleteStudy(params).then(d=>{
+      if (d.data.status == 1) {
+        if (that.data.aud == 0) {
+          // 学情
+          that.data.studyinfo.splice(that.data.showMoreActionIndex, 1)
+          that.setData({
+            studyinfo: that.data.studyinfo
+          })
+        } else if (that.data.aud == 1) {
+          // 概况
+          that.data.condition.splice(that.data.showMoreActionIndex, 1)
+          that.setData({
+            condition: that.data.condition
+          })
+        }
+        wx.showToast({
+          title: '删除成功',
+          icon: 'none'
+        })
+      }
+      that.setData({
+        showMoreActionIndex: null,
+      })
+    })
+  },
+
+  //--------------------------------------------交互事件-------------------------------------------------------
+
+  /**
+   * 学情/概况单元格 展示更多功能按钮 点击事件
+  */
+  moreActionButtonClciked: function(e) {
+    let index = e.currentTarget.dataset.index
+    let id_Str = "#moreActionButton" + index
+    var query = wx.createSelectorQuery();
+    var that = this;
+    query.select(id_Str).boundingClientRect(function (rect) {
+      let top = rect.top
+      console.log('top:', top)
+      that.setData({
+        moreActionViewTop: top,
+        showMoreActionIndex: index,
+        showMoreActionView: true
+      })
+    }).exec()
+  },
+
+  /**
+   * 背景视图 点击事件
+  */
+  backgroundClicked: function() {
+    if (this.data.showMoreActionIndex != null) {
+      this.closeMoreActionView()
+    }
+  },
+
+  /**
+   * 编辑按钮 点击事件
+  */
+  editButtonClciked: function() {
+    let index = this.data.showMoreActionIndex
+    let userinfo = wx.getStorageSync('userInfo')
+    if (this.data.aud == 0) {
+      // 学情
+      let study_item = this.data.studyinfo[index]
+      if (study_item.createuid != userinfo.uid) {
+        wx.showToast({
+          title: '只能编辑自己发布的学情哦！',
+          icon: 'none'
+        })
+        return
+      }
+      this.setData({
+        input_condition: study_item.memo
+      })
+    } else if (this.data.aud == 1) {
+      // 概况
+      let easyInfoItem = this.data.condition[index]
+      if (easyInfoItem.createuid != userinfo.uid) {
+        wx.showToast({
+          title: '只能编辑自己发布的概况哦！',
+          icon: 'none'
+        })
+        return
+      }
+      this.setData({
+        input_condition: easyInfoItem.memo
+      })
+    }
+
+    this.add()
+    this.closeMoreActionView()
+  },
+
+  /**
+   * 删除按钮 点击事件 
+  */
+  deleteButtonClciked: function() {
+    let index = this.data.showMoreActionIndex
+    let title = ''
+    let userinfo = wx.getStorageSync('userInfo')
+    if (this.data.aud == 0) {
+      // 学情
+      let study_item = this.data.studyinfo[index]
+      if (study_item.createuid != userinfo.uid) {
+        wx.showToast({
+          title: '只能删除自己发布的学情哦！',
+          icon: 'none'
+        })
+        return
+      }
+      title = '学情'
+    } else if (this.data.aud == 1) {
+      // 概况
+      let easyInfoItem = this.data.condition[index]
+      if (easyInfoItem.createuid != userinfo.uid) {
+        wx.showToast({
+          title: '只能删除自己发布的概况哦！',
+          icon: 'none'
+        })
+        return
+      }
+      title = '概况'
+    }
+    let that = this
+    wx.showModal({
+      content: '确定删除该条' + title + '吗？',
+      success (res) {
+        if (res.confirm) {
+          // 确定
+          that.deleteStudyInfo()
+        } else {
+          that.setData({
+            showMoreActionIndex: null,
+          })
+        }
+      },
+      fail (res) {
+        that.setData({
+          showMoreActionIndex: null,
+        })
+      }
+    })
+    this.closeMoreActionView()
+  },
+
+  /**
+   * 编辑弹框 确定按钮 点击事件
+  */
+  update_submit: function() {
+    if (!this.data.input_condition || this.data.input_condition.length == 0) {
+      return
+    }
+    this.updateStudyInfo()
+  }
 })

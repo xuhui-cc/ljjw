@@ -1,4 +1,4 @@
-<view class="container">
+<view class="container" bindtap="backgroundClicked">
   <!-- 导航 -->
   <view class="nabigation_bar" style="height:{{naviBarHeight}}px">
     <view class="navibar_contentView" style="height:{{naviBarHeight-stateBarHeight}}px;margin-top:{{stateBarHeight}}px;">
@@ -22,7 +22,7 @@
       <textarea wx:if="{{aud == 0}}" class="reject-for" placeholder="请输入该学生学情分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition' maxlength="600" value="{{input_condition}}"></textarea>
       <textarea wx:else="{{aud == 1}}" class="reject-for" placeholder="请输入该学生概况分析" placeholder-style="color:rgb(180,180,180);font-size:28rpx;" bindinput='input_condition' maxlength="600" value="{{input_condition}}"></textarea>
     </view>
-    <view class="reject-sub" style="{{input_condition? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{input_condition?'add_submit':''}}">确定</view>
+    <view class="reject-sub" style="{{input_condition? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}" bindtap="{{showMoreActionIndex == null?'add_submit':'update_submit'}}">确定</view>
   
   </view>
 
@@ -62,9 +62,17 @@
             <view class="name">{{item.teachername}}</view>
           </view>
           <view class="xqfx">学情分析：{{item.memo}}</view>
+
+          <!-- 更多功能按钮 -->
+          <view class="moreActionButtonView" id="moreActionButton{{index}}" catchtap="moreActionButtonClciked" data-index="{{index}}">
+            <view class="moreActionButton">
+              <view style="width:9rpx; height:9rpx; background-color:#91c4ba; border-radius: 4.5rpx; margin-left:19rpx;"></view>
+              <view style="width:9rpx; height:9rpx; background-color:#91c4ba; border-radius: 4.5rpx; margin-left:6rpx;"></view>
+              <view style="width:9rpx; height:9rpx; background-color:#91c4ba; border-radius: 4.5rpx; margin-left:6rpx;"></view>
+            </view>
+          </view>
         </view>
       </block>
-    
     </view>
 
     <block wx:else>
@@ -97,6 +105,15 @@
             <view class="name">{{item.teachername}}老师</view>
           </view>
           <view class="xqfx">学生概况：{{item.memo}}</view>
+
+          <!-- 更多功能按钮 -->
+          <view class="moreActionButtonView" id="moreActionButton{{index}}" catchtap="moreActionButtonClciked" data-index="{{index}}">
+            <view class="moreActionButton">
+              <view style="width:9rpx; height:9rpx; background-color:#8288A7; border-radius: 4.5rpx; margin-left:19rpx;"></view>
+              <view style="width:9rpx; height:9rpx; background-color:#8288A7; border-radius: 4.5rpx; margin-left:6rpx;"></view>
+              <view style="width:9rpx; height:9rpx; background-color:#8288A7; border-radius: 4.5rpx; margin-left:6rpx;"></view>
+            </view>
+          </view>
         </view>
       </block>
     </view>
@@ -207,4 +224,18 @@
 
 
 <!-- container -->
+</view>
+
+<!-- 更多功能视图 -->
+<view wx:if="{{showMoreActionView}}" class="moreActionView" style="top:{{moreActionViewTop}}px;">
+  <!-- 编辑按钮 -->
+  <view class="actionButton" bindtap="editButtonClciked">
+    <image style="width:31rpx; height:31rpx; margin-left:17rpx;" src="./resource/edit.png"></image>
+    <text style="color:white; font-size:24rpx; margin-left:6rpx;">编辑</text>
+  </view>
+  <!-- 删除按钮 -->
+  <view class="actionButton" bindtap="deleteButtonClciked">
+    <image style="width:26.74rpx; height:25.21rpx; margin-left:34rpx;" src="./resource/delete.png"></image>
+    <text style="color:white; font-size:24rpx; margin-left:6rpx; margin-right:17rpx;">删除</text>
+  </view>
 </view>
