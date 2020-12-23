@@ -223,7 +223,7 @@ Page({
     var type = e.currentTarget.dataset.type
     console.log(type + "to_stu_info")
     wx.navigateTo({
-      url: '../../pages/stu-info/stu-info?type=' + type,
+      url: '../../pages/stu-info/stu-info?type=' + type + '&checked=' + this.data.mydata.checked,
     })
 
   },

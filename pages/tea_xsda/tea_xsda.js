@@ -97,23 +97,23 @@ Page({
             cates: d.data.data.cates,
           })
           
-          for(var i=0;i<that.data.cates.length;i++){
-            var cs = "cates[" + i + "].com"
-            that.setData({
-              [cs]:false
-            })
-          }
-          for(var n=0;n<that.data.subject.length;n++){
-            if(that.data.cates[that.data.cates_index].id == that.data.subject[n].id){
-              var cscs = "cates[" + that.data.cates_index + "].com"
-              that.setData({
-                [cscs]:true
-              })
-            }
-          }
-          that.setData({
-            cscs: that.data.cates
-          })
+          // for(var i=0;i<that.data.cates.length;i++){
+          //   var cs = "cates[" + i + "].com"
+          //   that.setData({
+          //     [cs]:false
+          //   })
+          // }
+          // for(var n=0;n<that.data.subject.length;n++){
+          //   if(that.data.cates[that.data.cates_index].id == that.data.subject[n].id){
+          //     var cscs = "cates[" + that.data.cates_index + "].com"
+          //     that.setData({
+          //       [cscs]:true
+          //     })
+          //   }
+          // }
+          // that.setData({
+          //   cscs: that.data.cates
+          // })
           console.log(that.data.cates_index + "that.data.cates_index")
           console.log(that.data.cates)
           console.log("学生档案——学情获取成功")
@@ -167,23 +167,23 @@ Page({
             studyinfo: d.data.data.studyinfo,
             cates: d.data.data.cates,
           })
-          for (var i = 0; i < that.data.cates.length; i++) {
-            var cs = "cates[" + i + "].com"
-            that.setData({
-              [cs]: false
-            })
-          }
-          for (var n = 0; n < that.data.subject.length; n++) {
-            if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
-              var cscs = "cates[" + that.data.cates_index + "].com"
-              that.setData({
-                [cscs]: true
-              })
-            }
-          }
-          that.setData({
-            cscs: that.data.cates
-          })
+          // for (var i = 0; i < that.data.cates.length; i++) {
+          //   var cs = "cates[" + i + "].com"
+          //   that.setData({
+          //     [cs]: false
+          //   })
+          // }
+          // for (var n = 0; n < that.data.subject.length; n++) {
+          //   if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
+          //     var cscs = "cates[" + that.data.cates_index + "].com"
+          //     that.setData({
+          //       [cscs]: true
+          //     })
+          //   }
+          // }
+          // that.setData({
+          //   cscs: that.data.cates
+          // })
           console.log(that.data.cates_index + "that.data.cates_index")
           console.log(that.data.cates)
           console.log("学生档案——学情获取成功")
@@ -298,23 +298,23 @@ Page({
               studyinfo: d.data.data.studyinfo,
               cates: d.data.data.cates,
             })
-            for (var i = 0; i < that.data.cates.length; i++) {
-              var cs = "cates[" + i + "].com"
-              that.setData({
-                [cs]: false
-              })
-            }
-            for (var n = 0; n < that.data.subject.length; n++) {
-              if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
-                var cscs = "cates[" + that.data.cates_index + "].com"
-                that.setData({
-                  [cscs]: true
-                })
-              }
-            }
-            that.setData({
-              cscs:that.data.cates
-            })
+            // for (var i = 0; i < that.data.cates.length; i++) {
+            //   var cs = "cates[" + i + "].com"
+            //   that.setData({
+            //     [cs]: false
+            //   })
+            // }
+            // for (var n = 0; n < that.data.subject.length; n++) {
+            //   if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
+            //     var cscs = "cates[" + that.data.cates_index + "].com"
+            //     that.setData({
+            //       [cscs]: true
+            //     })
+            //   }
+            // }
+            // that.setData({
+            //   cscs:that.data.cates
+            // })
             
             console.log(that.data.cates_index + "that.data.cates_index")
             console.log(that.data.cates)
@@ -388,23 +388,23 @@ Page({
           studyinfo: d.data.data.studyinfo,
           cates: d.data.data.cates,
         })
-        for (var i = 0; i < that.data.cates.length; i++) {
-          var cs = "cates[" + i + "].com"
-          that.setData({
-            [cs]: false
-          })
-        }
-        for (var n = 0; n < that.data.subject.length; n++) {
-          if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
-            var cscs = "cates[" + that.data.cates_index + "].com"
-            that.setData({
-              [cscs]: true
-            })
-          }
-        }
-        that.setData({
-          cscs: that.data.cates
-        })
+        // for (var i = 0; i < that.data.cates.length; i++) {
+        //   var cs = "cates[" + i + "].com"
+        //   that.setData({
+        //     [cs]: false
+        //   })
+        // }
+        // for (var n = 0; n < that.data.subject.length; n++) {
+        //   if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
+        //     var cscs = "cates[" + that.data.cates_index + "].com"
+        //     that.setData({
+        //       [cscs]: true
+        //     })
+        //   }
+        // }
+        // that.setData({
+        //   cscs: that.data.cates
+        // })
         console.log(that.data.cates_index + "that.data.cates_index")
         console.log(that.data.cates)
         console.log("学生档案——学情获取成功")
@@ -485,23 +485,23 @@ Page({
             studyinfo: d.data.data.studyinfo,
             cates: d.data.data.cates,
           })
-          for (var i = 0; i < that.data.cates.length; i++) {
-            var cs = "cates[" + i + "].com"
-            that.setData({
-              [cs]: false
-            })
-          }
-          for (var n = 0; n < that.data.subject.length; n++) {
-            if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
-              var cscs = "cates[" + that.data.cates_index + "].com"
-              that.setData({
-                [cscs]: true
-              })
-            }
-          }
-          that.setData({
-            cscs: that.data.cates
-          })
+          // for (var i = 0; i < that.data.cates.length; i++) {
+          //   var cs = "cates[" + i + "].com"
+          //   that.setData({
+          //     [cs]: false
+          //   })
+          // }
+          // for (var n = 0; n < that.data.subject.length; n++) {
+          //   if (that.data.cates[that.data.cates_index].id == that.data.subject[n].id) {
+          //     var cscs = "cates[" + that.data.cates_index + "].com"
+          //     that.setData({
+          //       [cscs]: true
+          //     })
+          //   }
+          // }
+          // that.setData({
+          //   cscs: that.data.cates
+          // })
           console.log(that.data.cates_index + "that.data.cates_index")
           console.log(that.data.cates)
           console.log("学生档案——学情获取成功")

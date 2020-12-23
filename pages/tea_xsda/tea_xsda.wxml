@@ -79,7 +79,7 @@
       <null_image title="暂无内容" type="1"></null_image>
     </block>
 
-    <view wx:if="{{cates[cates_index].com}}" class="add" bindtap='add'>
+    <view wx:if="{{cates && cates.length != 0}}" class="add" bindtap='add'>
         <image class="add-img" src="../../images/add.png"></image>
         <view class="xj">新建</view>
     </view>

@@ -91,7 +91,10 @@ Page({
         this.setData({
           naviTitle: '重新提交基础信息'
         })
-        this.getRejectRenson()
+        if(options.checked == 2) {
+          this.getRejectRenson()
+        }
+        
         this.getBaseInfo()
         break
       }
