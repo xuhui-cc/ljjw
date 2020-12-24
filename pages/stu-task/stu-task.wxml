@@ -44,9 +44,9 @@
             <text class="taskCell_title twoLine">{{item.tasktitle}}</text>
             <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
               <!-- 发布人姓名 -->
-              <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text>
+              <!-- <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text> -->
               <!-- 发布时间 -->
-              <text style="color:#B4B4B4; font-size:26rpx;">{{item.operate_date}}</text>
+              <text style="color:#B4B4B4; font-size:26rpx;">发布时间：{{item.operate_date}}</text>
             </view>
           </view>
           <!-- 问题循环 -->
@@ -132,14 +132,20 @@
       <!-- type==4 考勤确认 -->
       <view wx:if="{{item.type == 4}}">
         <view class="ques-layout" style="margin-top:20rpx;">
-          <view class="flex">
-            <view class="ques-ori">来自：{{item.name}}老师</view>
-            <view class="ques-date">{{item.operate_date}}</view>
+          <view class="taskCell_topView" style="padding-bottom:20rpx;">
+            <!-- 任务标题 -->
+            <text class="taskCell_title twoLine">{{item.tasktitle}}</text>
+            <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
+              <!-- 发布人姓名 -->
+              <!-- <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text> -->
+              <!-- 发布时间 -->
+              <text style="color:#B4B4B4; font-size:26rpx;">发布时间：{{item.operate_date}}</text>
+            </view>
           </view>
           <image wx:if="{{item.ck_finished.verify_status == 1}}" class="work_img" src="../../images/yes_work.png"></image>
           <image wx:if="{{item.ck_finished.verify_status == 2}}" class="work_img" src="../../images/reject_work.png"></image>
 
-          <view class="heng"></view>
+          <!-- <view class="heng"></view> -->
           <view wx:if="{{item.ck_finished.verify_status == 2}}" class="reject_head">驳回原因：</view>
           <view wx:if="{{item.ck_finished.verify_status == 2}}" class="reject_reason">{{item.ck_finished.refuse_reason}}</view>
           <view class="task1_title">{{item.task_detail.tasktitle}}</view>

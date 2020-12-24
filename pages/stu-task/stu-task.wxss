@@ -229,6 +229,7 @@ page{
   margin-bottom: 16rpx;
   background:rgba(255,255,255,1);
   opacity:1;
+  position: relative;
 }
 .cs_layout{
   margin-top: 88rpx;
@@ -620,7 +621,8 @@ page{
   border-radius:49rpx;
 }
 .work_img{
-  margin-left: 583rpx;
+  left: 583rpx;
+  bottom: 0;
   position: absolute;
   width:167rpx;
   height:190rpx;
