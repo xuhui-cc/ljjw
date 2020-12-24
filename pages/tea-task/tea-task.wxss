@@ -281,3 +281,16 @@ page{
   font-weight: bold;
   line-height: 50rpx;
 }
+
+.anonymousView {
+  color: #2DC1A0;
+  font-size: 24rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  height: 56rpx;
+  background-color: rgba(20,203,162,0.1);
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
