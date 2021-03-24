@@ -33,6 +33,7 @@ Page({
      * cate_title：二级标题
      * update_list: 流程列表
      * checked_str：学生状态字符串
+     * editSelected: 编辑状态是否选中
     */
     apponintmentList: [],
 
@@ -59,6 +60,18 @@ Page({
 
     // 将要通过的预约申请
     passAppointmentIndex: null,
+
+    // 是否在编辑状态
+    editState: false,
+
+    // 编辑状态 已选中预约数量
+    editSelectedCount: 0,
+
+    // 是否展示驳回弹框
+    showRejectView: false,
+
+    // 是否展示通过弹框
+    showPassView: false,
   },
 
   /**
@@ -122,6 +135,7 @@ Page({
           that.teacherGetCourseAppointmentCount()
         }
       })
+      this.closeEditStatus()
     } else {
       // 预约详情
       this.getAppointmentDetail(function(success){
@@ -226,6 +240,8 @@ Page({
         let appointmentList = d.data.data
         for (var i = 0; i < appointmentList.length; i++) {
           let appointment = appointmentList[i]
+          // 编辑状态 默认未选中
+          appointment.editSelected = false
           switch(appointment.state * 1) {
             case 1: {
               // 审核中
@@ -412,6 +428,25 @@ Page({
     app.ljjw.getCourseAppointmentDetailInfo(params).then(d=>{
       if (d.data.status == 1) {
         let infoDetail = d.data.data
+        for (let k = 0; k < infoDetail.length; k++) {
+          let item = infoDetail[k]
+          if (item.type == 2) {
+            // 选择题
+            let newValue = []
+            let selectedOptionIdArr = item.value.split(',')
+            for (let j = 0; j < selectedOptionIdArr.length; j++) {
+              let selecteID = selectedOptionIdArr[j]
+              for (let i = 0; i < item.options.length; i++) {
+                let option = item.options[i]
+                if (option.id == selecteID) {
+                  newValue.push(option.title)
+                  break
+                }
+              }
+            }
+            item.value = newValue
+          }
+        }
         that.setData({
           infoDetail: infoDetail
         })
@@ -421,7 +456,7 @@ Page({
 
   /**
    * 老师审批
-   * state: 2-通过 3-驳回
+   * state: 2-通过 3-驳回 5-取消审核通过  6-取消审核驳回
   */
   courseAppointmentDeal: function(state, bm_id, remark, callback) {
     let params = {
@@ -435,6 +470,25 @@ Page({
     }
     let that = this
     app.ljjw.teacherDealCourseAppointment(params).then(d=>{
+      if (d.data.status == 1) {
+        typeof callback == 'function' && callback(true)
+      } else {
+        typeof callback == 'function' && callback(false)
+      }
+    })
+  },
+
+  /**
+   * 批量审批
+   * data：json字符串 [{teacher_id:XXX,state:XXX,bm_id:XXX,remark:XXX}]
+  */
+  appointmentBatchDeal: function(data, callback) {
+    let params = {
+      data: data,
+      token: wx.getStorageSync('token')
+    }
+    let that = this
+    app.ljjw.jwTeaYuekeShenheData(params).then(d=>{
       if (d.data.status == 1) {
         typeof callback == 'function' && callback(true)
       } else {
@@ -458,8 +512,11 @@ Page({
     this.pageData.page = 1
     if (index == 0) {
       this.getWaitDealList()
+      // 获取小红点数量
+      this.teacherGetCourseAppointmentCount()
     } else {
       this.getAppointmentDetail()
+      this.closeEditStatus()
     }
   },
 
@@ -509,29 +566,63 @@ Page({
       return
     }
     let content = e.detail.content
-    this.submiting = false
+    this.submiting = true
     let that = this
-    let rejectAppointment = this.data.apponintmentList[this.data.rejectAppointmentIndex]
-    let status = 3
-    if (rejectAppointment == 4) {
-      status = 2
-    }
-    this.courseAppointmentDeal(status, rejectAppointment.id, content, function(success){
-      if (success) {
-        that.data.apponintmentList.splice(that.data.rejectAppointmentIndex, 1)
-        that.setData({
-          apponintmentList: that.data.apponintmentList,
-          rejectAppointmentIndex: null
-        })
-        if(that.data.appointmentDetailList.length == 0) {
+
+    if (this.data.showRejectView) {
+      // 批量驳回
+      let teacher_id = wx.getStorageSync('uid')
+      let items = []
+      for (let i = 0; i < this.data.apponintmentList.length; i++) {
+        let appointment = this.data.apponintmentList[i]
+        if (appointment.editSelected) {
+          let item = {
+            teacher_id: teacher_id,
+            state: appointment.state == 4 ? 6 : 3,
+            bm_id: appointment.id,
+          }
+          if(content && content != '') {
+            item.remark = content
+          }
+          items.push(item)
+        }
+      }
+      let jsonItems = JSON.stringify(items)
+      this.appointmentBatchDeal(jsonItems, function(success){
+        if (success) {
+          that.closeEditStatus()
+          that.rejectViewClose()
           that.pageData.page = 1
           that.getWaitDealList()
+          // 获取小红点数量
+          that.teacherGetCourseAppointmentCount()
         }
-        // 获取小红点数量
-        that.teacherGetCourseAppointmentCount()
+        that.submiting = false
+      })
+    } else {
+      // 单个驳回
+      let rejectAppointment = this.data.apponintmentList[this.data.rejectAppointmentIndex]
+      let status = 3
+      if (rejectAppointment.state == 4) {
+        status = 6
       }
-      that.submiting = false
-    })
+      this.courseAppointmentDeal(status, rejectAppointment.id, content, function(success){
+        if (success) {
+          that.data.apponintmentList.splice(that.data.rejectAppointmentIndex, 1)
+          that.setData({
+            apponintmentList: that.data.apponintmentList,
+            rejectAppointmentIndex: null
+          })
+          if(that.data.appointmentDetailList.length == 0) {
+            that.pageData.page = 1
+            that.getWaitDealList()
+          }
+          // 获取小红点数量
+          that.teacherGetCourseAppointmentCount()
+        }
+        that.submiting = false
+      })
+    }
   },
 
   /**
@@ -539,7 +630,8 @@ Page({
   */
   rejectViewClose: function() {
     this.setData({
-      rejectAppointmentIndex: null
+      rejectAppointmentIndex: null,
+      showRejectView: false
     })
   },
 
@@ -562,29 +654,62 @@ Page({
       return
     }
     let content = e.detail.content
-    this.submiting = false
+    this.submiting = true
     let that = this
-    let passAppointment = this.data.apponintmentList[this.data.passAppointmentIndex]
-    let status = 2
-    if (passAppointment.state == 4) {
-      status = 5
-    }
-    this.courseAppointmentDeal(status, passAppointment.id, content, function(success){
-      if (success) {
-        that.data.apponintmentList.splice(that.data.passAppointmentIndex, 1)
-        that.setData({
-          apponintmentList: that.data.apponintmentList,
-          passAppointmentIndex: null
-        })
-        if(that.data.appointmentDetailList.length == 0) {
+    if(this.data.showPassView) {
+      // 批量通过
+      let teacher_id = wx.getStorageSync('uid')
+      let items = []
+      for (let i = 0; i < this.data.apponintmentList.length; i++) {
+        let appointment = this.data.apponintmentList[i]
+        if (appointment.editSelected) {
+          let item = {
+            teacher_id: teacher_id,
+            state: appointment.state == 4 ? 5 : 2,
+            bm_id: appointment.id,
+          }
+          if(content && content != '') {
+            item.remark = content
+          }
+          items.push(item)
+        }
+      }
+      let jsonItems = JSON.stringify(items)
+      this.appointmentBatchDeal(jsonItems, function(success){
+        if (success) {
+          that.closeEditStatus()
+          that.passViewClose()
           that.pageData.page = 1
           that.getWaitDealList()
+          // 获取小红点数量
+          that.teacherGetCourseAppointmentCount()
         }
-        // 获取小红点数量
-        that.teacherGetCourseAppointmentCount()
+        that.submiting = false
+      })
+    } else {
+      // 单个通过
+      let passAppointment = this.data.apponintmentList[this.data.passAppointmentIndex]
+      let status = 2
+      if (passAppointment.state == 4) {
+        status = 5
       }
-      that.submiting = false
-    })
+      this.courseAppointmentDeal(status, passAppointment.id, content, function(success){
+        if (success) {
+          that.data.apponintmentList.splice(that.data.passAppointmentIndex, 1)
+          that.setData({
+            apponintmentList: that.data.apponintmentList,
+            passAppointmentIndex: null
+          })
+          if(that.data.appointmentDetailList.length == 0) {
+            that.pageData.page = 1
+            that.getWaitDealList()
+          }
+          // 获取小红点数量
+          that.teacherGetCourseAppointmentCount()
+        }
+        that.submiting = false
+      })
+    }
   },
 
   /**
@@ -592,7 +717,8 @@ Page({
   */
   passViewClose: function() {
     this.setData({
-      passAppointmentIndex: null
+      passAppointmentIndex: null,
+      showPassView: false
     })
   },
 
@@ -625,6 +751,88 @@ Page({
       success(res) {
         res.eventChannel.emit('courseAppointmentInfo', {cate_id: cate.id, bm_id: appointment.id, title: appointment.title + '  ' + cate.title})
       }
+    })
+  },
+
+  /**
+   * 待审核单元格 长按事件
+  */
+  changeEditState: function() {
+    if(!this.data.editState) {
+      this.setData({
+        editState: true
+      })
+    }
+  },
+
+  /**
+   * 待审核单元格 点击事件
+  */
+  appointmentCellSelected: function(e) {
+    let index = e.currentTarget.dataset.index
+    if (this.data.editState) {
+      let appointment = this.data.apponintmentList[index]
+      appointment.editSelected = !appointment.editSelected
+      let editSelectedStr = 'apponintmentList[' + index + '].editSelected'
+      let selectedCount = 0
+      for (let i = 0; i < this.data.apponintmentList.length; i++) {
+        let item = this.data.apponintmentList[i]
+        if (item.editSelected) {
+          selectedCount += 1
+        }
+      }
+      this.setData({
+        [editSelectedStr]: appointment.editSelected,
+        editSelectedCount: selectedCount
+      })
+    }
+  },
+
+  /**
+   * 编辑状态取消按钮 点击事件
+  */
+  closeEditStatus: function() {
+    for (let i = 0; i < this.data.apponintmentList.length; i++) {
+      let appointment = this.data.apponintmentList[i]
+      appointment.editSelected = false
+    }
+
+    this.setData({
+      apponintmentList: this.data.apponintmentList,
+      editState: false,
+      editSelectedCount: 0,
+    })
+  },
+
+  /**
+   * 编辑状态 全部驳回按钮 点击事件
+  */
+  editStatueRejectButtonClciked: function() {
+    if (this.data.editSelectedCount == 0) {
+      wx.showToast({
+        title: '还没有已选任务哦',
+        icon: 'none'
+      })
+      return
+    }
+    this.setData({
+      showRejectView: true
+    })
+  },
+
+  /**
+   * 编辑状态 全部通过按钮 点击事件
+  */
+  editStatusPassButtonClciked: function() {
+    if (this.data.editSelectedCount == 0) {
+      wx.showToast({
+        title: '还没有已选任务哦',
+        icon: 'none'
+      })
+      return
+    }
+    this.setData({
+      showPassView: true
     })
   }
 })

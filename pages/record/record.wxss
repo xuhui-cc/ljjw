@@ -1,6 +1,7 @@
 page{
   background: rgba(251,251,252,1)
 }
+
 .nabigation_bar{
   position: fixed;
   width:750rpx;
@@ -141,47 +142,33 @@ page{
   opacity:1;
 }
 .tea-rec-layout{
+  display: flex;
+  flex-direction: column;
   margin-top: 16rpx;
   margin-left: 30rpx;
   width:690rpx;
-  height:223rpx;
+  min-height:223rpx;
   background:rgba(255,255,255,1);
   opacity:1;
   border-radius:10rpx;
 }
 .t-rec-img{
-  margin-top: 30rpx;
   margin-left: 37rpx;
-  width:23rpx;
-  height:23rpx;
+  width:23.77rpx;
+  height:23.01rpx;
 }
 .t-rec-date{
   margin-left: 15rpx;
-  margin-top: 23rpx;
-  width:170rpx;
-  height:37rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:37rpx;
   color:rgba(45,193,160,1);
-  opacity:1;
 }
 .t-rec-more{
-  margin-left: 345rpx;
-  margin-top: 22rpx;
-  width:52rpx;
-  height:37rpx;
+  margin-right: 3rpx;
   font-size:26rpx;
-  font-family:PingFang SC;
-  font-weight:400;
-  line-height:37rpx;
   color:rgba(180,180,180,1);
-  opacity:1;
 }
 .t-rec-more-img{
-  margin-left:4rpx;
-  margin-top: 33rpx;
+  margin-right:37rpx;
   width:15rpx;
   height:15rpx;
 }
@@ -193,24 +180,20 @@ page{
 
 }
 .t-rec-shu{
-  margin-left:40rpx;
-  margin-top: 55rpx;
-  width:0rpx;
-  height:11rpx;
-  border:5rpx solid rgba(45,193,160,1);
-  opacity:1;
+  margin-left:37rpx;
+  width:6rpx;
+  height:20rpx;
+  border-radius: 3rpx;
+  background-color: #2DC1A0;
 }
 .t-rec-title{
-  margin-left:40rpx;
-  margin-top: 38rpx;
-  width:324rpx;
-  height:50rpx;
+  margin-left:21rpx;
+  max-width:588rpx;
+  min-height:50rpx;
   font-size:36rpx;
-  font-family:PingFang SC;
   font-weight:bold;
   line-height:50rpx;
   color:rgba(39,39,39,1);
-  opacity:1;
 }
 .mull-img{
   /* margin-left:260rpx; */

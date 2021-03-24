@@ -54,20 +54,22 @@
 
       <view wx:for="{{tea_mock_list}}" wx:key="tea_mock_list_index">
         <view class="tea-rec-layout" bindtap="to_tea_record" data-xb='{{index}}'>
-          <view class="rec-flex">
-            <image class="t-rec-img" src="../../images/trec.png"></image>
-            <view class="t-rec-date">{{item.mock_date}}</view>
-            <view class="t-rec-more">详情</view>
-            <image class="t-rec-more-img" src="../../images/next.png"></image>
+          <view class="flex_row_alimenterCenter_spaceBetween" style="height:37rpx; margin-top:23rpx;">
+            <view class="flex_row_alimenterCenter">
+              <image class="t-rec-img" src="../../images/trec.png"></image>
+              <view class="t-rec-date">{{item.mock_date}}</view>
+            </view>
+            <view class="flex_row_alimenterCenter">
+              <view class="t-rec-more">详情</view>
+              <image class="t-rec-more-img" src="../../images/next.png"></image>
+            </view>
           </view>
+          <view style="height:20rpx; margin-left:34rpx; width:626rpx; border-bottom:0.5rpx dotted #E9E9E9;"></view>
 
-          <image class="t-rec-xu" src="../../images/xu.png"></image>
-
-          <view class="rec-flex">
+          <view class="flex_row_alimenterCenter" style="margin-top:48rpx; padding-bottom:45rpx;">
             <view class="t-rec-shu"></view>
             <view class="t-rec-title">{{item.name}}</view>
           </view>
-
         </view>
       </view>
     </view>

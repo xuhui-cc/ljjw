@@ -430,7 +430,7 @@ Page({
   },
 
   /**
-   * 获取提交信息详情
+   * 获取流程提交信息详情
   */
   getAppointmentDetailInfo: function(process){
     let params ={
@@ -441,6 +441,26 @@ Page({
     app.ljjw.getCourseAppointmentDetailInfo(params).then(d=>{
       if (d.data.status == 1) {
         let infoDetail = d.data.data
+        for (let k = 0; k < infoDetail.length; k++) {
+          let item = infoDetail[k]
+          if (item.type == 2) {
+            // 选择题
+            let newValue = []
+            let selectedOptionIdArr = item.value.split(',')
+            for (let j = 0; j < selectedOptionIdArr.length; j++) {
+              let selecteID = selectedOptionIdArr[j]
+              for (let i = 0; i < item.options.length; i++) {
+                let option = item.options[i]
+                if (option.id == selecteID) {
+                  newValue.push(option.title)
+                  break
+                }
+              }
+            }
+            item.value = newValue
+          }
+        }
+        
         that.setData({
           infoDetail: infoDetail
         })

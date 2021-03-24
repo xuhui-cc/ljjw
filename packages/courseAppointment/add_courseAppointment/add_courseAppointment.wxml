@@ -19,19 +19,38 @@
   </view>
   <!-- 遍历条目类型列表 -->
   <block wx:for="{{itemList}}" wx:key="index">
-    <view class="infoItem">
-      <view class="flex_row_alimenterCenter">
-        <view wx:if="{{item.required == 1}}" class="itemImage">*</view>
-        <view class="itemTitle" style="margin-left:{{item.required == 1 ? 10 : 29}}rpx;">{{item.title}}：</view>
+    <!-- 文本题 -->
+    <block wx:if="{{item.type==1}}">
+      <view class="infoItem">
+        <view style="display:flex; flex-direction: row;">
+          <view wx:if="{{item.required == 1}}" class="itemImage" style="margin-top:25rpx;">*</view>
+          <view class="itemTitle" style="margin-left:{{item.required == 1 ? 10 : 29}}rpx;">{{item.title}}：</view>
+        </view>
+        <input wx:if="{{item.text_type == 1}}" type="text" value="{{item.value}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" disabled="{{item.change == 1}}" data-index="{{index}}" bindinput="inputValueChange"></input>
       </view>
-      <input wx:if="{{item.text_type == 1}}" type="text" value="{{item.value}}" class="itemValue" placeholder="请输入" placeholder-class="itemValue_placehoulder" disabled="{{item.change == 1}}" data-index="{{index}}" bindinput="inputValueChange"></input>
-    </view>
-    <!-- 多行文本 -->
-    <view wx:if="{{item.text_type == 2}}" class="textArea_View">
-      <view class="textArea_bg">
-        <textarea class="textarea" value="{{item.value}}" placeholder="请输入{{item.title}}..." placeholder-class="textArea_placehoulder" maxlength="600" disabled="{{item.change == 1}}" bindinput="textareaValueChange" data-index="{{index}}"></textarea>
+      <!-- 多行文本 -->
+      <view wx:if="{{item.text_type == 2}}" class="textArea_View">
+        <view class="textArea_bg">
+          <textarea class="textarea" value="{{item.value}}" placeholder="请输入{{item.title}}..." placeholder-class="textArea_placehoulder" maxlength="600" disabled="{{item.change == 1}}" bindinput="textareaValueChange" data-index="{{index}}"></textarea>
+        </view>
       </view>
-    </view>
+    </block>
+    <!-- 选择题 -->
+    <block wx:elif="{{item.type==2}}">
+      <view class="infoItem">
+        <view style="display:flex; flex-direction: row;">
+          <view wx:if="{{item.required == 1}}" class="itemImage" style="margin-top:25rpx;">*</view>
+          <view class="itemTitle" style="margin-left:{{item.required == 1 ? 10 : 29}}rpx; max-width:{{item.required == 1 ? 660 : 690}}rpx;">{{item.selectNum}}({{item.text_type == 1 ? '单选' : '多选'}}). {{item.title}}：</view>
+        </view>
+        <view></view>
+      </view>
+      <view class="itemOptionsView">
+        <!-- 遍历选项 -->
+        <block wx:for="{{item.options}}" wx:key="id" wx:for-item="option_item" wx:for-index="option_index">
+          <view class="itemOption {{option_item.selected ? 'itemOptionSelected' : ''}}" catchtap="itemOptionClciked" data-itemindex="{{index}}" data-optionindex="{{option_index}}">{{option_item.title}}</view>
+        </block>
+      </view>
+    </block>
   </block>
 </view>
 

@@ -120,11 +120,18 @@
   <view class="infoDetailView">
     <scroll-view scroll-y="true" class="infoDetailView_scrollView">
       <block wx:for="{{infoDetail}}" wx:key="index">
-        <view class="flex_row_alimenterCenter" style="margin-top:35rpx;">
+        <view style="margin-top:35rpx; display:flex; flex-direction: row;">
           <view class="infoDetailView_itemView"></view>
           <view class="infoDetailView_key">{{item.title}}：</view>
         </view>
-        <view class="infoDetailView_value">{{item.value}}</view>
+        <!-- 文本题 -->
+        <view wx:if="{{item.type == 1}}" class="infoDetailView_value">{{item.value}}</view>
+        <!-- 选择题 -->
+        <block wx:elif="{{item.type == 2}}">
+          <block wx:for="{{item.value}}" wx:key="index" wx:for-item="option_item">
+            <view class="infoDetailView_option">{{option_item}}</view>
+          </block>
+        </block>
       </block>
     </scroll-view>
     <view class="infoDetailView_close">

@@ -73,6 +73,7 @@ page{
   max-width: 305rpx;
   margin-top: 23rpx;
   margin-bottom: 23rpx;
+  line-height: 45rpx;
 }
 
 .itemValue {
@@ -122,6 +123,39 @@ page{
   color: #B4B4B4;
   font-size: 28rpx;
   text-align: left;
+}
+
+.itemOptionsView {
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding-bottom: 25rpx;
+}
+
+.itemOption {
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  /* height: 50rpx; */
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  border-radius: 10rpx;
+  border: 1rpx solid #ccc;
+  color: #777;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 30rpx;
+  margin-top: 40rpx;
+  max-width: 650rpx;
+}
+
+.itemOptionSelected {
+  border: 1rpx solid #14CBA2;
+  background-color: #14CBA2;
+  color: white;
 }
 
 .submitButton_can {

@@ -24,10 +24,16 @@ Page({
     /**
      * 动态内容类型列表
      * title：条目标题
-     * text_type: 1-单行文本 2-多行文本
+     * text_type: 当type=1时：1-单行文本 2-多行文本； 当type=2时：1-单选  2-多选
      * required： 1-必填  2-非必填
      * value: 自定义参数 值
      * change: 不返回或者0可以修改 1-不可修改
+     * type：1-文本题  2-选择题
+     * options：选项 当type=2时使用
+     *     id：选项ID
+     *     title：选项标题
+     *     selected: 是否选中 自定义参数
+     * selectedIndex: 在type == 2 && text_type == 1时有值 当前被选中option的索引 自定义参数
     */
     itemList: [],
 
@@ -196,6 +202,28 @@ Page({
     app.ljjw.getCourseAppointmentItemList(param).then(d=>{
       if (d.data.status == 1) {
         let itemList = d.data.data
+        let selecteQuestionNum = 0
+        for (let i = 0; i < itemList.length; i++) {
+          let item = itemList[i]
+          if (item.type == 2) {
+            // 选择题
+            selecteQuestionNum += 1
+            // 选择题 序号
+            item.selectNum = selecteQuestionNum
+            if(!item.options) {
+              item.options = []
+            }
+            for (let j = 0; j < item.options.length; j++) {
+              let option = item.options[j]
+              // 默认未选中
+              option.selected = false
+            }
+            if (item.text_type == 1) {
+              // 单选题 默认选中索引为null
+              item.selectedIndex = null
+            }
+          }
+        }
         if (!itemList || itemList == '') {
           itemList = []
         }
@@ -254,6 +282,32 @@ Page({
         let itemList = result.type_list
         let cateList = result.cate_list
         let appointment_info = result.bm_info
+        // 处理选择题选项
+        for(let i = 0; i< itemList.length; i++) {
+          let item = itemList[i]
+          if (item.type == 2) {
+            // 选择题
+            let selectedOptionIDArr = item.value.split(',')
+            for (let i = 0; i < item.options.length; i++) {
+              let option = item.options[i]
+              option.selected = false
+            }
+            for (let j = 0; j< selectedOptionIDArr.length; j++) {
+              let selectedID = selectedOptionIDArr[j]
+              for (let k = 0; k < item.options.length; k++) {
+                let option = item.options[k]
+                if (option.id == selectedID) {
+                  option.selected = true
+                  if (item.text_type == 1) {
+                    // 单选题
+                    item.selectedIndex = k
+                  }
+                  break
+                }
+              }
+            }
+          }
+        }
         that.setData({
           itemList: itemList,
           appointmentTitleList: cateList,
@@ -456,4 +510,47 @@ Page({
       this.submitChange()
     }
   },
+
+  /**
+   * 选择题选项 点击事件
+  */
+  itemOptionClciked: function(e) {
+    let itemIndex = e.currentTarget.dataset.itemindex
+    let optionIndex = e.currentTarget.dataset.optionindex
+    let item = this.data.itemList[itemIndex]
+    let newSelectedOption = item.options[optionIndex]
+    if (item.text_type == 1) {
+      // 单选
+      if(item.selectedIndex != null) {
+        if (item.selectedIndex == optionIndex) {
+          return
+        }
+        let oldSelectedOption = item.options[item.selectedIndex]
+        oldSelectedOption.selected = false
+      }
+      newSelectedOption.selected = true
+      item.selectedIndex = optionIndex
+      item.value = newSelectedOption.id
+    } else if (item.text_type == 2) {
+      // 多选
+      newSelectedOption.selected = !newSelectedOption.selected
+      let value = ''
+      for (let i = 0; i< item.options.length; i++) {
+        let option = item.options[i]
+        if (option.selected) {
+          if (value.length == 0) {
+            value = option.id
+          } else {
+            value = value + ',' + option.id
+          }
+        }
+      }
+      item.value = value
+    }
+    let itemStr = "itemList[" + itemIndex + "]"
+    this.setData({
+      [itemStr]: item
+    })
+    this.canSubmitStatusChange()
+  }
 })

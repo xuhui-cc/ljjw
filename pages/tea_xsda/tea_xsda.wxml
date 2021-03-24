@@ -136,12 +136,12 @@
       <block wx:for="{{student_score}}" wx:key="score_index">
         <view class="rec-layout" style="margin-top:{{index == 0 ? 0 : 16}}rpx">
           <view data-xb="{{index}}" bindtap='score_fold'>
-            <view class="flex">
+            <view class="flex_row_spaceBetween">
               <view class="ks-name">{{item.mock_name}}</view>
               <view class="ks-date">{{item.mock_date}}</view>
             </view>
-            <view class="flex">
-              <view class="bj-name">{{item.classname}}</view>
+            <view class="flex_row_alignItemsCenter_spaceBetween" style="margin-top:18rpx; padding-bottom:32rpx;">
+              <view class="bj-name oneLine">{{item.classname}}</view>
               <image wx:if="{{!item.isfold}}" class="xl-img" src="../../images/xsj.png"></image>
               <image wx:else class="xl-img" src="../../images/ssj.png"></image>
             </view>

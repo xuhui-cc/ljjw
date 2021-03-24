@@ -367,6 +367,7 @@ page{
 
 .infoDetailView_itemView {
   margin-left: 48rpx;
+  margin-top: 15rpx;
   width: 5rpx;
   height: 13rpx;
   border-radius: 2.5rpx;
@@ -375,9 +376,10 @@ page{
 
 .infoDetailView_key {
   margin-left: 18rpx;
-  height: 42rpx;
+  /* height: 42rpx; */
   display: flex;
-  align-items: center;
+  max-width: 560rpx;
+  /* align-items: center; */
   color: #272727;
   font-size: 30rpx;
   font-weight: bold;
@@ -387,6 +389,21 @@ page{
   margin-top: 10rpx;
   margin-left: 71rpx;
   max-width: 539rpx;
+  line-height: 45rpx;
+  color: #272727;
+  font-size: 28rpx;
+}
+
+.infoDetailView_option {
+  margin-top: 10rpx;
+  margin-left: 71rpx;
+  max-width: 500rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  border-radius: 10rpx;
+  border: 0.5rpx solid #ccc;
   line-height: 45rpx;
   color: #272727;
   font-size: 28rpx;

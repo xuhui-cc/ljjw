@@ -7,6 +7,13 @@ page{
   flex-direction: row;
   align-items: center;
 }
+.flex_row_alimenterCenter_spaceBetween {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .oneLine {
   white-space: nowrap;
   overflow: hidden;
@@ -154,6 +161,26 @@ page{
 
 .myAppointmentCell {
   background-color: white;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.myAppointmentCell_selectView {
+  height: 100%;
+  width: 90rpx;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.myAppointmentCell_content {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -477,6 +504,7 @@ page{
 
 .infoDetailView_itemView {
   margin-left: 48rpx;
+  margin-top: 15rpx;
   width: 5rpx;
   height: 13rpx;
   border-radius: 2.5rpx;
@@ -485,9 +513,11 @@ page{
 
 .infoDetailView_key {
   margin-left: 18rpx;
-  height: 42rpx;
+  /* height: 42rpx; */
+  line-height: 42rpx;
   display: flex;
-  align-items: center;
+  max-width: 560rpx;
+  /* align-items: center; */
   color: #272727;
   font-size: 30rpx;
   font-weight: bold;
@@ -497,6 +527,21 @@ page{
   margin-top: 10rpx;
   margin-left: 71rpx;
   max-width: 539rpx;
+  line-height: 45rpx;
+  color: #272727;
+  font-size: 28rpx;
+}
+
+.infoDetailView_option {
+  margin-top: 10rpx;
+  margin-left: 71rpx;
+  max-width: 498rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  border-radius: 10rpx;
+  border: 0.5rpx solid #ccc;
   line-height: 45rpx;
   color: #272727;
   font-size: 28rpx;
@@ -513,3 +558,55 @@ page{
   justify-content: center;
 }
 
+.cancelEditButton {
+  width: 80rpx;
+  height: 45rpx;
+  border-radius: 6rpx;
+  border: 0.5rpx solid #ccc;
+  color: #272727;
+  font-size: 25rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30rpx;
+}
+
+.editBottomButtonView {
+  height: 120rpx;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  z-index: 10;
+}
+
+.editStatus_BottomButtom_reject {
+  width: 325rpx;
+  height: 78rpx;
+  border-radius: 40rpx;
+  border: 1rpx solid #FF5D5D;
+  background-color: white;
+  margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FF5D5D;
+  font-size: 32rpx;
+}
+
+.editStatus_BottomButtom_pass {
+  width: 325rpx;
+  height: 82rpx;
+  border-radius: 41rpx;
+  background-color: #2DC1A0;
+  margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 32rpx;
+  margin-left: 40rpx;
+}
