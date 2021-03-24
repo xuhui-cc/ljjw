@@ -120,9 +120,11 @@
         <view wx:if="{{item.type == 1}}" class="infoDetailView_value">{{item.value}}</view>
         <!-- 选择题 -->
         <block wx:elif="{{item.type == 2}}">
-          <block wx:for="{{item.value}}" wx:key="index" wx:for-item="option_item">
-            <view class="infoDetailView_option">{{option_item}}</view>
-          </block>
+          <view class="infoDetailView_optionList">
+            <block wx:for="{{item.value}}" wx:key="index" wx:for-item="option_item">
+              <view class="infoDetailView_option">{{option_item}}</view>
+            </block>
+          </view>
         </block>
       </block>
       <view style="width:100%; height:10rpx;"></view>

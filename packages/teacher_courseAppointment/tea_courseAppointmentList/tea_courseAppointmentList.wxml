@@ -34,7 +34,7 @@
             <view class="myAppointment_titleView">
               <view class="myAppointment_titlePerson oneLine">{{item.user_name + '（' + item.phone + '）'}}</view>
               <view class="myAppointment_titlePerson_state oneLine">学员状态：{{item.checked_str}}</view>
-              <view class="myAppointment_title oneLine">课程预约：{{item.yk_title + '   ' + item.cate_title}}</view>
+              <view class="myAppointment_title oneLine" style="max-width:{{editState ? 600 : 690}}rpx;">课程预约：{{item.yk_title + '   ' + item.cate_title}}</view>
             </view>
             <!-- 遍历处理流程 -->
             <block wx:for="{{item.update_list}}" wx:for-index="subIndex" wx:for-item="subItem" wx:key="subIndex">
@@ -57,7 +57,7 @@
                 </view>
                 <block wx:if="{{subItem.type == 1 || subItem.type == 4}}">
                   <!-- 查看备注信息 -->
-                  <view class="showProcessDetailView" catchtap="showProcessDetail" data-index="{{index}}" data-subindex="{{subIndex}}">
+                  <view class="showProcessDetailView" style="width:{{editState ? 590 : 650}}rpx;" catchtap="showProcessDetail" data-index="{{index}}" data-subindex="{{subIndex}}">
                     查看备注信息
                     <image src="/images/next.png" style="width: 13rpx; height: 13rpx; margin-left:20rpx;"></image>
                   </view>
@@ -65,7 +65,7 @@
                 </block>
                 <block wx:else>
                   <!-- 备注 -->
-                  <view class="myAppointment_note" wx:if="{{subItem.handle_remark && subItem.handle_remark != ''}}">{{'备注：' + subItem.handle_remark}}</view>
+                  <view class="myAppointment_note" style="width:{{editState ? 567 : 627}}rpx;" wx:if="{{subItem.handle_remark && subItem.handle_remark != ''}}">{{'备注：' + subItem.handle_remark}}</view>
                   <view style="width: 100%; height: 56rpx;"></view>
                 </block>
               </view>
@@ -156,12 +156,13 @@
         <view wx:if="{{item.type == 1}}" class="infoDetailView_value">{{item.value}}</view>
         <!-- 选择题 -->
         <block wx:elif="{{item.type == 2}}">
-          <block wx:for="{{item.value}}" wx:key="index" wx:for-item="option_item">
-            <view class="infoDetailView_option">{{option_item}}</view>
-          </block>
+          <view class="infoDetailView_optionList">
+            <block wx:for="{{item.value}}" wx:key="index" wx:for-item="option_item">
+              <view class="infoDetailView_option">{{option_item}}</view>
+            </block>
+          </view>
         </block>
       </block>
-      <view style="width;100%; height:10rpx;"></view>
     </scroll-view>
     <view class="infoDetailView_close">
       <image src="/images/close.png" style="width:37rpx; height:37rpx;" bindtap="infoDetailCloseButtonClciked"></image>

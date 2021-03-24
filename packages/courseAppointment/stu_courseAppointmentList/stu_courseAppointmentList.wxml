@@ -118,21 +118,25 @@
 <!-- 提交的课程预约备注信息 弹框 -->
 <view class="infoDetailView_bg" wx:if="{{infoDetail}}">
   <view class="infoDetailView">
-    <scroll-view scroll-y="true" class="infoDetailView_scrollView">
-      <block wx:for="{{infoDetail}}" wx:key="index">
-        <view style="margin-top:35rpx; display:flex; flex-direction: row;">
-          <view class="infoDetailView_itemView"></view>
-          <view class="infoDetailView_key">{{item.title}}：</view>
-        </view>
-        <!-- 文本题 -->
-        <view wx:if="{{item.type == 1}}" class="infoDetailView_value">{{item.value}}</view>
-        <!-- 选择题 -->
-        <block wx:elif="{{item.type == 2}}">
-          <block wx:for="{{item.value}}" wx:key="index" wx:for-item="option_item">
-            <view class="infoDetailView_option">{{option_item}}</view>
+    <scroll-view scroll-y="true" enable-flex="{{true}}" class="infoDetailView_scrollView">
+      <view class="infoDetailView_scrollView_content">
+        <block wx:for="{{infoDetail}}" wx:key="index">
+          <view style="margin-top:35rpx; display:flex; flex-direction: row;">
+            <view class="infoDetailView_itemView"></view>
+            <view class="infoDetailView_key">{{item.title}}：</view>
+          </view>
+          <!-- 文本题 -->
+          <view wx:if="{{item.type == 1}}" class="infoDetailView_value">{{item.value}}</view>
+          <!-- 选择题 -->
+          <block wx:elif="{{item.type == 2}}">
+            <view class="infoDetailView_optionList">
+              <block wx:for="{{item.value}}" wx:key="option_index" wx:for-item="option_item" wx:for-index="option_index">
+                <view class="infoDetailView_option">{{option_item}}</view>
+              </block>
+            </view>
           </block>
         </block>
-      </block>
+      </view>
     </scroll-view>
     <view class="infoDetailView_close">
       <image src="/images/close.png" style="width:37rpx; height:37rpx;" bindtap="infoDetailCloseButtonClciked"></image>

@@ -532,10 +532,18 @@ page{
   font-size: 28rpx;
 }
 
+.infoDetailView_optionList {
+  margin-left: 61rpx;
+  max-width: 510rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .infoDetailView_option {
+  margin-left: 10rpx;
   margin-top: 10rpx;
-  margin-left: 71rpx;
-  max-width: 498rpx;
+  max-width: 508rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
   padding-top: 10rpx;
