@@ -1,9 +1,11 @@
-// const Base_URI = 'http://cs.szgk.cn' // 测试
-const Base_URI = 'https://www.szgk.cn' // 正试
+const Base_URI = 'http://cs.szgk.cn' // 测试
+// const Base_URI = 'https://www.szgk.cn' // 正试
 
 const URI = Base_URI + '/apiv2.php'    //接口
 
 const uploadFileURI = Base_URI + '/apiv2.php?' // 上传文件接口
+
+const baiduMapAK = 'RRbyUafOYr3koAXqmP24ke7dSnLpMckY'
 
 /**
  * 获取上传文件URI
@@ -503,7 +505,28 @@ function jwTeaYuekeShenheData(params) {
   return fetch.ljjwfetchpost(URI, 'jwTeaYuekeShenheData', params, '老师端 课程预约待审核 批量审核', true)
 }
 
-module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime, jwUpdateUserAudioTime, updateAudioPlayCount, courseAppointmentList, courseAppointmentDetail_h5, getCourseAppointmentItemList, submitCourseAppointment, myCourseAppointmentList, cancelCourseAppointment, getCourseAppointmentDetailInfo, getNewCourseAppointmentDetail, submitChangeCourseAppointment, checkAppointmentCateCanUse, studentGetCourseAppointmentRedCount, teacherGetCourseAppointmentRedCount, teacherGetCourseAppointmentList, teacherGetCourseAppointmentAnalysis, teacherDealCourseAppointment, teacherGetCourseAppointmentStudentList, getAppointmentProcessListByID, getCourseAppointmentNotice, getTaskDetailH5, jwUpdateStudyInfo, jwDeleteStudy, jwGetRejection, jwTeaYuekeShenheData}
+// 获取区域列表
+function jwZoneList(params) {
+  return fetch.ljjwfetchpost(URI, 'jwZoneList', params, '获取区域列表', false)
+}
+
+// 修改老师当前区域
+function jwZoneCurrentZoneId(params) {
+  return fetch.ljjwfetchpost(URI, 'jwZoneCurrentZoneId', params, '修改老师当前区域', true, '提交中')
+}
+
+// 百度地图根据经纬度逆地理编码
+function getLoacationAddress(latitude, longitude) {
+  let params = {
+    ak: baiduMapAK,
+    type: 'wgs84ll',
+    location: latitude + ',' + longitude,
+    output: 'json'
+  }
+  return fetch.get('http://api.map.baidu.com/reverse_geocoding/v3/', params, '百度地图根据经纬度逆地理编码', true)
+}
+
+module.exports = {getUploadFileURI, xcxjwlogin, jwGetDayCourse, jwGetMonthCourse, jwGetMonthCheckon, jwGetDayCheckon, jwGetStudentAskforleave, jwGetStudentMainPage, jwGetMyCollection, jwGetFilesByKeyword, jwGetAllClass, jwSaveStudentBaseInfo, jwGetStudentScore, jwGetStudentTaskMain, jwGetStudentSortScore, jwGetMorningReadMore, jwStudentTaskNotFinished, jwStudentTaskFinished, jwStudentCheckonVerify, jwStudentAddCollection, jwAdminGetAskforleaveList, jwSaveAskforleave, jwAdminAskforleaveVerify, jwJiaowuGetAskforleaveList, jwJiaowuAskforleaveVerify, jwTeacherMyPage, jwTeacherClassFiles, jwTeacherClassStudents, jwGetCheckOnList, jwTeacherClassSignIn, jwSaveStudentSignIn, jwViewStudentProfile, jwViewStudentScores, jwViewStudentStudyInfo, jwViewStudentSumary, jwAddStudyInfo, jwTeacherScoreMainPage, jwTeacherScoreSubPage, jwTeacherTasksMainPage, jwTeacherMorningReadMore, jwTeacherAddMorningRead, jwTeacherTasks, jwViewScheduleCheckOn, jwTeacherAddMessages, jwStudentSaveTask, jwGetSchoolList, jwGetAskforleaveCount, jwGePeriodCourse, jwGetPeriodsCheckon, jwGetDayList, jwTaskBarRedPoint, jwReadMsg, jwAdminGetUnreadAskforleave, jwAdminViewAskforleaveList, jwUpdateAdminsaw, getFeedbackType, getUnreadCount, saveFeedback, getFeedBackList, saveStudentScore, submitReturn, setFeedbackSaw, getTeacherUnreadCount, getTeacherFeedbackList, getTeacherAttachSort, teacherConfirmFeedback, teacherConfirmReturn, jwgetUserinfoByUid, jwGetStudentClassFiles, jwUpdateStudentBaseInfo, testAPi, jwGetAudiolist, jwGetUserAudioTime, jwUpdateUserAudioTime, updateAudioPlayCount, courseAppointmentList, courseAppointmentDetail_h5, getCourseAppointmentItemList, submitCourseAppointment, myCourseAppointmentList, cancelCourseAppointment, getCourseAppointmentDetailInfo, getNewCourseAppointmentDetail, submitChangeCourseAppointment, checkAppointmentCateCanUse, studentGetCourseAppointmentRedCount, teacherGetCourseAppointmentRedCount, teacherGetCourseAppointmentList, teacherGetCourseAppointmentAnalysis, teacherDealCourseAppointment, teacherGetCourseAppointmentStudentList, getAppointmentProcessListByID, getCourseAppointmentNotice, getTaskDetailH5, jwUpdateStudyInfo, jwDeleteStudy, jwGetRejection, jwTeaYuekeShenheData, jwZoneList, jwZoneCurrentZoneId, getLoacationAddress}
 
 //测试正式服接口
 function testAPi(api, params) {

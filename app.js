@@ -167,8 +167,15 @@ App({
                 index: 2,
               })
             }
+            // 是否可用状态改变
             if (oldStuInfo && oldStuInfo.ifused && stuinfo.ifused != oldStuInfo.ifused) {
               console.log("学生是否可用状态由 " + oldStuInfo.ifused + " 变为 " + stuinfo.ifused + ", 即将清空数据重新登录")
+              that.clearLocalInfo()
+              return
+            }
+            // 区域改变
+            if (oldStuInfo && oldStuInfo.jw_zoneID != stuinfo.jw_zoneID) {
+              console.log("学生区域由" + oldStuInfo.jw_zoneID + "变为" + stuinfo.jw_zoneID + ", 即将清空数据重新登录")
               that.clearLocalInfo()
               return
             }
@@ -180,6 +187,16 @@ App({
           } catch (e) {
             // Do something when catch error
           }
+
+          // 老师区域改变
+          let zone_find = wx.getStorageSync('zone_find')
+          if(!zone_find || zone_find.id != data.zone_find.id) {
+            console.log('老师区域由'+ zone_find.name + '变为' + data.zone_find.name)
+            that.clearLocalInfo()
+            return
+          }
+
+          wx.setStorageSync('zond_list', data.zone_list)
         }
 
         let userinfo = data.userInfo

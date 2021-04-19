@@ -135,5 +135,50 @@ function ljjwfetchpost(api, path, params, info, loadingShow, loadingMsg) {
   })
 }
 
+function get(url, params, info, showLoading, loadingMsg) {
+  return new Promise((resolve, reject) => {
 
-module.exports = { ljjwfetch, ljjwfetchpost}
+    if (showLoading) {
+      wx.showLoading({
+        title: loadingMsg?loadingMsg:"加载中",
+      })
+    }
+
+    console.log(info+" "+url+" 参数：")
+    console.log(params)
+
+    wx.request({
+      url: url,
+      data: Object.assign({}, params),
+      success(res) {
+        if (showLoading) {
+          wx.hideLoading({
+            complete: () => {
+            },
+          })
+        }
+        console.log(info+" 返回数据：")
+        console.log(res)
+        resolve(res)
+      },
+      fail(res) {
+        if (showLoading) {
+          wx.hideLoading({
+            complete: () => {
+              wx.showToast({
+                title: '加载失败',
+                icon: 'none'
+              })
+            },
+          })
+        }
+        console.log(info+" 加载失败:")
+        console.log(res)
+        reject(res)
+      }
+    })
+  })
+}
+
+
+module.exports = { ljjwfetch, ljjwfetchpost, get}

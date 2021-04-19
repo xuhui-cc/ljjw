@@ -48,8 +48,11 @@ page{
 .baseInfo {
   height: 203rpx;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
 }
+
 
 #baseInfoExceptAvatar {
   height: 90rpx;

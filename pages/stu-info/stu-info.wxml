@@ -108,12 +108,24 @@
 
     <view class="flex">
       <view class="shu"></view>
-      <view class="info-tltle">班级</view>
-      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index == -1 ? 0 : stu_class_index}}" range="{{stu_class}}" >
-        <view class='tip' wx:if="{{stu_class_index == -1}}">请选择</view>
-        <view class="tip" wx:else="">{{stu_class[stu_class_index].name}}</view>
+      <view class="info-tltle">所属区域</view>
+      <picker mode='selector' bindchange="zone_picker" range-key="name" range="{{zoneList}}" >
+        <view class='tip' wx:if="{{zone_selected == null}}">请选择</view>
+        <view class="tip" wx:else>{{zone_selected.name}}</view>
       </picker>
-      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" value="{{stu_class_index == -1 ? 0 : stu_class_index}}" range="{{stu_class}}" >
+      <picker mode='selector' bindchange="zone_picker" range-key="name" range="{{zoneList}}" >
+        <image class="select" src="../../images/next.png"></image>
+      </picker>
+    </view>
+
+    <view class="flex">
+      <view class="shu"></view>
+      <view class="info-tltle">班级</view>
+      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" range="{{stu_class}}" >
+        <view class='tip' wx:if="{{stu_class_Selected == null}}">请选择</view>
+        <view class="tip" wx:else="">{{stu_class_Selected.name}}</view>
+      </picker>
+      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" range="{{stu_class}}" >
         <image class="select" src="../../images/next.png"></image>
       </picker>
     </view>
@@ -130,5 +142,22 @@
     <view class="pictureGet_button" style="margin-top:1rpx;" bindtap="pictureTypeButtonClicked" data-type="2">从手机相册选择</view>
     <view class="pictureGet_button" style="margin-top:20rpx;" bindtap="pictureTypeButtonClicked" data-type="3">取消</view>
     <view style="width:100%; height:{{pageSize.safeareaBottom}}px; background-color:white;"></view>
+  </view>
+</view>
+
+<!-- 区域 弹框 -->
+<view class="zonePickerView_bg" wx:if="{{showZonePicker}}">
+  <view class="zonePickerView">
+    <view class="zonePicker_actionView">
+      <view class="zonePicker_cancelButton" catchtap="cutomZonePickerCancelButtonClciked">取消</view>
+      <view class="zonePicker_sureButton" catchtap="customZonePickerSureButtonClciked">确定</view>
+    </view>
+    <picker-view indicator-style="height: 50px;" style="width: 100%; height: 500rpx;" bindchange="customZonePickerChange" bindpickstart="customZonePickerStart" bindpickend="customZonePickerEnd">
+      <picker-view-column>
+        <block wx:for="{{zoneList}}" wx:key="id">
+          <view class="zonePickerCell">{{item.name}}</view>
+        </block>
+      </picker-view-column>
+    </picker-view>
   </view>
 </view>

@@ -76,7 +76,16 @@
           <view wx:if="{{role == 2}}" class="role-name">教务</view>
           <view wx:if="{{role == 3}}" class="role-name">管理员</view>
         </view>
+      </view>
 
+      <!-- 区域 -->
+      <view class="zoneView">
+        <picker mode="selector" header-text="请选择区域" range="{{zone_list}}" range-key="name" bindchange="zonePickerChange">
+          <view class="flex_row_alimenterCenter">
+            <image src="./resource/location.png" style="width:30rpx; height:30rpx;"></image>
+            <text style="color:#14CBA2; font-size:30rpx; margin-left:10rpx;">{{zone_find.name}}</text>
+          </view>
+        </picker> 
       </view>
     </view>
   </view>

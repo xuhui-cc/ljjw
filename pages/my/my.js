@@ -29,6 +29,12 @@ Page({
 
     // 展示的功能条目
     items: [],
+
+    // 当前选择的区域
+    zone_find: null,
+
+    // 可选区域列表
+    zone_list: [],
   },
 
   /**
@@ -329,6 +335,14 @@ Page({
     }
 
     this.setUpItems()
+
+    // 更新区域
+    let zone_find = wx.getStorageSync('zone_find')
+    let zone_list = wx.getStorageSync('zone_list')
+    this.setData({
+      zone_find: zone_find,
+      zone_list: zone_list
+    })
   },
 
   /**
@@ -382,7 +396,7 @@ Page({
       }
       
       app.ljjw.xcxjwlogin(params).then(d => {
-        console.log(d)
+        // console.log(d)
         if (d.data.status == 0) {
           var role = d.data.role.split(",")
           if(role)
@@ -407,10 +421,14 @@ Page({
           wx.setStorageSync('role', role[0])
           
           if(role[0] != 4){
+            // 老师/教务/管理员
             wx.setStorageSync('subject', d.data.cate_info)
+            wx.setStorageSync('zone_list', d.data.zone_list)
+            wx.setStorageSync('zone_find', d.data.zone_find)
             // wx.setStorageSync('subject_name', d.data.cate_info.name)
             console.log(d.data.cate_info)
           } else {
+            // 学生
             let stuinfo = d.data.stuinfo
             wx.setStorageSync('stuinfo', stuinfo)
           }
@@ -797,6 +815,25 @@ Page({
     })
   },
 
+  /**
+   * 修改老师所在区域
+  */
+  changeTeacherZone: function(zone_id, callback) {
+    let params = {
+      uid: wx.getStorageSync('uid'),
+      token: wx.getStorageSync('token'),
+      zoneId: zone_id
+    }
+    let that = this
+    app.ljjw.jwZoneCurrentZoneId(params).then(d=>{
+      if (d.data.status == 1) {
+        typeof callback == 'function' && callback(true)
+      } else {
+        typeof callback == 'function' && callback(false)
+      }
+    })
+  },
+
   // ------------------------------------------事件-------------------------------------
   /**
    * 学生端 问题反馈 点击事件
@@ -906,5 +943,26 @@ Page({
       })
     }
   },
+
+  /**
+   * 区域选择器 选择
+  */
+  zonePickerChange: function(e) {
+    let index = e.detail.value
+    let zone = this.data.zone_list[index]
+    if (zone.id == this.data.zone_find.id) {
+      return
+    }
+
+    let that = this
+    this.changeTeacherZone(zone.id, function(success){
+      if (success) {
+        that.setData({
+          zone_find: zone
+        })
+        wx.setStorageSync('zone_find', zone)
+      }
+    })
+  }
   
 })

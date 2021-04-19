@@ -460,3 +460,12 @@ page{
   color: white;
   font-size: 22rpx;
 }
+
+.zoneView {
+  position: absolute;
+  align-self: center;
+  right: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

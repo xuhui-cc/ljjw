@@ -8,6 +8,9 @@ Page({
   data: {
     // 是否打开图片选择方式页面
     showPictureTypeSelect: false,
+
+    // 区域
+    zoneName: '',
   },
 
   timestampToTime: function (timestamp) {
@@ -27,6 +30,10 @@ Page({
   onLoad: function (options) {
     this.getPageSize()
     this.getStudentBaseInfo()
+    let stuinfo = wx.getStorageSync('stuinfo')
+    this.setData({
+      zoneName: stuinfo.name
+    })
   },
 
   /**

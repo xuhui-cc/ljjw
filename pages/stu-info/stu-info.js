@@ -2,15 +2,25 @@
 const app = getApp()
 Page({
 
+  // 是否正在提交中
   submiting: false,
+
+  // 自定义区域选择器 是否正在滚动
+  zonePickerScrolling: false,
+  // 临时自定义区域选择器 选中索引
+  tempZonePickerValue: null,
 
   /**
    * 页面的初始数据
    */
   data: {
     sex: ['请选择', '男', '女'],
+
+    // 班级列表
     stu_class:[],
-    stu_class_index:-1,
+    // 选择的班级
+    stu_class_Selected:null,
+
     sex_index :0 ,
     graduation_time: '请选择',
 
@@ -22,6 +32,13 @@ Page({
 
     // 被驳回原因 type为3时获取
     rejectReason: '',
+
+    // 区域列表
+    zoneList: [],
+    // 选择的区域对象
+    zone_selected: null,
+    // 是否展示区域选择器
+    showZonePicker: false,
   },
 
   /**
@@ -52,23 +69,9 @@ Page({
       cur_date : cur_date
     })
 
-    var params = {
-      "token": wx.getStorageSync("token"),
-    }
-    console.log(params)
-    app.ljjw.jwGetAllClass(params).then(d => {
-      if (d.data.status == 1) {
-        console.log(d.data.data)
-        that.setData({
-          stu_class: d.data.data
-        })
-        console.log(that.data.stu_class)
-        console.log("所有班级获取成功")
-      } 
-
-
-    })
-
+    // 获取区域列表
+    this.getZoneList()
+    
     switch(that.data.type*1) {
       case 0:
       case 1: {
@@ -76,6 +79,8 @@ Page({
         this.setData({
           naviTitle: '完善基础信息'
         })
+        // 定位当前位置所在区域
+        this.getCurrentArea()
         break
       }
       case 2: {
@@ -83,7 +88,11 @@ Page({
         this.setData({
           naviTitle: '修改基础信息'
         })
-        this.getBaseInfo()
+        this.getBaseInfo(function(success){
+          if (success) {
+            that.getClassList()
+          }
+        })
         break
       }
       case 3: {
@@ -95,7 +104,11 @@ Page({
           this.getRejectRenson()
         }
         
-        this.getBaseInfo()
+        this.getBaseInfo(function(success){
+          if (success) {
+            that.getClassList()
+          }
+        })
         break
       }
     }
@@ -131,9 +144,10 @@ Page({
   },
   stu_class_picker: function (e) {
     let that = this
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    let index = e.detail.value
+    let classItem = this.data.stu_class[index]
     that.setData({
-      stu_class_index: e.detail.value
+      stu_class_Selected: classItem
     })
     // console.log(that.data.input_name, that.data.input_phone, that.data.avatar, that.data.input_school.indexOf("请选择"), that.data.graduation_time, that.data.input_major, that.data.input_email, that.data.sex_index)
     that.chargeCanSubmit()
@@ -213,42 +227,7 @@ Page({
     that.chargeCanSubmit()
   },
 
-  submit:function(){
-    if (this.submiting) {
-      return
-    }
-    this.submiting = true
-    let that = this
-    if(that.data.issubmit){
-      var params = {
-        "token": wx.getStorageSync("token"),
-        "uid": wx.getStorageSync("uid"),
-        "avatar": that.data.avatar,
-        "realname": that.data.input_name,
-        "phone": that.data.phone,
-        "school": that.data.input_school,
-        "graduate_time": that.data.graduation_time,
-        "subject": that.data.input_major,
-        "email": that.data.input_email,
-        "class_id": that.data.stu_class[that.data.stu_class_index].id,
-        "sex": that.data.sex_index,
-        type: this.data.type == 3 ? '2' : '1',
-      }
-      // console.log(params)
-      // console.log(that.data.input_school + "that.data.input_school")
-      app.ljjw.jwSaveStudentBaseInfo(params).then(d => {
-        that.submiting = false
-        // console.log(d)
-        if (d.data.status == 1) {
-          wx.navigateBack({
-            delta: 1  // 返回上一级页面。
-          })
-        }
 
-
-      })
-    }
-  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -324,39 +303,52 @@ Page({
   */
   chargeCanSubmit: function(){
     let that = this
-    var issubmit = true
+    let issubmit = true
+    let reason = ''
     if (!that.data.input_name || that.data.input_name == ''){
+      reason = '姓名'
       issubmit = false
     }
 
     if (!that.data.sex_index || that.data.sex_index == '' || that.data.sex_index == 0) {
+      reason = '性别'
       issubmit = false
     }
     
     if (!that.data.input_school || that.data.input_school == '' || that.data.input_school == undefined) {
+      reason = '毕业院校'
       issubmit = false
     }
 
     if (!that.data.graduation_time || that.data.graduation_time == '' || that.data.graduation_time == 0) {
+      reason = '毕业时间'
       issubmit = false
     }
 
     if (!that.data.input_major || that.data.input_major == '') {
+      reason = '专业'
       issubmit = false
     }
 
     if (!that.data.input_email || that.data.input_email == '') {
+      reason = '邮箱'
       issubmit = false
     }
 
-    if (!that.data.stu_class_index || that.data.stu_class_index == '' || that.data.stu_class_index == -1) {
+    if (that.data.stu_class_Selected == null) {
+      reason = '班级'
+      issubmit = false
+    }
+
+    if (that.data.zone_selected == null) {
+      reason = '所属区域'
       issubmit = false
     }
 
     that.setData({
       issubmit:issubmit
     })
-    console.log(that.data.issubmit)
+    console.log(that.data.issubmit, reason)
   },
 
   /**
@@ -386,6 +378,40 @@ Page({
   gotoPictureEditPage: function (path) {
     wx.navigateTo({
       url: "../../pages/avatar_edit/avatar_edit?path="+path
+    })
+  },
+
+  /**
+   * 获取当前所在区域
+  */
+  getCurrentArea: function() {
+    let that = this
+    wx.getLocation({
+      type: 'wgs84',
+      success(res) {
+        let latitude = res.latitude
+        let longitude = res.longitude
+        that.getLocalAddress(latitude, longitude, function(success){
+          if (!success) {
+            that.setData({
+              showZonePicker: true
+            })
+            wx.showToast({
+              title: '请选择您所在的区域',
+              icon: 'none'
+            })
+          }
+        })
+      },
+      fail(res) {
+        that.setData({
+          showZonePicker: true
+        })
+        wx.showToast({
+          title: '请选择您所在的区域',
+          icon: 'none'
+        })
+      }
     })
   },
 
@@ -441,7 +467,7 @@ Page({
   /**
    * 获取基础信息
   */
-  getBaseInfo: function() {
+  getBaseInfo: function(callback) {
     var params = {
       "token": wx.getStorageSync("token"),
       "uid": wx.getStorageSync("uid"),
@@ -449,33 +475,40 @@ Page({
     let that = this
     app.ljjw.jwGetStudentMainPage(params).then(d => {
       if (d.data.status == 1) {
-        if (that.data.type == 2) {
-          for(var i=0;i<that.data.stu_class.length;i++){
-            if (d.data.data.classes[0].class_id == that.data.stu_class[i].id){
-              that.setData({
-                stu_class_index: i
-              })
-            }
+        let info = d.data.data
+        let classItem = info.classes[0]
+        classItem.name = classItem.classname
+
+        // 判断选择的区域是哪个
+        let zone_selected = null
+        for (let i = 0; i < that.data.zoneList.length; i++) {
+          let zone = that.data.zoneList[i]
+          if(zone.id == info.jw_zoneID) {
+            zone_selected = zone
+            break
           }
         }
         
         that.setData({
-          madata: d.data.data,
-          avatar: d.data.data.avatar,
-          input_name: d.data.data.realname,
-          // input_phone: d.data.data.phone,
-          sex_index: d.data.data.sex,
-          input_school: d.data.data.graduate_school,
-          input_major: d.data.data.subject,
-          input_email: d.data.data.email,
-          graduation_time: that.timestampToTime(d.data.data.graduate_time)
+          madata: info,
+          avatar: info.avatar,
+          input_name: info.realname,
+          // input_phone: info.phone,
+          sex_index: info.sex,
+          input_school: info.graduate_school,
+          input_major: info.subject,
+          input_email: info.email,
+          graduation_time: that.timestampToTime(info.graduate_time),
+          zone_selected: zone_selected,
+          stu_class_Selected: classItem
         })
 
         that.chargeCanSubmit()
-        console.log("我的主页接口获取成功")
+        
+        typeof callback == 'function' && callback(true)
+      } else {
+        typeof callback == 'function' && callback(false)
       }
-
-
     })
   },
 
@@ -496,6 +529,111 @@ Page({
           rejectReason: reason
         })
       }
+    })
+  },
+
+  /**
+   * 获取区域列表
+  */
+  getZoneList: function() {
+    let params = {
+      token: wx.getStorageSync('token')
+    }
+    let that = this
+    app.ljjw.jwZoneList(params).then(d=>{
+      if (d.data.status == 1) {
+        let zoneList = d.data.data
+        that.setData({
+          zoneList: zoneList
+        })
+      }
+    })
+  },
+
+  /**
+   * 基础信息提交
+  */
+  submit:function(){
+    if (this.submiting) {
+      return
+    }
+    this.submiting = true
+    let that = this
+    if(that.data.issubmit){
+      var params = {
+        "token": wx.getStorageSync("token"),
+        "uid": wx.getStorageSync("uid"),
+        "avatar": that.data.avatar,
+        "realname": that.data.input_name,
+        "phone": that.data.phone,
+        "school": that.data.input_school,
+        "graduate_time": that.data.graduation_time,
+        "subject": that.data.input_major,
+        "email": that.data.input_email,
+        "class_id": that.data.stu_class_Selected.id,
+        "sex": that.data.sex_index,
+        type: this.data.type == 3 ? '2' : '1',
+        jw_zoneID: this.data.zone_selected.id,
+      }
+      app.ljjw.jwSaveStudentBaseInfo(params).then(d => {
+        that.submiting = false
+        if (d.data.status == 1) {
+          wx.navigateBack({
+            delta: 1  // 返回上一级页面。
+          })
+        }
+      })
+    }
+  },
+
+  /**
+   * 获取班级列表
+  */
+  getClassList: function() {
+    if (!this.data.zone_selected) {
+      return
+    }
+    var params = {
+      "token": wx.getStorageSync("token"),
+      jw_zoneID: this.data.zone_selected.id
+    }
+    let that = this
+    app.ljjw.jwGetAllClass(params).then(d => {
+      if (d.data.status == 1) {
+        that.setData({
+          stu_class: d.data.data
+        })
+      } 
+    })
+  },
+
+  /**
+   * 获取当前地址
+  */
+  getLocalAddress: function(latitude, longitude, callback) {
+    let that = this
+    app.ljjw.getLoacationAddress(latitude, longitude).then(d=>{
+      if(d.data.status == 0) {
+        let province = d.data.result.addressComponent.province
+        for (let i = 0; i < that.data.zoneList.length; i++) {
+          let zone = that.data.zoneList[i]
+          if (zone.province == province || province.indexOf(zone.province)) {
+            that.setData({
+              zone_selected: zone
+            })
+            break
+          }
+        }
+        if (!that.data.zone_selected) {
+          typeof callback == 'function' && callback(false)
+        } else {
+          typeof callback == 'function' && callback(true)
+        }
+      } else {
+        typeof callback == 'function' && callback(false)
+      }
+    }).catch(error=>{
+      typeof callback == 'function' && callback(false)
     })
   },
 
@@ -624,5 +762,72 @@ Page({
         break
       }
     }
+  },
+
+  /**
+   * 区域选择器 选择
+  */
+  zone_picker: function(e) {
+    let index = e.detail.value
+    let zone = this.data.zoneList[index]
+    if(zone.id == this.data.zone_selected.id) {
+      return
+    }
+    this.setData({
+      zone_selected: zone,
+      stu_class_Selected: null
+    })
+    this.getClassList()
+  },
+
+  /**
+   * 自定义区域选择器 选中
+  */
+  customZonePickerChange: function(e) {
+    // console.log(e)
+    let index = e.detail.value[0]
+    this.tempZonePickerValue = index
+  },
+
+  /**
+   * 自定义区域选择器 开始滚动
+  */
+  customZonePickerStart: function() {
+    this.zonePickerScrolling = true
+  },
+
+  /**
+   * 自定义区域选择器 结束滚动
+  */
+  customZonePickerEnd: function() {
+    this.zonePickerScrolling = false
+  },
+
+  /**
+   * 自定义区域选择器 取消按钮 点击事件
+  */
+  cutomZonePickerCancelButtonClciked: function() {
+    this.setData({
+      showZonePicker: false
+    })
+    this.zonePickerScrolling = false
+    this.tempZonePickerValue = null
+  },
+
+  /**
+   * 自定义区域选择器 确定按钮 点击事件
+  */
+  customZonePickerSureButtonClciked: function() {
+    if (this.zonePickerScrolling) {
+      return
+    }
+    let index = this.tempZonePickerValue
+    let zone = this.data.zoneList[index]
+    if (!this.data.zone_selected || zone.id != this.data.zone_selected.id) {
+      this.setData({
+        zone_selected: zone
+      })
+    }
+    this.cutomZonePickerCancelButtonClciked()
   }
 })

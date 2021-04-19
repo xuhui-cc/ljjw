@@ -14,16 +14,23 @@
   <view class="layout" style="margin-top:{{pageSize.naviHeight}}px">
     <!-- 基本信息 -->
     <view class="baseInfo">
-      <view class="avatarView" bindtap="avatarTap">
-        <image class="ava" src="{{mydata.avatar}}"></image>
-        <view class="avatarEditView">编辑</view>
-      </view>
-      <view id="baseInfoExceptAvatar">
-        <view id="nameGender">
-          <view class="name">{{mydata.realname}}</view>
-          <image id="gender" src="{{mydata.sex == 1 ? '../../images/male.png' : '../../images/woman.png'}}" mode="aspectFit"></image>
+      <view class="flex_row_alimenterCenter">
+        <view class="avatarView" bindtap="avatarTap">
+          <image class="ava" src="{{mydata.avatar}}"></image>
+          <view class="avatarEditView">编辑</view>
         </view>
-        <text id="phone">{{mydata.phone}}</text>
+        <view id="baseInfoExceptAvatar">
+          <view id="nameGender">
+            <view class="name">{{mydata.realname}}</view>
+            <image id="gender" src="{{mydata.sex == 1 ? '../../images/male.png' : '../../images/woman.png'}}" mode="aspectFit"></image>
+          </view>
+          <text id="phone">{{mydata.phone}}</text>
+        </view>
+      </view>
+      <!-- 区域 -->
+      <view class="flex_row_alimenterCenter" style="margin-right:30rpx;">
+        <image src="./resource/location.png" style="width:30rpx; height:30rpx;"></image>
+        <text style="color:#14CBA2; font-size:30rpx; margin-left:10rpx;">{{zoneName}}</text>
       </view>
     </view>
     <view class="heng"></view>
