@@ -9,6 +9,8 @@ Page({
   zonePickerScrolling: false,
   // 临时自定义区域选择器 选中索引
   tempZonePickerValue: null,
+  // 是否拒绝授权定位
+  rejectLocationAuth: false,
 
   /**
    * 页面的初始数据
@@ -79,8 +81,6 @@ Page({
         this.setData({
           naviTitle: '完善基础信息'
         })
-        // 定位当前位置所在区域
-        this.getCurrentArea()
         break
       }
       case 2: {
@@ -400,10 +400,13 @@ Page({
               title: '请选择您所在的区域',
               icon: 'none'
             })
+          } else {
+            that.getClassList()
           }
         })
       },
       fail(res) {
+        that.rejectLocationAuth = true
         that.setData({
           showZonePicker: true
         })
@@ -781,6 +784,24 @@ Page({
   },
 
   /**
+   * 区域 点击事件
+  */
+  areaClicked: function() {
+    if(this.data.zone_selected || this.rejectLocationAuth) {
+      // 已选择过区域
+      if (this.data.type != 3) {
+        // 重新提交基础信息时不能修改区域
+        this.setData({
+          showZonePicker: true
+        })
+      }
+    } else {
+      // 未选择过区域
+      this.getCurrentArea()
+    }
+  },
+
+  /**
    * 自定义区域选择器 选中
   */
   customZonePickerChange: function(e) {
@@ -821,13 +842,30 @@ Page({
     if (this.zonePickerScrolling) {
       return
     }
-    let index = this.tempZonePickerValue
+    let index = this.tempZonePickerValue ? this.tempZonePickerValue : 0
     let zone = this.data.zoneList[index]
+
     if (!this.data.zone_selected || zone.id != this.data.zone_selected.id) {
       this.setData({
-        zone_selected: zone
+        zone_selected: zone,
+        stu_class_Selected: null
       })
+      this.getClassList()
+      this.chargeCanSubmit()
     }
     this.cutomZonePickerCancelButtonClciked()
+  },
+
+  /**
+   * 班级 点击事件
+  */
+  classViewClicked: function() {
+    if(this.data.zone_selected) {
+      return
+    }
+    wx.showToast({
+      title: '请先选择区域',
+      icon: 'none'
+    })
   }
 })

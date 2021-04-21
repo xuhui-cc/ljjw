@@ -106,28 +106,35 @@
       <!-- <image class="select" src="../../images/next.png"></image> -->
     </view>
 
-    <view class="flex">
+    <view class="flex" catchtap="areaClicked">
       <view class="shu"></view>
       <view class="info-tltle">所属区域</view>
-      <picker mode='selector' bindchange="zone_picker" range-key="name" range="{{zoneList}}" >
+      <!-- <picker mode='selector' bindchange="zone_picker" range-key="name" range="{{zoneList}}" > -->
         <view class='tip' wx:if="{{zone_selected == null}}">请选择</view>
         <view class="tip" wx:else>{{zone_selected.name}}</view>
-      </picker>
-      <picker mode='selector' bindchange="zone_picker" range-key="name" range="{{zoneList}}" >
-        <image class="select" src="../../images/next.png"></image>
-      </picker>
+      <!-- </picker> -->
+      <!-- <picker mode='selector' bindchange="zone_picker" range-key="name" range="{{zoneList}}" > -->
+        <image wx:if="{{type != 3}}" class="select" src="../../images/next.png"></image>
+      <!-- </picker> -->
     </view>
 
-    <view class="flex">
+    <view class="flex" catchtap="classViewClicked">
       <view class="shu"></view>
       <view class="info-tltle">班级</view>
-      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" range="{{stu_class}}" >
+      <block wx:if="{{zone_selected}}">
+        <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" range="{{stu_class}}" >
+          <view class='tip' wx:if="{{stu_class_Selected == null}}">请选择</view>
+          <view class="tip" wx:else="">{{stu_class_Selected.name}}</view>
+        </picker>
+        <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" range="{{stu_class}}" >
+          <image class="select" src="../../images/next.png"></image>
+        </picker>
+      </block>
+      <block wx:else>
         <view class='tip' wx:if="{{stu_class_Selected == null}}">请选择</view>
         <view class="tip" wx:else="">{{stu_class_Selected.name}}</view>
-      </picker>
-      <picker mode='selector' bindchange="stu_class_picker" range-key="{{'name'}}" range="{{stu_class}}" >
         <image class="select" src="../../images/next.png"></image>
-      </picker>
+      </block>
     </view>
 
     <view class='submit' bindtap="submit" style="{{issubmit ? 'background:rgba(45,193,160,1);' : 'background:rgba(222,222,222,1);'}}">提交</view>
