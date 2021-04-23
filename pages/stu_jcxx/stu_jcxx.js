@@ -32,7 +32,7 @@ Page({
     this.getStudentBaseInfo()
     let stuinfo = wx.getStorageSync('stuinfo')
     this.setData({
-      zoneName: stuinfo.name
+      zoneName: stuinfo.stu_zone.name
     })
   },
 

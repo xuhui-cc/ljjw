@@ -11,51 +11,53 @@
   </view>
 
   <view class="ques-layout" style="margin-top:{{naviBarHeight}}px">
-    <!-- 任务遍历 -->
-    <block wx:for="{{task}}" wx:key="task_index" wx:for-index="task_index">
-      <view class='taskCell'>
-        <!-- 考勤式 -->
-        <block wx:if="{{item.type == 4}}">
-          <view class="taskCell_topView">
-            <!-- 任务标题 -->
-            <text class="taskCell_title twoLine">{{item.title}}</text>
-            <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
-              <!-- 发布人姓名 -->
-              <!-- <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text> -->
-              <!-- 发布时间 -->
-              <text style="color:#B4B4B4; font-size:26rpx;">发布时间：{{item.operate_date}}</text>
-              <!-- <view wx:if="{{item.anonymous == 1}}" class="anonymousView">匿名任务</view> -->
+    <block wx:if="{{task && task.length != 0}}">
+      <!-- 任务遍历 -->
+      <block wx:for="{{task}}" wx:key="task_index" wx:for-index="task_index">
+        <view class='taskCell'>
+          <!-- 考勤式 -->
+          <block wx:if="{{item.type == 4}}">
+            <view class="taskCell_topView">
+              <!-- 任务标题 -->
+              <text class="taskCell_title twoLine">{{item.title}}</text>
+              <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
+                <!-- 发布人姓名 -->
+                <!-- <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text> -->
+                <!-- 发布时间 -->
+                <text style="color:#B4B4B4; font-size:26rpx;">发布时间：{{item.operate_date}}</text>
+                <!-- <view wx:if="{{item.anonymous == 1}}" class="anonymousView">匿名任务</view> -->
+              </view>
+            </view>
+          </block>
+
+          <!-- 普通式 -->
+          <view wx:else>
+            <view class="taskCell_topView">
+              <!-- 任务标题 -->
+              <text class="taskCell_title twoLine">{{item.title}}</text>
+              <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
+                <!-- 发布人姓名 -->
+                <!-- <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text> -->
+                <!-- 发布时间 -->
+                <text style="color:#B4B4B4; font-size:26rpx;">发布时间：{{item.operate_date}}</text>
+                <view wx:if="{{item.anonymous == 1}}" class="anonymousView">匿名任务</view>
+              </view>
             </view>
           </view>
-        </block>
 
-        <!-- 普通式 -->
-        <view wx:else>
-          <view class="taskCell_topView">
-            <!-- 任务标题 -->
-            <text class="taskCell_title twoLine">{{item.title}}</text>
-            <view class="flex_row_itemsCenter_spaceBetween" style="height:37rpx; margin-top:20rpx; width:100%;">
-              <!-- 发布人姓名 -->
-              <!-- <text style="color:#B4B4B4; font-size:26rpx;">来自：{{item.name}}</text> -->
-              <!-- 发布时间 -->
-              <text style="color:#B4B4B4; font-size:26rpx;">发布时间：{{item.operate_date}}</text>
-              <view wx:if="{{item.anonymous == 1}}" class="anonymousView">匿名任务</view>
-            </view>
+          <!-- 完成情况 -->
+          <view class='cs'>
+            <view wx:if="{{item.finished_students}}" class="finish">已完成：</view>
+            <view class="finish-man">{{item.anonymous == 1 ? item.finished_students.length + '人' : item.finished_name}}</view>
+            <view wx:if="{{item.notfinished_students}}" class="unfinish">未完成：</view>
+            <view class="finish-man">{{item.anonymous == 1 ? item.notfinished_students.length + '人' : item.notFinished_name}}</view>
           </view>
         </view>
-
-        <!-- 完成情况 -->
-        <view class='cs'>
-          <view wx:if="{{item.finished_students}}" class="finish">已完成：</view>
-          <view class="finish-man">{{item.anonymous == 1 ? item.finished_students.length + '人' : item.finished_name}}</view>
-          <view wx:if="{{item.notfinished_students}}" class="unfinish">未完成：</view>
-          <view class="finish-man">{{item.anonymous == 1 ? item.notfinished_students.length + '人' : item.notFinished_name}}</view>
-        </view>
-      </view>
+      </block>
     </block>
-  
-  
-    
+    <block wx:else>
+      <null_image title="暂无任务" type="{{6}}" ></null_image>
+    </block>
   </view>
 
 

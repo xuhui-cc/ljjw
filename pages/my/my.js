@@ -327,22 +327,23 @@ Page({
     
     // 获取问题反馈消息数
     if(this.data.role == 4) {
+      // 学生
       this.studentGetFeedBackNotiCount()
       this.studentGetCourseAppointmentCount()
     } else {
+      // 老师/教务/管理员
       this.teacherGetFeedBackNotiCount()
       this.teacherGetCourseAppointmentCount()
+      // 更新区域
+      let zone_find = wx.getStorageSync('zone_find')
+      let zone_list = wx.getStorageSync('zone_list')
+      this.setData({
+        zone_find: zone_find,
+        zone_list: zone_list
+      })
     }
 
     this.setUpItems()
-
-    // 更新区域
-    let zone_find = wx.getStorageSync('zone_find')
-    let zone_list = wx.getStorageSync('zone_list')
-    this.setData({
-      zone_find: zone_find,
-      zone_list: zone_list
-    })
   },
 
   /**
@@ -398,46 +399,7 @@ Page({
       app.ljjw.xcxjwlogin(params).then(d => {
         // console.log(d)
         if (d.data.status == 0) {
-          var role = d.data.role.split(",")
-          if(role)
-            if (d.data.class_ids != null){
-              var class_ids = d.data.class_ids.split(",")
-              wx.setStorageSync('class_ids', class_ids);
-            }
-          
-          if(role.length == 2){
-            role[0] = role[1]
-          }
-          console.log("登录成功")
-
-          wx.setStorageSync('token', d.data.token);
-          wx.setStorageSync('uid', d.data.uid);
-
-          let userinfo = d.data.userInfo
-          if (!userinfo.avatar || userinfo.avatar.indexOf('http') == -1) {
-            userinfo.avatar = '../../images/avatar_null.png'
-          }
-          wx.setStorageSync('userInfo', userinfo)
-          wx.setStorageSync('role', role[0])
-          
-          if(role[0] != 4){
-            // 老师/教务/管理员
-            wx.setStorageSync('subject', d.data.cate_info)
-            wx.setStorageSync('zone_list', d.data.zone_list)
-            wx.setStorageSync('zone_find', d.data.zone_find)
-            // wx.setStorageSync('subject_name', d.data.cate_info.name)
-            console.log(d.data.cate_info)
-          } else {
-            // 学生
-            let stuinfo = d.data.stuinfo
-            wx.setStorageSync('stuinfo', stuinfo)
-          }
-          
-          
-          app.setTaskItemDot()
-          that.onShow()
-
-
+          that.dealUserInfo(d.data)
         } else {
           wx.showToast({
             title: "登录失败",
@@ -672,6 +634,51 @@ Page({
     })
   },
 
+  /**
+   * 处理企业微信
+  */
+  dealUserInfo: function(data) {
+    wx.clearStorageSync()
+    let role = data.role.split(",")
+    if(role)
+      if (data.class_ids != null){
+        let class_ids = data.class_ids.split(",")
+        wx.setStorageSync('class_ids', class_ids);
+      }
+    
+    if(role.length == 2){
+      role[0] = role[1]
+    }
+    console.log("登录成功")
+
+    wx.setStorageSync('token', data.token);
+    wx.setStorageSync('uid', data.uid);
+
+    let userinfo = data.userInfo
+    if (!userinfo.avatar || userinfo.avatar.indexOf('http') == -1) {
+      userinfo.avatar = '../../images/avatar_null.png'
+    }
+    wx.setStorageSync('userInfo', userinfo)
+    wx.setStorageSync('role', role[0])
+    
+    if(role[0] != 4){
+      // 老师/教务/管理员
+      wx.setStorageSync('subject', data.cate_info)
+      wx.setStorageSync('zone_list', data.zone_list)
+      wx.setStorageSync('zone_find', data.zone_find)
+      // wx.setStorageSync('subject_name', data.cate_info.name)
+      console.log(data.cate_info)
+    } else {
+      // 学生
+      let stuinfo = data.stuinfo
+      wx.setStorageSync('stuinfo', stuinfo)
+    }
+    
+    
+    app.setTaskItemDot()
+    this.onShow()
+  },
+
   // ------------------------------------------------------接口-----------------------------------------
   /**
    * 学生获取页面数据
@@ -834,6 +841,23 @@ Page({
     })
   },
 
+  /**
+   * 刷新用户信息
+  */
+  refreshUserInfo: function() {
+    let params = {
+      uid : wx.getStorageSync('uid'),
+      token : wx.getStorageSync('token')
+    }
+    let that = this
+    app.ljjw.jwgetUserinfoByUid(params).then(d=>{
+      let status = d.data.status
+      if (status == 1) {
+        that.dealUserInfo(d.data.data)
+      }
+    })
+  },
+
   // ------------------------------------------事件-------------------------------------
   /**
    * 学生端 问题反馈 点击事件
@@ -961,6 +985,7 @@ Page({
           zone_find: zone
         })
         wx.setStorageSync('zone_find', zone)
+        that.refreshUserInfo()
       }
     })
   }

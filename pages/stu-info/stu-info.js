@@ -481,6 +481,7 @@ Page({
         let info = d.data.data
         let classItem = info.classes[0]
         classItem.name = classItem.classname
+        classItem.id = classItem.class_id
 
         // 判断选择的区域是哪个
         let zone_selected = null
