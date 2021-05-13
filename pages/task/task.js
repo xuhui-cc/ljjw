@@ -525,7 +525,11 @@ Page({
               pageData.morning_read.pics = pageData.morning_read.pics.split(",")
             }
             var newMessages = pageData.messages
-
+            for (let i = 0; i < newMessages.length; i++){
+              let message = newMessages[i]
+              let content_title = message.content_clear
+              message.content_clear = content_title.replace(/&[a-z]{5};/g, '')
+            }
             var showNoData = false
             // if (newMessages.length == 0) {
             //   showNoData = true
@@ -590,6 +594,11 @@ Page({
               pageData.morning_read.pics = pageData.morning_read.pics.split(",")
             }
             var newMessages = pageData.messages
+            for (let i = 0; i < newMessages.length; i++){
+              let message = newMessages[i]
+              let content_title = message.content_clear
+              message.content_clear = content_title.replace(/&[a-z]{5};/g, '')
+            }
             // 判断是否加载空页面
             var showNoData = false
             // if (newMessages.length == 0) {

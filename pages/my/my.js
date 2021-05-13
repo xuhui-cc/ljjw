@@ -531,7 +531,7 @@ Page({
             title: '申请与反馈',
             icon: './resource/item_feedback.png',
             action: 'to_feedBack',
-            count: this.data.teacherNotDealCount > 9 ? '9+' : this.data.teacherNotDealCount
+            count: this.data.feedBackNotiCount > 9 ? '9+' : this.data.feedBackNotiCount
           },
           {
             title: '课程预约',
